@@ -22,13 +22,13 @@ int main()
     // Load relevant shaders
     CGCore::StaticShader* StaticShaderObj = new CGCore::StaticShader(); // generates ProgramID too
     // Get a ProgramID just in case
-    GLuint ProgramID = StaticShaderObj->GetProgramID();
+    // GLuint ProgramID = StaticShaderObj->GetProgramID();
     // Get handles for any uniform shader vars which we may need
     // GLuint SomeUniform = glGetUniformLocation(ProgramID, "VarName");
     // Load a texture
     CGCore::Texture* TextureObj = new CGCore::Texture(TEXTURE_FILE);
     // Get a handle for the "textureSampler" uniform
-	GLuint TextureSamplerHnd  = glGetUniformLocation(ProgramID, "textureSampler");
+    GLuint TextureSamplerHnd  = StaticShaderObj->GetUniformLocation("textureSampler");
     // Vertex data representing a rectangle
     const GLfloat VertexBufferData[] = {
         -0.5f,   0.5f, 0.0f, // v0 top left
@@ -67,21 +67,12 @@ int main()
         TextureObj->ApplyTexture(TextureSamplerHnd, 0);
         // 0th attribute buffer : vertices
         LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
-        // 2nd attribute buffer : UVs
+        // 1st attribute buffer : UVs
         LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
-        
-        // Draw the triangle !
-		//glDrawArrays(GL_TRIANGLES, 0, 3*3); // 12*3 indices starting at 0 -> 12 triangles
+        RendererObj->RenderFromBufferIndex(BufferIndex, GL_TRIANGLES, GL_UNSIGNED_INT, 6);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferIndex);
-        glDrawElements(	GL_TRIANGLES, 
-            6,  // 3 cinse we want to draw 3 vetrices
-            GL_UNSIGNED_INT, 
-            (void*) 
-            0);
-
-        glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
+        LoaderObj->DisableVAO(0);
+        LoaderObj->DisableVAO(1);
 
         Display->UpdateDisplay();
     }

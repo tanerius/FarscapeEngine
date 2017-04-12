@@ -18,6 +18,8 @@ namespace CGCore
             void BindAttribute(int Attrib, const GLchar* VarName);
             void CleanUp();
             GLuint GetProgramID() const { return ProgramID; }
+            GLuint GetUniformLocation(const char* LocationName);
+            virtual void GetAllUniformLocations();
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();
             void StopProgram();

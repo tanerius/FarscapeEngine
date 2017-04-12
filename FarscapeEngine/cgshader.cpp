@@ -7,7 +7,6 @@
 #include <GLFW/glfw3.h>
 
 
-
 void CGCore::Shader::BindAttribute(int Attrib, const GLchar* VarName)
 {
     glBindAttribLocation(ProgramID, Attrib, VarName);
@@ -28,6 +27,18 @@ void CGCore::Shader::CleanUp()
     glDeleteProgram(ProgramID);
 }
 
+
+GLuint CGCore::Shader::GetUniformLocation(const char* LocationName)
+{
+    return glGetUniformLocation(ProgramID, LocationName);
+}
+
+void CGCore::Shader::GetAllUniformLocations()
+{
+    printf("WRONG GetAllUniformLocations() called. Please Overload this! \n");
+    return;
+
+}
 
 void CGCore::Shader::StartProgram()
 {
@@ -108,6 +119,8 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	glAttachShader(ProgramID, FragmentShaderID);
     BindAttributes();
 	glLinkProgram(ProgramID);
+    
+    GetAllUniformLocations(); // This hsould be overloaded
 
     // Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
@@ -128,6 +141,9 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	glFinish();
 
     if (HasFailed) exit(EXIT_FAILURE);
+    
+    
+    
     return ProgramID;
 }
 

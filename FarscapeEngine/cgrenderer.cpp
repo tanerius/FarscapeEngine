@@ -12,10 +12,24 @@ void CGCore::Renderer::Prepare()
     
 }
 
-void CGCore::Renderer::Render()
+
+void CGCore::Renderer::Render(GLenum RenderMode, GLuint StartIndex, GLuint NumberOfVertices)
 {
-   // Main rendering code
+    glDrawArrays(RenderMode, StartIndex, NumberOfVertices);
 }
+
+
+void CGCore::Renderer::RenderFromBufferIndex(GLuint BufferIndex,GLenum RenderMode, GLenum DataType, GLuint NumberOfVertices)
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferIndex);
+    glDrawElements(	RenderMode,
+        NumberOfVertices,  // 3 cinse we want to draw 3 vetrices
+        DataType,
+        (void*)
+        0
+    );
+}
+
 
 void CGCore::Renderer::SetStates()
 {

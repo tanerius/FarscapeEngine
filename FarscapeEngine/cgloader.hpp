@@ -21,6 +21,7 @@ namespace CGCore
             // containers to keep things clean
             std::vector<GLuint> VAOContainer;
             std::vector<GLuint> VBOContainer;
+        
 
             // Members
             void BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySize);
@@ -28,7 +29,7 @@ namespace CGCore
         public:
             void CleanUp(); 
             void CreateBindVAO(); // returcreates a new VAO and
-        
+            void DisableVAO(GLuint VaoAttrNumber);
             void LoadVboToVAO(const GLuint VaoAttrNumber, const GLuint BufferID, const GLuint ElementSize, GLenum BufferType, GLenum BufferTarget);
             GLuint LoadToVBO(const GLfloat DataArray[], const GLuint DataSize);
             GLuint LoadToVBO(const GLuint Indices[], const GLuint ArraySize);
