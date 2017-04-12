@@ -9,11 +9,11 @@ CC = g++
 LIB_P = common/linux_x86_64/
 LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
 SYS_LIB = -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lpng
-INCLUDE_PATHS = -Icommon/include 
+INCLUDE_PATHS = -Icommon/include -I/usr/include -I/usr/local/include
 LIBRARY_PATHS = -L/lib/x86_64-linux-gnu -L/usr/lib
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
-COMPILER_FLAGS = -std=c++11 -Wall
+COMPILER_FLAGS = -std=c++11 -Wall -DLINUX64
 
 # OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = farscape_demo

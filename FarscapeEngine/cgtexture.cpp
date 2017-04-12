@@ -3,9 +3,9 @@
 #include <cstring>
 
 // Apple only definition
-#ifdef APPLE
+//#ifdef APPLE
 #include <png.h> // Ability to read png files for textures
-#endif
+//#endif
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

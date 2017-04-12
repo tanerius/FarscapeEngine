@@ -1,5 +1,8 @@
 #include "cgshader.hpp"
 #include <string>
+#ifdef LINUX64
+#include <cstring>
+#endif
 #include <vector>
 #include <iostream>
 #include <fstream>
