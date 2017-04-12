@@ -6,7 +6,7 @@
 #include "cgloader.hpp"
 #include "cgrenderer.hpp"
 
-const char* TextureFile = "/Users/tanerselim/Dev/Quadtree_LOD/res/tex512.png";
+static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/Quadtree_LOD/res/tex512.png";
 
 int main()
 {
@@ -26,7 +26,7 @@ int main()
     // Get handles for any uniform shader vars which we may need
     // GLuint SomeUniform = glGetUniformLocation(ProgramID, "VarName");
     // Load a texture
-    CGCore::Texture* TextureObj = new CGCore::Texture(TextureFile);
+    CGCore::Texture* TextureObj = new CGCore::Texture(TEXTURE_FILE);
     // Get a handle for the "textureSampler" uniform
 	GLuint TextureSamplerHnd  = glGetUniformLocation(ProgramID, "textureSampler");
     // Vertex data representing a rectangle

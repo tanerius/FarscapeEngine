@@ -6,9 +6,17 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+
+
 void CGCore::Shader::BindAttribute(int Attrib, const GLchar* VarName)
 {
     glBindAttribLocation(ProgramID, Attrib, VarName);
+}
+
+void CGCore::Shader::BindAttributes()
+{
+    printf("WRONG BindAttributes() called. Please Overload this! \n");
+    return;
 }
 
 void CGCore::Shader::CleanUp()
@@ -18,11 +26,6 @@ void CGCore::Shader::CleanUp()
     StopProgram();
     // detach and delete shaders
     glDeleteProgram(ProgramID);
-}
-
-CGCore::Shader::Shader(const char* VertexFile, const char* FragmentFile)
-{
-    LoadShaders(VertexFile, FragmentFile);
 }
 
 
@@ -103,6 +106,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
+    BindAttributes();
 	glLinkProgram(ProgramID);
 
     // Check the program

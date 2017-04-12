@@ -13,13 +13,12 @@ namespace CGCore
             GLuint ProgramID;
             bool ReadFile ( const char* file_name, char* shader_str, int max_len);
         protected:
-            virtual void BindAttributes() = 0; // PURE VIRTUAL !!!
-            virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
+            virtual void BindAttributes(); // MUST BE OVERRIDEN !!!
         public:
             void BindAttribute(int Attrib, const GLchar* VarName);
             void CleanUp();
             GLuint GetProgramID() const { return ProgramID; }
-            Shader(const char* VertexFile, const char* FragmentFile);
+            virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();
             void StopProgram();
 

@@ -3,9 +3,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-CGCore::StaticShader::StaticShader() : Shader(CGCore::VERTEX_FILENAME, CGCore::FRAGMENT_FILENAME)
+CGCore::StaticShader::StaticShader() : Shader()
 {
-    BindAttributes();
+    LoadShaders(VERTEX_FILENAME, FRAGMENT_FILENAME);
 }
 
 void CGCore::StaticShader::BindAttributes()
