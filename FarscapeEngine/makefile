@@ -29,10 +29,8 @@ LINKER_FLAGS = -framework OpenGL -lpng -framework Cocoa -framework IOKit -framew
 OBJ_NAME = cgdisplay
 
 #This is the target that compiles our executable
-all : clean $(OBJS) standalone
+all : clean $(OBJS) 
 
-standalone : 
-	$(CC) tests_standalone.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/standalone $(LOC_LIB)
 
 tests: cgdisplay rawmodel loader renderer shader staticshader texture 
 	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(LOC_LIB)
