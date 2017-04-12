@@ -8,8 +8,9 @@ CC = g++
 # LIBRARY_PATHS specifies the additional library paths we'll need
 LIB_P = common/linux_x86_64/
 LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
-SYS_LIB = -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm
-INCLUDE_PATHS = -Icommon/include
+SYS_LIB = -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lpng
+INCLUDE_PATHS = -Icommon/include 
+LIBRARY_PATHS = -L/lib/x86_64-linux-gnu -L/usr/lib
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 COMPILER_FLAGS = -std=c++11 -Wall
@@ -24,25 +25,25 @@ tests: cgdisplay rawmodel loader renderer shader staticshader texture
 	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(SYS_LIB) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(LOC_LIB)
 
 cgdisplay : cgdisplay.hpp
-	$(CC) cgdisplay.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgdisplay.o
+	$(CC) cgdisplay.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgdisplay.o
 
 loader : rawmodel texture cgloader.hpp
-	$(CC) cgloader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgloader.o
+	$(CC) cgloader.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgloader.o
 
 renderer : rawmodel cgrenderer.hpp
-	$(CC) cgrenderer.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrenderer.o
+	$(CC) cgrenderer.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrenderer.o
 
 rawmodel : cgrawmodel.hpp
-	$(CC) cgrawmodel.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrawmodel.o
+	$(CC) cgrawmodel.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrawmodel.o
 
 staticshader : shader cgstaticshader.hpp
-	$(CC) cgstaticshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgstaticshader.o
+	$(CC) cgstaticshader.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgstaticshader.o
 
 shader : cgshader.hpp
-	$(CC) cgshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgshader.o
+	$(CC) cgshader.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgshader.o
 
 texture : cgtexture.hpp
-	$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
+	$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
 
 clean:
 	- rm -rf $(OUTPUTDIR)
