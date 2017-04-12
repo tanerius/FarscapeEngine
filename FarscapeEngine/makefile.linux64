@@ -1,0 +1,49 @@
+OBJS = tests
+
+OUTPUTDIR = build
+
+# CC specifies which compiler we're using
+CC = g++
+
+# LIBRARY_PATHS specifies the additional library paths we'll need
+LIB_P = common/linux_x86_64/
+LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
+SYS_LIB = -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm
+INCLUDE_PATHS = -Icommon/include
+
+# COMPILER_FLAGS specifies the additional compilation options we're using
+COMPILER_FLAGS = -std=c++11 -Wall
+
+# OBJ_NAME specifies the name of our exectuable
+OBJ_NAME = farscape_demo
+
+#This is the target that compiles our executable
+all : clean $(OBJS) standalone
+
+tests: cgdisplay rawmodel loader renderer shader staticshader texture
+$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(SYS_LIB) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(LOC_LIB)
+
+cgdisplay : cgdisplay.hpp
+$(CC) cgdisplay.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgdisplay.o
+
+loader : rawmodel texture cgloader.hpp
+$(CC) cgloader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgloader.o
+
+renderer : rawmodel cgrenderer.hpp
+$(CC) cgrenderer.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrenderer.o
+
+rawmodel : cgrawmodel.hpp
+$(CC) cgrawmodel.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrawmodel.o
+
+staticshader : shader cgstaticshader.hpp
+$(CC) cgstaticshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgstaticshader.o
+
+shader : cgshader.hpp
+$(CC) cgshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgshader.o
+
+texture : cgtexture.hpp
+$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
+
+clean:
+- rm -rf $(OUTPUTDIR)
+- mkdir -p $(OUTPUTDIR)
