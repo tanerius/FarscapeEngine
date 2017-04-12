@@ -1,4 +1,3 @@
-#include "cgrawmodel.hpp"
 #include "cgtexture.hpp"
 #include "cgloader.hpp"
 
@@ -35,15 +34,8 @@ void CGCore::Loader::CleanUp()
         glDeleteVertexArrays(1, &n);
     }
 
-    for(CGCore::Texture* n : TextureContainer)
-    {
-        delete n;
-        n = 0;
-    }
-    
     VBOContainer.clear();
     VAOContainer.clear();
-    TextureContainer.clear();
 }
 
 void CGCore::Loader::CreateBindVAO()
@@ -54,19 +46,21 @@ void CGCore::Loader::CreateBindVAO()
     glBindVertexArray(VaoID); // bind the VAO
 }
 
-CGCore::RawModel* CGCore::Loader::LoadToVAO
-(
-    const GLfloat VertexData[], GLuint PosArrySize,
-    const GLuint Indices[], GLuint IndArrySize,
-    const GLfloat TextureUV[], GLuint TCArrySize
-)
+
+void CGCore::Loader::LoadVboToVAO(const GLuint VaoAttrNumber, const GLuint BufferID, const GLuint ElementSize, GLenum BufferType, GLenum BufferTarget)
 {
-    BindIndicesBufferVBO(Indices, IndArrySize); // Buffer Index - optimization
-    StoreDataInAttrList(0, 3, VertexData, PosArrySize);
-    StoreDataInAttrList(1, 2, TextureUV, TCArrySize);
-    UnbindVAO();
-    CGCore::RawModel* ret = new CGCore::RawModel(VAOContainer[0], IndArrySize);
-    return ret;
+    // 1rst attribute buffer : vertices
+    glEnableVertexAttribArray(VaoAttrNumber);
+    glBindBuffer(BufferTarget, BufferID);
+    glVertexAttribPointer(
+        VaoAttrNumber,      // attribute. No particular reason for 0, but must match the layout in the shader.
+        ElementSize,        // size (x+y+z) = 3
+        BufferType,         // type
+        GL_FALSE,           // normalized?
+        0,                  // stride
+        (void*)0            // array buffer offset
+    );
+
 }
 
 
@@ -90,18 +84,8 @@ GLuint CGCore::Loader::LoadToVBO(const GLuint Indices[], const GLuint ArraySize)
     VBOContainer.push_back(VboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*ArraySize, Indices, GL_STATIC_DRAW);
-    return VboID;
-}
-
-void CGCore::Loader::StoreDataInAttrList(GLuint AttrNumber, GLuint AttrSize, const GLfloat Data[], GLuint DataSize)
-{
-    GLuint VboID; 
-    glGenBuffers(1,&VboID);
-    VBOContainer.push_back(VboID);
-    glBindBuffer(GL_ARRAY_BUFFER, VboID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat)*DataSize, Data, GL_STATIC_DRAW);
-    glVertexAttribPointer(AttrNumber, AttrSize, GL_FLOAT, GL_FALSE, 0, (void*) 0); // write to VAO
     glBindBuffer(GL_ARRAY_BUFFER, 0); // unbind current VBO
+    return VboID;
 }
 
 void CGCore::Loader::UnbindVAO()

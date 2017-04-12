@@ -65,31 +65,11 @@ int main()
         //RendererObj->Render(TMObj);
         // Bind our texture in Texture Unit 0
         TextureObj->ApplyTexture(TextureSamplerHnd, 0);
-		
-        // 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, ModelVertexBufferID);
-		glVertexAttribPointer(
-			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size (x+y+z) = 3
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-
+        // 0th attribute buffer : vertices
+        LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
         // 2nd attribute buffer : UVs
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, TextureUV);
-		glVertexAttribPointer(
-			1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-			2,                                // size : U+V => 2
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-		);
-
+        LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
+        
         // Draw the triangle !
 		//glDrawArrays(GL_TRIANGLES, 0, 3*3); // 12*3 indices starting at 0 -> 12 triangles
 
@@ -109,7 +89,7 @@ int main()
     StaticShaderObj->CleanUp();
     LoaderObj->CleanUp();
     Display->DestroyDisplay();
-    //delete ModelObj;
+    
     delete TextureObj;
     delete StaticShaderObj;
     delete Display;
