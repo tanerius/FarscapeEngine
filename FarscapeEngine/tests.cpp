@@ -21,10 +21,6 @@ int main()
     CGCore::Loader* LoaderObj = new CGCore::Loader();
     // Load relevant shaders
     CGCore::StaticShader* StaticShaderObj = new CGCore::StaticShader(); // generates ProgramID too
-    // Get a ProgramID just in case
-    // GLuint ProgramID = StaticShaderObj->GetProgramID();
-    // Get handles for any uniform shader vars which we may need
-    // GLuint SomeUniform = glGetUniformLocation(ProgramID, "VarName");
     // Load a texture
     CGCore::Texture* TextureObj = new CGCore::Texture(TEXTURE_FILE);
     // Get a handle for the "textureSampler" uniform

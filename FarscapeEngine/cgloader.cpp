@@ -52,6 +52,7 @@ void CGCore::Loader::DisableVAO(GLuint VaoAttrNumber)
     glDisableVertexAttribArray(VaoAttrNumber);
 }
 
+
 void CGCore::Loader::LoadVboToVAO(const GLuint VaoAttrNumber, const GLuint BufferID, const GLuint ElementSize, GLenum BufferType, GLenum BufferTarget)
 {
     // 1rst attribute buffer : vertices
