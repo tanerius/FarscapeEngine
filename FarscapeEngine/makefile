@@ -19,7 +19,7 @@ LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -std=c++11 -DAPPLE -Wall -pedantic -arch x86_64 -fmessage-length=0 -UGLFW_CDECL -ftest-coverage
+COMPILER_FLAGS = -std=c++11 -DAPPLE -Wall -pedantic -arch x86_64 -fmessage-length=0 -UGLFW_CDECL
 
 # LINKER_FLAGS specifies the libraries we're linking against
 # Cocoa, IOKit, and CoreVideo are needed for static GLFW3.
@@ -32,8 +32,8 @@ OBJ_NAME = cgdisplay
 all : clean $(OBJS) 
 
 
-tests: cgdisplay rawmodel loader renderer shader staticshader texture 
-	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(LOC_LIB)
+tests: cgdisplay rawmodel loader renderer shader staticshader texture helpers
+	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(LOC_LIB)
 
 cgdisplay : cgdisplay.hpp
 	$(CC) cgdisplay.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgdisplay.o
@@ -55,6 +55,9 @@ shader : cgshader.hpp
 
 texture : cgtexture.hpp 
 	$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
+
+helpers : cghelper.hpp
+	$(CC) cghelper.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cghelper.o
 
 clean:
 	- rm -rf $(OUTPUTDIR)
