@@ -84,6 +84,7 @@ namespace CGCore
     };
     
     
+    
     class Vec4 : public Vec3
     {
     public:
@@ -93,12 +94,10 @@ namespace CGCore
         Vec4(const double x, const double y, const double z, const double a) : Vec3(x, y, z) { Data[3] = a; Clipping = 0.0000001f; }
         Vec4(const Vec3& V) : Vec3(V) { }
         Vec4(const Vec4& V) : Vec3(V) { Data[3] = V.Data[3]; Clipping = 0.0000001f; }
-        
         void Set(const double X, const double Y, const double Z, const double A);
         void SetA(const double A);
         double A() const { return Data[3]; }
     };
-    
     
     
     
@@ -108,11 +107,12 @@ namespace CGCore
     private:
         Vec4** Data;
         const int DATA_SIZE = 4;
-        double* DumpLinearArray(int& Size, bool IsColumnMajorOrder=true) const;
+        float* DumpLinearArray(int& Size, bool IsColumnMajorOrder=true) const;
     public:
         Mat4f();
-        double* GetColumnMajorOrderLinear(int& Size) const;
-        double* GetRowMajorOrderLinear(int& Size) const;
+        ~Mat4f();
+        float* GetColumnMajorOrderLinear(int& Size) const;
+        float* GetRowMajorOrderLinear(int& Size) const;
     };
 }
 

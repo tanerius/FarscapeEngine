@@ -243,11 +243,22 @@ CGCore::Mat4f::Mat4f()
     }
 }
 
+CGCore::Mat4f::~Mat4f()
+{
 
-double* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
+    for(int i = 0; i < DATA_SIZE; i++)
+    {
+        delete Data[i];
+    }
+    delete[] Data;
+}
+
+
+
+float* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
 {
     // USER RESPONSIBLE FOR DESTROYING THIS ARRAY
-    double* Array = new double[16];
+    float* Array = new float[16];
     Size = 16;
     int CurPosition = 0;
     for(int Row = 0; Row < DATA_SIZE; Row++)
@@ -258,12 +269,12 @@ double* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
             if(IsColumnMajorOrder)
             {
                 tmp = Data[Col];
-                Array[CurPosition] = tmp->XYZA(Row);
+                Array[CurPosition] = (float)(*tmp)[Row]; // tmp->XYZA(Row);
             }
             else
             {
                 tmp = Data[Row];
-                Array[CurPosition] = tmp->XYZA(Col);
+                Array[CurPosition] = (float)tmp->XYZA(Col);
             }
             CurPosition++;
         }
@@ -272,13 +283,13 @@ double* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
 }
 
 
-double* CGCore::Mat4f::GetColumnMajorOrderLinear(int& Size) const
+float* CGCore::Mat4f::GetColumnMajorOrderLinear(int& Size) const
 {
     return DumpLinearArray(Size, true);
 }
 
 
-double* CGCore::Mat4f::GetRowMajorOrderLinear(int& Size) const
+float* CGCore::Mat4f::GetRowMajorOrderLinear(int& Size) const
 {
     return DumpLinearArray(Size, false);
 }

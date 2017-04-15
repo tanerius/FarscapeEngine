@@ -6,8 +6,10 @@
 #define MAX_SHADER_LENGTH 262144
 namespace CGCore
 {
+    // Forward declares so not to clutter with includes
     class Vec3;
     class Vec2;
+    class Mat4f;
     // An abstract class representing a shader - can't be instantiated on its own
     class Shader
     {
@@ -30,6 +32,7 @@ namespace CGCore
             // bool loader
             void LoadUniform(GLint Location, const bool VarValue) const;
             // Mat4 loader
+            void LoadUniform(GLint Location, const Mat4f& Matrix) const;
         
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();

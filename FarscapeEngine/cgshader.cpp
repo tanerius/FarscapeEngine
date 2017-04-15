@@ -78,6 +78,17 @@ void CGCore::Shader::LoadUniform(GLint Location, const bool VarValue) const
 }
 
 
+void CGCore::Shader::LoadUniform(GLint Location, const Mat4f& Matrix) const
+{
+    int Size = 0;
+    float* LinearMat4CMO = Matrix.GetColumnMajorOrderLinear(Size); // Column-major-order (downscaled from double to floats)
+    glUniformMatrix4fv(Location, Size, false, LinearMat4CMO);
+    
+    delete[] LinearMat4CMO;
+    
+}
+
+
 GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* FramentShader)
 {
 	// If something fails here stop
