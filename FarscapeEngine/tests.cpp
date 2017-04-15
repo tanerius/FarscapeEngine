@@ -53,8 +53,10 @@ int main()
     GLuint BufferIndex = LoaderObj->LoadToVBO(Indices, 12); // Should use the GLuint version
     GLuint TextureUV = LoaderObj->LoadToVBO(TextureCoords, 8);
     
+    bool HasError = false;
+    
     // Start main loop
-    while(!Display->CloseRequested())
+    while(!Display->CloseRequested() && (!HasError))
     {
         RendererObj->Prepare();
         StaticShaderObj->StartProgram();
@@ -65,6 +67,9 @@ int main()
         LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
         // 1st attribute buffer : UVs
         LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
+        
+        HasError = StaticShaderObj->ValidateProgram();
+        
         RendererObj->RenderFromBufferIndex(BufferIndex, GL_TRIANGLES, GL_UNSIGNED_INT, 6);
 
         LoaderObj->DisableVAO(0);

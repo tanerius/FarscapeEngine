@@ -123,7 +123,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
     BindAttributes();
 	glLinkProgram(ProgramID);
     
-    GetAllUniformLocations(); // This hsould be overloaded
+    GetAllUniformLocations(); // This should be overloaded
 
     // Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
@@ -141,7 +141,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	
 	glDeleteShader(VertexShaderID);
 	glDeleteShader(FragmentShaderID);
-	glFinish();
+
 
     if (HasFailed) exit(EXIT_FAILURE);
     
@@ -179,5 +179,25 @@ bool CGCore::Shader::ReadFile ( const char* file_name, char* shader_str, int max
 		return false;
 	}
 	return true;
+}
+
+
+bool CGCore::Shader::ValidateProgram()
+{
+    GLint Result = GL_FALSE;
+    int InfoLogLength;
+
+    // Validate program status
+    glValidateProgram(ProgramID);
+    // Check the validation
+    glGetProgramiv(ProgramID, GL_VALIDATE_STATUS, &Result);
+    glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if ( InfoLogLength > 0 ){
+        std::vector<char> ProgramErrorMessage(InfoLogLength+1);
+        glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+        printf("%s\n", &ProgramErrorMessage[0]);
+        return true;
+    }
+    return false; // false == good validation
 }
 

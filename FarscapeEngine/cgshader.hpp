@@ -23,8 +23,9 @@ namespace CGCore
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();
             void StopProgram();
+            bool ValidateProgram();
 
-            
+        
 
     };
 }
