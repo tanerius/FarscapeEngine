@@ -9,7 +9,57 @@
 #include "cghelper.hpp"
 #include <cmath>
 
-// Vec2 Implementation
+// Vec3 Implementation
+CGCore::Vec3::Vec3()
+{
+    Data = new double[VEC_LEN];
+    Data[0] = 0.0f;
+    Data[1] =0.0f;
+    Data[2] =0.0f;
+    Data[3] = 1.0f;
+}
+
+
+CGCore::Vec3::Vec3(const double x, const double y)
+{
+    Data = new double[VEC_LEN];
+    Data[0] = x;
+    Data[1] = y;
+    Data[2] = 0.0f;
+    Data[3] = 1.0f;
+    Clipping = 0.0000001f;
+}
+
+
+CGCore::Vec3::Vec3(const double x, const double y, const double z)
+{
+    Data = new double[VEC_LEN];
+    Data[0] = x;
+    Data[1] = y;
+    Data[2] = z;
+    Data[3] = 1.0f;
+    Clipping = 0.0000001f;
+}
+
+
+CGCore::Vec3::Vec3(const Vec3& V)
+{
+    Data = new double[VEC_LEN];
+    Data[0] = V.Data[0];
+    Data[1] = V.Data[1];
+    Data[2] = V.Data[2];
+    Data[3] = 1.0f;
+    Clipping = 0.0000001f;
+}
+
+
+CGCore::Vec3::~Vec3()
+{
+    delete [] Data;
+    Data = nullptr;
+}
+
+
 
 double CGCore::Vec3::AngleBetween(const CGCore::Vec3& V) const
 {
@@ -181,4 +231,54 @@ double CGCore::Vec2::X() const
 double CGCore::Vec2::Y() const
 {
     return Data[1];
+}
+
+
+CGCore::Mat4f::Mat4f()
+{
+    Data = new Vec4* [DATA_SIZE];
+    for(int i = 0; i < DATA_SIZE; i++)
+    {
+        Data[i] = new Vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+}
+
+
+double* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
+{
+    // USER RESPONSIBLE FOR DESTROYING THIS ARRAY
+    double* Array = new double[16];
+    Size = 16;
+    int CurPosition = 0;
+    for(int Row = 0; Row < DATA_SIZE; Row++)
+    {
+        for(int Col = 0; Col < DATA_SIZE; Col++)
+        {
+            Vec4* tmp;
+            if(IsColumnMajorOrder)
+            {
+                tmp = Data[Col];
+                Array[CurPosition] = tmp->XYZA(Row);
+            }
+            else
+            {
+                tmp = Data[Row];
+                Array[CurPosition] = tmp->XYZA(Col);
+            }
+            CurPosition++;
+        }
+    }
+    return Array;
+}
+
+
+double* CGCore::Mat4f::GetColumnMajorOrderLinear(int& Size) const
+{
+    return DumpLinearArray(Size, true);
+}
+
+
+double* CGCore::Mat4f::GetRowMajorOrderLinear(int& Size) const
+{
+    return DumpLinearArray(Size, false);
 }
