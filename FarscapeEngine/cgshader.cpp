@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "cghelper.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -31,7 +32,7 @@ void CGCore::Shader::CleanUp()
 }
 
 
-GLuint CGCore::Shader::GetUniformLocation(const char* LocationName)
+GLint CGCore::Shader::GetUniformLocation(const char* LocationName)
 {
     return glGetUniformLocation(ProgramID, LocationName);
 }
@@ -54,6 +55,26 @@ void CGCore::Shader::StopProgram()
 {
     // Sto current shader program
     glUseProgram(0);
+}
+
+
+void CGCore::Shader::LoadUniform(GLint Location, float VarValue) const
+{
+    glUniform1f(Location, VarValue);
+}
+
+
+void CGCore::Shader::LoadUniform(GLint Location, const CGCore::Vec3& V) const
+{
+    // Load a vector
+    glUniform3f(Location, (GLfloat)V.X(), (GLfloat)V.Y(), (GLfloat)V.Z());
+}
+
+
+void CGCore::Shader::LoadUniform(GLint Location, const bool VarValue) const
+{
+    // Load a bool is simulated with GLint isntead sincce shaders don't have bools
+    VarValue ? glUniform1i(Location, 1) : glUniform1i(Location, 0);
 }
 
 

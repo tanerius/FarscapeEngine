@@ -6,6 +6,8 @@
 #define MAX_SHADER_LENGTH 262144
 namespace CGCore
 {
+    class Vec3;
+    class Vec2;
     // An abstract class representing a shader - can't be instantiated on its own
     class Shader
     {
@@ -18,8 +20,17 @@ namespace CGCore
             void BindAttribute(int Attrib, const GLchar* VarName);
             void CleanUp();
             GLuint GetProgramID() const { return ProgramID; }
-            GLuint GetUniformLocation(const char* LocationName);
+            GLint GetUniformLocation(const char* LocationName);
             virtual void GetAllUniformLocations(); // Also must be overriden
+            // Load vars to uniform locations in shader
+            // Float laoder
+            void LoadUniform(GLint Location, float VarValue) const;
+            // Vec3 Loader
+            void LoadUniform(GLint Location, const Vec3& VarValue) const;
+            // bool loader
+            void LoadUniform(GLint Location, const bool VarValue) const;
+            // Mat4 loader
+        
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();
             void StopProgram();

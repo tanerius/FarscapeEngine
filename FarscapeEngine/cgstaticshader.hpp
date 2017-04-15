@@ -21,6 +21,8 @@ namespace CGCore
         public:
             StaticShader();
             virtual ~StaticShader() {}
+        
+            virtual void GetAllUniformLocations() override;
     };
 }
 
