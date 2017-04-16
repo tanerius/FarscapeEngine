@@ -12,23 +12,40 @@
 #include <assert.h>
 
 #ifdef USE_GLM
-#include <iostream>
+
 // Use C++11 standard
 #include<glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp> 
+#include <glm/gtx/transform.hpp>
 
 
 
-void CGCore::TestPrintMatrix4(){
+glm::mat4 CGCore::CreateTransformationMatrix(
+     const glm::vec3& Translation,
+     const glm::vec3& RotAxis,
+     const float RotAngle,
+     const glm::vec3& Scale
+     )
+{
+    glm::mat4 TranslationMat = glm::translate(Translation);
+    float RotAngleRad = CGCore::DegToRad(RotAngle);
+    glm::mat4 RotMat = glm::rotate(RotAngleRad,RotAxis);
+    glm::mat4 ScaleMat = glm::scale(Scale);
+    
+    glm::mat4 TransformationMat =
+    TranslationMat * RotMat * ScaleMat;
+    return TransformationMat;
+}
+
+
+void CGCore::TestPrintMatrix4(glm::mat4& M){
     glm::mat4 m(1.0f);
     for(int Col = 0; Col < 4; Col++)
     {
         printf("|\t");
         for(int Row = 0; Row < 4; Row++)
         {
-            if((Col ==0) && (Row ==1)){
-                m[Col][Row] = 5;
-            }
-            std::cout << m[Col][Row];
+            printf("%f\t",m[Col][Row]);
         }
         printf("\n");
     }

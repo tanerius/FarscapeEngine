@@ -21,8 +21,15 @@
 namespace CGCore
 {
 #ifdef USE_GLM
-    void TestPrintMatrix4();
-    inline float DegToRad(float Angle) { return (PI*Angle)/180; }
+    glm::mat4 CreateTransformationMatrix(
+         const glm::vec3& Translation,
+         const glm::vec3& RotAxis,
+         const float RotAngle,
+         const glm::vec3& Scale
+                                                 );
+    inline float DegToRad(float Angle) { return (PI*Angle)/180;
+    }
+    void TestPrintMatrix4(glm::mat4& M);
 #endif 
 
     // Defining high precision data types
