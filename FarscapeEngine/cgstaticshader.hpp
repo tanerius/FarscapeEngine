@@ -6,23 +6,32 @@
 
 namespace CGCore
 {
-
+    // Forward declares so not to clutter with includes
+    class Vec3;
+    class Mat4f;
     // static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello.vsh";
     // static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello.fsh";
 
     // Shaders with a texture
     static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.vsh";
     static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.fsh";
+    
     //textureCoords
     class StaticShader : public CGCore::Shader
     {
+        private:
+            GLint Loc_transformationMatrix;
         protected:
             virtual void BindAttributes() override;
         public:
             StaticShader();
             virtual ~StaticShader() {}
-        
             virtual void GetAllUniformLocations() override;
+#ifdef USE_GLM
+            void LoadTransformationMatrix(glm::mat4& M);
+#else
+            void LoadTransformationMatrix(Mat4f& M);
+#endif
     };
 }
 

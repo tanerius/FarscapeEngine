@@ -5,6 +5,7 @@
 #include "cgstaticshader.hpp"
 #include "cgloader.hpp"
 #include "cgrenderer.hpp"
+#include "cghelper.hpp"
 
 static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/Quadtree_LOD/res/tex512.png";
 
@@ -46,6 +47,24 @@ int main()
         1.0f, 0.0f, // v3
         1.0f, 1.0f
     };
+    
+/*
+    // Matrix tests
+    CGCore::Mat4f* TestMat4 = new CGCore::Mat4f();
+    TestMat4->PrintMatrix();
+    TestMat4->SetIdentity();
+    TestMat4->PrintMatrix();
+    CGCore::Vec4 x(2.0,3.0,4.0,5.0);
+    TestMat4->SetVector(0, x);
+    TestMat4->PrintMatrix();
+    CGCore::Mat4f* TestMat42 = new CGCore::Mat4f();
+    TestMat42->PrintMatrix();
+    *TestMat42 = *TestMat4;
+    TestMat42->PrintMatrix();
+*/
+#ifdef USE_GLM
+    CGCore::TestPrintMatrix4();
+#endif
 
     LoaderObj->CreateBindVAO();
     // Generate and load buffers (VBOs)

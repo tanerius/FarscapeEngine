@@ -17,5 +17,17 @@ void CGCore::StaticShader::BindAttributes()
 
 void CGCore::StaticShader::GetAllUniformLocations()
 {
-    printf("Calling the correct GetAllUniformLocations()\n");
+    Loc_transformationMatrix = GetUniformLocation("transformationMatrix");
 }
+
+#ifdef USE_GLM
+void CGCore::StaticShader::LoadTransformationMatrix(glm::mat4& M)
+{
+    LoadUniform(Loc_transformationMatrix, M);
+}
+#else
+void CGCore::StaticShader::LoadTransformationMatrix(Mat4f& M)
+{
+    LoadUniform(Loc_transformationMatrix, M);
+}
+#endif

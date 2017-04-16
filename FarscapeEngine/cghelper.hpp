@@ -9,10 +9,23 @@
 #ifndef cghelper_hpp
 #define cghelper_hpp
 
+#ifdef USE_GLM
+// Use C++11 standard
+#include<glm/glm.hpp>
+// translate, rotate, scale, perspective
+#include <glm/gtc/matrix_transform.hpp>
+// value_ptr
+#include <glm/gtc/type_ptr.hpp>
+#endif
+
 #define PI 3.14159265
+
 
 namespace CGCore
 {
+#ifdef USE_GLM
+    void TestPrintMatrix4();
+#endif 
 
     // Defining high precision data types
     class Vec2;
@@ -97,11 +110,14 @@ namespace CGCore
         void Set(const double X, const double Y, const double Z, const double A);
         void SetA(const double A);
         double A() const { return Data[3]; }
+        
+        Vec4& operator=(const Vec4& Other); // copy assignment
+
     };
     
     
     
-    // Implementation of a 4x4 Vec4 (stored in Row-major order) matrix
+    // Implementation of a 4x4 Vec4 (stored in Col-major order) matrix
     class Mat4f
     {
     private:
@@ -110,9 +126,19 @@ namespace CGCore
         float* DumpLinearArray(int& Size, bool IsColumnMajorOrder=true) const;
     public:
         Mat4f();
+        // Ctor to create a transformation matrix
+        Mat4f(const Vec3& Translation, const Vec3& Rotation, const float Scale);
         ~Mat4f();
         float* GetColumnMajorOrderLinear(int& Size) const;
         float* GetRowMajorOrderLinear(int& Size) const;
+        Vec4* GetVector(int VectorIndex) const;
+        void PrintMatrix() const;
+        void SetIdentity();
+        void SetVector(int Index, const Vec4& V);
+        
+        // Useful operators
+        Mat4f& operator=(const Mat4f& Other); // copy assignment
+
     };
 }
 

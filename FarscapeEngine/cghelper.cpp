@@ -8,6 +8,36 @@
 
 #include "cghelper.hpp"
 #include <cmath>
+#include <cstdio>
+#include <assert.h>
+
+#ifdef USE_GLM
+#include <iostream>
+// Use C++11 standard
+#include<glm/glm.hpp>
+// translate, rotate, scale, perspective
+#include <glm/gtc/matrix_transform.hpp>
+// value_ptr
+#include <glm/gtc/type_ptr.hpp>
+
+
+void CGCore::TestPrintMatrix4(){
+    glm::mat4 m(1.0f);
+    for(int Col = 0; Col < 4; Col++)
+    {
+        printf("|\t");
+        for(int Row = 0; Row < 4; Row++)
+        {
+            if((Col ==0) && (Row ==1)){
+                m[Col][Row] = 5;
+            }
+            std::cout << m[Col][Row];
+        }
+        printf("\n");
+    }
+}
+#endif
+
 
 // Vec3 Implementation
 CGCore::Vec3::Vec3()
@@ -123,7 +153,7 @@ void CGCore::Vec3::Normalize()
 void CGCore::Vec3::Set(const double X, const double Y, const double Z)
 {
     SetX(X);
-    SetX(Y);
+    SetY(Y);
     SetZ(Z);
 }
 
@@ -234,20 +264,65 @@ double CGCore::Vec2::Y() const
 }
 
 
+// Vec4
+void CGCore::Vec4::Set(const double X, const double Y, const double Z, const double A)
+{
+    CGCore::Vec3::Set(X, Y, Z);
+    Data[3] = A;
+}
+
+
+void CGCore::Vec4::SetA(const double A)
+{
+    Data[3] = A;
+}
+
+
+CGCore::Vec4& CGCore::Vec4::operator=(const CGCore::Vec4& Other)
+{
+    if (this != &Other) { // self-assignment check expected
+        Other.Data[0] = Data[0];
+        Other.Data[1] = Data[1];
+        Other.Data[2] = Data[2];
+        Other.Data[3] = Data[3];
+    }
+    return *this;
+}
+
+
+// MAt4f
+
 CGCore::Mat4f::Mat4f()
+{
+    Data = new Vec4* [DATA_SIZE];
+    for(int i = 0; i < DATA_SIZE; i++)
+    {
+        // Define a column (Column-major order)
+        Data[i] = new Vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    }
+}
+
+
+CGCore::Mat4f::Mat4f(const Vec3& Translation, const Vec3& Rotation, const float Scale)
 {
     Data = new Vec4* [DATA_SIZE];
     for(int i = 0; i < DATA_SIZE; i++)
     {
         Data[i] = new Vec4(0.0f, 0.0f, 0.0f, 0.0f);
     }
+    SetIdentity();
+    
+    
+    
 }
+
 
 CGCore::Mat4f::~Mat4f()
 {
 
     for(int i = 0; i < DATA_SIZE; i++)
     {
+        // Delete each col
         delete Data[i];
     }
     delete[] Data;
@@ -261,20 +336,17 @@ float* CGCore::Mat4f::DumpLinearArray(int& Size, bool IsColumnMajorOrder) const
     float* Array = new float[16];
     Size = 16;
     int CurPosition = 0;
-    for(int Row = 0; Row < DATA_SIZE; Row++)
+    for(int Col = 0; Col < DATA_SIZE; Col++)
     {
-        for(int Col = 0; Col < DATA_SIZE; Col++)
+        for(int Row = 0; Row < DATA_SIZE; Row++)
         {
-            Vec4* tmp;
             if(IsColumnMajorOrder)
             {
-                tmp = Data[Col];
-                Array[CurPosition] = (float)(*tmp)[Row]; // tmp->XYZA(Row);
+                Array[CurPosition] = (float)(*(Data[Col]))[Row];
             }
             else
             {
-                tmp = Data[Row];
-                Array[CurPosition] = (float)tmp->XYZA(Col);
+                Array[CurPosition] = (float)(*(Data[Row]))[Col];
             }
             CurPosition++;
         }
@@ -293,3 +365,65 @@ float* CGCore::Mat4f::GetRowMajorOrderLinear(int& Size) const
 {
     return DumpLinearArray(Size, false);
 }
+
+
+CGCore::Vec4* CGCore::Mat4f::GetVector(int VectorIndex) const
+{
+    assert(VectorIndex < DATA_SIZE);
+    return Data[VectorIndex];
+}
+
+
+void CGCore::Mat4f::PrintMatrix() const
+{
+    printf("|\tV0\tV1\tV2\tV3\n");
+    for(int Col = 0; Col < DATA_SIZE; Col++)
+    {
+        printf("|\t");
+        for(int Row = 0; Row < DATA_SIZE; Row++)
+        {
+            printf("%f\t", (float)(*(Data[Row]))[Col]);
+        }
+        printf("\n");
+    }
+}
+
+
+void CGCore::Mat4f::SetIdentity()
+{
+    for(int Col = 0; Col < DATA_SIZE; Col++)
+    {
+        for(int Row = 0; Row < DATA_SIZE; Row++)
+        {
+            if(Col == Row)
+            {
+                (*(Data[Col]))[Row] = 1.0f;
+            }
+            else
+            {
+                (*(Data[Col]))[Row] = 0.0f;
+            }
+        }
+    }
+}
+
+
+void CGCore::Mat4f::SetVector(int Index, const Vec4& V)
+{
+    assert(Index < DATA_SIZE);
+    (*(Data[Index])).Set(V.X(), V.Y(), V.Z(), V.A());
+}
+
+
+// Overloading Mat4f operators
+CGCore::Mat4f& CGCore::Mat4f::operator=(const CGCore::Mat4f& Other)
+{
+    if (this != &Other) { // self-assignment check expected
+        for(int i=0; i < DATA_SIZE; i++)
+        {
+            *(Other.Data[i]) = *(Data[i]);
+        }
+    }
+    return *this;
+}
+

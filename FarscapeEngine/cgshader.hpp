@@ -3,10 +3,19 @@
 
 #include <vector>
 #include <GL/glew.h>
+
+#ifdef USE_GLM
+// Use C++11 standard
+#include<glm/glm.hpp>
+// translate, rotate, scale, perspective
+#include <glm/gtc/matrix_transform.hpp>
+// value_ptr
+#include <glm/gtc/type_ptr.hpp>
+#endif
+
 #define MAX_SHADER_LENGTH 262144
 namespace CGCore
 {
-    // Forward declares so not to clutter with includes
     class Vec3;
     class Vec2;
     class Mat4f;
@@ -27,12 +36,21 @@ namespace CGCore
             // Load vars to uniform locations in shader
             // Float laoder
             void LoadUniform(GLint Location, float VarValue) const;
+        
+#ifdef USE_GLM
+            // Vec3 Loader
+        void LoadUniform(GLint Location, const glm::vec3& VarValue) const;
+            // Mat4 loader
+        void LoadUniform(GLint Location, const glm::mat4& Matrix) const;
+#else
             // Vec3 Loader
             void LoadUniform(GLint Location, const Vec3& VarValue) const;
-            // bool loader
-            void LoadUniform(GLint Location, const bool VarValue) const;
             // Mat4 loader
             void LoadUniform(GLint Location, const Mat4f& Matrix) const;
+#endif
+            // bool loader
+            void LoadUniform(GLint Location, const bool VarValue) const;
+        
         
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);
             void StartProgram();

@@ -64,6 +64,26 @@ void CGCore::Shader::LoadUniform(GLint Location, float VarValue) const
 }
 
 
+void CGCore::Shader::LoadUniform(GLint Location, const bool VarValue) const
+{
+    // Load a bool is simulated with GLint isntead sincce shaders don't have bools
+    VarValue ? glUniform1i(Location, 1) : glUniform1i(Location, 0);
+}
+
+#ifdef USE_GLM
+void CGCore::Shader::LoadUniform(GLint Location, const glm::vec3& V) const
+{
+    // Load a vector
+    glUniform3f(Location, V.x, V.y, V.z);
+}
+
+
+void CGCore::Shader::LoadUniform(GLint Location, const glm::mat4& Matrix) const
+{
+    glUniformMatrix4fv(Location, Matrix.length(), false, glm::value_ptr(Matrix));
+    
+}
+#else
 void CGCore::Shader::LoadUniform(GLint Location, const CGCore::Vec3& V) const
 {
     // Load a vector
@@ -71,22 +91,16 @@ void CGCore::Shader::LoadUniform(GLint Location, const CGCore::Vec3& V) const
 }
 
 
-void CGCore::Shader::LoadUniform(GLint Location, const bool VarValue) const
-{
-    // Load a bool is simulated with GLint isntead sincce shaders don't have bools
-    VarValue ? glUniform1i(Location, 1) : glUniform1i(Location, 0);
-}
-
-
 void CGCore::Shader::LoadUniform(GLint Location, const Mat4f& Matrix) const
 {
     int Size = 0;
-    float* LinearMat4CMO = Matrix.GetColumnMajorOrderLinear(Size); // Column-major-order (downscaled from double to floats)
+    float* LinearMat4CMO = Matrix.GetColumnMajorOrderLinear(Size); // Column-major-order
     glUniformMatrix4fv(Location, Size, false, LinearMat4CMO);
     
-    delete[] LinearMat4CMO;
+    delete [] LinearMat4CMO;
     
 }
+#endif
 
 
 GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* FramentShader)
