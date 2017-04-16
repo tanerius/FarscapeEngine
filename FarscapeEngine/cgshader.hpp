@@ -4,16 +4,12 @@
 #include <vector>
 #include <GL/glew.h>
 
-#ifdef USE_GLM
-// Use C++11 standard
-#include<glm/glm.hpp>
-// translate, rotate, scale, perspective
-#include <glm/gtc/matrix_transform.hpp>
-// value_ptr
-#include <glm/gtc/type_ptr.hpp>
-#endif
+
 
 #define MAX_SHADER_LENGTH 262144
+// Use C++11 standard
+#include<glm/glm.hpp>
+
 namespace CGCore
 {
     class Vec3;

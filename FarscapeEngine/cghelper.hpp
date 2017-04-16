@@ -12,10 +12,7 @@
 #ifdef USE_GLM
 // Use C++11 standard
 #include<glm/glm.hpp>
-// translate, rotate, scale, perspective
-#include <glm/gtc/matrix_transform.hpp>
-// value_ptr
-#include <glm/gtc/type_ptr.hpp>
+
 #endif
 
 #define PI 3.14159265
@@ -25,6 +22,7 @@ namespace CGCore
 {
 #ifdef USE_GLM
     void TestPrintMatrix4();
+    inline float DegToRad(float Angle) { return (PI*Angle)/180; }
 #endif 
 
     // Defining high precision data types

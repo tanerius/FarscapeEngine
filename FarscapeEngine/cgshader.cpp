@@ -6,6 +6,14 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+
+#ifdef USE_GLM
+// Use C++11 standard
+#include<glm/glm.hpp>
+// for glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
+#endif
+
 #include "cghelper.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

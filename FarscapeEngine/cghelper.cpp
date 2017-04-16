@@ -15,10 +15,7 @@
 #include <iostream>
 // Use C++11 standard
 #include<glm/glm.hpp>
-// translate, rotate, scale, perspective
-#include <glm/gtc/matrix_transform.hpp>
-// value_ptr
-#include <glm/gtc/type_ptr.hpp>
+
 
 
 void CGCore::TestPrintMatrix4(){
