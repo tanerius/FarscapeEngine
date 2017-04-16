@@ -6,6 +6,7 @@
 #include "cgloader.hpp"
 #include "cgrenderer.hpp"
 #include "cghelper.hpp"
+#include "cgentity.hpp"
 
 static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/Quadtree_LOD/res/tex512.png";
 
@@ -26,14 +27,15 @@ int main()
     CGCore::Texture* TextureObj = new CGCore::Texture(TEXTURE_FILE);
     // Get a handle for the "textureSampler" uniform
     GLuint TextureSamplerHnd  = StaticShaderObj->GetUniformLocation("textureSampler");
-    // Vertex data representing a rectangle
+    
+    // Vertex data representing a square / rectangle
     const GLfloat VertexBufferData[] = {
         -0.5f,   0.5f, 0.0f, // v0 top left
         -0.5f,  -0.5f, 0.0f, // v1 bot left
          0.5f,   0.5f, 0.0f, // v2 top right
          0.5f,  -0.5f, 0.0f  // v3 bot right
     };
-    /// indexes how to draw the triangle (in GL_CCW) forming a box
+    /// indexes how to draw the triangles (in GL_CCW) forming a square
     const GLuint Indices[] = {
         2, 0, 1,    // first triangle
         1, 3, 2
@@ -57,33 +59,38 @@ int main()
     LoaderObj->CreateBindVAO();
     // Generate and load buffers (VBOs)
     GLuint ModelVertexBufferID = LoaderObj->LoadToVBO(VertexBufferData, 12);
-    GLuint BufferIndex = LoaderObj->LoadToVBO(Indices, 12); // Should use the GLuint version
+    GLuint BufferIndex = LoaderObj->LoadToVBO(Indices, 6); // Should use the GLuint version
     GLuint TextureUV = LoaderObj->LoadToVBO(TextureCoords, 8);
     
     bool HasError = false;
     
+    // Bind our texture in Texture Unit 0 -> DO THIS IN THE RENDERER
+    TextureObj->ApplyTexture(TextureSamplerHnd, 0);
+    // 0th attribute buffer : vertices
+    LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
+    // 1st attribute buffer : UVs
+    LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
+    
+   
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
         RendererObj->Prepare();
         StaticShaderObj->StartProgram();
-        //RendererObj->Render(TMObj);
-        // Bind our texture in Texture Unit 0
-        TextureObj->ApplyTexture(TextureSamplerHnd, 0);
-        // 0th attribute buffer : vertices
-        LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
-        // 1st attribute buffer : UVs
-        LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
+
+        
         
         HasError = StaticShaderObj->ValidateProgram();
         
         RendererObj->RenderFromBufferIndex(BufferIndex, GL_TRIANGLES, GL_UNSIGNED_INT, 6);
 
-        LoaderObj->DisableVAO(0);
-        LoaderObj->DisableVAO(1);
+        
 
         Display->UpdateDisplay();
     }
+    
+    LoaderObj->DisableVAO(0);
+    LoaderObj->DisableVAO(1);
 
     StaticShaderObj->CleanUp();
     LoaderObj->CleanUp();
@@ -93,7 +100,8 @@ int main()
     delete StaticShaderObj;
     delete Display;
     delete LoaderObj;
-
     
+    
+
     return 0;
 }

@@ -50,7 +50,7 @@ namespace CGCore
         Vec3(const double x, const double y);
         Vec3(const double x, const double y, const double z);
         Vec3(const Vec3& V);
-        ~Vec3();
+        virtual ~Vec3();
         // Get angle between this and V
         double AngleBetween(const Vec3& V) const;
         Vec3 CrossProduct(const Vec3& V) const;
