@@ -29,6 +29,7 @@ namespace CGCore
             virtual void GetAllUniformLocations() override;
 #ifdef USE_GLM
             void LoadTransformationMatrix(glm::mat4& M);
+            
 #else
             void LoadTransformationMatrix(Mat4f& M);
 #endif
