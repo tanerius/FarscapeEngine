@@ -1,7 +1,8 @@
 #include "cgrenderer.hpp"
-#include "cgrawmodel.hpp"
 #include "cgtexture.hpp"
-
+#include "cgshader.hpp"
+#include "cgstaticshader.hpp"
+#include "cgentity.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -28,6 +29,18 @@ void CGCore::Renderer::RenderFromBufferIndex(GLuint BufferIndex,GLenum RenderMod
         (void*)
         0
     );
+}
+
+
+void CGCore::Renderer::RenderFromBufferIndex(Entity* EntityObj, StaticShader* EntityShader)
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EntityObj->GetIndexBufferVBO());
+    glDrawElements(	GL_TRIANGLES,
+                   EntityObj->GetIBSize(),  
+                   GL_UNSIGNED_INT,
+                   (void*)
+                   0
+                   );
 }
 
 

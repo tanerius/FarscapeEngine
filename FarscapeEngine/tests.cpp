@@ -69,9 +69,9 @@ int main()
         
         
         HasError = StaticShaderObj->ValidateProgram();
-        //RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
+        RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
         
-        RendererObj->RenderFromBufferIndex(Square->GetIndexBufferVBO(), GL_TRIANGLES, GL_UNSIGNED_INT, 6);
+        //RendererObj->RenderFromBufferIndex(Square->GetIndexBufferVBO(), GL_TRIANGLES, GL_UNSIGNED_INT, 6);
 
         
 
