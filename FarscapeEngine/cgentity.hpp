@@ -36,8 +36,10 @@ namespace CGCore
         
         void DisableEntity() const;
         void EnableEntity() const;
+        GLuint GetIndexBufferVBO() const { return IndexBufferVBO; }
+        GLuint GetIBSize() const { return IndicesSize; }
         void GetVertices(GLfloat* VertexBuffer, GLuint& Size) const;
-        Texture* GetTextureObj() { return TextureObj; }
+        Texture* GetTextureObj() const { return TextureObj; }
         
         void SetIndices(GLuint VBO, GLuint BuffSize);
         void SetTexture(GLuint VAO, GLuint VBO, GLuint BuffSize, const char* FilePath);

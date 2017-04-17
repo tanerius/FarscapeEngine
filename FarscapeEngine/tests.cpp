@@ -23,11 +23,8 @@ int main()
     CGCore::Loader* LoaderObj = new CGCore::Loader();
     // Load relevant shaders
     CGCore::StaticShader* StaticShaderObj = new CGCore::StaticShader(); // generates ProgramID too
-    // Load a texture
-    CGCore::Texture* TextureObj = new CGCore::Texture(TEXTURE_FILE);
-    // Get a handle for the "textureSampler" uniform
-    GLuint TextureSamplerHnd  = StaticShaderObj->GetUniformLocation("textureSampler");
-    
+    LoaderObj->CreateBindVAO();
+  
     // Vertex data representing a square / rectangle
     const GLfloat VertexBufferData[] = {
         -0.5f,   0.5f, 0.0f, // v0 top left
@@ -49,27 +46,18 @@ int main()
         1.0f, 0.0f, // v3
         1.0f, 1.0f
     };
+
     
-
-#ifdef USE_GLM
-    glm::mat4 x(1.0f);
-    CGCore::TestPrintMatrix4(x);
-#endif
-
-    LoaderObj->CreateBindVAO();
-    // Generate and load buffers (VBOs)
-    GLuint ModelVertexBufferID = LoaderObj->LoadToVBO(VertexBufferData, 12);
-    GLuint BufferIndex = LoaderObj->LoadToVBO(Indices, 6); // Should use the GLuint version
-    GLuint TextureUV = LoaderObj->LoadToVBO(TextureCoords, 8);
+    // Create the square entity
+    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 12, Indices, 6, TextureCoords, 8, TEXTURE_FILE);
+    // Get a handle for the "textureSampler" uniform
+    GLuint TextureSamplerHnd  = StaticShaderObj->GetUniformLocation("textureSampler");
+    // Bind our texture in Texture Unit 0 -> DO THIS IN THE RENDERER
+    Square->GetTextureObj()->ApplyTexture(TextureSamplerHnd, 0);
+    // Enable the entity
+    Square->EnableEntity();
     
     bool HasError = false;
-    
-    // Bind our texture in Texture Unit 0 -> DO THIS IN THE RENDERER
-    TextureObj->ApplyTexture(TextureSamplerHnd, 0);
-    // 0th attribute buffer : vertices
-    LoaderObj->LoadVboToVAO(0, ModelVertexBufferID, 3, GL_FLOAT, GL_ARRAY_BUFFER);
-    // 1st attribute buffer : UVs
-    LoaderObj->LoadVboToVAO(1, TextureUV, 2, GL_FLOAT, GL_ARRAY_BUFFER);
     
    
     // Start main loop
@@ -81,22 +69,23 @@ int main()
         
         
         HasError = StaticShaderObj->ValidateProgram();
+        //RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
         
-        RendererObj->RenderFromBufferIndex(BufferIndex, GL_TRIANGLES, GL_UNSIGNED_INT, 6);
+        RendererObj->RenderFromBufferIndex(Square->GetIndexBufferVBO(), GL_TRIANGLES, GL_UNSIGNED_INT, 6);
 
         
 
         Display->UpdateDisplay();
     }
     
-    LoaderObj->DisableVAO(0);
-    LoaderObj->DisableVAO(1);
+    //Disable entity
+    Square->DisableEntity();
 
     StaticShaderObj->CleanUp();
     LoaderObj->CleanUp();
     Display->DestroyDisplay();
     
-    delete TextureObj;
+    delete Square;
     delete StaticShaderObj;
     delete Display;
     delete LoaderObj;

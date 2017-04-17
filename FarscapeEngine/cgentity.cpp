@@ -19,6 +19,20 @@ CGCore::Entity::~Entity()
 }
 
 
+void CGCore::Entity::DisableEntity() const
+{
+    glDisableVertexAttribArray(V_VaoAttrIndex);
+    glDisableVertexAttribArray(T_VaoAttrIndex);
+}
+
+
+void CGCore::Entity::EnableEntity() const
+{
+    glEnableVertexAttribArray(V_VaoAttrIndex);
+    glEnableVertexAttribArray(T_VaoAttrIndex);
+}
+
+
 void CGCore::Entity::GetVertices(GLfloat* VertexBuffer, GLuint& Size) const
 {
     Size = VerticesSize;
