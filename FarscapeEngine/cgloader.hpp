@@ -1,24 +1,27 @@
 #ifndef CG_LOADER_HPP
 #define CG_LOADER_HPP
 #include <vector>
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 #include <GL/glew.h>
 
 
 
 namespace CGCore
 {
-    
+
     class RawModel;
     class Texture;
     class Entity;
-    
+
     struct VertexSimple
     {
         GLfloat x, y, z;        //Vertex
         GLfloat padding;        // to keep this struct 16bytes
     };
 
-    
+
     // This class loads 3d models into memory by storing positional data of model in a VAO (vertex array object)
     class Loader
     {
@@ -27,14 +30,14 @@ namespace CGCore
             std::vector<GLuint> VAOContainer;
             std::vector<GLuint> VBOContainer;
             int CurrentVAOindex = 0;
-        
+
 
             // Members
             void BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySize);
             int GetVAOindex();
             void UnbindVAO();
         public:
-            void CleanUp(); 
+            void CleanUp();
             void CreateBindVAO(); // returcreates a new VAO and
             Entity* CreateEntity(
                 const GLfloat* Vertices, // The vertex buffer
@@ -51,6 +54,6 @@ namespace CGCore
             GLuint LoadToVBO(const GLuint Indices[], const GLuint ArraySize);
     };
 
-} 
+}
 
 #endif

@@ -1,4 +1,7 @@
 #include "cgdisplay.hpp"
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 #include <assert.h>
 #include <cstdio>
 #include <cstdlib>
@@ -9,12 +12,12 @@
 class CGCallbacks
 {
     public:
-    static void ErrorCallback(int error, const char* description) 
+    static void ErrorCallback(int error, const char* description)
     {
         fputs(description, stderr);
     }
 
-    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) 
+    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         {
@@ -46,7 +49,7 @@ void CGCore::DisplayManager::CreateDisplay()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #endif
-    
+
     // Create a window to put our stuff in.
     GLFWWindowPtr = glfwCreateWindow(DisplayWidth, DisplayHeight, "Quadtree LOD", NULL, NULL);
 
@@ -69,12 +72,12 @@ void CGCore::DisplayManager::CreateDisplay()
     // Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(GLFWWindowPtr, GLFW_STICKY_KEYS, GL_TRUE);
 
-    
+
 }
 
 void CGCore::DisplayManager::DestroyDisplay()
 {
-    // Destroy the display 
+    // Destroy the display
     glfwDestroyWindow(GLFWWindowPtr);
     glfwTerminate();
 }

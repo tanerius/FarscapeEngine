@@ -2,10 +2,13 @@
 #define CG_DISPLAY_HPP
 
 #include <cstdio>
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 
 class GLFWwindow;
 
-namespace CGCore 
+namespace CGCore
 {
 
     class DisplayManager
