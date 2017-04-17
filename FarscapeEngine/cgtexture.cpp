@@ -2,6 +2,10 @@
 #include <cstdlib>
 #include <cstring>
 
+#ifdef WINDOWS
+#include<windows.h>
+#endif
+
 // Apple only definition
 //#ifdef APPLE
 #include <png.h> // Ability to read png files for textures
@@ -36,24 +40,24 @@ void CGCore::Texture::GenerateTexture(GLuint temp_width, GLuint temp_height, GLi
     glGenTextures(1, &TextureID);
     glActiveTexture (GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureID);
- 
-    
+
+
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
+
     // Use clamping
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    
+
     glTexImage2D(
-        GL_TEXTURE_2D, 
-        0, 
-        GL_RGBA, //format, 
-        temp_width, 
-        temp_height, 
-        0, 
-        GL_RGBA, //format, 
-        GL_UNSIGNED_BYTE, 
+        GL_TEXTURE_2D,
+        0,
+        GL_RGBA, //format,
+        temp_width,
+        temp_height,
+        0,
+        GL_RGBA, //format,
+        GL_UNSIGNED_BYTE,
         image_data
     );
 }
@@ -135,7 +139,7 @@ bool CGCore::Texture::LoadPNGFile(const char* file_name)
     // No need to store the data now enable if needed
     //Width = temp_width;
     //Height = temp_height;
-    
+
     //printf("%s: %lux%lu %d\n", file_name, temp_width, temp_height, color_type);
 
     if (bit_depth != 8)

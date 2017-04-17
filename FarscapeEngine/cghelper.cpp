@@ -10,12 +10,14 @@
 #include <cmath>
 #include <cstdio>
 #include <assert.h>
-
+#ifdef WINDOWS
+#include <windows.h>
+#endif
 #ifdef USE_GLM
 
 // Use C++11 standard
 #include<glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp> 
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
 
@@ -35,7 +37,7 @@ glm::mat4 CGCore::CreateTransformationMatrix(
     float RotAngleRad = CGCore::DegToRad(RotAngle);
     glm::mat4 RotMat = glm::rotate(RotAngleRad,RotAxis);
     glm::mat4 ScaleMat = glm::scale(Scale);
-    
+
     glm::mat4 TransformationMat =
     TranslationMat * RotMat * ScaleMat;
     return TransformationMat;
@@ -133,7 +135,7 @@ void CGCore::Vec3::CheckZeros()
 CGCore::Vec3 CGCore::Vec3::CrossProduct(const Vec3& V) const
 {
     CGCore::Vec3 NewV3;
-    
+
     NewV3.Data[0] = Data[1] * V.Data[2] - Data[2] * V.Data[1];
     NewV3.Data[1] = Data[2] * V.Data[0] - Data[0] * V.Data[2];
     NewV3.Data[2] = Data[0] * V.Data[1] - Data[1] * V.Data[0];
@@ -166,7 +168,7 @@ double CGCore::Vec3::Magnitude() const
 void CGCore::Vec3::Normalize()
 {
     double MagV = Magnitude();
-    
+
     Data[0] = Data[0] / MagV;
     Data[1] = Data[1] / MagV;
     Data[2] = Data[2] / MagV;
@@ -234,8 +236,8 @@ double CGCore::Vec2::DotProduct(const Vec2& V) const
 
 CGCore::Vec2 CGCore::Vec2::GetNormalized() const
 {
-    CGCore::Vec2::Vec3 V3d = CGCore::Vec3::GetNormalized();
-    CGCore::Vec2::Vec2 V2d(V3d.X(),V3d.Y());
+    CGCore::Vec3 V3d = CGCore::Vec3::GetNormalized();
+    CGCore::Vec2 V2d(V3d.X(),V3d.Y());
     return V2d;
 }
 
@@ -335,9 +337,9 @@ CGCore::Mat4f::Mat4f(const Vec3& Translation, const Vec3& Rotation, const float 
         Data[i] = new Vec4(0.0f, 0.0f, 0.0f, 0.0f);
     }
     SetIdentity();
-    
-    
-    
+
+
+
 }
 
 

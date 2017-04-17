@@ -7,6 +7,10 @@
 #include <iostream>
 #include <fstream>
 
+#ifdef WINDOWS
+#include<windows.h>
+#endif
+
 #ifdef USE_GLM
 // Use C++11 standard
 #include<glm/glm.hpp>
@@ -89,7 +93,7 @@ void CGCore::Shader::LoadUniform(GLint Location, const glm::vec3& V) const
 void CGCore::Shader::LoadUniform(GLint Location, const glm::mat4& Matrix) const
 {
     glUniformMatrix4fv(Location, 1, false, glm::value_ptr(Matrix));
-    
+
 }
 #else
 void CGCore::Shader::LoadUniform(GLint Location, const CGCore::Vec3& V) const
@@ -104,9 +108,9 @@ void CGCore::Shader::LoadUniform(GLint Location, const Mat4f& Matrix) const
     int Size = 0;
     float* LinearMat4CMO = Matrix.GetColumnMajorOrderLinear(Size); // Column-major-order
     glUniformMatrix4fv(Location, 1, false, LinearMat4CMO);
-    
+
     delete [] LinearMat4CMO;
-    
+
 }
 #endif
 
@@ -126,7 +130,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	HasFailed = !ReadFile (VertexShader, VertexSource, MAX_SHADER_LENGTH);
 	if (HasFailed) {
 		printf("Could not open vshader file: %s\n", VertexShader);
-		exit(EXIT_FAILURE); 
+		exit(EXIT_FAILURE);
 	}
 	// Read the Vertex Shader code from the file
     const GLchar* VertexSourcePointer = (const GLchar*) VertexSource;
@@ -151,7 +155,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	HasFailed = !ReadFile (FramentShader, FragmentSource, MAX_SHADER_LENGTH);
 	if (HasFailed) {
 		printf("Could not open fshader file: %s\n", FramentShader);
-		exit(EXIT_FAILURE); 
+		exit(EXIT_FAILURE);
 	}
 	const GLchar* FragmentSourcePointer = (const GLchar*) FragmentSource;
     // Compile Fragment Shader
@@ -176,7 +180,7 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	glAttachShader(ProgramID, FragmentShaderID);
     BindAttributes();
 	glLinkProgram(ProgramID);
-    
+
     GetAllUniformLocations(); // This should be overloaded
 
     // Check the program
@@ -192,20 +196,20 @@ GLuint CGCore::Shader::LoadShaders(const char* VertexShader, const char* Frament
 	// Clean up
     glDetachShader(ProgramID, VertexShaderID);
 	glDetachShader(ProgramID, FragmentShaderID);
-	
+
 	glDeleteShader(VertexShaderID);
 	glDeleteShader(FragmentShaderID);
 
 
     if (HasFailed) exit(EXIT_FAILURE);
-    
-    
-    
+
+
+
     return ProgramID;
 }
 
 
-bool CGCore::Shader::ReadFile ( const char* file_name, char* shader_str, int max_len) 
+bool CGCore::Shader::ReadFile ( const char* file_name, char* shader_str, int max_len)
 {
 	shader_str[0] = '\0'; // reset string
 	FILE* file = fopen (file_name , "r");

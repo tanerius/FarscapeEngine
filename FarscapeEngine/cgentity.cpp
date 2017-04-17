@@ -8,7 +8,10 @@
 
 #include "cgentity.hpp"
 #include "cgtexture.hpp"
-
+#ifdef WINDOWS
+#include<windows.h>
+#include <GL/glew.h>
+#endif
 
 CGCore::Entity::~Entity()
 {
@@ -41,7 +44,7 @@ void CGCore::Entity::GetVertices(GLfloat* VertexBuffer, GLuint& Size) const
                        0,
                        VerticesSize,
                        VertexBuffer);
-    
+
 }
 
 

@@ -1,6 +1,8 @@
 #include "cgtexture.hpp"
 #include "cgloader.hpp"
-
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 #include <assert.h>
 #include <cstdio>
 #include <cstdlib>
@@ -17,7 +19,7 @@
 */
 void CGCore::Loader::BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySize)
 {
-    GLuint VboID; 
+    GLuint VboID;
     glGenBuffers(1,&VboID);
     VBOContainer.push_back(VboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboID);
@@ -26,11 +28,11 @@ void CGCore::Loader::BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySi
 
 void CGCore::Loader::CleanUp()
 {
-    
+
     for(GLuint n : VBOContainer) {
         glDeleteBuffers(1, &n);
     }
-    
+
     for(GLuint n : VAOContainer) {
         glDeleteVertexArrays(1, &n);
     }
@@ -59,7 +61,7 @@ CGCore::Entity* CGCore::Loader::CreateEntity(
                      )
 {
     CGCore::Entity* NewEntityModel = new CGCore::Entity();
-    
+
     // Generate and load buffers (VBOs)
     GLuint ModelVertexBufferID = LoadToVBO(Vertices, Vsize);
     GLuint BufferIndex = LoadToVBO(Indices, Isize);
@@ -73,7 +75,7 @@ CGCore::Entity* CGCore::Loader::CreateEntity(
     NewEntityModel->SetVertices(VertexVAO, ModelVertexBufferID, Vsize);
     NewEntityModel->SetIndices(BufferIndex, Isize);
     NewEntityModel->SetTexture(TextureVAO, TextureUV, Tsize, TexturePath);
-    
+
     return NewEntityModel;
 }
 
@@ -114,7 +116,7 @@ int CGCore::Loader::GetVAOindex()
 GLuint CGCore::Loader::LoadToVBO(const GLfloat DataArray[], const GLuint DataSize)
 {
     //printf("Data Loader\n");
-    GLuint VboID; 
+    GLuint VboID;
     glGenBuffers(1,&VboID);
     VBOContainer.push_back(VboID);
     glBindBuffer(GL_ARRAY_BUFFER, VboID);
@@ -125,7 +127,7 @@ GLuint CGCore::Loader::LoadToVBO(const GLfloat DataArray[], const GLuint DataSiz
 GLuint CGCore::Loader::LoadToVBO(const GLuint Indices[], const GLuint ArraySize)
 {
     // printf("Index Loader\n");
-    GLuint VboID; 
+    GLuint VboID;
     glGenBuffers(1,&VboID);
     VBOContainer.push_back(VboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboID);

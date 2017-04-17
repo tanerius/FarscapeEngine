@@ -9,6 +9,10 @@
 #ifndef cghelper_hpp
 #define cghelper_hpp
 
+#ifdef WINDOWS
+#include<windows.h>
+#endif
+
 #ifdef USE_GLM
 // Use C++11 standard
 #include<glm/glm.hpp>
@@ -29,12 +33,14 @@ namespace CGCore
                                                  );
     inline float DegToRad(float Angle) { return (PI*Angle)/180;
     }
+
     void TestPrintMatrix4(glm::mat4& M, const char* msg = nullptr);
 #endif 
 
+
     // Defining high precision data types
     class Vec2;
-    
+
     // 3d Vector
     class Vec3
     {
@@ -66,28 +72,28 @@ namespace CGCore
         void SetZ(const double Z);
         // Square of components
         virtual double Sqrmag() const;
-        
+
         inline double GetClipping() const { return Clipping; }
         inline virtual double X() const { return Data[0]; }
         inline virtual double Y() const { return Data[1]; }
         inline double Z() const { return Data[2]; }
         inline double XYZA(int x) { return Data[x]; }
-        
+
         operator Vec2() const;
         double& operator[] (int x) {
             return Data[x];
         }
     };
-    
-    
-    
+
+
+
     class Vec2 : protected Vec3
     {
     public:
         Vec2() : Vec3(0.0f,0.0f) {}
         Vec2(const double x, const double y) : Vec3(x,y) {}
         Vec2(const Vec2& V) : Vec3(V.Data[0], V.Data[1]) {}
-        
+
         double AngleBetween(const Vec2& V) const;
         double DotProduct(const Vec2& V) const;
         Vec2 GetNormalized() const;
@@ -100,9 +106,9 @@ namespace CGCore
         virtual double X() const override;
         virtual double Y() const override;
     };
-    
-    
-    
+
+
+
     class Vec4 : public Vec3
     {
     public:
@@ -115,13 +121,13 @@ namespace CGCore
         void Set(const double X, const double Y, const double Z, const double A);
         void SetA(const double A);
         double A() const { return Data[3]; }
-        
+
         Vec4& operator=(const Vec4& Other); // copy assignment
 
     };
-    
-    
-    
+
+
+
     // Implementation of a 4x4 Vec4 (stored in Col-major order) matrix
     class Mat4f
     {
@@ -140,7 +146,7 @@ namespace CGCore
         void PrintMatrix() const;
         void SetIdentity();
         void SetVector(int Index, const Vec4& V);
-        
+
         // Useful operators
         Mat4f& operator=(const Mat4f& Other); // copy assignment
 
