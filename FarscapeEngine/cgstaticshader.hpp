@@ -21,12 +21,15 @@ namespace CGCore
     {
         private:
             GLint Loc_transformationMatrix;
+            GLint Loc_TextureSamplerHnd;
         protected:
             virtual void BindAttributes() override;
         public:
             StaticShader();
             virtual ~StaticShader() {}
             virtual void GetAllUniformLocations() override;
+        
+            void LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit) ;
 #ifdef USE_GLM
             void LoadTransformationMatrix(glm::mat4& M);
             

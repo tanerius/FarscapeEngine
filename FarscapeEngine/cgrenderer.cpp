@@ -22,6 +22,8 @@ void CGCore::Renderer::Render(GLenum RenderMode, GLuint StartIndex, GLuint Numbe
 
 void CGCore::Renderer::RenderFromBufferIndex(GLuint BufferIndex,GLenum RenderMode, GLenum DataType, GLuint NumberOfVertices)
 {
+    
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferIndex);
     glDrawElements(	RenderMode,
         NumberOfVertices,  // 3 cinse we want to draw 3 vetrices
@@ -34,6 +36,16 @@ void CGCore::Renderer::RenderFromBufferIndex(GLuint BufferIndex,GLenum RenderMod
 
 void CGCore::Renderer::RenderFromBufferIndex(Entity* EntityObj, StaticShader* EntityShader)
 {
+    
+    // Load sampler
+    if(EntityObj->GetTextureObj() != nullptr)
+    {
+        // there is a texture load the uniform var
+        EntityShader->LoadTextureToSampler(EntityObj->GetTextureObj()->GetTextureID(), 0);
+    }
+    
+    
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EntityObj->GetIndexBufferVBO());
     glDrawElements(	GL_TRIANGLES,
                    EntityObj->GetIBSize(),  

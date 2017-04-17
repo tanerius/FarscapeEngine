@@ -27,7 +27,11 @@ glm::mat4 CGCore::CreateTransformationMatrix(
      const glm::vec3& Scale
      )
 {
-    glm::mat4 TranslationMat = glm::translate(Translation);
+    printf("*** %f, %f, %f\n",Translation.x,Translation.y, Translation.y);
+
+    glm::mat4 TranslationMat = glm::translate(glm::mat4(1.0f), Translation);
+
+    TestPrintMatrix4(TranslationMat,"TRANSLATION");
     float RotAngleRad = CGCore::DegToRad(RotAngle);
     glm::mat4 RotMat = glm::rotate(RotAngleRad,RotAxis);
     glm::mat4 ScaleMat = glm::scale(Scale);
@@ -38,8 +42,13 @@ glm::mat4 CGCore::CreateTransformationMatrix(
 }
 
 
-void CGCore::TestPrintMatrix4(glm::mat4& M){
+void CGCore::TestPrintMatrix4(glm::mat4& M, const char* msg ){
     glm::mat4 m(1.0f);
+    if(msg !=nullptr)
+    {
+        printf("************************* mat4 %s \n",msg);
+    }
+    
     for(int Col = 0; Col < 4; Col++)
     {
         printf("|\t");
@@ -49,6 +58,7 @@ void CGCore::TestPrintMatrix4(glm::mat4& M){
         }
         printf("\n");
     }
+    printf("************************* END");
 }
 #endif
 

@@ -5,7 +5,6 @@
 
 namespace CGCore
 {
-    class StaticShader;
 
     // A representation of a texture image - currently png only
     class Texture

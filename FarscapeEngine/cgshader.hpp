@@ -35,9 +35,9 @@ namespace CGCore
         
 #ifdef USE_GLM
             // Vec3 Loader
-        void LoadUniform(GLint Location, const glm::vec3& VarValue) const;
+            void LoadUniform(GLint Location, const glm::vec3& VarValue) const;
             // Mat4 loader
-        void LoadUniform(GLint Location, const glm::mat4& Matrix) const;
+            void LoadUniform(GLint Location, const glm::mat4& Matrix) const;
 #else
             // Vec3 Loader
             void LoadUniform(GLint Location, const Vec3& VarValue) const;
@@ -45,7 +45,9 @@ namespace CGCore
             void LoadUniform(GLint Location, const Mat4f& Matrix) const;
 #endif
             // bool loader
-            void LoadUniform(GLint Location, const bool VarValue) const;
+            void LoadUniform(GLint Location, const int VarValue) const;
+        
+            void LoadUniform(GLint Location, const bool VarValue) const { VarValue?LoadUniform(Location, (int)1):LoadUniform(Location, (int)0); }
         
         
             virtual GLuint LoadShaders(const char* VertexShader, const char* FramentShader);

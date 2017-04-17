@@ -29,7 +29,7 @@ namespace CGCore
                                                  );
     inline float DegToRad(float Angle) { return (PI*Angle)/180;
     }
-    void TestPrintMatrix4(glm::mat4& M);
+    void TestPrintMatrix4(glm::mat4& M, const char* msg = nullptr);
 #endif 
 
     // Defining high precision data types

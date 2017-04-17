@@ -72,7 +72,7 @@ void CGCore::Shader::LoadUniform(GLint Location, float VarValue) const
 }
 
 
-void CGCore::Shader::LoadUniform(GLint Location, const bool VarValue) const
+void CGCore::Shader::LoadUniform(GLint Location, const int VarValue) const
 {
     // Load a bool is simulated with GLint isntead sincce shaders don't have bools
     VarValue ? glUniform1i(Location, 1) : glUniform1i(Location, 0);

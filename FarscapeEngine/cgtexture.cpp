@@ -28,6 +28,7 @@ void CGCore::Texture::ApplyTexture(GLuint TextureSamplerHnd, int TextureUnit){
     glBindTexture(GL_TEXTURE_2D, TextureID);
     // Set our "textureSampler" sampler to user Texture Unit 0
     glUniform1i(TextureSamplerHnd, 0);
+    
 }
 
 void CGCore::Texture::GenerateTexture(GLuint temp_width, GLuint temp_height, GLint format, GLubyte* image_data)

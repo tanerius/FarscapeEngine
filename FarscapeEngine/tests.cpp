@@ -50,31 +50,30 @@ int main()
     
     // Create the square entity
     CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 12, Indices, 6, TextureCoords, 8, TEXTURE_FILE);
-    // Get a handle for the "textureSampler" uniform
-    GLuint TextureSamplerHnd  = StaticShaderObj->GetUniformLocation("textureSampler");
-    // Bind our texture in Texture Unit 0 -> DO THIS IN THE RENDERER
-    Square->GetTextureObj()->ApplyTexture(TextureSamplerHnd, 0);
-    // Enable the entity
+    
     Square->EnableEntity();
     
     bool HasError = false;
+    glm::vec3 Translate(0.5f, 0.0f, 0.0f);
+    glm::vec3 Rot(0.0f, 0.0f, 0.0f);
+    glm::vec3 Scale(1.0f, 2.0f, 1.0f);
+    glm::mat4 M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+    
+    CGCore::TestPrintMatrix4(M, "Transformation Matrix");
     
    
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
         RendererObj->Prepare();
+        
+        // M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+        // StaticShaderObj->LoadTransformationMatrix(M);
+        
         StaticShaderObj->StartProgram();
-
-        
-        
         HasError = StaticShaderObj->ValidateProgram();
         RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
-        
-        //RendererObj->RenderFromBufferIndex(Square->GetIndexBufferVBO(), GL_TRIANGLES, GL_UNSIGNED_INT, 6);
-
-        
-
+   
         Display->UpdateDisplay();
     }
     
@@ -89,8 +88,6 @@ int main()
     delete StaticShaderObj;
     delete Display;
     delete LoaderObj;
-    
-    
 
     return 0;
 }

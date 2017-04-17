@@ -18,7 +18,18 @@ void CGCore::StaticShader::BindAttributes()
 void CGCore::StaticShader::GetAllUniformLocations()
 {
     Loc_transformationMatrix = GetUniformLocation("transformationMatrix");
+    Loc_TextureSamplerHnd = GetUniformLocation("textureSampler");
 }
+
+void CGCore::StaticShader::LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit)
+{
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0 + SamplerUnit);
+    glBindTexture(GL_TEXTURE_2D, TextureID);
+    
+    LoadUniform(Loc_TextureSamplerHnd, 0);
+}
+
 
 #ifdef USE_GLM
 void CGCore::StaticShader::LoadTransformationMatrix(glm::mat4& M)
