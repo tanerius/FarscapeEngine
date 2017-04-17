@@ -9,12 +9,12 @@ namespace CGCore
     // Forward declares so not to clutter with includes
     class Vec3;
     class Mat4f;
-    // static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello.vsh";
-    // static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello.fsh";
+     //static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.vsh";
+     //static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.fsh";
 
     // Shaders with a texture
-    static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.vsh";
-    static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.fsh";
+    static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.vsh";
+    static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.fsh";
     
     //textureCoords
     class StaticShader : public CGCore::Shader

@@ -29,11 +29,8 @@ glm::mat4 CGCore::CreateTransformationMatrix(
      const glm::vec3& Scale
      )
 {
-    printf("*** %f, %f, %f\n",Translation.x,Translation.y, Translation.y);
-
     glm::mat4 TranslationMat = glm::translate(glm::mat4(1.0f), Translation);
 
-    TestPrintMatrix4(TranslationMat,"TRANSLATION");
     float RotAngleRad = CGCore::DegToRad(RotAngle);
     glm::mat4 RotMat = glm::rotate(RotAngleRad,RotAxis);
     glm::mat4 ScaleMat = glm::scale(Scale);

@@ -54,10 +54,10 @@ int main()
     Square->EnableEntity();
     
     bool HasError = false;
-    glm::vec3 Translate(0.5f, 0.0f, 0.0f);
+    glm::vec3 Translate(0.0f, 0.0f, 0.0f);
     glm::vec3 Rot(0.0f, 0.0f, 0.0f);
     glm::vec3 Scale(1.0f, 2.0f, 1.0f);
-    glm::mat4 M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+    glm::mat4 M(1.0f);// = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
     
     CGCore::TestPrintMatrix4(M, "Transformation Matrix");
     
@@ -67,8 +67,8 @@ int main()
     {
         RendererObj->Prepare();
         
-        // M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
-        // StaticShaderObj->LoadTransformationMatrix(M);
+        M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+        StaticShaderObj->LoadTransformationMatrix(M);
         
         StaticShaderObj->StartProgram();
         HasError = StaticShaderObj->ValidateProgram();
