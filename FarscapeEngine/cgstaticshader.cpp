@@ -19,6 +19,7 @@ void CGCore::StaticShader::GetAllUniformLocations()
 {
     Loc_transformationMatrix = GetUniformLocation("transformationMatrix");
     Loc_TextureSamplerHnd = GetUniformLocation("textureSampler");
+    Loc_ProjectionMatrix = GetUniformLocation("projectionMatrix");
 }
 
 void CGCore::StaticShader::LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit)
@@ -35,6 +36,10 @@ void CGCore::StaticShader::LoadTextureToSampler(const GLuint TextureID, const in
 void CGCore::StaticShader::LoadTransformationMatrix(glm::mat4& M)
 {
     LoadUniform(Loc_transformationMatrix, M);
+}
+void CGCore::StaticShader::LoadProjectionMatrix(glm::mat4& M)
+{
+    LoadUniform(Loc_ProjectionMatrix, M);
 }
 #else
 void CGCore::StaticShader::LoadTransformationMatrix(Mat4f& M)

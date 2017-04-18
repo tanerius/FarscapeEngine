@@ -32,13 +32,14 @@ namespace CGCore
          const float RotAngle,
          const glm::vec3& Scale
                                                  );
-    inline float DegToRad(float Angle) { return (PI*Angle)/180;
-    }
+    
 
     void TestPrintMatrix4(glm::mat4& M, const char* msg = nullptr);
 #endif 
 
-
+inline float DegToRad(float Angle) { return (PI*Angle)/180; }
+    
+    
 template <typename T>
 T Clamp(const T& n, const T& lower, const T& upper) {
   return std::max(lower, std::min(n, upper));

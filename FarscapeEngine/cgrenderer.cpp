@@ -1,4 +1,5 @@
 #include "cgrenderer.hpp"
+#include "cgdisplay.hpp"
 #include "cgtexture.hpp"
 #include "cgshader.hpp"
 #include "cgstaticshader.hpp"
@@ -8,8 +9,47 @@
 #include<windows.h>
 #endif
 
+#include <cmath> // for creating projection matrix
+#include "cghelper.hpp"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+
+
+CGCore::Renderer::Renderer(const CGCore::DisplayManager* DM)
+{
+    CreateProjectionMatrix(DM);
+}
+
+
+CGCore::Renderer::~Renderer()
+{
+    if(ProjectionMatrix!=nullptr)
+        delete ProjectionMatrix;
+}
+
+
+void CGCore::Renderer::CreateProjectionMatrix(const DisplayManager* DM)
+{
+    int ScreenWidth, ScreenHeight;
+    DM->GetResolution(ScreenWidth, ScreenHeight);
+    float AspectRatio = (float)ScreenWidth / (float)ScreenHeight;
+    float YScale = (float) ((1.0f / tanf(CGCore::DegToRad(CGCore::Renderer::FOV / 2.0f))) * AspectRatio);
+    float XScale = YScale / AspectRatio;
+    float FrustrumLength = CGCore::Renderer::FAR_PLANE - CGCore::Renderer::NEAR_PLANE;
+    
+    if (ProjectionMatrix != nullptr)
+        delete ProjectionMatrix;
+    ProjectionMatrix = new glm::mat4(0.0f);
+    (*ProjectionMatrix)[0][0] = YScale;
+    (*ProjectionMatrix)[1][1] = XScale;
+    (*ProjectionMatrix)[2][2] = -((CGCore::Renderer::FAR_PLANE + CGCore::Renderer::NEAR_PLANE) / FrustrumLength);
+    (*ProjectionMatrix)[2][3] = -1;
+    (*ProjectionMatrix)[3][2] = -((2 * CGCore::Renderer::NEAR_PLANE * CGCore::Renderer::FAR_PLANE) / FrustrumLength);
+    (*ProjectionMatrix)[3][3] = 0.0f;
+}
+
 
 void CGCore::Renderer::Prepare()
 {

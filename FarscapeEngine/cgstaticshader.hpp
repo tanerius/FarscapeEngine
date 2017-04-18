@@ -29,6 +29,7 @@ namespace CGCore
         private:
             GLint Loc_transformationMatrix;
             GLint Loc_TextureSamplerHnd;
+            GLint Loc_ProjectionMatrix;
         protected:
             virtual void BindAttributes() override;
         public:
@@ -39,6 +40,7 @@ namespace CGCore
             void LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit) ;
 #ifdef USE_GLM
             void LoadTransformationMatrix(glm::mat4& M);
+            void LoadProjectionMatrix(glm::mat4& M);
 
 #else
             void LoadTransformationMatrix(Mat4f& M);

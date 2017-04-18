@@ -7,8 +7,9 @@
 
 
 #define MAX_SHADER_LENGTH 262144
-// Use C++11 standard
-#include<glm/glm.hpp>
+#ifdef USE_GLM
+    #include<glm/glm.hpp>
+#endif
 
 namespace CGCore
 {

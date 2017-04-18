@@ -1,11 +1,10 @@
 #include "cgdisplay.hpp"
-#include "cgrawmodel.hpp"
 #include "cgtexture.hpp"
 #include "cgshader.hpp"
 #include "cgstaticshader.hpp"
 #include "cgloader.hpp"
 #include "cgrenderer.hpp"
-#include "cghelper.hpp"
+
 #include "cgentity.hpp"
 
 
@@ -21,13 +20,21 @@ int main()
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
     Display->GetInfo();
-    // Call a renderer to set states
-    CGCore::Renderer* RendererObj = new CGCore::Renderer();
+    // Call a renderer to set states and create a projection matrix
+    CGCore::Renderer* RendererObj = new CGCore::Renderer(Display);
     RendererObj->SetStates();
     // Get a loader instance
     CGCore::Loader* LoaderObj = new CGCore::Loader();
     // Load relevant shaders
     CGCore::StaticShader* StaticShaderObj = new CGCore::StaticShader(); // generates ProgramID too
+    
+    // Get the projection matrix and load it onto the shader once
+    glm::mat4 ProjectionMatrix = RendererObj->GetProjection();
+    StaticShaderObj->StartProgram();
+    StaticShaderObj->LoadProjectionMatrix(ProjectionMatrix);
+    StaticShaderObj->StopProgram();
+    
+    
     LoaderObj->CreateBindVAO();
 
     // Vertex data representing a square / rectangle
@@ -58,7 +65,7 @@ int main()
 
     Square->EnableEntity();
     Square->SetTransform(
-         glm::vec3(0.0f, 0.0f, 0.0f),       // Translation (x, y, z)
+         glm::vec3(0.0f, 0.0f, 1.0f),       // Translation (x, y, z)
          glm::vec4(1.0f,1.0f,0.0f,0.0f),    // Rotate Quat (xAxis, yAxis, zAxis, rotAngle)
          glm::vec3(1.0f, 1.0f, 1.0f)        // Scaling (x, y, z)
      );
@@ -70,20 +77,9 @@ int main()
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
-        // Square->SetTranslation(glm::vec3(sin(Display->GetRunningTime()),0.0f, 0.0f));
-        Square->SetTranslation(glm::vec3(0.0f, 0.0f, 0.0f));
+        Square->ChangeTranslation(glm::vec3(0.0f, 0.0f, -0.01f));
         RendererObj->Prepare();
         
-        if(Square->GetRotationDeg() > 359.5f)
-        {
-            Square->SetRotation(glm::vec4(1.0f, 1.0f, 0.0f,0.0f)); // set a new rotation
-        }
-        else
-        {
-            Square->ChangeRotation(glm::vec4(1.0f, 0.0f, 1.0f,0.01f)); // add to current rotation
-        }
-        
-
         StaticShaderObj->StartProgram();
         glm::mat4 M = Square->CreateTransformationMatrix();
         StaticShaderObj->LoadTransformationMatrix(M);

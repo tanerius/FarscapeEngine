@@ -29,6 +29,11 @@ namespace CGCore
             void CreateDisplay();
             void DestroyDisplay();
             void GetInfo();
+            void GetResolution(int& W, int& H) const
+            {
+                W = DisplayWidth;
+                H = DisplayHeight;
+            }
             float GetRunningTime() const;
             void WriteDisplay(const char* Msg);
             void UpdateDisplay();
