@@ -57,36 +57,35 @@ int main()
     CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 12, Indices, 6, TextureCoords, 8, TEXTURE_FILE);
 
     Square->EnableEntity();
+    Square->SetTransform(
+         glm::vec3(0.0f, 0.0f, 0.0f),       // Translation (x, y, z)
+         glm::vec4(1.0f,1.0f,0.0f,0.0f),    // Rotate Quat (xAxis, yAxis, zAxis, rotAngle)
+         glm::vec3(1.0f, 1.0f, 1.0f)        // Scaling (x, y, z)
+     );
+
 
     bool HasError = false;
-    glm::vec3 Translate(0.0f, 0.0f, 0.0f);
-    glm::vec3 Rot(0.0f, 1.0f, 1.0f); // cant be 0 vectors or rotation matrix will fail
-    glm::vec3 Scale(1.0f, 1.0f, 1.0f);
-    float RotAngle = 0.0f;
 
-    glm::mat4 M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
 
-    //CGCore::TestPrintMatrix4(M, "Transform Matrix");
-    float Tx = 0.0f;
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
-        Tx = sin(Display->GetRunningTime());
-        Translate.x = Tx;
-        
+        // Square->SetTranslation(glm::vec3(sin(Display->GetRunningTime()),0.0f, 0.0f));
+        Square->SetTranslation(glm::vec3(0.0f, 0.0f, 0.0f));
         RendererObj->Prepare();
         
-        if (RotAngle > 359.8f)
+        if(Square->GetRotationDeg() > 359.5f)
         {
-            RotAngle = 0.0f;
+            Square->SetRotation(glm::vec4(1.0f, 1.0f, 0.0f,0.0f)); // set a new rotation
         }
         else
         {
-            RotAngle = RotAngle + 0.01f;
+            Square->ChangeRotation(glm::vec4(1.0f, 0.0f, 1.0f,0.01f)); // add to current rotation
         }
+        
 
         StaticShaderObj->StartProgram();
-        M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
+        glm::mat4 M = Square->CreateTransformationMatrix();
         StaticShaderObj->LoadTransformationMatrix(M);
 
 
