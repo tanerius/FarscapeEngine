@@ -19,6 +19,10 @@ namespace CGCore
             // const int MaxFps = 120;
 
             GLFWwindow* GLFWWindowPtr = 0; // will hold our window pointer
+            double previous_seconds = 0.0f;
+            int frame_count = 0;
+        
+        
 
         public:
             bool CloseRequested();
@@ -27,6 +31,7 @@ namespace CGCore
             void GetInfo();
             void WriteDisplay(const char* Msg);
             void UpdateDisplay();
+            void UpdateFpsCounter();
     };
 
 }

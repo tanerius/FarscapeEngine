@@ -55,22 +55,33 @@ int main()
     
     bool HasError = false;
     glm::vec3 Translate(0.0f, 0.0f, 0.0f);
-    glm::vec3 Rot(0.0f, 0.0f, 0.0f);
-    glm::vec3 Scale(1.0f, 2.0f, 1.0f);
-    glm::mat4 M(1.0f);// = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+    glm::vec3 Rot(0.0f, 0.0f, 1.0f); // cant be 0 vectors or rotation matrix will fail
+    glm::vec3 Scale(1.0f, 1.0f, 1.0f);
+    float RotAngle = 0.0f;
     
-    CGCore::TestPrintMatrix4(M, "Transformation Matrix");
+    glm::mat4 M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
+    
+    CGCore::TestPrintMatrix4(M, "Transform Matrix");
     
    
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
         RendererObj->Prepare();
+        StaticShaderObj->StartProgram();
+        if (RotAngle > 359.8f)
+        {
+            RotAngle = 0.0f;
+        }
+        else
+        {
+            RotAngle = RotAngle + 0.01f;
+        }
         
-        M = CGCore::CreateTransformationMatrix(Translate, Rot, 0, Scale);
+        M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
         StaticShaderObj->LoadTransformationMatrix(M);
         
-        StaticShaderObj->StartProgram();
+        
         HasError = StaticShaderObj->ValidateProgram();
         RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
    

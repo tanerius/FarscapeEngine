@@ -16,9 +16,9 @@
 #ifdef USE_GLM
 
 // Use C++11 standard
-#include<glm/glm.hpp>
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
+//#include <glm/gtx/transform.hpp>
 
 
 
@@ -30,10 +30,12 @@ glm::mat4 CGCore::CreateTransformationMatrix(
      )
 {
     glm::mat4 TranslationMat = glm::translate(glm::mat4(1.0f), Translation);
+    TestPrintMatrix4(TranslationMat, "TRANSLATION");
 
-    float RotAngleRad = CGCore::DegToRad(RotAngle);
-    glm::mat4 RotMat = glm::rotate(RotAngleRad,RotAxis);
-    glm::mat4 ScaleMat = glm::scale(Scale);
+    glm::mat4 RotMat = glm::rotate(TranslationMat, RotAngle, RotAxis);
+    TestPrintMatrix4(RotMat, "ROTATION");
+    
+    glm::mat4 ScaleMat = glm::scale(RotMat, Scale);
 
     glm::mat4 TransformationMat =
     TranslationMat * RotMat * ScaleMat;
@@ -42,7 +44,6 @@ glm::mat4 CGCore::CreateTransformationMatrix(
 
 
 void CGCore::TestPrintMatrix4(glm::mat4& M, const char* msg ){
-    glm::mat4 m(1.0f);
     if(msg !=nullptr)
     {
         printf("************************* mat4 %s \n",msg);
@@ -53,7 +54,7 @@ void CGCore::TestPrintMatrix4(glm::mat4& M, const char* msg ){
         printf("|\t");
         for(int Row = 0; Row < 4; Row++)
         {
-            printf("%f\t",m[Col][Row]);
+            printf("%f\t",M[Row][Col]);
         }
         printf("\n");
     }

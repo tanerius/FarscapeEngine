@@ -51,7 +51,7 @@ void CGCore::DisplayManager::CreateDisplay()
 #endif
 
     // Create a window to put our stuff in.
-    GLFWWindowPtr = glfwCreateWindow(DisplayWidth, DisplayHeight, "Quadtree LOD", NULL, NULL);
+    GLFWWindowPtr = glfwCreateWindow(DisplayWidth, DisplayHeight, "Farscape Demo: ", NULL, NULL);
 
     if( GLFWWindowPtr == NULL ){
 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
@@ -62,6 +62,8 @@ void CGCore::DisplayManager::CreateDisplay()
 
     glfwSetKeyCallback(GLFWWindowPtr, CGCallbacks::KeyCallback); // key capture
     glfwSetErrorCallback(CGCallbacks::ErrorCallback);
+    
+    glfwWindowHint (GLFW_SAMPLES, 4);
 
     // Initialize GLEW
 	glewExperimental = GL_TRUE; // Needed for core profile
@@ -93,9 +95,33 @@ void CGCore::DisplayManager::GetInfo()
 
 void CGCore::DisplayManager::UpdateDisplay()
 {
+    UpdateFpsCounter();
     // Swap the buffers so that what we drew will appear on the screen.
     glfwSwapBuffers(GLFWWindowPtr);
     glfwPollEvents();
+}
+
+
+
+void CGCore::DisplayManager::UpdateFpsCounter()
+{
+    double current_seconds;
+    double elapsed_seconds;
+    
+
+    current_seconds = glfwGetTime ();
+    elapsed_seconds = current_seconds - previous_seconds;
+    if (elapsed_seconds > 0.25) {
+        double fps;
+        char tmp[256];
+        
+        previous_seconds = current_seconds;
+        fps = (double)frame_count / elapsed_seconds;
+        sprintf (tmp, "Farscape demo - opengl @ fps: %.2f", fps);
+        glfwSetWindowTitle (GLFWWindowPtr, tmp);
+        frame_count = 0;
+    }
+    frame_count++;
 }
 
 void CGCore::DisplayManager::WriteDisplay(const char* Msg)

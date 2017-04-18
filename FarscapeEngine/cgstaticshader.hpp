@@ -12,9 +12,16 @@ namespace CGCore
      //static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.vsh";
      //static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/Quadtree_LOD/core/shaders/hello_tex.fsh";
 
+#ifdef WINDOWS
+    // Shaders with a texture
+    static const char* VERTEX_FILENAME = "c:\\hello_tex.vsh";
+    static const char* FRAGMENT_FILENAME = "c:\\hello_tex.fsh";
+
+#else
     // Shaders with a texture
     static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.vsh";
     static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.fsh";
+#endif
     
     //textureCoords
     class StaticShader : public CGCore::Shader
