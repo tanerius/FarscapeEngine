@@ -15,11 +15,12 @@ INCLUDE_PATHS =  -I/usr/local/include
 LIBRARY_PATHS = -L/usr/local/lib 
 # LIB_P = /Users/tanerselim/Dev/antons_opengl_tutorials_book/common/osx_64/
 LIB_P = /usr/local/lib/
+
 LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -std=c++11 -DAPPLE -Wall -pedantic -arch x86_64 -fmessage-length=0 -UGLFW_CDECL
+COMPILER_FLAGS = -std=c++11 -DAPPLE -DUSE_GLM -Wall -pedantic -arch x86_64 -fmessage-length=0 -UGLFW_CDECL
 
 # LINKER_FLAGS specifies the libraries we're linking against
 # Cocoa, IOKit, and CoreVideo are needed for static GLFW3.
