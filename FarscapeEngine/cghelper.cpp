@@ -30,11 +30,11 @@ glm::mat4 CGCore::CreateTransformationMatrix(
      )
 {
     glm::mat4 TranslationMat = glm::translate(glm::mat4(1.0f), Translation);
-    TestPrintMatrix4(TranslationMat, "TRANSLATION");
+    //TestPrintMatrix4(TranslationMat, "TRANSLATION");
 
     glm::mat4 RotMat = glm::rotate(TranslationMat, RotAngle, RotAxis);
-    TestPrintMatrix4(RotMat, "ROTATION");
-    
+    //TestPrintMatrix4(RotMat, "ROTATION");
+
     glm::mat4 ScaleMat = glm::scale(RotMat, Scale);
 
     glm::mat4 TransformationMat =
@@ -48,7 +48,7 @@ void CGCore::TestPrintMatrix4(glm::mat4& M, const char* msg ){
     {
         printf("************************* mat4 %s \n",msg);
     }
-    
+
     for(int Col = 0; Col < 4; Col++)
     {
         printf("|\t");

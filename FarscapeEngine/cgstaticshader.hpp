@@ -14,15 +14,15 @@ namespace CGCore
 
 #ifdef WINDOWS
     // Shaders with a texture
-    static const char* VERTEX_FILENAME = "c:\\hello_tex.vsh";
-    static const char* FRAGMENT_FILENAME = "c:\\hello_tex.fsh";
+    static const char* VERTEX_FILENAME = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\shaders\\hello_tex.vsh";
+    static const char* FRAGMENT_FILENAME = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\shaders\\hello_tex.fsh";
 
 #else
     // Shaders with a texture
     static const char* VERTEX_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.vsh";
     static const char* FRAGMENT_FILENAME = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex.fsh";
 #endif
-    
+
     //textureCoords
     class StaticShader : public CGCore::Shader
     {
@@ -35,11 +35,11 @@ namespace CGCore
             StaticShader();
             virtual ~StaticShader() {}
             virtual void GetAllUniformLocations() override;
-        
+
             void LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit) ;
 #ifdef USE_GLM
             void LoadTransformationMatrix(glm::mat4& M);
-            
+
 #else
             void LoadTransformationMatrix(Mat4f& M);
 #endif
