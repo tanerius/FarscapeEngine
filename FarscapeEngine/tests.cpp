@@ -8,7 +8,11 @@
 #include "cghelper.hpp"
 #include "cgentity.hpp"
 
-static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/Quadtree_LOD/res/tex512.png";
+#ifdef WINDOWS
+static const char* TEXTURE_FILE = "C:\\tex512.png";
+#else
+static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex512.png";
+#endif
 
 int main()
 {
