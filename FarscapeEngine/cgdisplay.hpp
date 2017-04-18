@@ -29,6 +29,7 @@ namespace CGCore
             void CreateDisplay();
             void DestroyDisplay();
             void GetInfo();
+            float GetRunningTime() const;
             void WriteDisplay(const char* Msg);
             void UpdateDisplay();
             void UpdateFpsCounter();

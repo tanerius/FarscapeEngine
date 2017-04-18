@@ -56,19 +56,6 @@ void CGCore::Shader::GetAllUniformLocations()
 
 }
 
-void CGCore::Shader::StartProgram()
-{
-    // Start a shader program on the current rendering state
-    glUseProgram(ProgramID);
-}
-
-
-void CGCore::Shader::StopProgram()
-{
-    // Sto current shader program
-    glUseProgram(0);
-}
-
 
 void CGCore::Shader::LoadUniform(GLint Location, float VarValue) const
 {
@@ -237,6 +224,19 @@ bool CGCore::Shader::ReadFile ( const char* file_name, char* shader_str, int max
 		return false;
 	}
 	return true;
+}
+
+void CGCore::Shader::StartProgram()
+{
+    // Start a shader program on the current rendering state
+    glUseProgram(ProgramID);
+}
+
+
+void CGCore::Shader::StopProgram()
+{
+    // Sto current shader program
+    glUseProgram(0);
 }
 
 

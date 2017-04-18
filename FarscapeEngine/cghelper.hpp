@@ -9,6 +9,7 @@
 #ifndef cghelper_hpp
 #define cghelper_hpp
 
+#include <algorithm> // for std::max
 #ifdef WINDOWS
 #include<windows.h>
 #endif
@@ -36,6 +37,12 @@ namespace CGCore
 
     void TestPrintMatrix4(glm::mat4& M, const char* msg = nullptr);
 #endif 
+
+
+template <typename T>
+T Clamp(const T& n, const T& lower, const T& upper) {
+  return std::max(lower, std::min(n, upper));
+}
 
 
     // Defining high precision data types

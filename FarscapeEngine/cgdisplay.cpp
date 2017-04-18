@@ -93,6 +93,12 @@ void CGCore::DisplayManager::GetInfo()
     printf("Current GL renderer: %s \n",glGetString(GL_RENDERER));
 }
 
+
+float CGCore::DisplayManager::GetRunningTime() const
+{ 
+     return glfwGetTime (); 
+}
+
 void CGCore::DisplayManager::UpdateDisplay()
 {
     UpdateFpsCounter();

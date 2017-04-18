@@ -26,6 +26,7 @@ void CGCore::Loader::BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySi
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)*ArraySize, Indices, GL_STATIC_DRAW);
 }
 
+
 void CGCore::Loader::CleanUp()
 {
 

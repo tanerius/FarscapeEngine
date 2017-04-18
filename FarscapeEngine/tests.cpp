@@ -8,6 +8,7 @@
 #include "cghelper.hpp"
 #include "cgentity.hpp"
 
+
 #ifdef WINDOWS
 static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex512.png";
 #else
@@ -59,20 +60,22 @@ int main()
 
     bool HasError = false;
     glm::vec3 Translate(0.0f, 0.0f, 0.0f);
-    glm::vec3 Rot(0.0f, 0.0f, 1.0f); // cant be 0 vectors or rotation matrix will fail
+    glm::vec3 Rot(0.0f, 1.0f, 1.0f); // cant be 0 vectors or rotation matrix will fail
     glm::vec3 Scale(1.0f, 1.0f, 1.0f);
     float RotAngle = 0.0f;
 
     glm::mat4 M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
 
     //CGCore::TestPrintMatrix4(M, "Transform Matrix");
-
-
+    float Tx = 0.0f;
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
+        Tx = sin(Display->GetRunningTime());
+        Translate.x = Tx;
+        
         RendererObj->Prepare();
-        StaticShaderObj->StartProgram();
+        
         if (RotAngle > 359.8f)
         {
             RotAngle = 0.0f;
@@ -82,6 +85,7 @@ int main()
             RotAngle = RotAngle + 0.01f;
         }
 
+        StaticShaderObj->StartProgram();
         M = CGCore::CreateTransformationMatrix(Translate, Rot, RotAngle, Scale);
         StaticShaderObj->LoadTransformationMatrix(M);
 
@@ -106,3 +110,12 @@ int main()
 
     return 0;
 }
+
+/*
+  Talk with Li
+
+  - Draft of the circular 
+  - and draft of the seating arrangements and suggest
+  - Plata tetka lile! 12k vs 15k viki
+  - 
+*/
