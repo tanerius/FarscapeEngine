@@ -35,7 +35,7 @@ all : clean $(OBJS)
 tests: cgdisplay rawmodel loader renderer shader staticshader texture helpers entity
 	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(LOC_LIB)
 
-cgdisplay : cgdisplay.hpp
+cgdisplay : cgcallback.hpp cgdisplay.hpp
 	$(CC) cgdisplay.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgdisplay.o
 
 loader : rawmodel texture cgloader.hpp 

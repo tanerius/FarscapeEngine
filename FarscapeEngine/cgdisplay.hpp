@@ -5,24 +5,22 @@
 #ifdef WINDOWS
 #include<windows.h>
 #endif
+#include "cgcallback.hpp"
 
-class GLFWwindow;
+
 
 namespace CGCore
 {
 
-    class DisplayManager
+    class DisplayManager : protected CGCallbacks
     {
         private:
             const int DisplayWidth = 1280;
             const int DisplayHeight = 720;
             // const int MaxFps = 120;
 
-            GLFWwindow* GLFWWindowPtr = 0; // will hold our window pointer
             double previous_seconds = 0.0f;
             int frame_count = 0;
-        
-        
 
         public:
             bool CloseRequested();

@@ -5,26 +5,10 @@
 #include <assert.h>
 #include <cstdio>
 #include <cstdlib>
+#include "cgcallback.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-// Definitions for the callbacks
-class CGCallbacks
-{
-    public:
-    static void ErrorCallback(int error, const char* description)
-    {
-        fputs(description, stderr);
-    }
-
-    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-    {
-        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        {
-            glfwSetWindowShouldClose(window, GL_TRUE);
-        }
-    }
-};
 
 bool CGCore::DisplayManager::CloseRequested()
 {
