@@ -75,6 +75,21 @@ void CGCore::DisplayManager::GetInfo()
     printf("Supported shading lang: %s \n",glGetString (GL_SHADING_LANGUAGE_VERSION));
     printf("Current GL vendor: %s \n",glGetString(GL_VENDOR));
     printf("Current GL renderer: %s \n",glGetString(GL_RENDERER));
+    
+    GLint num=0;
+    GLuint i;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &num);
+    printf("GL extensions supported: %d\n", num);
+    if (num < 1) {
+        return;
+    }
+    
+    for (i=0; i<(GLuint)num; i++) {
+        const GLubyte *ext=glGetStringi(GL_EXTENSIONS,i);
+        if (ext) {
+            printf("  %s\n",ext);
+        }
+    }
 }
 
 

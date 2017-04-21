@@ -55,7 +55,9 @@ int main()
         1,0,3, // back face
         3,2,1, // back face	
         7,4,5, // front face
-        5,6,7 // front face
+        5,6,7, // front face
+        4,0,1, // left face
+        1,5,4
 
     };
     // Two UV coordinates for each vertex.
@@ -89,7 +91,7 @@ int main()
 
 
     // Create the square entity
-    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 12, TextureCoords, 48, TEXTURE_FILE);
+    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 18, TextureCoords, 48, TEXTURE_FILE);
 
     Square->EnableEntity();
     Square->SetTransform(
