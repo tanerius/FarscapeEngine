@@ -11,6 +11,7 @@
 
 #include <cmath> // for creating projection matrix
 #include "cghelper.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -34,6 +35,13 @@ void CGCore::Renderer::CreateProjectionMatrix(const DisplayManager* DM)
 {
     int ScreenWidth, ScreenHeight;
     DM->GetResolution(ScreenWidth, ScreenHeight);
+    
+    if (ProjectionMatrix != nullptr)
+        delete ProjectionMatrix;
+    ProjectionMatrix = new glm::mat4(1.0f);
+    *ProjectionMatrix = glm::perspective( glm::half_pi<float>(), (float)ScreenWidth/(float)ScreenHeight, 0.1f, 10.0f);
+    
+    /*
     float AspectRatio = (float)ScreenWidth / (float)ScreenHeight;
     float YScale = (float) ((1.0f / tanf(CGCore::DegToRad(CGCore::Renderer::FOV / 2.0f))) * AspectRatio);
     float XScale = YScale / AspectRatio;
@@ -48,6 +56,7 @@ void CGCore::Renderer::CreateProjectionMatrix(const DisplayManager* DM)
     (*ProjectionMatrix)[2][3] = -1;
     (*ProjectionMatrix)[3][2] = -((2 * CGCore::Renderer::NEAR_PLANE * CGCore::Renderer::FAR_PLANE) / FrustrumLength);
     (*ProjectionMatrix)[3][3] = 0.0f;
+     */
 }
 
 
