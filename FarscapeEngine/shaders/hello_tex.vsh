@@ -7,9 +7,10 @@ out vec2 TexCoord;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
 
 void main(void)
 {
-    gl_Position = projectionMatrix * transformationMatrix * vec4(position, 1.0f);
+    gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(position, 1.0f);
     TexCoord = textureCoords;
 }

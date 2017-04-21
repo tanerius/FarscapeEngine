@@ -44,7 +44,7 @@ void CGCore::DisplayManager::CreateDisplay()
 	}
 	glfwMakeContextCurrent(GLFWWindowPtr);
 
-    glfwSetKeyCallback(GLFWWindowPtr, CGCallbacks::KeyCallback); // key capture
+    glfwSetKeyCallback(GLFWWindowPtr, CGCore::CGCallbacks::KeyCallback); // key capture
     glfwSetErrorCallback(CGCallbacks::ErrorCallback);
     
     glfwWindowHint (GLFW_SAMPLES, 4);

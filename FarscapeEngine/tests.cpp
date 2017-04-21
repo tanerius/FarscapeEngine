@@ -6,6 +6,7 @@
 #include "cgrenderer.hpp"
 
 #include "cgentity.hpp"
+#include "cgcamera.hpp"
 
 
 #ifdef WINDOWS
@@ -20,6 +21,7 @@ int main()
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
     Display->GetInfo();
+    CGCore::Camera* MainCamera = new CGCore::Camera(Display);
     // Call a renderer to set states and create a projection matrix
     CGCore::Renderer* RendererObj = new CGCore::Renderer(Display);
     RendererObj->SetStates();
@@ -65,7 +67,7 @@ int main()
 
     Square->EnableEntity();
     Square->SetTransform(
-         glm::vec3(0.0f, 0.0f, 1.0f),       // Translation (x, y, z)
+         glm::vec3(0.0f, 0.0f, -5.0f),       // Translation (x, y, z)
          glm::vec4(1.0f,1.0f,0.0f,0.0f),    // Rotate Quat (xAxis, yAxis, zAxis, rotAngle)
          glm::vec3(1.0f, 1.0f, 1.0f)        // Scaling (x, y, z)
      );
@@ -77,16 +79,20 @@ int main()
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
-        Square->ChangeTranslation(glm::vec3(0.0f, 0.0f, -0.01f));
+        //Square->ChangeTranslation(glm::vec3(0.0f, 0.0f, -0.01f));
+        Square->ChangeRotation(glm::vec4(1.0f, 1.0f, 1.0f, 0.02f));
         RendererObj->Prepare();
         
         StaticShaderObj->StartProgram();
+        glm::mat4 V = MainCamera->GetViewMatrix();
+        StaticShaderObj->LoadViewMatrix(V);
         glm::mat4 M = Square->CreateTransformationMatrix();
         StaticShaderObj->LoadTransformationMatrix(M);
 
 
         HasError = StaticShaderObj->ValidateProgram();
         RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
+        MainCamera->Move();
 
         Display->UpdateDisplay();
     }

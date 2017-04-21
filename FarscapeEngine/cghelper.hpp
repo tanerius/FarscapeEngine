@@ -29,10 +29,14 @@ namespace CGCore
     glm::mat4 CreateTransformationMatrix(
          const glm::vec3& Translation,
          const glm::vec3& RotAxis,
-         const float RotAngle,
+         const float& RotAngle,
          const glm::vec3& Scale
-                                                 );
-    
+    );
+
+    glm::mat4 CreateViewMatrix(
+        const glm::vec3& Position,
+        const glm::vec3& Orientation // (pitch,yaw,roll) angles 
+    );
 
     void TestPrintMatrix4(glm::mat4& M, const char* msg = nullptr);
 #endif 

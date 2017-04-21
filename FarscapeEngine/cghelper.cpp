@@ -25,21 +25,30 @@
 glm::mat4 CGCore::CreateTransformationMatrix(
      const glm::vec3& Translation,
      const glm::vec3& RotAxis,
-     const float RotAngle,
+     const float& RotAngle,
      const glm::vec3& Scale
      )
 {
     glm::mat4 TranslationMat = glm::translate(glm::mat4(1.0f), Translation);
-    //TestPrintMatrix4(TranslationMat, "TRANSLATION");
-
-    glm::mat4 RotMat = glm::rotate(TranslationMat, RotAngle, RotAxis);
-    //TestPrintMatrix4(RotMat, "ROTATION");
-
-    glm::mat4 ScaleMat = glm::scale(RotMat, Scale);
-
-    glm::mat4 TransformationMat =
-    TranslationMat * RotMat * ScaleMat;
+    glm::mat4 RotMat = glm::rotate(glm::mat4(1.0f), RotAngle, RotAxis);
+    glm::mat4 ScaleMat = glm::scale(glm::mat4(1.0f), Scale);
+    glm::mat4 TransformationMat = TranslationMat * RotMat * ScaleMat;
     return TransformationMat;
+}
+
+
+glm::mat4 CGCore::CreateViewMatrix(
+     const glm::vec3& Position,
+     const glm::vec3& Orientation // (pitch,yaw,roll) angles 
+     )
+{
+    glm::vec3 NegativePos = glm::vec3(-1 * Position.x, -1 * Position.y, -1 * Position.z);
+    glm::mat4 T = glm::translate(glm::mat4(1.0f), NegativePos); // Camera postion
+    glm::mat4 RotMat = glm::rotate(glm::mat4(1.0), Orientation.x, glm::vec3(1.0f,0.0f,0.0f)); // Pitch
+    RotMat = glm::rotate(RotMat, Orientation.y, glm::vec3(0.0f,1.0f,0.0f)); // Yaw
+    RotMat = glm::rotate(RotMat, Orientation.z, glm::vec3(0.0f,0.0f,1.0f)); // Roll
+    glm::mat4 ViewMatrix = T * RotMat;
+    return ViewMatrix;
 }
 
 

@@ -16,30 +16,33 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-// Definitions for the callbacks
-class CGCallbacks
+
+namespace CGCore
 {
-    protected:
-    GLFWwindow* GLFWWindowPtr = 0; // will hold our window pointer
 
-    public:
-    static void ErrorCallback(int error, const char* description)
+    // Definitions for the callbacks
+    class CGCallbacks
     {
-        fputs(description, stderr);
-    }
+        protected:
+        GLFWwindow* GLFWWindowPtr = 0; // will hold our window pointer
 
-    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-    {
-        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        public:
+        static void ErrorCallback(int error, const char* description)
         {
-            glfwSetWindowShouldClose(window, GL_TRUE);
+            fputs(description, stderr);
         }
-    }
 
-    GLFWwindow* GetWindow() const { return GLFWWindowPtr; }
+        static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+            {
+                glfwSetWindowShouldClose(window, GL_TRUE);
+            }
+        }
 
-    // Override in classes where the Keycallback needs to send event info
-    virtual void Move(int key, int scancode, int action, int mods) { return; };
-};
+        GLFWwindow* GetWindow() const { return GLFWWindowPtr; }
+
+    };
+}
 
 #endif

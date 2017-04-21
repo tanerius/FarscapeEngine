@@ -30,6 +30,7 @@ namespace CGCore
             GLint Loc_transformationMatrix;
             GLint Loc_TextureSamplerHnd;
             GLint Loc_ProjectionMatrix;
+            GLint Loc_ViewMatrix;
         protected:
             virtual void BindAttributes() override;
         public:
@@ -41,6 +42,7 @@ namespace CGCore
 #ifdef USE_GLM
             void LoadTransformationMatrix(glm::mat4& M);
             void LoadProjectionMatrix(glm::mat4& M);
+            void LoadViewMatrix(glm::mat4& M);
 
 #else
             void LoadTransformationMatrix(Mat4f& M);

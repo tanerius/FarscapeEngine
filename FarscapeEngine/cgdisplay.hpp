@@ -12,7 +12,7 @@
 namespace CGCore
 {
 
-    class DisplayManager : protected CGCallbacks
+    class DisplayManager : public CGCallbacks
     {
         private:
             const int DisplayWidth = 1280;

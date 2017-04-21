@@ -1,5 +1,6 @@
 #include "cgshader.hpp"
 #include "cgstaticshader.hpp"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -20,6 +21,7 @@ void CGCore::StaticShader::GetAllUniformLocations()
     Loc_transformationMatrix = GetUniformLocation("transformationMatrix");
     Loc_TextureSamplerHnd = GetUniformLocation("textureSampler");
     Loc_ProjectionMatrix = GetUniformLocation("projectionMatrix");
+    Loc_ViewMatrix = GetUniformLocation("viewMatrix");
 }
 
 void CGCore::StaticShader::LoadTextureToSampler(const GLuint TextureID, const int SamplerUnit)
@@ -40,6 +42,10 @@ void CGCore::StaticShader::LoadTransformationMatrix(glm::mat4& M)
 void CGCore::StaticShader::LoadProjectionMatrix(glm::mat4& M)
 {
     LoadUniform(Loc_ProjectionMatrix, M);
+}
+void CGCore::StaticShader::LoadViewMatrix(glm::mat4& M)
+{
+    LoadUniform(Loc_ViewMatrix, M);
 }
 #else
 void CGCore::StaticShader::LoadTransformationMatrix(Mat4f& M)

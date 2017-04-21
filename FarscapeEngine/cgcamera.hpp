@@ -21,7 +21,7 @@
 
 namespace CGCore
 {
-
+    class DisplayManager;
     
     class Camera 
     {
@@ -36,11 +36,10 @@ namespace CGCore
         Camera(DisplayManager* D);
         ~Camera();
 
-        
-
-        glm::vec3 GetPosition();
+        glm::vec3 GetPosition() const { return *Position; }
         float GetPitch() const { return Pitch; }
         float GetRoll() const { return Pitch; }
+        glm::mat4 GetViewMatrix() const;
         float GetYaw() const { return Pitch; }
         void Move();
     };
