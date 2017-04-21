@@ -32,59 +32,31 @@ int main()
     
     // Get the projection matrix and load it onto the shader once
     glm::mat4 ProjectionMatrix = RendererObj->GetProjection();
-    StaticShaderObj->StartProgram();
-    StaticShaderObj->LoadProjectionMatrix(ProjectionMatrix);
-    StaticShaderObj->StopProgram();
+
     
     
     LoaderObj->CreateBindVAO();
 
     // Vertex data representing a 3D CUBE
     const GLfloat VertexBufferData[] = {
-        -0.5f,0.5f,-0.5f,	
-        -0.5f,-0.5f,-0.5f,	
-        0.5f,-0.5f,-0.5f,	
-        0.5f,0.5f,-0.5f,		
-        
-        -0.5f,0.5f,0.5f,	
-        -0.5f,-0.5f,0.5f,	
-        0.5f,-0.5f,0.5f,	
-        0.5f,0.5f,0.5f,
-        
-        0.5f,0.5f,-0.5f,	
-        0.5f,-0.5f,-0.5f,	
-        0.5f,-0.5f,0.5f,	
-        0.5f,0.5f,0.5f,
-        
-        -0.5f,0.5f,-0.5f,	
-        -0.5f,-0.5f,-0.5f,	
-        -0.5f,-0.5f,0.5f,	
-        -0.5f,0.5f,0.5f,
-        
-        -0.5f,0.5f,0.5f,
-        -0.5f,0.5f,-0.5f,
-        0.5f,0.5f,-0.5f,
-        0.5f,0.5f,0.5f,
-        
-        -0.5f,-0.5f,0.5f,
-        -0.5f,-0.5f,-0.5f,
-        0.5f,-0.5f,-0.5f,
-        0.5f,-0.5f,0.5f
+        // back side
+        -0.5f,0.5f,-0.5f,	// top left back
+        -0.5f,-0.5f,-0.5f,	// btm left back
+        0.5f,-0.5f,-0.5f,	// btm right back
+        0.5f,0.5f,-0.5f,	// top right back
+        //front side
+        -0.5f,0.5f,0.5f,	//top left front
+        -0.5f,-0.5f,0.5f,	//btm left front
+        0.5f,-0.5f,0.5f,	//btm right front
+        0.5f,0.5f,0.5f     //top right front
     };
     /// indexes how to draw the faces (in GL_CCW) forming a cube
     const GLuint Indices[] = {
-        0,1,3,	
-        3,1,2,	
-        4,5,7,
-        7,5,6,
-        8,9,11,
-        11,9,10,
-        12,13,15,
-        15,13,14,	
-        16,17,19,
-        19,17,18,
-        20,21,23,
-        23,21,22
+        1,0,3, // back face
+        3,2,1, // back face	
+        7,4,5, // front face
+        5,6,7 // front face
+
     };
     // Two UV coordinates for each vertex.
     const GLfloat TextureCoords[] =
@@ -117,7 +89,7 @@ int main()
 
 
     // Create the square entity
-    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 72, Indices, 36, TextureCoords, 48, TEXTURE_FILE);
+    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 12, TextureCoords, 48, TEXTURE_FILE);
 
     Square->EnableEntity();
     Square->SetTransform(
@@ -134,10 +106,11 @@ int main()
     while(!Display->CloseRequested() && (!HasError))
     {
         //Square->ChangeTranslation(glm::vec3(0.0f, 0.0f, -0.01f));
-        Square->ChangeRotation(glm::vec4(1.0f, 1.0f, 1.0f, 0.02f));
+        Square->ChangeRotation(glm::vec4(0.0f, 1.0f, 0.0f, 0.02f));
         RendererObj->Prepare();
         
         StaticShaderObj->StartProgram();
+        StaticShaderObj->LoadProjectionMatrix(ProjectionMatrix);
         glm::mat4 V = MainCamera->GetViewMatrix();
         StaticShaderObj->LoadViewMatrix(V);
         glm::mat4 M = Square->CreateTransformationMatrix();
