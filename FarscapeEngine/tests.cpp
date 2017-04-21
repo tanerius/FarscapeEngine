@@ -39,31 +39,85 @@ int main()
     
     LoaderObj->CreateBindVAO();
 
-    // Vertex data representing a square / rectangle
+    // Vertex data representing a 3D CUBE
     const GLfloat VertexBufferData[] = {
-        -0.5f,   0.5f, 0.0f, // v0 top left
-        -0.5f,  -0.5f, 0.0f, // v1 bot left
-         0.5f,   0.5f, 0.0f, // v2 top right
-         0.5f,  -0.5f, 0.0f  // v3 bot right
+        -0.5f,0.5f,-0.5f,	
+        -0.5f,-0.5f,-0.5f,	
+        0.5f,-0.5f,-0.5f,	
+        0.5f,0.5f,-0.5f,		
+        
+        -0.5f,0.5f,0.5f,	
+        -0.5f,-0.5f,0.5f,	
+        0.5f,-0.5f,0.5f,	
+        0.5f,0.5f,0.5f,
+        
+        0.5f,0.5f,-0.5f,	
+        0.5f,-0.5f,-0.5f,	
+        0.5f,-0.5f,0.5f,	
+        0.5f,0.5f,0.5f,
+        
+        -0.5f,0.5f,-0.5f,	
+        -0.5f,-0.5f,-0.5f,	
+        -0.5f,-0.5f,0.5f,	
+        -0.5f,0.5f,0.5f,
+        
+        -0.5f,0.5f,0.5f,
+        -0.5f,0.5f,-0.5f,
+        0.5f,0.5f,-0.5f,
+        0.5f,0.5f,0.5f,
+        
+        -0.5f,-0.5f,0.5f,
+        -0.5f,-0.5f,-0.5f,
+        0.5f,-0.5f,-0.5f,
+        0.5f,-0.5f,0.5f
     };
-    /// indexes how to draw the triangles (in GL_CCW) forming a square
+    /// indexes how to draw the faces (in GL_CCW) forming a cube
     const GLuint Indices[] = {
-        2, 0, 1,    // first triangle
-        1, 3, 2
-
+        0,1,3,	
+        3,1,2,	
+        4,5,7,
+        7,5,6,
+        8,9,11,
+        11,9,10,
+        12,13,15,
+        15,13,14,	
+        16,17,19,
+        19,17,18,
+        20,21,23,
+        23,21,22
     };
     // Two UV coordinates for each vertex.
     const GLfloat TextureCoords[] =
     {
-        0.0f, 1.0f, // v0
-        0.0f, 0.0f, // v1
-        1.0f, 0.0f, // v3
-        1.0f, 1.0f
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f,			
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f,			
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f,
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f,
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f,
+        0.0f,0.0f,
+        0.0f,1.0f,
+        1.0f,1.0f,
+        1.0f,0.0f
     };
 
 
     // Create the square entity
-    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 12, Indices, 6, TextureCoords, 8, TEXTURE_FILE);
+    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 72, Indices, 36, TextureCoords, 48, TEXTURE_FILE);
 
     Square->EnableEntity();
     Square->SetTransform(
@@ -88,8 +142,6 @@ int main()
         StaticShaderObj->LoadViewMatrix(V);
         glm::mat4 M = Square->CreateTransformationMatrix();
         StaticShaderObj->LoadTransformationMatrix(M);
-
-
         HasError = StaticShaderObj->ValidateProgram();
         RendererObj->RenderFromBufferIndex(Square, StaticShaderObj);
         MainCamera->Move();
