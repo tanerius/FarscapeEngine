@@ -7,7 +7,7 @@
 
 #include "cgentity.hpp"
 #include "cgcamera.hpp"
-
+#include "cgmesh.hpp"
 
 #ifdef WINDOWS
 static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex512.png";
@@ -17,6 +17,14 @@ static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/Farscape
 
 int main()
 {
+    
+    CGCore::Vertex* V = new CGCore::Vertex(
+                    glm::vec3(1.0f,2.0f,3.0f),
+                    glm::vec2(4.0f,5.0f),
+                    glm::vec3(6.0f,7.0f,8.0f));
+    printf("Vertex info: \n%s",V->ToString().c_str());
+    return 0;
+    
     // Initialize the display
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
@@ -39,59 +47,49 @@ int main()
 
     // Vertex data representing a 3D CUBE
     const GLfloat VertexBufferData[] = {
+        // front side
+        -0.5f, -0.5f,  0.0f,    // left bot front
+         0.5f, -0.5f,  0.0f,    // right bot front
+         0.5f,  0.5f,  0.0f,    // right top front
+        -0.5f,  0.5f,  0.0f,    // left top front
         // back side
-        -0.5f,0.5f,-0.5f,	// top left back
-        -0.5f,-0.5f,-0.5f,	// btm left back
-        0.5f,-0.5f,-0.5f,	// btm right back
-        0.5f,0.5f,-0.5f,	// top right back
-        //front side
-        -0.5f,0.5f,0.5f,	//top left front
-        -0.5f,-0.5f,0.5f,	//btm left front
-        0.5f,-0.5f,0.5f,	//btm right front
-        0.5f,0.5f,0.5f     //top right front
+        -0.5f,  0.5f, -0.5f,    // left top back
+        -0.5f, -0.5f, -0.5f,    // left bot back
+         0.5f, -0.5f, -0.5f,    // right bot back
+         0.5f,  0.5f, -0.5f     // right top back
     };
+    
     /// indexes how to draw the faces (in GL_CCW) forming a cube
     const GLuint Indices[] = {
-        1,0,3, // back face
-        3,2,1, // back face	
-        7,4,5, // front face
-        5,6,7, // front face
-        4,0,1, // left face
-        1,5,4
-
+        2,3,0, 0,1,2,   // front face
+        2,1,6, 6,7,2,   // right face
+        2,7,4, 3,2,4,   // top face
+        4,5,0, 0,3,4,   // left face
+        5,4,7, 7,6,5,   // back face
+        5,6,1, 1,0,5    // bot face
     };
     // Two UV coordinates for each vertex.
     const GLfloat TextureCoords[] =
     {
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f,			
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f,			
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f,
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f,
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f,
-        0.0f,0.0f,
-        0.0f,1.0f,
-        1.0f,1.0f,
-        1.0f,0.0f
+        1.0f,1.0f,  // 2 -
+        0.0f,1.0f,  // 3  |
+        0.0f,0.0f,  // 0  |
+        0.0f,0.0f,  // 0  |-- front face
+        1.0f,0.0f,  // 1  |
+        1.0f,1.0f,  // 2 -
+        
+        0.0f,1.0f,  // 2 -
+        0.0f,0.0f,  // 1  |
+        1.0f,0.0f,  // 6  |
+        1.0f,0.0f,  // 6  |-- right face
+        1.0f,1.0f,  // 7  |
+        0.0f,1.0f,  // 2 -
     };
 
 
     // Create the square entity
-    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 18, TextureCoords, 48, TEXTURE_FILE);
+    CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 36, TextureCoords, 24, TEXTURE_FILE);
+    //CGCore::Entity *Square = LoaderObj->CreateEntity(VertexBufferData, 24, Indices, 36, TextureCoords, 24);
 
     Square->EnableEntity();
     Square->SetTransform(
@@ -138,12 +136,3 @@ int main()
 
     return 0;
 }
-
-/*
-  Talk with Li
-
-  - Draft of the circular 
-  - and draft of the seating arrangements and suggest
-  - Plata tetka lile! 12k vs 15k viki
-  - 
-*/
