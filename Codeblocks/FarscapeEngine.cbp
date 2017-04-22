@@ -38,6 +38,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../FarscapeEngine/cgcallback.hpp" />
+		<Unit filename="../FarscapeEngine/cgcamera.cpp" />
+		<Unit filename="../FarscapeEngine/cgcamera.hpp" />
 		<Unit filename="../FarscapeEngine/cgdisplay.cpp" />
 		<Unit filename="../FarscapeEngine/cgdisplay.hpp" />
 		<Unit filename="../FarscapeEngine/cgentity.cpp" />
