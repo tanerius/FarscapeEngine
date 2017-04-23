@@ -55,36 +55,38 @@ namespace CGCore
     };
     
     
-    
+
     class IndexedModel
     {
     public:
-        std::vector<glm::vec3> positions;
-        std::vector<glm::vec2> texCoords;
-        std::vector<glm::vec3> normals;
-        std::vector<unsigned int> indices;
+        // std::vector allocated to heap by default
+        std::vector<glm::vec3> Positions;
+        std::vector<glm::vec2> TexCoords;
+        std::vector<glm::vec3> Normals;
+        std::vector<unsigned int> Indices;
         
         void CalcNormals();
     };
     
     
-    
-    class Mesh
+    // Representation of a mesh
+    class Mesh : public Object
     {
     public:
-        Mesh(const std::string& fileName)
+        Mesh(const std::string& FileName)
         {
             assert(false); // DONT USE NOW
         }
         Mesh(
-             Vertex* vertices,
-             unsigned int numVertices,
-             unsigned int* indices,
-             unsigned int numIndices
+             Vertex* Vertices,
+             unsigned int VertexCount,
+             unsigned int* Indices,
+             unsigned int IndexCount
              );
         
         void Draw();
         virtual ~Mesh();
+        virtual std::string ToString() const override;
     protected:
     private:
         static const unsigned int NUM_BUFFERS = 4;
