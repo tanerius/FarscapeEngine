@@ -7,8 +7,6 @@
 //
 
 #include "cgcamera.hpp"
-#include "cghelper.hpp"
-#include "cgdisplay.hpp"
 
 #ifdef WINDOWS
     #include<windows.h>
@@ -18,61 +16,44 @@
     #include <glm/glm.hpp>
 #endif
 
-#include <assert.h>
-#include <cstdio>
-#include <cstdlib>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <string>
 
-CGCore::Camera::Camera(CGCore::DisplayManager* D)
+std::string CGCore::Camera::ToString() const 
 {
-    assert(Position == nullptr);
-    Position = new glm::vec3(0.0f, 0.0f, 0.0f);
-    Display = D;
+    std::string x = "Camera {\n";
+    
+    x = x + "ProjectionMatrix \n{\n";
+    
+    for(int j = 0; j < 4; j++)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            x += std::to_string(projection[i][j]) + "\t";
+        }
+        x += "\n";
+    }
+    x += "}\nPos(";
+    x += std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) +")\n";
+    x += "Fwd(";
+    x += std::to_string(forward.x) + ", " + std::to_string(forward.y) + ", " + std::to_string(forward.z) +")\n";
+    x += "Up(";
+    x += std::to_string(up.x) + ", " + std::to_string(up.y) + ", " + std::to_string(up.z) +")\n";
+    x += "}\n";
+    
+    /*
+     
+     glm::mat4 projection;
+     glm::vec3 pos;
+     glm::vec3 forward;
+     glm::vec3 up;
+     
+     */
+    return x;
 }
 
-
-CGCore::Camera::~Camera()
-{
-    delete Position;
-    Position = nullptr;
-}
-
-
-glm::mat4 CGCore::Camera::GetViewMatrix() const
-{
-    glm::mat4 VM = CGCore::CreateViewMatrix(*Position, glm::vec3(Pitch, Yaw, Roll));
-    return VM;
-}
 
 
 void CGCore::Camera::Move()
 {
-    int state = glfwGetKey(Display->GetWindow(), GLFW_KEY_W);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        Position->z -= 0.02f; 
-    }
-
-    state = glfwGetKey(Display->GetWindow(), GLFW_KEY_S);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        Position->z += 0.02f; 
-    }
-
-    state = glfwGetKey(Display->GetWindow(), GLFW_KEY_A);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        Position->x -= 0.02f; 
-    }
-
-    state = glfwGetKey(Display->GetWindow(), GLFW_KEY_D);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        Position->x += 0.02f; 
-    }
+    return;
 }

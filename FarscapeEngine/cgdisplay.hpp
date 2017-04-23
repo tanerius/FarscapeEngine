@@ -15,8 +15,8 @@ namespace CGCore
     class DisplayManager : public CGCallbacks
     {
         private:
-            const int DisplayWidth = 1280;
-            const int DisplayHeight = 720;
+            const int DisplayWidth = 800;
+            const int DisplayHeight = 600;
             // const int MaxFps = 120;
 
             double previous_seconds = 0.0f;
