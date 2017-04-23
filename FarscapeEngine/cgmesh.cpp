@@ -66,6 +66,12 @@ void CGCore::IndexedModel::CalcNormals()
 }
 
 
+// *****************************************************
+// ********* Mesh Model
+// *****************************************************
+
+
+
 CGCore::Mesh::Mesh(
                    Vertex* Vertices,
                    unsigned int VertexCount,

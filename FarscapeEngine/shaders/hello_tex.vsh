@@ -1,16 +1,19 @@
 #version 410
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec2 textureCoords;
+layout (location = 1) in vec2 texCoord;
+layout (location = 2) in vec3 normal;
 
-out vec2 TexCoord;
+out vec2 texCoord0;
+out vec3 normal0;
 
-uniform mat4 transformationMatrix;
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
+uniform mat4 MVP;
+uniform mat4 Normal;
+
 
 void main(void)
 {
-    gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(position, 1.0f);
-    TexCoord = textureCoords;
+    gl_Position = MVP * vec4(position, 1.0f);
+    texCoord0 = texCoord;
+    normal0 = (Normal * vec4(normal, 0.0)).xyz;
 }
