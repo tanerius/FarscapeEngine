@@ -15,6 +15,16 @@ static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeE
 
 int main()
 {
+
+    /*
+        1. load shaders
+        2. attach them
+        3. bind attributes
+        4. link program
+        5. get uniform vars
+        6. detach shaders
+        7 delete shaders
+    */
     
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
