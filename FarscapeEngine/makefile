@@ -32,10 +32,10 @@ OBJ_NAME = cgdisplay
 all : clean $(OBJS) 
 
 
-tests: cgdisplay rawmodel loader renderer shader staticshader texture helpers entity cgcamera
-	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgstaticshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(LOC_LIB)
+tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh
+	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(LOC_LIB)
 
-cgcamera : cgdisplay cgcamera.hpp 
+cgcamera : cgcore.hpp cgcamera.hpp 
 	$(CC) cgcamera.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgcamera.o
 
 cgdisplay : cgcallback.hpp cgdisplay.hpp
@@ -50,20 +50,20 @@ renderer : rawmodel cgrenderer.hpp
 rawmodel : cgrawmodel.hpp
 	$(CC) cgrawmodel.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgrawmodel.o
 
-staticshader : shader cgstaticshader.hpp
-	$(CC) cgstaticshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgstaticshader.o
-
 shader : cgshader.hpp
 	$(CC) cgshader.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgshader.o
 
 entity : texture cgentity.hpp
 	$(CC) cgentity.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgentity.o
 
-texture : cgtexture.hpp 
+texture : cgtransform.hpp cgtexture.hpp 
 	$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
 
 helpers : cghelper.hpp
 	$(CC) cghelper.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cghelper.o
+
+mesh : cgcore.hpp cgmesh.hpp
+	$(CC) cgmesh.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgmesh.o
 
 clean:
 	- rm -rf $(OUTPUTDIR)

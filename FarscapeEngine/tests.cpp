@@ -98,8 +98,8 @@ int main()
         
         renderer->Prepare();
         
-        float sinCounter = sinf(counter);
-        float absSinCounter = abs(sinCounter);
+        float sinCounter = std::sinf(counter);
+        float absSinCounter = std::abs(sinCounter);
         
         //transform.GetPos()->x = sinCounter;
         transform->GetRot()->y = counter * 100;
