@@ -93,8 +93,8 @@ int main()
     CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     CGCore::Texture* texture = nullptr;
-    CGCore::Transform* transform = new CGCore::Transform();
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, -5.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, -10.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
     
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
     renderer->SetStates();
@@ -107,19 +107,19 @@ int main()
     {
         
         renderer->Prepare();
+        counter = counter+0.01f;
+
+        glm::vec3 x(counter,counter,0.0f);
+        transform->SetRot(x);
         
-        float sinCounter = std::sinf(counter);
-        float absSinCounter = std::abs(sinCounter);
-        
-        //transform.GetPos()->x = sinCounter;
-        transform->GetRot()->y = counter * 100;
         if(texture == nullptr)
         {
             texture = new CGCore::Texture(TEXTURE_FILE);
         }
+        shader->Bind();
         shader->Update(*transform, camera->GetViewProjection());
         mesh->Draw();
-        
+        shader->UnBind();
         
         Display->UpdateDisplay();
     }

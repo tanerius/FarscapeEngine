@@ -38,7 +38,7 @@ void CGCore::Renderer::CreateProjectionMatrix(const DisplayManager* DM)
     if (ProjectionMatrix != nullptr)
         delete ProjectionMatrix;
     ProjectionMatrix = new glm::mat4(1.0f);
-    *ProjectionMatrix = glm::perspective( glm::half_pi<float>(), (float)ScreenWidth/(float)ScreenHeight, 0.1f, 10.0f);
+    *ProjectionMatrix = glm::perspective( glm::half_pi<float>(), (float)ScreenWidth/(float)ScreenHeight, 0.1f, -100.0f);
    
 }
 

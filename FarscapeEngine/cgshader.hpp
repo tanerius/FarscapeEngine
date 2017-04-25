@@ -14,12 +14,14 @@ namespace CGCore
         Shader(const std::string& fileName);
         
         void Bind();
+        void UnBind();
         void Update(const Transform& transform, const glm::mat4& VP);
         
         virtual ~Shader();
     protected:
     private:
-        static const unsigned int NUM_SHADERS = 2; // vertex + fragment shaders
+        // vertex + fragment shaders
+        static const unsigned int NUM_SHADERS = 2; 
         static const unsigned int NUM_UNIFORMS = 3; 
         
         void operator=(const Shader& shader) {}

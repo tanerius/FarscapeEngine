@@ -5,25 +5,27 @@
 CGCore::Shader::Shader(const std::string& fileName)
 {
     m_program = glCreateProgram();
+
     m_shaders[0] = CreateShader(LoadShader(fileName + ".vsh"), GL_VERTEX_SHADER);
     m_shaders[1] = CreateShader(LoadShader(fileName + ".fsh"), GL_FRAGMENT_SHADER);
-    
+    // Attach shaders to program
     for(unsigned int i = 0; i < NUM_SHADERS; i++)
         glAttachShader(m_program, m_shaders[i]);
-    
+    // Bind the location attrs from shader
     glBindAttribLocation(m_program, 0, "position");
     glBindAttribLocation(m_program, 1, "texCoord");
     glBindAttribLocation(m_program, 2, "normal");
-    
+    // Link Program
     glLinkProgram(m_program);
     CheckShaderError(m_program, GL_LINK_STATUS, true, "Error linking shader program");
-    
-    glValidateProgram(m_program);
-    CheckShaderError(m_program, GL_LINK_STATUS, true, "Invalid shader program");
-    
+
     m_uniforms[0] = glGetUniformLocation(m_program, "MVP");
     m_uniforms[1] = glGetUniformLocation(m_program, "Normal");
     m_uniforms[2] = glGetUniformLocation(m_program, "lightDirection");
+
+    glValidateProgram(m_program);
+    CheckShaderError(m_program, GL_LINK_STATUS, true, "Invalid shader program");
+    
 }
 
 CGCore::Shader::~Shader()
@@ -40,6 +42,11 @@ CGCore::Shader::~Shader()
 void CGCore::Shader::Bind()
 {
     glUseProgram(m_program);
+}
+
+void CGCore::Shader::UnBind()
+{
+    glUseProgram(0);
 }
 
 void CGCore::Shader::Update(const Transform& transform, const glm::mat4& VP)
@@ -86,13 +93,16 @@ void CGCore::Shader::CheckShaderError(GLuint shader, GLuint flag, bool isProgram
     else
         glGetShaderiv(shader, flag, &success);
     
+    
+    std::cout << "Checking shaders..." << std::endl;
+
     if(success == GL_FALSE)
     {
         if(isProgram)
             glGetProgramInfoLog(shader, sizeof(error), NULL, error);
         else
             glGetShaderInfoLog(shader, sizeof(error), NULL, error);
-        
+
         std::cerr << errorMessage << ": '" << error << "'" << std::endl;
     }
 }
