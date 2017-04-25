@@ -7,9 +7,9 @@
 #include "cgrenderer.hpp"
 
 #ifdef WINDOWS
-static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex512.png";
+static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex3_512.png";
 #else
-static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex512.png";
+static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex3_512.png";
 static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex";
 #endif
 
@@ -38,31 +38,32 @@ int main()
     
     CGCore::Vertex vertices[] =
     {
-        CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(1, 0), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 0), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(0, 0, -1)),
-        
-        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(1, 0), glm::vec3(0, 0, 1)),
+        // front
+        CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 0), glm::vec3(0, 0, -1)),
+        CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, -1)),
+        CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(1, 1), glm::vec3(0, 0, -1)),
+        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 0), glm::vec3(0, 0, -1)),
+        // back
+        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(0, 1), glm::vec3(0, 0, 1)),
         CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(0, 0), glm::vec3(0, 0, 1)),
-        CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(0, 1), glm::vec3(0, 0, 1)),
+        CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(1, 0), glm::vec3(0, 0, 1)),
         CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 1), glm::vec3(0, 0, 1)),
-        
+        // bottom
         CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 1), glm::vec3(0, -1, 0)),
-        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(1, 1), glm::vec3(0, -1, 0)),
+        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(0, 0), glm::vec3(0, -1, 0)),
         CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 0), glm::vec3(0, -1, 0)),
-        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(0, 0), glm::vec3(0, -1, 0)),
-        
+        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(0, -1, 0)),
+        // top
         CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 1, 0)),
         CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(1, 1), glm::vec3(0, 1, 0)),
         CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(1, 0), glm::vec3(0, 1, 0)),
         CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 0), glm::vec3(0, 1, 0)),
-        
+        // left
         CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(1, 1), glm::vec3(-1, 0, 0)),
         CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(1, 0), glm::vec3(-1, 0, 0)),
         CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(0, 0), glm::vec3(-1, 0, 0)),
         CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(-1, 0, 0)),
-        
+        // right
         CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(1, 0, 0)),
         CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 0), glm::vec3(1, 0, 0)),
         CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(0, 0), glm::vec3(1, 0, 0)),
@@ -94,7 +95,7 @@ int main()
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     CGCore::Texture* texture = nullptr;
     CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, -10.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, 0.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
     
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
     renderer->SetStates();
@@ -109,7 +110,7 @@ int main()
         renderer->Prepare();
         counter = counter+0.01f;
 
-        glm::vec3 x(counter,counter,0.0f);
+        glm::vec3 x(counter,0.0f,0.0f);
         transform->SetRot(x);
         
         if(texture == nullptr)
