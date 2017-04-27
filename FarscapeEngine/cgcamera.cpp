@@ -18,6 +18,56 @@
 
 #include <string>
 
+
+void CGCore::Camera::MoveLeft()
+{
+    glm::vec3 m(-MOVE_SPEED, 0.0f, 0.0f);
+    Reposition(m);
+}
+
+
+void CGCore::Camera::MoveRight()
+{
+    glm::vec3 m(MOVE_SPEED, 0.0f, 0.0f);
+    Reposition(m);
+}
+
+
+void CGCore::Camera::MoveUp()
+{
+    glm::vec3 m(0.0f, MOVE_SPEED, 0.0f);
+    Reposition(m);
+}
+
+void CGCore::Camera::MoveDown()
+{
+    glm::vec3 m(0.0f, -MOVE_SPEED, 0.0f);
+    Reposition(m);
+}
+
+
+void CGCore::Camera::MoveIn()
+{
+    glm::vec3 m(0.0f, 0.0f, MOVE_SPEED);
+    Reposition(m);
+}
+
+void CGCore::Camera::MoveBack()
+{
+    glm::vec3 m(0.0f, 0.0f, -MOVE_SPEED);
+    Reposition(m);
+}
+
+
+void CGCore::Camera::Reposition(glm::vec3& positionDelta)
+{
+    pos.x += positionDelta.x;
+    pos.y += positionDelta.y;
+    pos.z += positionDelta.z;
+    return;
+}
+
+
 std::string CGCore::Camera::ToString() const 
 {
     std::string x = "Camera {\n";
@@ -39,21 +89,15 @@ std::string CGCore::Camera::ToString() const
     x += "Up(";
     x += std::to_string(up.x) + ", " + std::to_string(up.y) + ", " + std::to_string(up.z) +")\n";
     x += "}\n";
-    
-    /*
-     
-     glm::mat4 projection;
-     glm::vec3 pos;
-     glm::vec3 forward;
-     glm::vec3 up;
-     
-     */
+
     return x;
 }
 
 
 
-void CGCore::Camera::Move()
-{
-    return;
-}
+
+
+
+
+
+

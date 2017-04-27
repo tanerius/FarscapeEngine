@@ -33,6 +33,8 @@ namespace CGCore
         glm::vec3 pos;
         glm::vec3 forward;
         glm::vec3 up;
+
+        const float MOVE_SPEED = 0.025f;
     public:
         Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
         {
@@ -41,13 +43,21 @@ namespace CGCore
             this->up = glm::vec3(0.0f, 1.0f, 0.0f);
             this->projection = glm::perspective(fov, aspect, zNear, zFar);
         }
+
+        
+        void MoveLeft();
+        void MoveRight();
+        void MoveUp();
+        void MoveDown();
+        void MoveIn();
+        void MoveBack();
         
         inline glm::mat4 GetViewProjection() const
         {
             return projection * glm::lookAt(pos, pos + forward, up);
         }
 
-        void Move();
+        void Reposition(glm::vec3& positionDelta);
         virtual std::string ToString() const override;
     };
 }

@@ -6,6 +6,8 @@
 #include "cgtexture.hpp"
 #include "cgrenderer.hpp"
 
+#include "cginput.hpp"
+
 #ifdef WINDOWS
 static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex3_512.png";
 #else
@@ -95,7 +97,8 @@ int main()
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     CGCore::Texture* texture = nullptr;
     CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, 0.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, -5.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Input* input = new CGCore::Input(Display, camera);
     
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
     renderer->SetStates();
@@ -117,6 +120,10 @@ int main()
         {
             texture = new CGCore::Texture(TEXTURE_FILE);
         }
+
+        // Get keys
+        input->Move();
+
         shader->Bind();
         shader->Update(*transform, camera->GetViewProjection());
         mesh->Draw();
