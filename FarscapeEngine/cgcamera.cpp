@@ -58,6 +58,22 @@ void CGCore::Camera::MoveBack()
     Reposition(m);
 }
 
+void CGCore::Camera::Roll(int direction)
+{
+    (direction < 0)?(this->up.x +=  MOVE_SPEED):(this->up.x -=  MOVE_SPEED);
+}
+
+void CGCore::Camera::Pitch(int direction)
+{
+    (direction < 0)?(this->forward.y +=  MOVE_SPEED):(this->forward.y -=  MOVE_SPEED);
+}
+
+
+void CGCore::Camera::Yaw(int direction)
+{
+    (direction < 0)?(this->forward.x +=  MOVE_SPEED):(this->forward.x -=  MOVE_SPEED);
+}
+
 
 void CGCore::Camera::Reposition(glm::vec3& positionDelta)
 {

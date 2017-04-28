@@ -51,6 +51,10 @@ namespace CGCore
         void MoveDown();
         void MoveIn();
         void MoveBack();
+
+        void Roll(int direction);
+        void Pitch(int direction);
+        void Yaw(int direction);
         
         inline glm::mat4 GetViewProjection() const
         {
