@@ -41,24 +41,33 @@
 		<Unit filename="../FarscapeEngine/cgcallback.hpp" />
 		<Unit filename="../FarscapeEngine/cgcamera.cpp" />
 		<Unit filename="../FarscapeEngine/cgcamera.hpp" />
+		<Unit filename="../FarscapeEngine/cgcore.hpp" />
 		<Unit filename="../FarscapeEngine/cgdisplay.cpp" />
 		<Unit filename="../FarscapeEngine/cgdisplay.hpp" />
 		<Unit filename="../FarscapeEngine/cgentity.cpp" />
 		<Unit filename="../FarscapeEngine/cgentity.hpp" />
 		<Unit filename="../FarscapeEngine/cghelper.cpp" />
 		<Unit filename="../FarscapeEngine/cghelper.hpp" />
+		<Unit filename="../FarscapeEngine/cginput.cpp" />
+		<Unit filename="../FarscapeEngine/cginput.hpp" />
 		<Unit filename="../FarscapeEngine/cgloader.cpp" />
 		<Unit filename="../FarscapeEngine/cgloader.hpp" />
+		<Unit filename="../FarscapeEngine/cgmesh.cpp" />
+		<Unit filename="../FarscapeEngine/cgmesh.hpp" />
+		<Unit filename="../FarscapeEngine/cgobj.cpp" />
+		<Unit filename="../FarscapeEngine/cgobj.hpp" />
 		<Unit filename="../FarscapeEngine/cgrawmodel.cpp" />
 		<Unit filename="../FarscapeEngine/cgrawmodel.hpp" />
 		<Unit filename="../FarscapeEngine/cgrenderer.cpp" />
 		<Unit filename="../FarscapeEngine/cgrenderer.hpp" />
 		<Unit filename="../FarscapeEngine/cgshader.cpp" />
 		<Unit filename="../FarscapeEngine/cgshader.hpp" />
-		<Unit filename="../FarscapeEngine/cgstaticshader.cpp" />
-		<Unit filename="../FarscapeEngine/cgstaticshader.hpp" />
 		<Unit filename="../FarscapeEngine/cgtexture.cpp" />
 		<Unit filename="../FarscapeEngine/cgtexture.hpp" />
+		<Unit filename="../FarscapeEngine/shaders/hello.fsh" />
+		<Unit filename="../FarscapeEngine/shaders/hello.vsh" />
+		<Unit filename="../FarscapeEngine/shaders/hello_tex.fsh" />
+		<Unit filename="../FarscapeEngine/shaders/hello_tex.vsh" />
 		<Unit filename="../FarscapeEngine/tests.cpp" />
 		<Extensions>
 			<code_completion />
