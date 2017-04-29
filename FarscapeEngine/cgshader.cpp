@@ -27,7 +27,7 @@ CGCore::Shader::Shader(const std::string& fileName)
     m_uniforms[2] = glGetUniformLocation(m_program, "lightDirection");
 
     glValidateProgram(m_program);
-    CheckShaderError(m_program, GL_LINK_STATUS, true, "Invalid shader program");
+    CheckShaderError(m_program, GL_LINK_STATUS, true, "ERROR: Invalid shader program");
 
 }
 
@@ -80,7 +80,7 @@ std::string CGCore::Shader::LoadShader(const std::string& fileName)
     }
     else
     {
-        std::cerr << "Unable to load shader: " << fileName << std::endl;
+        std::cerr << "ERROR: Unable to load shader: " << fileName << std::endl;
     }
 
     return output;
@@ -115,7 +115,7 @@ GLuint CGCore::Shader::CreateShader(const std::string& text, unsigned int type)
     GLuint shader = glCreateShader(type);
 
     if(shader == 0)
-        std::cerr << "Error compiling shader type " << type << std::endl;
+        std::cerr << "ERROR: Error compiling shader type " << type << std::endl;
 
     const GLchar* p[1];
     p[0] = text.c_str();
@@ -125,7 +125,7 @@ GLuint CGCore::Shader::CreateShader(const std::string& text, unsigned int type)
     glShaderSource(shader, 1, p, lengths);
     glCompileShader(shader);
 
-    CheckShaderError(shader, GL_COMPILE_STATUS, false, "Error compiling shader!");
+    CheckShaderError(shader, GL_COMPILE_STATUS, false, "ERROR: Error compiling shader!");
 
     return shader;
 }
