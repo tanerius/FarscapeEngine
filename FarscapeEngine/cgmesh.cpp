@@ -6,8 +6,10 @@
 //  Copyright © 2017 Taner Selim. All rights reserved.
 //
 
+#include "cgobj.hpp"
 #include "cgmesh.hpp"
 #include <string>
+
 
 
 #include <GL/glew.h>
@@ -70,6 +72,10 @@ void CGCore::IndexedModel::CalcNormals()
 // ********* Mesh Model
 // *****************************************************
 
+CGCore::Mesh::Mesh(const std::string& FileName)
+{
+    InitMesh(OBJModel(FileName).ToIndexedModel());
+}
 
 
 CGCore::Mesh::Mesh(

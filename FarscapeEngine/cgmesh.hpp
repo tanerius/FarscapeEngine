@@ -73,10 +73,7 @@ namespace CGCore
     class Mesh : public Object
     {
     public:
-        Mesh(const std::string& FileName)
-        {
-            assert(false); // DONT USE NOW
-        }
+        Mesh(const std::string& fileName);
         Mesh(
              Vertex* Vertices,
              unsigned int VertexCount,

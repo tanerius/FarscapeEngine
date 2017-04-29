@@ -11,23 +11,14 @@
 #ifdef WINDOWS
 static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex3_512.png";
 #else
-static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex3_512.png";
+static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex512.png";
+static const char* OBJ_SAMPLE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/monkey3.obj";
 static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex";
 #endif
 
 int main()
 {
 
-    /*
-        1. load shaders
-        2. attach them
-        3. bind attributes
-        4. link program
-        5. get uniform vars
-        6. detach shaders
-        7 delete shaders
-    */
-    
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
     Display->GetInfo();
@@ -94,6 +85,8 @@ int main()
     
     
     CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
+    CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
+    
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     CGCore::Texture* texture = nullptr;
     CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
@@ -126,7 +119,8 @@ int main()
 
         shader->Bind();
         shader->Update(*transform, camera->GetViewProjection());
-        mesh->Draw();
+        // mesh->Draw();
+        monkey->Draw();
         shader->UnBind();
         
         Display->UpdateDisplay();
