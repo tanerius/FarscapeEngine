@@ -127,13 +127,14 @@ int main()
     }
 
     Display->DestroyDisplay();
-    /*
+
     delete camera;
     delete transform;
     delete texture;
     delete shader;
     delete mesh;
-    */
+    delete monkey;
+    delete input;
     delete renderer;
     delete Display;
 

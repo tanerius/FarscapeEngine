@@ -33,6 +33,8 @@ namespace CGCore
         glm::vec3 pos;
         glm::vec3 forward;
         glm::vec3 up;
+        
+        
 
         const float MOVE_SPEED = 0.025f;
     public:

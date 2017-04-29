@@ -21,58 +21,54 @@
 
 void CGCore::Camera::MoveLeft()
 {
-    glm::vec3 m(-MOVE_SPEED, 0.0f, 0.0f);
-    Reposition(m);
+    pos -= glm::normalize(glm::cross(forward, up)) * MOVE_SPEED;
 }
 
 
 void CGCore::Camera::MoveRight()
 {
-    glm::vec3 m(MOVE_SPEED, 0.0f, 0.0f);
-    Reposition(m);
-}
-
-
-void CGCore::Camera::MoveUp()
-{
-    glm::vec3 m(0.0f, MOVE_SPEED, 0.0f);
-    Reposition(m);
-}
-
-void CGCore::Camera::MoveDown()
-{
-    glm::vec3 m(0.0f, -MOVE_SPEED, 0.0f);
-    Reposition(m);
+    pos += glm::normalize(glm::cross(forward, up)) * MOVE_SPEED;
 }
 
 
 void CGCore::Camera::MoveIn()
 {
-    glm::vec3 m(0.0f, 0.0f, MOVE_SPEED);
-    Reposition(m);
+    pos += MOVE_SPEED * forward;
 }
 
 void CGCore::Camera::MoveBack()
 {
-    glm::vec3 m(0.0f, 0.0f, -MOVE_SPEED);
-    Reposition(m);
+    pos -= MOVE_SPEED * forward;
 }
+
+
+void CGCore::Camera::MoveUp()
+{
+    pos += MOVE_SPEED * up;
+}
+
+void CGCore::Camera::MoveDown()
+{
+    pos -= MOVE_SPEED * up;
+}
+
 
 void CGCore::Camera::Roll(int direction)
 {
-    (direction < 0)?(this->up.x +=  MOVE_SPEED):(this->up.x -=  MOVE_SPEED);
+    // do roll
 }
 
 void CGCore::Camera::Pitch(int direction)
 {
-    (direction < 0)?(this->forward.y +=  MOVE_SPEED):(this->forward.y -=  MOVE_SPEED);
+    // do pitch
 }
 
 
 void CGCore::Camera::Yaw(int direction)
 {
-    (direction < 0)?(this->forward.x +=  MOVE_SPEED):(this->forward.x -=  MOVE_SPEED);
+    // do yaw
 }
+
 
 
 void CGCore::Camera::Reposition(glm::vec3& positionDelta)
