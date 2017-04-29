@@ -390,3 +390,11 @@ static inline std::vector<std::string> SplitString(const std::string &s, char de
     
     return elems;
 }
+
+std::string CGCore::OBJModel::ToString() const
+{
+    std::string x = "OBJ File";
+    
+    return x;
+}
+
