@@ -9,6 +9,9 @@
 #ifndef cgcore_h
 #define cgcore_h
 #include <string>
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 namespace CGCore
 {
     class Object

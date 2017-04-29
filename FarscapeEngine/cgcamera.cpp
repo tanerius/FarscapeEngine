@@ -80,12 +80,12 @@ void CGCore::Camera::Reposition(glm::vec3& positionDelta)
 }
 
 
-std::string CGCore::Camera::ToString() const 
+std::string CGCore::Camera::ToString() const
 {
     std::string x = "Camera {\n";
-    
+#ifndef WINDOWS
     x = x + "ProjectionMatrix \n{\n";
-    
+
     for(int j = 0; j < 4; j++)
     {
         for(int i = 0; i < 4; i++)
@@ -100,6 +100,7 @@ std::string CGCore::Camera::ToString() const
     x += std::to_string(forward.x) + ", " + std::to_string(forward.y) + ", " + std::to_string(forward.z) +")\n";
     x += "Up(";
     x += std::to_string(up.x) + ", " + std::to_string(up.y) + ", " + std::to_string(up.z) +")\n";
+#endif
     x += "}\n";
 
     return x;

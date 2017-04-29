@@ -2,7 +2,9 @@
 
 #include "cgcamera.hpp"
 #include "cgdisplay.hpp"
-
+#ifdef WINDOWS
+#include<windows.h>
+#endif
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -40,7 +42,7 @@ void CGCore::Input::Move()
     if (state == GLFW_PRESS)
     {
         // Up key pressed
-        m_camera->MoveLeft(); 
+        m_camera->MoveLeft();
     }
 
     state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_D);

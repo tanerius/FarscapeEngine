@@ -13,6 +13,10 @@
     #include <glm/glm.hpp>
 #endif
 
+#ifdef WINDOWS
+#include<windows.h>
+#endif
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
