@@ -27,12 +27,12 @@ namespace CGCore
             this->rot = rot;
             this->scale = scale;
         }
-        
-        
+
+
         // Generate transformation matrix
-        inline glm::mat4 GetModel() const
+        inline glm::mat4 GetTransformationMatrix() const
         {
-            glm::mat4 posMat = glm::translate(pos);
+            glm::mat4 posMat = glm::translate(pos); // Translation matrix
             glm::mat4 scaleMat = glm::scale(scale);
             glm::mat4 rotX = glm::rotate(rot.x, glm::vec3(1.0, 0.0, 0.0));
             glm::mat4 rotY = glm::rotate(rot.y, glm::vec3(0.0, 1.0, 0.0));
@@ -40,20 +40,20 @@ namespace CGCore
             glm::mat4 rotMat = rotX * rotY * rotZ;
             return posMat * rotMat * scaleMat;
         }
-        
-        
+
+
         inline glm::mat4 GetMVP(const glm::mat4& VP) const
         {
-            glm::mat4 M = GetModel();
-            
+            glm::mat4 M = GetTransformationMatrix();
+
             return VP * M;
             // for camera.GetViewProjection() * GetModel(); do return glm::mat4&
         }
-        
+
         inline glm::vec3* GetPos() { return &pos; }
         inline glm::vec3* GetRot() { return &rot; }
         inline glm::vec3* GetScale() { return &scale; }
-        
+
         inline void SetPos(glm::vec3& pos) { this->pos = pos; }
         inline void SetRot(glm::vec3& rot) { this->rot = rot; }
         inline void SetScale(glm::vec3& scale) { this->scale = scale; }

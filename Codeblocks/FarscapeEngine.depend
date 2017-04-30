@@ -605,7 +605,7 @@
 	<glm/glm.hpp>
 	<GL/glew.h>
 
-1493414889 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.hpp
+1493591115 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.hpp
 	<string>
 	<GL/glew.h>
 	"cgtransform.hpp"
@@ -614,11 +614,14 @@
 	<vector>
 	<GL/glew.h>
 
-1493493384 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.cpp
+1493593662 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.cpp
 	"cgshader.hpp"
 	<iostream>
 	<fstream>
 	<string>
+	<assert.h>
+	<cstdio>
+	<cstdlib>
 
 1492455016 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\glm\gtc\type_ptr.hpp
 	"../gtc/quaternion.hpp"
@@ -663,16 +666,18 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493414889 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.cpp
+1493573879 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.cpp
 	"cgtexture.hpp"
 	<cstdlib>
 	<cstring>
+	<assert.h>
+	<cstdio>
 	<windows.h>
 	<png.h>
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493494968 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\tests.cpp
+1493586680 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\tests.cpp
 	"cgdisplay.hpp"
 	"cgtransform.hpp"
 	"cgcamera.hpp"
@@ -714,13 +719,13 @@
 
 1489670463 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\pnglibconf.h
 
-1493490423 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.cpp
+1493573879 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.cpp
 	"cgcamera.hpp"
 	<windows.h>
 	<glm/glm.hpp>
 	<string>
 
-1493414889 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.hpp
+1493594024 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.hpp
 	"cgcore.hpp"
 	<windows.h>
 	<glm/glm.hpp>
@@ -779,7 +784,7 @@
 	<map>
 	<windows.h>
 
-1493414889 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtransform.hpp
+1493593817 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtransform.hpp
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 

@@ -24,7 +24,7 @@
 
 namespace CGCore
 {
-    
+
     class Camera : public Object
     {
     private:
@@ -33,8 +33,8 @@ namespace CGCore
         glm::vec3 pos;
         glm::vec3 forward;
         glm::vec3 up;
-        
-        
+
+
 
         const float MOVE_SPEED = 0.025f;
     public:
@@ -46,7 +46,7 @@ namespace CGCore
             this->projection = glm::perspective(fov, aspect, zNear, zFar);
         }
 
-        
+
         void MoveLeft();
         void MoveRight();
         void MoveUp();
@@ -57,11 +57,22 @@ namespace CGCore
         void Roll(int direction);
         void Pitch(int direction);
         void Yaw(int direction);
-        
+
+        inline glm::mat4 GetProjectionMatrix() const
+        {
+            return projection;
+        }
+
+        inline glm::mat4 GetViewMatrix() const
+        {
+            return glm::lookAt(pos, pos + forward, up);
+        }
+
         inline glm::mat4 GetViewProjection() const
         {
             return projection * glm::lookAt(pos, pos + forward, up);
         }
+
 
         void Reposition(glm::vec3& positionDelta);
         virtual std::string ToString() const override;

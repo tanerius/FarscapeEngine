@@ -4,8 +4,7 @@
 #include <string>
 #include <assert.h>
 #include <cstdio>
-
-
+#include <cstdlib>
 
 CGCore::Shader::Shader(const std::string& fileName)
 {
@@ -23,10 +22,8 @@ CGCore::Shader::Shader(const std::string& fileName)
     // Link Program
     glLinkProgram(m_program);
     CheckShaderError(m_program, GL_LINK_STATUS, true, "Error linking shader program");
-
-    m_uniforms[0] = glGetUniformLocation(m_program, "MVP");
-    m_uniforms[1] = glGetUniformLocation(m_program, "Normal");
-    m_uniforms[2] = glGetUniformLocation(m_program, "lightDirection");
+    // Read in the uniform variables
+    ReadUniformVariables();
 
     glValidateProgram(m_program);
     CheckShaderError(m_program, GL_LINK_STATUS, true, "ERROR: Invalid shader program");
@@ -49,6 +46,16 @@ void CGCore::Shader::Bind()
     glUseProgram(m_program);
 }
 
+void CGCore::Shader::ReadUniformVariables()
+{
+    m_uniforms[0] = glGetUniformLocation(m_program, "MVP");
+    m_uniforms[1] = glGetUniformLocation(m_program, "Normal");
+    m_uniforms[2] = glGetUniformLocation(m_program, "lightDirection");
+    m_uniforms[3] = glGetUniformLocation(m_program, "lightColor");
+    m_uniforms[4] = glGetUniformLocation(m_program, "shineDamper");
+    m_uniforms[5] = glGetUniformLocation(m_program, "reflectivity");
+}
+
 void CGCore::Shader::UnBind()
 {
     glUseProgram(0);
@@ -57,11 +64,14 @@ void CGCore::Shader::UnBind()
 void CGCore::Shader::Update(const Transform& transform, const glm::mat4& VP)
 {
     glm::mat4 MVP = transform.GetMVP(VP);
-    glm::mat4 Normal = transform.GetModel();
+    glm::mat4 Normal = transform.GetTransformationMatrix();
 
     glUniformMatrix4fv(m_uniforms[0], 1, GL_FALSE, &MVP[0][0]); // write to uniform location - MVP
     glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &Normal[0][0]); // write to uniform location - Normal
-    glUniform3f(m_uniforms[2], 0.0f, 0.0f, 1.0f);
+    // TODO: Light direction - make this programatic
+    glUniform3f(m_uniforms[2], 0.0f, -1.0f, 0.0f); // light direction
+    // TODO: Make Light color programatic
+    glUniform3f(m_uniforms[3], 1.0f, 1.0f, 1.0f); // light color
 }
 
 std::string CGCore::Shader::LoadShader(const std::string& fileName)
