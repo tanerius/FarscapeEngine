@@ -64,6 +64,7 @@
 		<Unit filename="../FarscapeEngine/cgshader.hpp" />
 		<Unit filename="../FarscapeEngine/cgtexture.cpp" />
 		<Unit filename="../FarscapeEngine/cgtexture.hpp" />
+		<Unit filename="../FarscapeEngine/cgtransform.hpp" />
 		<Unit filename="../FarscapeEngine/shaders/hello.fsh" />
 		<Unit filename="../FarscapeEngine/shaders/hello.vsh" />
 		<Unit filename="../FarscapeEngine/shaders/hello_tex.fsh" />
