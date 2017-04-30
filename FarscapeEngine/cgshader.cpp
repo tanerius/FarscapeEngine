@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <assert.h>
+#include <cstdio>
 
 
 
@@ -81,6 +83,7 @@ std::string CGCore::Shader::LoadShader(const std::string& fileName)
     else
     {
         std::cerr << "ERROR: Unable to load shader: " << fileName << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     return output;
@@ -107,6 +110,7 @@ void CGCore::Shader::CheckShaderError(GLuint shader, GLuint flag, bool isProgram
             glGetShaderInfoLog(shader, sizeof(error), NULL, error);
 
         std::cerr << errorMessage << ": '" << error << "'" << std::endl;
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -114,8 +118,10 @@ GLuint CGCore::Shader::CreateShader(const std::string& text, unsigned int type)
 {
     GLuint shader = glCreateShader(type);
 
-    if(shader == 0)
+    if(shader == 0){
         std::cerr << "ERROR: Error compiling shader type " << type << std::endl;
+        exit(EXIT_FAILURE);
+    }
 
     const GLchar* p[1];
     p[0] = text.c_str();

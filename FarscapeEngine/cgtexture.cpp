@@ -1,6 +1,8 @@
 #include "cgtexture.hpp"
 #include <cstdlib>
 #include <cstring>
+#include <assert.h>
+#include <cstdio>
 
 #ifdef WINDOWS
 #include<windows.h>
@@ -80,7 +82,7 @@ bool CGCore::Texture::LoadPNGFile(const char* file_name)
 
     if (png_sig_cmp(header, 0, 8))
     {
-        fprintf(stderr, "error: %s is not a PNG.\n", file_name);
+        fprintf(stderr, "ERROR: %s is not a PNG.\n", file_name);
         fclose(fp);
         return false;
     }
@@ -88,7 +90,7 @@ bool CGCore::Texture::LoadPNGFile(const char* file_name)
     png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!png_ptr)
     {
-        fprintf(stderr, "error: png_create_read_struct returned 0.\n");
+        fprintf(stderr, "ERROR: png_create_read_struct returned 0.\n");
         fclose(fp);
         return false;
     }
