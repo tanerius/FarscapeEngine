@@ -59,8 +59,8 @@ void CGCore::Shader::Update(const Transform& transform, const glm::mat4& VP)
     glm::mat4 MVP = transform.GetMVP(VP);
     glm::mat4 Normal = transform.GetModel();
 
-    glUniformMatrix4fv(m_uniforms[0], 1, GL_FALSE, &MVP[0][0]);
-    glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &Normal[0][0]);
+    glUniformMatrix4fv(m_uniforms[0], 1, GL_FALSE, &MVP[0][0]); // write to uniform location - MVP
+    glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &Normal[0][0]); // write to uniform location - Normal
     glUniform3f(m_uniforms[2], 0.0f, 0.0f, 1.0f);
 }
 

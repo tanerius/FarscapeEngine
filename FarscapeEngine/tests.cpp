@@ -15,6 +15,11 @@ static const char* SHADER_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngi
 #else
 static const char* TEXTURE_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/tex512.png";
 static const char* OBJ_SAMPLE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/monkey3.obj";
+static const char* STALL_SAMPLE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/stall.obj";
+static const char* STALL_TEXTURE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/stallTexture.png";
+static const char* DRAGON_SAMPLE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/dragon.obj";
+static const char* YELLOW_TEX = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/assets/yellow128tex.png";
+
 static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeEngine/shaders/hello_tex";
 #endif
 
@@ -87,12 +92,15 @@ int main()
 
 
     //CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
-    CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
-
+    //CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
+    //CGCore::Mesh* stall = new CGCore::Mesh(STALL_SAMPLE);
+    
+    CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
+    
     CGCore::Texture* texture = nullptr;
     CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 0.0f, -15.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
     CGCore::Input* input = new CGCore::Input(Display, camera);
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
@@ -108,12 +116,12 @@ int main()
         renderer->Prepare();
         counter = counter+0.01f;
 
-        glm::vec3 x(counter,0.0f,0.0f);
+        glm::vec3 x(0.0f,counter,0.0f);
         transform->SetRot(x);
 
         if(texture == nullptr)
         {
-            texture = new CGCore::Texture(TEXTURE_FILE);
+            texture = new CGCore::Texture(YELLOW_TEX);
         }
 
         // Get keys
@@ -122,7 +130,8 @@ int main()
         shader->Bind();
         shader->Update(*transform, camera->GetViewProjection());
         //mesh->Draw();
-        monkey->Draw();
+        //monkey->Draw();
+        dragon->Draw();
         shader->UnBind();
 
         Display->UpdateDisplay();
@@ -133,7 +142,7 @@ int main()
     delete transform;
     delete texture;
     delete shader;
-    delete monkey;
+    delete dragon;
     delete renderer;
     delete Display;
 
