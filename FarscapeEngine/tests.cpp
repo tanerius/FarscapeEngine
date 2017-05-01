@@ -110,6 +110,10 @@ int main()
     CGCore::Input* input = new CGCore::Input(Display, camera);
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
+    
+    shader->SetShineDamper(10.0f);
+    shader->SetReflectivity(1.0f);
+    
     renderer->SetStates();
 
     bool HasError = false;
@@ -132,6 +136,8 @@ int main()
 
         // Get keys
         input->Move();
+        glm::vec3 CameraDirection = glm::normalize(camera->GetPosition());
+        shader->SetCamPosition(CameraDirection);
 
         shader->Bind();
         shader->Update(*transform, camera->GetViewProjection());

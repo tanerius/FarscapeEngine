@@ -14,6 +14,13 @@ namespace CGCore
         Shader(const std::string& fileName);
 
         void Bind();
+        float getReflectivity() const { return m_Reflectivity; }
+        float getShine() const { return m_ShineDamper; }
+        void SetCamPosition(glm::vec3& Pos);
+        void SetLightColor(glm::vec3& Color);
+        void SetLightDirection(glm::vec3& NewLD);
+        void SetReflectivity(float NewReflectivity);
+        void SetShineDamper(float NewShine);
         void UnBind();
         void Update(const Transform& transform, const glm::mat4& VP);
 
@@ -23,7 +30,7 @@ namespace CGCore
     private:
         // vertex + fragment shaders
         static const unsigned int NUM_SHADERS = 2;
-        static const unsigned int NUM_UNIFORMS = 6;
+        static const unsigned int NUM_UNIFORMS = 7;
 
 
         void operator=(const Shader& shader) {}
@@ -39,6 +46,9 @@ namespace CGCore
         // TODO: also make these programmatic
         float m_ShineDamper = 1.0f;
         float m_Reflectivity = 0.0f;
+        glm::vec3 m_LightDirection;
+        glm::vec3 m_LightColor;
+        glm::vec3 m_camPosition = glm::vec3(0.0f, 0.0f, -15.0f);
     };
 
 }

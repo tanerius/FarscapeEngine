@@ -23,6 +23,11 @@ CGCore::Shader::Shader(const std::string& fileName)
     glLinkProgram(m_program);
     CheckShaderError(m_program, GL_LINK_STATUS, true, "Error linking shader program");
     // Read in the uniform variables
+    // Default light direction from top
+    m_LightDirection = glm::vec3(0.0f, -1.0f, 0.0f);
+    // Default light color - white
+    m_LightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    
     ReadUniformVariables();
 
     glValidateProgram(m_program);
@@ -49,11 +54,12 @@ void CGCore::Shader::Bind()
 void CGCore::Shader::ReadUniformVariables()
 {
     m_uniforms[0] = glGetUniformLocation(m_program, "MVP");
-    m_uniforms[1] = glGetUniformLocation(m_program, "Normal");
+    m_uniforms[1] = glGetUniformLocation(m_program, "TransformationMatrix");
     m_uniforms[2] = glGetUniformLocation(m_program, "lightDirection");
     m_uniforms[3] = glGetUniformLocation(m_program, "lightColor");
     m_uniforms[4] = glGetUniformLocation(m_program, "shineDamper");
     m_uniforms[5] = glGetUniformLocation(m_program, "reflectivity");
+    m_uniforms[6] = glGetUniformLocation(m_program, "cameraDirection");
 }
 
 void CGCore::Shader::UnBind()
@@ -64,14 +70,32 @@ void CGCore::Shader::UnBind()
 void CGCore::Shader::Update(const Transform& transform, const glm::mat4& VP)
 {
     glm::mat4 MVP = transform.GetMVP(VP);
-    glm::mat4 Normal = transform.GetTransformationMatrix();
+    glm::mat4 TransformationMatrix = transform.GetTransformationMatrix();
 
     glUniformMatrix4fv(m_uniforms[0], 1, GL_FALSE, &MVP[0][0]); // write to uniform location - MVP
-    glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &Normal[0][0]); // write to uniform location - Normal
-    // TODO: Light direction - make this programatic
-    glUniform3f(m_uniforms[2], 0.0f, -1.0f, 0.0f); // light direction
-    // TODO: Make Light color programatic
-    glUniform3f(m_uniforms[3], 1.0f, 1.0f, 1.0f); // light color
+    glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &TransformationMatrix[0][0]); // write to uniform location - TransformationMatrix
+    // Light direction
+    glUniform3f(m_uniforms[2],
+                m_LightDirection.x,
+                m_LightDirection.y,
+                m_LightDirection.z
+                ); // light direction
+    // Light color
+    glUniform3f(m_uniforms[3],
+                m_LightColor.x,
+                m_LightColor.y,
+                m_LightColor.z
+                ); // light color
+    
+    glUniform1f(m_uniforms[4], m_ShineDamper);
+    glUniform1f(m_uniforms[5], m_Reflectivity);
+    
+    // Camera position unit (direction)
+    glUniform3f(m_uniforms[6],
+                m_camPosition.x,
+                m_camPosition.y,
+                m_camPosition.z
+                ); // camera position
 }
 
 std::string CGCore::Shader::LoadShader(const std::string& fileName)
@@ -136,7 +160,7 @@ GLuint CGCore::Shader::CreateShader(const std::string& text, unsigned int type)
     const GLchar* p[1];
     p[0] = text.c_str();
     GLint lengths[1];
-    lengths[0] = text.length();
+    lengths[0] = (GLint)text.length();
 
     glShaderSource(shader, 1, p, lengths);
     glCompileShader(shader);
@@ -147,3 +171,30 @@ GLuint CGCore::Shader::CreateShader(const std::string& text, unsigned int type)
 }
 
 
+void CGCore::Shader::SetCamPosition(glm::vec3& Pos)
+{
+    m_camPosition = Pos;
+}
+
+
+void CGCore::Shader::SetLightColor(glm::vec3& Color)
+{
+    m_LightColor = glm::normalize(Color);
+}
+
+void CGCore::Shader::SetLightDirection(glm::vec3& NewLD)
+{
+    m_LightDirection = glm::normalize(NewLD);
+}
+
+
+void CGCore::Shader::SetReflectivity(float NewReflectivity)
+{
+    m_Reflectivity = NewReflectivity;
+}
+
+
+void CGCore::Shader::SetShineDamper(float NewShine)
+{
+    m_ShineDamper = NewShine;
+}
