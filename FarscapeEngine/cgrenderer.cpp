@@ -56,7 +56,7 @@ void CGCore::Renderer::Render(GLenum RenderMode, GLuint StartIndex, GLuint Numbe
     glDrawArrays(RenderMode, StartIndex, NumberOfVertices);
 }
 
-
+/*
 void CGCore::Renderer::RenderFromBufferIndex(GLuint BufferIndex,GLenum RenderMode, GLenum DataType, GLuint NumberOfVertices)
 {
     
@@ -80,7 +80,7 @@ void CGCore::Renderer::RenderFromBufferIndex(Entity* EntityObj, StaticShader* En
         // there is a texture load the uniform var
         //EntityShader->LoadTextureToSampler(EntityObj->GetTextureObj()->GetTextureID(), 0);
     }
-    
+ 
     
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EntityObj->GetIndexBufferVBO());
@@ -91,7 +91,7 @@ void CGCore::Renderer::RenderFromBufferIndex(Entity* EntityObj, StaticShader* En
                    0
                    );
 }
-
+*/
 
 void CGCore::Renderer::SetStates()
 {

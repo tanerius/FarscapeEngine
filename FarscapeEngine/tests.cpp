@@ -5,6 +5,7 @@
 #include "cgshader.hpp"
 #include "cgtexture.hpp"
 #include "cgrenderer.hpp"
+#include "cgentity.hpp"
 
 #include "cginput.hpp"
 
@@ -96,23 +97,28 @@ int main()
         23, 22, 20
     };
 
-
+    // TODO: Increment correctly texture samplers
+    CGCore::Entity* dragon = new CGCore::Entity(DRAGON_SAMPLE,YELLOW_TEX);
+    
+    //CGCore::Entity* monkey = new CGCore::Entity(OBJ_SAMPLE,TEXTURE_FILE);
+    //glm::vec3 monkeyPosition = glm::vec3(1.0f,1.0f,2.0f);
+    //monkey->GetTransform()->SetPos(monkeyPosition);
+    
     //CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
     //CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
     //CGCore::Mesh* stall = new CGCore::Mesh(STALL_SAMPLE);
 
-    CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
+    //CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
 
-    CGCore::Texture* texture = nullptr;
-    CGCore::Transform* transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
+    
     CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
     CGCore::Input* input = new CGCore::Input(Display, camera);
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
     
-    shader->SetShineDamper(10.0f);
-    shader->SetReflectivity(1.0f);
+    shader->SetShineDamper(7.0f);
+    shader->SetReflectivity(3.0f);
     
     renderer->SetStates();
 
@@ -127,23 +133,17 @@ int main()
         counter = counter+0.01f;
 
         glm::vec3 x(0.0f,counter,0.0f);
-        transform->SetRot(x);
+        dragon->GetTransform()->SetRot(x);
 
-        if(texture == nullptr)
-        {
-            texture = new CGCore::Texture(YELLOW_TEX);
-        }
-
+    
         // Get keys
         input->Move();
         glm::vec3 CameraDirection = glm::normalize(camera->GetPosition());
         shader->SetCamPosition(CameraDirection);
 
         shader->Bind();
-        shader->Update(*transform, camera->GetViewProjection());
-        //mesh->Draw();
-        //monkey->Draw();
-        dragon->Draw();
+        shader->Update(*(dragon->GetTransform()), camera->GetViewProjection());
+        dragon->GetMesh()->Draw();
         shader->UnBind();
 
         Display->UpdateDisplay();
@@ -151,8 +151,6 @@ int main()
 
     Display->DestroyDisplay();
     delete camera;
-    delete transform;
-    delete texture;
     delete shader;
     delete dragon;
     delete renderer;

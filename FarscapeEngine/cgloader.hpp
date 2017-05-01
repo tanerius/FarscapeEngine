@@ -1,57 +1,14 @@
 #ifndef CG_LOADER_HPP
 #define CG_LOADER_HPP
-#include <vector>
-#ifdef WINDOWS
-#include<windows.h>
-#endif
-#include <GL/glew.h>
-
 
 
 namespace CGCore
 {
 
-    class RawModel;
-    class Texture;
-    class Entity;
-
-    struct VertexSimple
-    {
-        GLfloat x, y, z;        //Vertex
-        GLfloat padding;        // to keep this struct 16bytes
-    };
-
-
     // This class loads 3d models into memory by storing positional data of model in a VAO (vertex array object)
     class Loader
     {
-        private:
-            // containers to keep things clean
-            std::vector<GLuint> VAOContainer;
-            std::vector<GLuint> VBOContainer;
-            int CurrentVAOindex = 0;
 
-
-            // Members
-            void BindIndicesBufferVBO(const GLuint Indices[], GLuint ArraySize);
-            int GetVAOindex();
-            void UnbindVAO();
-        public:
-            void CleanUp();
-            void CreateBindVAO(); // returcreates a new VAO and
-            Entity* CreateEntity(
-                const GLfloat* Vertices, // The vertex buffer
-                const GLuint Vsize, // size of the vertex buffer
-                const GLuint* Indices, // the index buffer
-                const GLuint Isize, // size of the index buffer
-                const GLfloat* TexUV, // the texture mapping buffer
-                const GLuint Tsize, // size of the texture map buffer
-                const char* TexturePath = nullptr
-            );
-            void DisableVAO(GLuint VaoAttrNumber);
-            void LoadVboToVAO(const GLuint VaoAttrNumber, const GLuint BufferID, const GLuint ElementSize, GLenum BufferType, GLenum BufferTarget);
-            GLuint LoadToVBO(const GLfloat DataArray[], const GLuint DataSize);
-            GLuint LoadToVBO(const GLuint Indices[], const GLuint ArraySize);
     };
 
 }
