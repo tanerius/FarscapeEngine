@@ -20,11 +20,10 @@ uniform vec3 cameraDirection;
 
 void main(void)
 {
-    float brightness = clamp(dot(-lightDirection, surfaceNormal), 0.15, 1.0);
+    float brightness = clamp(dot(-lightDirection, surfaceNormal), 0.1, 1.0);
     vec3 diffuse = brightness * lightColor;
     
-    vec3 lightSrcDirection = -lightDirection;
-    vec3 reflectedLightDirection = reflect(lightSrcDirection,surfaceNormal);
+    vec3 reflectedLightDirection = reflect(lightDirection,surfaceNormal);
     
     float specularFactor = dot(reflectedLightDirection,cameraDirection);
     specularFactor = max(specularFactor,0.0);

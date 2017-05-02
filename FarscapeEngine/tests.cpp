@@ -115,7 +115,8 @@ int main()
     //CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     
-    
+    glm::vec3 light(0.0f,-1.0f,1.0f);
+    shader->SetLightDirection(light);
 
     
     CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
@@ -123,8 +124,7 @@ int main()
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
     
-    shader->SetShineDamper(7.0f);
-    shader->SetReflectivity(3.0f);
+    
     
     renderer->SetStates();
 
@@ -137,7 +137,9 @@ int main()
 
         renderer->Prepare();
         counter = counter+0.01f;
-
+        
+        
+        
         glm::vec3 x(0.0f,counter,0.0f);
         dragon->GetTransform()->SetRot(x);
         monkey->GetTransform()->SetRot(-x);
@@ -149,10 +151,17 @@ int main()
 
         shader->Bind();
         
+        // Make the dragon shine
+        shader->SetShineDamper(7.0f);
+        shader->SetReflectivity(3.0f);
         grass->ApplyTexture(shader->GetUniformTexSampler());
         shader->Update(*(dragon->GetTransform()), camera->GetViewProjection());
         dragon->GetMesh()->Draw();
         
+        
+        // Make the monkey plastic without shine
+        //shader->SetShineDamper(10.0f);
+        //shader->SetReflectivity(0.0f);
         yellow->ApplyTexture(shader->GetUniformTexSampler());
         shader->Update(*(monkey->GetTransform()), camera->GetViewProjection());
         monkey->GetMesh()->Draw();
