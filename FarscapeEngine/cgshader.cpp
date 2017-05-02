@@ -60,6 +60,8 @@ void CGCore::Shader::ReadUniformVariables()
     m_uniforms[4] = glGetUniformLocation(m_program, "shineDamper");
     m_uniforms[5] = glGetUniformLocation(m_program, "reflectivity");
     m_uniforms[6] = glGetUniformLocation(m_program, "cameraDirection");
+    m_uniforms[7] = glGetUniformLocation(m_program, "sampler");
+    
 }
 
 void CGCore::Shader::UnBind()

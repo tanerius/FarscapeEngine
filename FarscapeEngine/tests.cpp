@@ -98,11 +98,15 @@ int main()
     };
 
     // TODO: Increment correctly texture samplers
-    CGCore::Entity* dragon = new CGCore::Entity(DRAGON_SAMPLE,YELLOW_TEX);
+    CGCore::Texture* grass = new CGCore::Texture(TEXTURE_FILE,0);
+    CGCore::Texture* yellow = new CGCore::Texture(YELLOW_TEX,1);
     
-    //CGCore::Entity* monkey = new CGCore::Entity(OBJ_SAMPLE,TEXTURE_FILE);
-    //glm::vec3 monkeyPosition = glm::vec3(1.0f,1.0f,2.0f);
-    //monkey->GetTransform()->SetPos(monkeyPosition);
+    
+    CGCore::Entity* dragon = new CGCore::Entity(DRAGON_SAMPLE,yellow);
+    
+    CGCore::Entity* monkey = new CGCore::Entity(OBJ_SAMPLE,grass);
+    glm::vec3 monkeyPosition = glm::vec3(0.0f,5.0f,-5.0f);
+    monkey->GetTransform()->SetPos(monkeyPosition);
     
     //CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
     //CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
@@ -110,6 +114,8 @@ int main()
 
     //CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
+    
+    
 
     
     CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
@@ -134,7 +140,7 @@ int main()
 
         glm::vec3 x(0.0f,counter,0.0f);
         dragon->GetTransform()->SetRot(x);
-
+        monkey->GetTransform()->SetRot(-x);
     
         // Get keys
         input->Move();
@@ -142,8 +148,15 @@ int main()
         shader->SetCamPosition(CameraDirection);
 
         shader->Bind();
+        
+        grass->ApplyTexture(shader->GetUniformTexSampler());
         shader->Update(*(dragon->GetTransform()), camera->GetViewProjection());
         dragon->GetMesh()->Draw();
+        
+        yellow->ApplyTexture(shader->GetUniformTexSampler());
+        shader->Update(*(monkey->GetTransform()), camera->GetViewProjection());
+        monkey->GetMesh()->Draw();
+        
         shader->UnBind();
 
         Display->UpdateDisplay();

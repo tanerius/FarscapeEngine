@@ -54,9 +54,9 @@ namespace CGCore
         inline glm::vec3* GetRot() { return &rot; }
         inline glm::vec3* GetScale() { return &scale; }
 
-        inline void SetPos(glm::vec3& pos) { this->pos = pos; }
-        inline void SetRot(glm::vec3& rot) { this->rot = rot; }
-        inline void SetScale(glm::vec3& scale) { this->scale = scale; }
+        inline void SetPos(const glm::vec3 pos) { this->pos = pos; }
+        inline void SetRot(const glm::vec3 rot) { this->rot = rot; }
+        inline void SetScale(const glm::vec3 scale) { this->scale = scale; }
     protected:
     private:
         glm::vec3 pos;

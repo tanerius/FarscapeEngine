@@ -11,6 +11,7 @@ namespace CGCore
     {
         private:
             GLuint TextureID;
+            int m_TextureUnit;
             bool IsLoadedCorrectly;
 
             
@@ -19,10 +20,10 @@ namespace CGCore
             bool LoadPNGFile(const char* name); // Load texture libpng 
             void LoadTextureFile(const char* FileName);
         public:
-            Texture(const char* PNGFileName); // Textures for now must be PNG 
+            Texture(const char* PNGFileName, int TextureUnit = 0); // Textures for now must be PNG
             ~Texture();
             
-            void ApplyTexture(GLuint TextureSamplerHnd, int TextureUnit = 0);
+            void ApplyTexture(GLuint TextureSamplerHnd);
             bool CheckIsLoaded() const { return IsLoadedCorrectly; }
             GLuint GetTextureID() const { return TextureID; }
             

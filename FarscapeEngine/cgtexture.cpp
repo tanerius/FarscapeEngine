@@ -16,9 +16,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-CGCore::Texture::Texture(const char* PNGFileName)
+CGCore::Texture::Texture(const char* PNGFileName, int TextureUnit)
 {
     IsLoadedCorrectly = false;
+    m_TextureUnit = TextureUnit;
     LoadTextureFile(PNGFileName);
 }
 
@@ -28,20 +29,21 @@ CGCore::Texture::~Texture()
     if (IsLoadedCorrectly) glDeleteTextures(1, &TextureID);
 }
 
-void CGCore::Texture::ApplyTexture(GLuint TextureSamplerHnd, int TextureUnit){
+void CGCore::Texture::ApplyTexture(GLuint TextureSamplerHnd){
     // Bind our texture in Texture Unit 0
-    glActiveTexture(GL_TEXTURE0 + TextureUnit);
+    glActiveTexture(GL_TEXTURE0 + m_TextureUnit);
     glBindTexture(GL_TEXTURE_2D, TextureID);
     // Set our "textureSampler" sampler to user Texture Unit 0
-    glUniform1i(TextureSamplerHnd, 0);
+    glUniform1i(TextureSamplerHnd, m_TextureUnit);
     
 }
 
 void CGCore::Texture::GenerateTexture(GLuint temp_width, GLuint temp_height, GLint format, GLubyte* image_data)
 {
+    glActiveTexture (GL_TEXTURE0 + m_TextureUnit);
     glGenTextures(1, &TextureID);
-    glActiveTexture (GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureID);
+    //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
     // Use clamping
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

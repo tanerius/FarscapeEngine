@@ -39,6 +39,20 @@ CGCore::Entity::Entity(const char* objModelPath, const char* texturePath, CGCore
 }
 
 
+CGCore::Entity::Entity(const char* objModelPath, Texture* texture, CGCore::Transform* defTransform)
+{
+    m_Mesh = new CGCore::Mesh(objModelPath);
+    m_Texture = texture;
+    
+    if (defTransform == nullptr)
+    {
+        // default transformation
+        m_Transform = new CGCore::Transform(glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(1.0f,1.0f,1.0f));
+    }
+}
+
+
+
 CGCore::Entity::~Entity()
 {
     delete m_Mesh;

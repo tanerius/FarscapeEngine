@@ -35,13 +35,18 @@ namespace CGCore
         Transform* m_Transform = nullptr;
     
         public:
+        // Binds texture to texture unit 0
         Entity(const char* objModelPath, const char* texturePath, Transform* defTransform = nullptr);
+        Entity(const char* objModelPath, Texture* texture, Transform* defTransform = nullptr);
         Entity(); // default entity maybe a triangle
         virtual ~Entity();
         
         Mesh* GetMesh() { return m_Mesh; }
         Texture* GetTexture() { return m_Texture; }
         Transform* GetTransform() { return m_Transform; }
+        
+        // Set and activate a texture
+        void SetTexture(Texture* t) { m_Texture = t; }
         
         virtual std::string ToString() const override;
 

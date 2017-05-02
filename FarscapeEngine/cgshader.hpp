@@ -16,6 +16,7 @@ namespace CGCore
         void Bind();
         float getReflectivity() const { return m_Reflectivity; }
         float getShine() const { return m_ShineDamper; }
+        GLuint GetUniformTexSampler() const { return m_uniforms[7]; }
         void SetCamPosition(glm::vec3& Pos);
         void SetLightColor(glm::vec3& Color);
         void SetLightDirection(glm::vec3& NewLD);
@@ -30,7 +31,7 @@ namespace CGCore
     private:
         // vertex + fragment shaders
         static const unsigned int NUM_SHADERS = 2;
-        static const unsigned int NUM_UNIFORMS = 7;
+        static const unsigned int NUM_UNIFORMS = 8;
 
 
         void operator=(const Shader& shader) {}
