@@ -45,6 +45,8 @@ namespace CGCore
             this->up = glm::vec3(0.0f, 1.0f, 0.0f);
             this->projection = glm::perspective(fov, aspect, zNear, zFar);
         }
+
+        virtual ~Camera() {}
         
         glm::vec3 GetPosition() const { return pos; }
 

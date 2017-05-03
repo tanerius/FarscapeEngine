@@ -32,8 +32,8 @@ OBJ_NAME = cgdisplay
 all : clean $(OBJS) 
 
 
-tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh cginput
-	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o  $(LOC_LIB)
+tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh cginput cgobj
+	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o $(OUTPUTDIR)/cgobj.o $(LOC_LIB)
 
 cgcamera : cgcore.hpp cgcamera.hpp 
 	$(CC) cgcamera.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgcamera.o
@@ -61,6 +61,9 @@ entity : texture cgentity.hpp
 
 texture : cgtransform.hpp cgtexture.hpp 
 	$(CC) cgtexture.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgtexture.o
+
+cgobj : mesh cgobj.hpp
+	$(CC) cgobj.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgobj.o
 
 helpers : cghelper.hpp
 	$(CC) cghelper.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cghelper.o

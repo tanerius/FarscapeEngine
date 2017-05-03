@@ -24,7 +24,7 @@ namespace CGCore
 {
     class Mesh;
     class Texture;
-    class Transform;
+    struct Transform;
 
     // Container wit a model together with the transform matrix
     class Entity : public Object
