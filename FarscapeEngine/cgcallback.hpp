@@ -20,29 +20,25 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#define MAX_HANDLED_KEYS 1024
 
 namespace CGCore
 {
-
+    extern bool HandledKeys[MAX_HANDLED_KEYS];
     // Definitions for the callbacks
     class CGCallbacks
     {
         protected:
         GLFWwindow* GLFWWindowPtr = 0; // will hold our window pointer
-
+        
         public:
+
         static void ErrorCallback(int error, const char* description)
         {
-            fputs(description, stderr);
+            // printf("ERROR %d: %s",error,description);
         }
 
-        static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-        {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-            {
-                glfwSetWindowShouldClose(window, GL_TRUE);
-            }
-        }
+        static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
         GLFWwindow* GetWindow() const { return GLFWWindowPtr; }
 

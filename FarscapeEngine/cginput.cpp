@@ -14,6 +14,7 @@ CGCore::Input::Input(DisplayManager* currentDisplay, Camera* currentCam)
     m_display = currentDisplay;
     m_camera = currentCam;
     m_isAttached = true;
+    m_keysPressed = currentDisplay->GetHandledKeys();
 }
 
 std::string CGCore::Input::ToString() const
@@ -24,58 +25,11 @@ std::string CGCore::Input::ToString() const
 
 void CGCore::Input::Move()
 {
-    int state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_W);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->MoveIn();
-    }
+    if(m_keysPressed[GLFW_KEY_ESCAPE]) glfwSetWindowShouldClose(m_display->GetWindow(), GL_TRUE);
+    if(m_keysPressed[GLFW_KEY_W]) m_camera->MoveIn();
+    if(m_keysPressed[GLFW_KEY_S]) m_camera->MoveBack();
+    if(m_keysPressed[GLFW_KEY_A]) m_camera->MoveLeft();
+    if(m_keysPressed[GLFW_KEY_D]) m_camera->MoveRight();
 
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_S);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->MoveBack();
-    }
-
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_A);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->MoveLeft();
-    }
-
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_D);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->MoveRight();
-    }
-
-    //MoveSomething(int direction)
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_Q);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->Roll(-1);
-    }
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_E);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->Roll(1);
-    }
-
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_R);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->Pitch(-1);
-    }
-    state = glfwGetKey(m_display->GetWindow(), GLFW_KEY_F);
-    if (state == GLFW_PRESS)
-    {
-        // Up key pressed
-        m_camera->Pitch(1);
-    }
+    // TODO: roll, pitch, yaw
 }

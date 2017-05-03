@@ -27,6 +27,11 @@ void CGCore::DisplayManager::CreateDisplay()
 		exit(EXIT_FAILURE);
 	}
 
+    for (int c=0; c<MAX_HANDLED_KEYS; c++)
+    {
+        CGCore::HandledKeys[c] = false;
+    }
+
 #ifdef APPLE
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Try 4
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1); // try 1

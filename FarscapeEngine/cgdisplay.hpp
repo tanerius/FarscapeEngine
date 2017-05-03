@@ -26,6 +26,7 @@ namespace CGCore
             bool CloseRequested();
             void CreateDisplay();
             void DestroyDisplay();
+            bool* GetHandledKeys() {return HandledKeys; }
             void GetInfo();
             void GetResolution(int& W, int& H) const
             {
