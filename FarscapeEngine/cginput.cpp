@@ -25,6 +25,7 @@ std::string CGCore::Input::ToString() const
 
 void CGCore::Input::Move()
 {
+    GLfloat cameraSpeed = 5.0f * m_display->GetDeltaTime();
     if(m_keysPressed[GLFW_KEY_ESCAPE]) glfwSetWindowShouldClose(m_display->GetWindow(), GL_TRUE);
     if(m_keysPressed[GLFW_KEY_W]) m_camera->MoveIn();
     if(m_keysPressed[GLFW_KEY_S]) m_camera->MoveBack();

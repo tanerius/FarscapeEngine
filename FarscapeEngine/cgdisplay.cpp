@@ -115,18 +115,16 @@ void CGCore::DisplayManager::UpdateDisplay()
 
 void CGCore::DisplayManager::UpdateFpsCounter()
 {
-    double current_seconds;
-    double elapsed_seconds;
-    
+    double current_seconds;    
 
     current_seconds = glfwGetTime ();
-    elapsed_seconds = current_seconds - previous_seconds;
-    if (elapsed_seconds > 0.25) {
+    delta_time = current_seconds - previous_seconds;
+    if (delta_time > 0.25) {
         double fps;
         char tmp[256];
         
         previous_seconds = current_seconds;
-        fps = (double)frame_count / elapsed_seconds;
+        fps = (double)frame_count / delta_time;
         sprintf (tmp, "Farscape demo - opengl @ fps: %.2f", fps);
         glfwSetWindowTitle (GLFWWindowPtr, tmp);
         frame_count = 0;

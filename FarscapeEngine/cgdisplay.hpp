@@ -20,12 +20,14 @@ namespace CGCore
             // const int MaxFps = 120;
 
             double previous_seconds = 0.0f;
+            double delta_time = 0.0f;
             int frame_count = 0;
 
         public:
             bool CloseRequested();
             void CreateDisplay();
             void DestroyDisplay();
+            double GetDeltaTime() { return delta_time; }
             bool* GetHandledKeys() {return HandledKeys; }
             void GetInfo();
             void GetResolution(int& W, int& H) const
