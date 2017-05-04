@@ -55,8 +55,13 @@ void CGCore::DisplayManager::CreateDisplay(const bool UsingMouse)
     if (UsingMouse)
     {
         m_UsingMouse = true;
+        CGCore::FirstMouseEvent = true;
+        CGCore::LastMouseX = DisplayWidth / 2;
+        CGCore::LastMouseY = DisplayHeight / 2;
+        CGCore::MouseSensitivity = 0.05f;
         glfwSetInputMode(GLFWWindowPtr, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         glfwSetCursorPosCallback(GLFWWindowPtr, CGCore::CGCallbacks::MouseCallback);
+        
     }
     else{
         m_UsingMouse = false;
@@ -112,6 +117,13 @@ float CGCore::DisplayManager::GetRunningTime() const
 { 
      return glfwGetTime (); 
 }
+
+
+void CGCore::DisplayManager::SetMouseSensitivity(const float s)
+{
+    CGCore::MouseSensitivity = s;
+}
+
 
 void CGCore::DisplayManager::UpdateDisplay()
 {

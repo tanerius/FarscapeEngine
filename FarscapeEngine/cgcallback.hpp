@@ -25,6 +25,13 @@
 namespace CGCore
 {
     extern bool HandledKeys[MAX_HANDLED_KEYS];
+    extern double LastMouseX;
+    extern double LastMouseY;
+    extern bool FirstMouseEvent;
+    extern float MouseSensitivity;
+    extern double MouseOffsetX;
+    extern double MouseOffsetY;
+    
     // Definitions for the callbacks
     class CGCallbacks
     {

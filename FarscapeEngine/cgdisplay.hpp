@@ -29,7 +29,7 @@ namespace CGCore
             void CreateDisplay(const bool UsesMouse = true);
             void DestroyDisplay();
             double GetDeltaTime() { return delta_time; }
-            bool* GetHandledKeys() {return HandledKeys; }
+            bool* GetHandledKeys() { return HandledKeys; }
             void GetInfo();
             void GetResolution(int& W, int& H) const
             {
@@ -37,6 +37,7 @@ namespace CGCore
                 H = DisplayHeight;
             }
             float GetRunningTime() const;
+            void SetMouseSensitivity(const float s);
             void WriteDisplay(const char* Msg);
             void UpdateDisplay();
             void UpdateFpsCounter();
