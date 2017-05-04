@@ -74,13 +74,13 @@ void CGCore::Camera::MoveDown(GLfloat cameraSpeed)
 void CGCore::Camera::Zoom(GLfloat zoomLevel)
 {
     // printf("%f ->",this->fov);
-    this->fov += zoomLevel;
-    if(this->fov <= 1.0f)
-        this->fov = 1.0f;
-    if(this->fov >= 45.0f)
-        this->fov = 45.0f;
+    this->m_fov += zoomLevel;
+    if(this->m_fov <= 1.0f)
+        this->m_fov = 1.0f;
+    if(this->m_fov >= 45.0f)
+        this->m_fov = 45.0f;
     // printf(" %f \n...",this->fov);
-    this->projection = glm::perspective(this->fov, this->m_aspect, this->m_near, this->m_far);
+    this->projection = glm::perspective(this->m_fov, this->m_aspect, this->m_near, this->m_far);
 }
 
 

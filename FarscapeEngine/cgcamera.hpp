@@ -34,7 +34,7 @@ namespace CGCore
         glm::vec3 forward;
         glm::vec3 up;
         glm::vec3 rotation;
-        float fov; // Field of view
+        float m_fov; // Field of view
         float m_aspect;
         float m_near;
         float m_far;
@@ -48,7 +48,7 @@ namespace CGCore
             this->up = glm::vec3(0.0f, 1.0f, 0.0f);
             this->rotation = glm::vec3(0.0f,89.0f,0.0f); // (pitch, yaw, roll)
             this->projection = glm::perspective(fov, aspect, zNear, zFar);
-            this->fov = fov;
+            this->m_fov = fov;
             this->m_aspect = aspect;
             this->m_near = zNear;
             this->m_far = zFar;

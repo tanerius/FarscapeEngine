@@ -22,10 +22,11 @@ namespace CGCore
             double previous_seconds = 0.0f;
             double delta_time = 0.0f;
             int frame_count = 0;
+            bool m_UsingMouse;
 
         public:
             bool CloseRequested();
-            void CreateDisplay();
+            void CreateDisplay(const bool UsesMouse = true);
             void DestroyDisplay();
             double GetDeltaTime() { return delta_time; }
             bool* GetHandledKeys() {return HandledKeys; }

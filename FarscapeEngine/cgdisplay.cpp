@@ -15,7 +15,7 @@ bool CGCore::DisplayManager::CloseRequested()
     return glfwWindowShouldClose(GLFWWindowPtr);
 }
 
-void CGCore::DisplayManager::CreateDisplay()
+void CGCore::DisplayManager::CreateDisplay(const bool UsingMouse)
 {
     // Creating a display
     assert(GLFWWindowPtr == 0);
@@ -51,6 +51,16 @@ void CGCore::DisplayManager::CreateDisplay()
 
     glfwSetKeyCallback(GLFWWindowPtr, CGCore::CGCallbacks::KeyCallback); // key capture
     glfwSetErrorCallback(CGCallbacks::ErrorCallback);
+    // If we  are using mouse
+    if (UsingMouse)
+    {
+        m_UsingMouse = true;
+        glfwSetInputMode(GLFWWindowPtr, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(GLFWWindowPtr, CGCore::CGCallbacks::MouseCallback);
+    }
+    else{
+        m_UsingMouse = false;
+    }
     
     glfwWindowHint (GLFW_SAMPLES, 4);
 

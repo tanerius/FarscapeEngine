@@ -21,18 +21,10 @@ void CGCore::CGCallbacks::KeyCallback(GLFWwindow* window, int key, int scancode,
     {
         CGCore::HandledKeys[key] = false;
     }
-    /*
-    if ((action == GLFW_PRESS) && (key == GLFW_KEY_Z))
-    {
-        for(int c=0;c<200;c++)
-        {
-            printf("Key %d = Val(%d)\n",c,CGCore::HandledKeys[c]);
-        }
-    }
+}
 
-    if ((action == GLFW_PRESS) && (key == GLFW_KEY_X))
-    {
-        printf("Pointer %ul \n",CGCore::HandledKeys);
-    }
-    */
+
+void CGCore::CGCallbacks::MouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    printf("Mouse( %f, %f ) \n",xpos,ypos);
 }
