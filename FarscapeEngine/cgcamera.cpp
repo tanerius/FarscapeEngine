@@ -20,6 +20,24 @@
 #include <GL/glew.h>
 
 
+void CGCore::Camera::Rotate(const glm::vec3 angles)
+{
+    rotation += angles;
+
+
+    if(rotation.x > 89.0f)
+        rotation.x = 89.0f;
+    if(rotation.x < -89.0f)
+        rotation.x = -89.0f;
+
+    glm::vec3 front;
+    front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    front.y = sin(glm::radians(rotation.x));
+    front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    forward = glm::normalize(front);
+}
+
+
 void CGCore::Camera::MoveLeft(GLfloat cameraSpeed)
 {
     pos -= glm::normalize(glm::cross(forward, up)) * cameraSpeed;
@@ -53,21 +71,36 @@ void CGCore::Camera::MoveDown(GLfloat cameraSpeed)
     pos -= cameraSpeed * up;
 }
 
+void CGCore::Camera::Zoom(GLfloat zoomLevel)
+{
+    // printf("%f ->",this->fov);
+    this->fov += zoomLevel;
+    if(this->fov <= 1.0f)
+        this->fov = 1.0f;
+    if(this->fov >= 45.0f)
+        this->fov = 45.0f;
+    // printf(" %f \n...",this->fov);
+    this->projection = glm::perspective(this->fov, this->m_aspect, this->m_near, this->m_far);
+}
 
-void CGCore::Camera::Roll(int direction)
+
+void CGCore::Camera::Roll(GLfloat angle)
 {
     // do roll
+    Rotate(glm::vec3(0.0f, 0.0f, angle));
 }
 
-void CGCore::Camera::Pitch(int direction)
+void CGCore::Camera::Pitch(GLfloat angle)
 {
     // do pitch
+    Rotate(glm::vec3(angle, 0.0f, 0.0f));
 }
 
 
-void CGCore::Camera::Yaw(int direction)
+void CGCore::Camera::Yaw(GLfloat angle)
 {
     // do yaw
+    Rotate(glm::vec3(0.0f, angle, 0.0f));
 }
 
 
