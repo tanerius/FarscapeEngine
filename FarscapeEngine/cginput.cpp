@@ -25,12 +25,12 @@ std::string CGCore::Input::ToString() const
 
 void CGCore::Input::Move()
 {
-    GLfloat cameraSpeed = 5.0f * m_display->GetDeltaTime();
+    GLfloat cameraSpeed = 1.5f * m_display->GetDeltaTime();
     if(m_keysPressed[GLFW_KEY_ESCAPE]) glfwSetWindowShouldClose(m_display->GetWindow(), GL_TRUE);
-    if(m_keysPressed[GLFW_KEY_W]) m_camera->MoveIn();
-    if(m_keysPressed[GLFW_KEY_S]) m_camera->MoveBack();
-    if(m_keysPressed[GLFW_KEY_A]) m_camera->MoveLeft();
-    if(m_keysPressed[GLFW_KEY_D]) m_camera->MoveRight();
+    if(m_keysPressed[GLFW_KEY_W]) m_camera->MoveIn(cameraSpeed);
+    if(m_keysPressed[GLFW_KEY_S]) m_camera->MoveBack(cameraSpeed);
+    if(m_keysPressed[GLFW_KEY_A]) m_camera->MoveLeft(cameraSpeed);
+    if(m_keysPressed[GLFW_KEY_D]) m_camera->MoveRight(cameraSpeed);
 
     // TODO: roll, pitch, yaw
 }

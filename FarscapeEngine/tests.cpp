@@ -167,7 +167,6 @@ int main()
         monkey->GetMesh()->Draw();
         
         shader->UnBind();
-
         Display->UpdateDisplay();
     }
 

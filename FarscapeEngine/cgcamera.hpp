@@ -20,7 +20,7 @@
     #include <glm/glm.hpp>
     #include <glm/gtx/transform.hpp>
 #endif
-
+#include <GL/glew.h>
 
 namespace CGCore
 {
@@ -51,12 +51,12 @@ namespace CGCore
         glm::vec3 GetPosition() const { return pos; }
 
 
-        void MoveLeft();
-        void MoveRight();
-        void MoveUp();
-        void MoveDown();
-        void MoveIn();
-        void MoveBack();
+        void MoveLeft(GLfloat cameraSpeed);
+        void MoveRight(GLfloat cameraSpeed);
+        void MoveUp(GLfloat cameraSpeed);
+        void MoveDown(GLfloat cameraSpeed);
+        void MoveIn(GLfloat cameraSpeed);
+        void MoveBack(GLfloat cameraSpeed);
 
         void Roll(int direction);
         void Pitch(int direction);

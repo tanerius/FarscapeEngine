@@ -17,39 +17,40 @@
 #endif
 
 #include <string>
+#include <GL/glew.h>
 
 
-void CGCore::Camera::MoveLeft()
+void CGCore::Camera::MoveLeft(GLfloat cameraSpeed)
 {
-    pos -= glm::normalize(glm::cross(forward, up)) * MOVE_SPEED;
+    pos -= glm::normalize(glm::cross(forward, up)) * cameraSpeed;
 }
 
 
-void CGCore::Camera::MoveRight()
+void CGCore::Camera::MoveRight(GLfloat cameraSpeed)
 {
-    pos += glm::normalize(glm::cross(forward, up)) * MOVE_SPEED;
+    pos += glm::normalize(glm::cross(forward, up)) * cameraSpeed;
 }
 
 
-void CGCore::Camera::MoveIn()
+void CGCore::Camera::MoveIn(GLfloat cameraSpeed)
 {
-    pos += MOVE_SPEED * forward;
+    pos += cameraSpeed * forward;
 }
 
-void CGCore::Camera::MoveBack()
+void CGCore::Camera::MoveBack(GLfloat cameraSpeed)
 {
-    pos -= MOVE_SPEED * forward;
+    pos -= cameraSpeed * forward;
 }
 
 
-void CGCore::Camera::MoveUp()
+void CGCore::Camera::MoveUp(GLfloat cameraSpeed)
 {
-    pos += MOVE_SPEED * up;
+    pos += cameraSpeed * up;
 }
 
-void CGCore::Camera::MoveDown()
+void CGCore::Camera::MoveDown(GLfloat cameraSpeed)
 {
-    pos -= MOVE_SPEED * up;
+    pos -= cameraSpeed * up;
 }
 
 
