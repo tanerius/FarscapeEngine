@@ -45,6 +45,19 @@ void CGCore::Input::Move()
     // Zoom
     if(m_keysPressed[GLFW_KEY_R]) m_camera->Zoom(-0.05f);
     if(m_keysPressed[GLFW_KEY_F]) m_camera->Zoom(0.05f);
+    
+    double offset = m_display->GetMouseOffsetY();
+    if((offset > 0.0001) || (offset < -0.0001))
+    {
+        m_camera->Pitch(offset);
+    }
+    
+    offset = m_display->GetMouseOffsetX();
+    if((offset > 0.0001) || (offset < -0.0001))
+    {
+        m_camera->Yaw(offset);
+    }
+    
 
 
     // TODO: roll, pitch, yaw

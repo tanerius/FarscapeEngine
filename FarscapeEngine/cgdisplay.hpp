@@ -30,6 +30,9 @@ namespace CGCore
             void DestroyDisplay();
             double GetDeltaTime() { return delta_time; }
             bool* GetHandledKeys() { return HandledKeys; }
+            double GetMouseOffsetY() { return MouseOffsetY; }
+            double GetMouseOffsetX() { return MouseOffsetX; }
+        
             void GetInfo();
             void GetResolution(int& W, int& H) const
             {
