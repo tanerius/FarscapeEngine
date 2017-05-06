@@ -20,22 +20,6 @@
 #include <GL/glew.h>
 
 
-void CGCore::Camera::Rotate(const glm::vec3 angles)
-{
-    rotation += angles;
-
-
-    if(rotation.x > 89.0f)
-        rotation.x = 89.0f;
-    if(rotation.x < -89.0f)
-        rotation.x = -89.0f;
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-    front.y = sin(glm::radians(rotation.x));
-    front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-    forward = glm::normalize(front);
-}
 
 
 void CGCore::Camera::MoveLeft(GLfloat cameraSpeed)
@@ -70,6 +54,24 @@ void CGCore::Camera::MoveDown(GLfloat cameraSpeed)
 {
     pos -= cameraSpeed * up;
 }
+
+void CGCore::Camera::Rotate(const glm::vec3 angles)
+{
+    rotation += angles;
+    
+    
+    if(rotation.x > 89.0f)
+        rotation.x = 89.0f;
+    if(rotation.x < -89.0f)
+        rotation.x = -89.0f;
+    
+    glm::vec3 front;
+    front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    front.y = sin(glm::radians(rotation.x));
+    front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    forward = glm::normalize(front);
+}
+
 
 void CGCore::Camera::Zoom(GLfloat zoomLevel)
 {

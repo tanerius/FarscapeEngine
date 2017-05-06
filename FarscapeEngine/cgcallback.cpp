@@ -48,5 +48,6 @@ void CGCore::CGCallbacks::MouseCallback(GLFWwindow* window, double xpos, double 
     
     CGCore::MouseOffsetX *= CGCore::MouseSensitivity;
     CGCore::MouseOffsetY *= CGCore::MouseSensitivity;
-    printf("Mouse( %f, %f ) \n",CGCore::MouseOffsetX,CGCore::MouseOffsetY);
+
+    //printf("Mouse( %f, %f ) \n",CGCore::MouseOffsetX,CGCore::MouseOffsetY);
 }

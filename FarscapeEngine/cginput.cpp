@@ -25,7 +25,7 @@ std::string CGCore::Input::ToString() const
 
 void CGCore::Input::Move()
 {
-    GLfloat cameraSpeed = 1.5f * m_display->GetDeltaTime();
+    GLfloat cameraSpeed = 0.75f;//  * m_display->GetDeltaTime();
     GLfloat rotationAngleStep = 1.0f;
     if(m_keysPressed[GLFW_KEY_ESCAPE]) glfwSetWindowShouldClose(m_display->GetWindow(), GL_TRUE);
     if(m_keysPressed[GLFW_KEY_W]) m_camera->MoveIn(cameraSpeed);
@@ -47,18 +47,11 @@ void CGCore::Input::Move()
     if(m_keysPressed[GLFW_KEY_F]) m_camera->Zoom(0.05f);
     
     double offset = m_display->GetMouseOffsetY();
-    if((offset > 0.0001) || (offset < -0.0001))
-    {
-        m_camera->Pitch(offset);
-    }
-    
+    m_camera->Pitch(offset);
+
     offset = m_display->GetMouseOffsetX();
-    if((offset > 0.0001) || (offset < -0.0001))
-    {
-        m_camera->Yaw(offset);
-    }
+    m_camera->Yaw(offset);
+
     
-
-
     // TODO: roll, pitch, yaw
 }
