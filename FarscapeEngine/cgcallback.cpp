@@ -46,8 +46,22 @@ void CGCore::CGCallbacks::MouseCallback(GLFWwindow* window, double xpos, double 
     CGCore::LastMouseX = xpos;
     CGCore::LastMouseY = ypos;
     
-    CGCore::MouseOffsetX *= CGCore::MouseSensitivity;
-    CGCore::MouseOffsetY *= CGCore::MouseSensitivity;
+    if ((CGCore::MouseOffsetX > 0.000001f) || (CGCore::MouseOffsetX < -0.000001f))
+    {
+        CGCore::MouseOffsetX *= CGCore::MouseSensitivity;
+    }
+    else{
+        CGCore::MouseOffsetX = 0.000000001f;
+    }
+    
+    if ((CGCore::MouseOffsetY > 0.000001f) || (CGCore::MouseOffsetY < -0.000001f))
+    {
+        CGCore::MouseOffsetY *= CGCore::MouseSensitivity;
+    }
+    else{
+        CGCore::MouseOffsetY = 0.000000001f;
+    }
 
+    
     //printf("Mouse( %f, %f ) \n",CGCore::MouseOffsetX,CGCore::MouseOffsetY);
 }

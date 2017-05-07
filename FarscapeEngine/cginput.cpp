@@ -41,17 +41,37 @@ void CGCore::Input::Move()
     {
         m_camera->Yaw(rotationAngleStep);
     }
+    if(m_keysPressed[GLFW_KEY_P])
+    {
+        stopRotate = true;
+    }
 
     // Zoom
     if(m_keysPressed[GLFW_KEY_R]) m_camera->Zoom(-0.05f);
     if(m_keysPressed[GLFW_KEY_F]) m_camera->Zoom(0.05f);
     
-    double offset = m_display->GetMouseOffsetY();
-    m_camera->Pitch(offset);
-
-    offset = m_display->GetMouseOffsetX();
-    m_camera->Yaw(offset);
-
+    if (!stopRotate)
+    {
+        double offset = m_display->GetMouseOffsetY();
+        
+        if((offset < -0.000001f) || (offset > 0.000001f))
+        {
+            m_camera->Pitch(offset);
+        }
+       
+        offset = m_display->GetMouseOffsetX();
+        if((offset < -0.000001f) || (offset > 0.000001f))
+        {
+            m_camera->Yaw(offset);
+        
+        }
+        
+        m_display->ResetOffset();
+    }
+    
     
     // TODO: roll, pitch, yaw
 }
+
+
+

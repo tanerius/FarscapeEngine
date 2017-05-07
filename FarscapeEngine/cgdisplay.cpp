@@ -119,6 +119,14 @@ float CGCore::DisplayManager::GetRunningTime() const
 }
 
 
+
+void CGCore::DisplayManager::ResetOffset()
+{
+    CGCore::MouseOffsetX = 0.0f;
+    CGCore::MouseOffsetY = 0.0f;
+}
+
+
 void CGCore::DisplayManager::SetMouseSensitivity(const float s)
 {
     CGCore::MouseSensitivity = s;

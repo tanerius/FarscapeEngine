@@ -41,6 +41,7 @@ namespace CGCore
             }
             float GetRunningTime() const;
             void SetMouseSensitivity(const float s);
+            void ResetOffset();
             void WriteDisplay(const char* Msg);
             void UpdateDisplay();
             void UpdateFpsCounter();

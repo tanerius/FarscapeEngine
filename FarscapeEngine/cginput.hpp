@@ -28,7 +28,8 @@ namespace CGCore
             DisplayManager* m_display = nullptr;
             Camera* m_camera = nullptr;
             bool* m_keysPressed = nullptr;
-            
+            bool stopRotate = false;
+        
 
         public:
             Input(DisplayManager* currentDisplay, Camera* currentCam);
