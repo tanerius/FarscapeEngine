@@ -6,7 +6,8 @@
 #include "cgtexture.hpp"
 #include "cgrenderer.hpp"
 #include "cgentity.hpp"
-
+#include <vector>
+#include <ctime>
 #include "cginput.hpp"
 
 #ifdef WINDOWS
@@ -43,106 +44,53 @@ int main()
     float aspectRatio = (float)w / (float)h;
 
 
-    CGCore::Vertex vertices[] =
-    {
-        // front
-        CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 0), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(1, 1), glm::vec3(0, 0, -1)),
-        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 0), glm::vec3(0, 0, -1)),
-        // back
-        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(0, 1), glm::vec3(0, 0, 1)),
-        CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(0, 0), glm::vec3(0, 0, 1)),
-        CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(1, 0), glm::vec3(0, 0, 1)),
-        CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 1), glm::vec3(0, 0, 1)),
-        // bottom
-        CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(0, 1), glm::vec3(0, -1, 0)),
-        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(0, 0), glm::vec3(0, -1, 0)),
-        CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 0), glm::vec3(0, -1, 0)),
-        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(0, -1, 0)),
-        // top
-        CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(0, 1, 0)),
-        CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(1, 1), glm::vec3(0, 1, 0)),
-        CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(1, 0), glm::vec3(0, 1, 0)),
-        CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 0), glm::vec3(0, 1, 0)),
-        // left
-        CGCore::Vertex(glm::vec3(-1, -1, -1), glm::vec2(1, 1), glm::vec3(-1, 0, 0)),
-        CGCore::Vertex(glm::vec3(-1, -1, 1), glm::vec2(1, 0), glm::vec3(-1, 0, 0)),
-        CGCore::Vertex(glm::vec3(-1, 1, 1), glm::vec2(0, 0), glm::vec3(-1, 0, 0)),
-        CGCore::Vertex(glm::vec3(-1, 1, -1), glm::vec2(0, 1), glm::vec3(-1, 0, 0)),
-        // right
-        CGCore::Vertex(glm::vec3(1, -1, -1), glm::vec2(1, 1), glm::vec3(1, 0, 0)),
-        CGCore::Vertex(glm::vec3(1, -1, 1), glm::vec2(1, 0), glm::vec3(1, 0, 0)),
-        CGCore::Vertex(glm::vec3(1, 1, 1), glm::vec2(0, 0), glm::vec3(1, 0, 0)),
-        CGCore::Vertex(glm::vec3(1, 1, -1), glm::vec2(0, 1), glm::vec3(1, 0, 0)),
-    };
-
-    unsigned int indices[] = {
-        0, 1, 2,
-        0, 2, 3,
-
-        6, 5, 4,
-        7, 6, 4,
-
-        10, 9, 8,
-        11, 10, 8,
-
-        12, 13, 14,
-        12, 14, 15,
-
-        16, 17, 18,
-        16, 18, 19,
-
-        22, 21, 20,
-        23, 22, 20
-    };
-
     // TODO: Increment correctly texture samplers
     CGCore::Texture* grass = new CGCore::Texture(TEXTURE_FILE,0);
     CGCore::Texture* yellow = new CGCore::Texture(YELLOW_TEX,1);
     
-    
-    CGCore::Entity* dragon = new CGCore::Entity(DRAGON_SAMPLE,yellow);
-    
-    CGCore::Entity* monkey = new CGCore::Entity(OBJ_SAMPLE,grass);
-    glm::vec3 monkeyPosition = glm::vec3(0.0f,5.0f,-5.0f);
-    monkey->GetTransform()->SetPos(monkeyPosition);
-    
-    //CGCore::Mesh* mesh = new CGCore::Mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
-    //CGCore::Mesh* monkey = new CGCore::Mesh(OBJ_SAMPLE);
-    //CGCore::Mesh* stall = new CGCore::Mesh(STALL_SAMPLE);
+    std::vector <CGCore::Entity*> monkeys;
+    CGCore::Transform* keyTransform = new CGCore::Transform();
+    // 100 monkeys
+    srand(time(NULL));
+    for (int c=0; c < 100 ; c++)
+    {   
+        //double f = (double)rand() / RAND_MAX;
+        double x = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
+        double y = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
+        double z = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
 
-    //CGCore::Mesh* dragon = new CGCore::Mesh(DRAGON_SAMPLE);
+        glm::vec3 objPosition = glm::vec3(x,y,z);
+        keyTransform->SetPos(objPosition);
+        objPosition = glm::vec3(z,x,y);
+        keyTransform->SetRot(objPosition);
+        monkeys.push_back(new CGCore::Entity(OBJ_SAMPLE,yellow,keyTransform));
+    }    
+
+
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     
     glm::vec3 light(0.0f,-1.0f,1.0f);
     shader->SetLightDirection(light);
 
     
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 100.0f);
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 1000.0f);
     CGCore::Input* input = new CGCore::Input(Display, camera);
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
-    
-    
     
     renderer->SetStates();
 
     bool HasError = false;
     float counter = 0.0f;
 
+    
+    CGCore::Entity* e = nullptr;
+
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
 
         renderer->Prepare();
-        counter = counter+0.01f;
-        
-        
-        
-        glm::vec3 x(0.0f,counter,0.0f);
-        dragon->GetTransform()->SetRot(x);
-        monkey->GetTransform()->SetRot(-x);
     
         // Get keys
         input->Move();
@@ -154,18 +102,16 @@ int main()
         // Make the dragon shine
         shader->SetShineDamper(7.0f);
         shader->SetReflectivity(3.0f);
-        grass->ApplyTexture(shader->GetUniformTexSampler());
-        shader->Update(*(dragon->GetTransform()), camera->GetViewProjection());
-        dragon->GetMesh()->Draw();
-        
-        
-        // Make the monkey plastic without shine
-        //shader->SetShineDamper(10.0f);
-        //shader->SetReflectivity(0.0f);
+        // for all objects on screen
         yellow->ApplyTexture(shader->GetUniformTexSampler());
-        shader->Update(*(monkey->GetTransform()), camera->GetViewProjection());
-        monkey->GetMesh()->Draw();
-        
+
+        for (int c=0; c < monkeys.size() ; c++)
+        {   
+            e = monkeys[c];
+            shader->Update(*(e->GetTransform()), camera->GetViewProjection());
+            e->GetMesh()->Draw();
+        }    
+
         shader->UnBind();
         Display->UpdateDisplay();
     }
@@ -173,7 +119,6 @@ int main()
     Display->DestroyDisplay();
     delete camera;
     delete shader;
-    delete dragon;
     delete renderer;
     delete Display;
 
