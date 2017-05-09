@@ -54,14 +54,14 @@ int main()
 
     CGCore::Transform* keyTransform = new CGCore::Transform();
 
-    // 100 monkeys, in random locations and randomly rotated
+    // 500 monkeys, in random locations and randomly rotated
     srand(time(NULL));
-    for (int c=0; c < 100 ; c++)
+    for (int c=0; c < 500 ; c++)
     {   
         //double f = (double)rand() / RAND_MAX;
-        double x = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
-        double y = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
-        double z = 0.0f + ((double)rand() / RAND_MAX) * (100.0f - 0.0f);
+        double x = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+        double y = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+        double z = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
 
         glm::vec3 objPosition = glm::vec3(x,y,z);
         keyTransform->SetPos(objPosition);
