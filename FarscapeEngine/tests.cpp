@@ -47,10 +47,14 @@ int main()
     // TODO: Increment correctly texture samplers
     CGCore::Texture* grass = new CGCore::Texture(TEXTURE_FILE,0);
     CGCore::Texture* yellow = new CGCore::Texture(YELLOW_TEX,1);
-    
+
+    // Container for our same monkeys    
     std::vector <CGCore::Entity*> monkeys;
+    
+
     CGCore::Transform* keyTransform = new CGCore::Transform();
-    // 100 monkeys
+
+    // 100 monkeys, in random locations and randomly rotated
     srand(time(NULL));
     for (int c=0; c < 100 ; c++)
     {   

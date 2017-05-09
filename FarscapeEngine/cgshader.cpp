@@ -200,3 +200,4 @@ void CGCore::Shader::SetShineDamper(float NewShine)
 {
     m_ShineDamper = NewShine;
 }
+
