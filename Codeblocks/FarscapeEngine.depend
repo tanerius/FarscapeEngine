@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1492892399 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgdisplay.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgdisplay.cpp
 	"cgdisplay.hpp"
 	<windows.h>
 	<assert.h>
@@ -9,7 +9,7 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493414889 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgdisplay.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgdisplay.hpp
 	<cstdio>
 	<windows.h>
 	"cgcallback.hpp"
@@ -44,19 +44,22 @@
 	<GL/glext.h>
 	<GL/glu.h>
 
-1492892399 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgentity.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgentity.cpp
 	"cgentity.hpp"
 	"cgtexture.hpp"
+	"cgtransform.hpp"
+	"cgmesh.hpp"
 	"cghelper.hpp"
 	<windows.h>
 	<GL/glew.h>
 
-1492892399 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgentity.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgentity.hpp
 	<windows.h>
+	"cgcore.hpp"
 	<glm/glm.hpp>
 	<GL/glew.h>
 
-1492473088 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.hpp
 	<GL/glew.h>
 
 1492892399 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cghelper.cpp
@@ -544,23 +547,10 @@
 
 1492455017 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\glm\gtx\transform.inl
 
-1492892399 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgloader.cpp
-	"cgtexture.hpp"
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgloader.cpp
 	"cgloader.hpp"
-	<windows.h>
-	<assert.h>
-	<cstdio>
-	<cstdlib>
-	<vector>
-	<png.h>
-	"cgentity.hpp"
-	<GL/glew.h>
-	<GLFW/glfw3.h>
 
-1492469626 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgloader.hpp
-	<vector>
-	<windows.h>
-	<GL/glew.h>
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgloader.hpp
 
 1489670462 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\png.h
 	"pnglibconf.h"
@@ -588,7 +578,7 @@
 1492455015 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgrawmodel.hpp
 	<GL/glew.h>
 
-1493414889 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgrenderer.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgrenderer.cpp
 	"cgrenderer.hpp"
 	"cgdisplay.hpp"
 	"cgtexture.hpp"
@@ -601,11 +591,11 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1492892399 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgrenderer.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgrenderer.hpp
 	<glm/glm.hpp>
 	<GL/glew.h>
 
-1493591115 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.hpp
 	<string>
 	<GL/glew.h>
 	"cgtransform.hpp"
@@ -614,7 +604,7 @@
 	<vector>
 	<GL/glew.h>
 
-1493593662 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgshader.cpp
 	"cgshader.hpp"
 	<iostream>
 	<fstream>
@@ -666,7 +656,7 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493573879 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtexture.cpp
 	"cgtexture.hpp"
 	<cstdlib>
 	<cstring>
@@ -677,7 +667,7 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493586680 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\tests.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\tests.cpp
 	"cgdisplay.hpp"
 	"cgtransform.hpp"
 	"cgcamera.hpp"
@@ -685,6 +675,9 @@
 	"cgshader.hpp"
 	"cgtexture.hpp"
 	"cgrenderer.hpp"
+	"cgentity.hpp"
+	<vector>
+	<ctime>
 	"cginput.hpp"
 
 1492454852 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\gl\glew.h
@@ -719,29 +712,31 @@
 
 1489670463 c:\users\taner\documents\dev\farscapeengine\farscapeengine\common\win\include\pnglibconf.h
 
-1493573879 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.cpp
 	"cgcamera.hpp"
 	<windows.h>
 	<glm/glm.hpp>
 	<string>
+	<GL/glew.h>
 
-1493594024 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcamera.hpp
 	"cgcore.hpp"
 	<windows.h>
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
+	<GL/glew.h>
 
-1493490262 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcore.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcore.hpp
 	<string>
 	<windows.h>
 
-1493490269 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcallback.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgcallback.hpp
 	<glm/glm.hpp>
 	<windows.h>
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493490232 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cginput.cpp
+1494273841 source:c:\users\taner\documents\dev\farscapeengine\farscapeengine\cginput.cpp
 	"cginput.hpp"
 	"cgcamera.hpp"
 	"cgdisplay.hpp"
@@ -749,7 +744,7 @@
 	<GL/glew.h>
 	<GLFW/glfw3.h>
 
-1493414889 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cginput.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cginput.hpp
 	"cgcore.hpp"
 	<windows.h>
 
@@ -784,7 +779,7 @@
 	<map>
 	<windows.h>
 
-1493593817 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtransform.hpp
+1494273841 c:\users\taner\documents\dev\farscapeengine\farscapeengine\cgtransform.hpp
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
