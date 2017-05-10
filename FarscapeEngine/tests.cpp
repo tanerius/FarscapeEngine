@@ -10,6 +10,8 @@
 #include <ctime>
 #include "cginput.hpp"
 
+#include <iostream>
+
 #ifdef WINDOWS
 static const char* TEXTURE_FILE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\tex512.png";
 static const char* OBJ_SAMPLE = "C:\\Users\\taner\\Documents\\Dev\\FarscapeEngine\\FarscapeEngine\\assets\\monkey.obj";
@@ -33,6 +35,7 @@ static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeE
 
 int main()
 {
+    CGCore::InitHighPrecisionTimers(); // start timing functions
 
     CGCore::DisplayManager* Display = new CGCore::DisplayManager();
     Display->CreateDisplay();
@@ -42,6 +45,7 @@ int main()
     int w,h;
     Display->GetResolution(w, h);
     float aspectRatio = (float)w / (float)h;
+    CGCore::GetTimePassed("* Created the display");
 
 
     // TODO: Increment correctly texture samplers
@@ -54,14 +58,30 @@ int main()
 
     CGCore::Transform* keyTransform = new CGCore::Transform();
 
+    CGCore::GetTimePassed("* Created the textures and tranforms");
+    
+
     // 500 monkeys, in random locations and randomly rotated
+    
     srand(time(NULL));
-    for (int c=0; c < 500 ; c++)
+    // create one monkey
+
+    //double f = (double)rand() / RAND_MAX;
+    double x = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+    double y = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+    double z = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+
+    glm::vec3 objPosition = glm::vec3(x,y,z);
+    keyTransform->SetPos(objPosition);
+    objPosition = glm::vec3(z,x,y);
+    keyTransform->SetRot(objPosition);
+    monkeys.push_back(new CGCore::Entity(OBJ_SAMPLE,yellow,keyTransform));
+    CGCore::GetTimePassed("* Created and init a monkey entity");
+    for (int c=0; c < 499 ; c++)
     {   
-        //double f = (double)rand() / RAND_MAX;
-        double x = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
-        double y = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
-        double z = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+        x = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+        y = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
+        z = -100.0f + ((double)rand() / RAND_MAX) * (100.0f - (-100.0f));
 
         glm::vec3 objPosition = glm::vec3(x,y,z);
         keyTransform->SetPos(objPosition);
@@ -69,7 +89,8 @@ int main()
         keyTransform->SetRot(objPosition);
         monkeys.push_back(new CGCore::Entity(OBJ_SAMPLE,yellow,keyTransform));
     }    
-
+    CGCore::GetTimePassed("* Created and init additional 499 monkey entities");
+   
 
     CGCore::Shader* shader = new CGCore::Shader(SHADER_FILE);
     
@@ -77,7 +98,7 @@ int main()
     shader->SetLightDirection(light);
 
     
-    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 1000.0f);
+    CGCore::Camera* camera = new CGCore::Camera(glm::vec3(0.0f, 5.0f, -25.0f), 70.0f, aspectRatio, 0.1f, 300.0f);
     CGCore::Input* input = new CGCore::Input(Display, camera);
 
     CGCore::Renderer* renderer = new CGCore::Renderer(Display);
@@ -89,7 +110,8 @@ int main()
 
     
     CGCore::Entity* e = nullptr;
-
+    CGCore::GetTimePassed("* Initialized the engine");
+  
     // Start main loop
     while(!Display->CloseRequested() && (!HasError))
     {
@@ -125,6 +147,6 @@ int main()
     delete shader;
     delete renderer;
     delete Display;
-
+    CGCore::GetTimePassed("* Application time");
 
 }

@@ -4,6 +4,7 @@
 #endif
 #include <cstdio>
 
+#include <chrono>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -16,7 +17,27 @@ bool FirstMouseEvent;
 float MouseSensitivity;
 double MouseOffsetX;
 double MouseOffsetY;
+
+TimePoint t1;
+TimePoint t2; 
+Duration time_span;
+
     
+}
+
+void CGCore::InitHighPrecisionTimers()
+{
+    CGCore::t1 = CGCore::Clock::now();
+    CGCore::t2 = CGCore::Clock::now();
+    CGCore::time_span = std::chrono::duration_cast<CGCore::Duration>(CGCore::t2 - CGCore::t1);
+}
+
+void CGCore::GetTimePassed(const char* m)
+{
+    CGCore::t2 = CGCore::Clock::now();
+    CGCore::time_span = std::chrono::duration_cast<CGCore::Duration>(CGCore::t2 - CGCore::t1);
+    printf("%s: %f s\n ", m, CGCore::time_span.count());
+    CGCore::t1 = CGCore::Clock::now();
 }
 
 void CGCore::CGCallbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

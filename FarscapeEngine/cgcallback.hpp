@@ -16,7 +16,7 @@
 #ifdef WINDOWS
 #include<windows.h>
 #endif
-
+#include <chrono>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -31,6 +31,16 @@ namespace CGCore
     extern float MouseSensitivity;
     extern double MouseOffsetX;
     extern double MouseOffsetY;
+
+    typedef std::chrono::high_resolution_clock Clock;
+    typedef std::chrono::duration<double> Duration;
+    typedef std::chrono::high_resolution_clock::time_point TimePoint;
+
+    extern TimePoint t1;
+    extern TimePoint t2;
+    
+    void GetTimePassed(const char* m);
+    void InitHighPrecisionTimers();
     
     // Definitions for the callbacks
     class CGCallbacks
