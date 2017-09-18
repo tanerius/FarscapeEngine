@@ -39,7 +39,7 @@ namespace CGCore
         // Binds texture to texture unit 0
         Entity(const char* objModelPath, const char* texturePath, Transform* defTransform = nullptr);
         Entity(const char* objModelPath, Texture* texture, Transform* defTransform = nullptr);
-        Entity(const IndexedModel* objModelPath, Texture* texture, Transform* defTransform = nullptr);
+        Entity(IndexedModel* objModelPath, Texture* texture, Transform* defTransform = nullptr);
         Entity(); // default entity maybe a triangle
         virtual ~Entity();
         

@@ -74,7 +74,7 @@ namespace CGCore
     {
     public:
         Mesh(const std::string& fileName);
-        Mesh(const CGCore::IndexedModel* Model);
+        Mesh(CGCore::IndexedModel* Model);
         Mesh(
              Vertex* Vertices,
              unsigned int VertexCount,
@@ -96,6 +96,8 @@ namespace CGCore
         GLuint m_vertexArrayObject;
         GLuint m_vertexArrayBuffers[NUM_BUFFERS];
         unsigned int m_numIndices;
+        // Representation of the model
+        IndexedModel* m_indexedModel = nullptr;
     };
 }
 

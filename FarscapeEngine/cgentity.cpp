@@ -60,7 +60,7 @@ CGCore::Entity::Entity(const char* objModelPath, Texture* texture, CGCore::Trans
 }
 
 
-CGCore::Entity::Entity(const IndexedModel* Model, Texture* texture, Transform* t)
+CGCore::Entity::Entity(IndexedModel* Model, Texture* texture, Transform* t)
 {
     m_Mesh = new CGCore::Mesh(Model);
     m_Texture = texture;

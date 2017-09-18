@@ -83,9 +83,11 @@ CGCore::Mesh::Mesh(const std::string& FileName)
 }
 
 
-CGCore::Mesh::Mesh(const CGCore::IndexedModel* Model)
+CGCore::Mesh::Mesh(CGCore::IndexedModel* Model)
 {
-    InitMesh(Model);
+    assert(m_indexedModel == nullptr);
+    m_indexedModel = Model;
+    InitMesh(m_indexedModel);
 }
 
 
@@ -108,7 +110,9 @@ CGCore::Mesh::Mesh(
     for(unsigned int i = 0; i < IndexCount; i++)
         Model->Indices.push_back(Indices[i]);
 
-    InitMesh(Model);
+    assert(m_indexedModel == nullptr);
+    m_indexedModel = Model;
+    InitMesh(m_indexedModel);
 }
 
 
@@ -116,6 +120,8 @@ CGCore::Mesh::~Mesh()
 {
     glDeleteBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
     glDeleteVertexArrays(1, &m_vertexArrayObject);
+    delete m_indexedModel;
+    m_indexedModel = nullptr;
 }
 
 
