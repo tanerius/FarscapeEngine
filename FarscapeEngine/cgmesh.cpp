@@ -78,7 +78,14 @@ void CGCore::IndexedModel::CalcNormals()
 
 CGCore::Mesh::Mesh(const std::string& FileName)
 {
-    InitMesh(OBJModel(FileName).ToIndexedModel());
+    CGCore::IndexedModel* Model = OBJModel(FileName).ToIndexedModel();
+    InitMesh(Model);
+}
+
+
+CGCore::Mesh::Mesh(const CGCore::IndexedModel* Model)
+{
+    InitMesh(Model);
 }
 
 
@@ -89,17 +96,17 @@ CGCore::Mesh::Mesh(
                    unsigned int IndexCount
                    )
 {
-    IndexedModel Model;
+    IndexedModel* Model = new IndexedModel();
 
     for(unsigned int i = 0; i < VertexCount; i++)
     {
-        Model.Positions.push_back(*Vertices[i].GetPos());
-        Model.TexCoords.push_back(*Vertices[i].GetTexCoord());
-        Model.Normals.push_back(*Vertices[i].GetNormal());
+        Model->Positions.push_back(*Vertices[i].GetPos());
+        Model->TexCoords.push_back(*Vertices[i].GetTexCoord());
+        Model->Normals.push_back(*Vertices[i].GetNormal());
     }
 
     for(unsigned int i = 0; i < IndexCount; i++)
-        Model.Indices.push_back(Indices[i]);
+        Model->Indices.push_back(Indices[i]);
 
     InitMesh(Model);
 }
@@ -123,9 +130,9 @@ void CGCore::Mesh::Draw()
 }
 
 
-void CGCore::Mesh::InitMesh(const CGCore::IndexedModel& Model)
+void CGCore::Mesh::InitMesh(const CGCore::IndexedModel* Model)
 {
-    m_numIndices = (unsigned int)Model.Indices.size();
+    m_numIndices = (unsigned int)Model->Indices.size();
 
     // Generate a VAO and bind it.
     glGenVertexArrays(1, &m_vertexArrayObject);
@@ -137,25 +144,25 @@ void CGCore::Mesh::InitMesh(const CGCore::IndexedModel& Model)
     // Bind and allocate the VBOs
     // Bind the Vertex Positions VBO
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[static_cast<int>(E_BUFFER_POSITION::E_POSITION)]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Model.Positions[0]) * Model.Positions.size(), &Model.Positions[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Model->Positions[0]) * Model->Positions.size(), &Model->Positions[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // Bind the Texture coordinate VBO
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[static_cast<int>(E_BUFFER_POSITION::E_TEXCOORD)]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Model.TexCoords[0]) * Model.TexCoords.size(), &Model.TexCoords[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Model->TexCoords[0]) * Model->TexCoords.size(), &Model->TexCoords[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     // Bind the Vertex normals VBO
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[static_cast<int>(E_BUFFER_POSITION::E_NORMAL)]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Model.Normals[0]) * Model.Normals.size(), &Model.Normals[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Model->Normals[0]) * Model->Normals.size(), &Model->Normals[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     // Bind the Vertex index VBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[static_cast<int>(E_BUFFER_POSITION::E_INDEX)]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Model.Indices[0]) * Model.Indices.size(), &Model.Indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Model->Indices[0]) * Model->Indices.size(), &Model->Indices[0], GL_STATIC_DRAW);
 
     // Unbind VAO
     glBindVertexArray(0);

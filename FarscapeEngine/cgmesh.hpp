@@ -74,6 +74,7 @@ namespace CGCore
     {
     public:
         Mesh(const std::string& fileName);
+        Mesh(const CGCore::IndexedModel* Model);
         Mesh(
              Vertex* Vertices,
              unsigned int VertexCount,
@@ -90,7 +91,7 @@ namespace CGCore
         void operator=(const Mesh& mesh) {}
         Mesh(const Mesh& mesh) {}
         
-        void InitMesh(const IndexedModel& model);
+        void InitMesh(const IndexedModel* model);
         
         GLuint m_vertexArrayObject;
         GLuint m_vertexArrayBuffers[NUM_BUFFERS];

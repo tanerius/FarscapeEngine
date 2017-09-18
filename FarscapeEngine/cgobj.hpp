@@ -45,7 +45,7 @@ namespace CGCore
         
         OBJModel(const std::string& fileName);
         
-        IndexedModel ToIndexedModel();
+        IndexedModel* ToIndexedModel();
         std::string ToString() const override;
     private:
         unsigned int FindLastVertexIndex(const std::vector<OBJIndex*>& indexLookup, const OBJIndex* currentIndex, const IndexedModel& result);

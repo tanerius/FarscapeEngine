@@ -66,9 +66,9 @@ CGCore::OBJModel::OBJModel(const std::string& fileName)
     }
 }
 
-CGCore::IndexedModel CGCore::OBJModel::ToIndexedModel()
+CGCore::IndexedModel* CGCore::OBJModel::ToIndexedModel()
 {
-    CGCore::IndexedModel result;
+    CGCore::IndexedModel* result = new CGCore::IndexedModel();
     CGCore::IndexedModel normalModel;
 
     unsigned int numIndices = (unsigned int)OBJIndices.size();
@@ -119,21 +119,21 @@ CGCore::IndexedModel CGCore::OBJModel::ToIndexedModel()
             normalModelIndex = it->second;
 
         //Create model which properly separates texture coordinates
-        unsigned int previousVertexLocation = FindLastVertexIndex(indexLookup, currentIndex, result);
+        unsigned int previousVertexLocation = FindLastVertexIndex(indexLookup, currentIndex, *result);
 
         if(previousVertexLocation == (unsigned int)-1)
         {
-            resultModelIndex = (unsigned int)result.Positions.size();
+            resultModelIndex = (unsigned int)result->Positions.size();
 
-            result.Positions.push_back(currentPosition);
-            result.TexCoords.push_back(currentTexCoord);
-            result.Normals.push_back(currentNormal);
+            result->Positions.push_back(currentPosition);
+            result->TexCoords.push_back(currentTexCoord);
+            result->Normals.push_back(currentNormal);
         }
         else
             resultModelIndex = previousVertexLocation;
 
         normalModel.Indices.push_back(normalModelIndex);
-        result.Indices.push_back(resultModelIndex);
+        result->Indices.push_back(resultModelIndex);
         indexMap.insert(std::pair<unsigned int, unsigned int>(resultModelIndex, normalModelIndex));
     }
 
@@ -141,8 +141,8 @@ CGCore::IndexedModel CGCore::OBJModel::ToIndexedModel()
     {
         normalModel.CalcNormals();
 
-        for(unsigned int i = 0; i < result.Positions.size(); i++)
-            result.Normals[i] = normalModel.Normals[indexMap[i]];
+        for(unsigned int i = 0; i < result->Positions.size(); i++)
+            result->Normals[i] = normalModel.Normals[indexMap[i]];
     }
 
     return result;

@@ -1,3 +1,4 @@
+#include "cgobj.hpp"
 #include "cgdisplay.hpp"
 #include "cgtransform.hpp"
 #include "cgcamera.hpp"
@@ -75,7 +76,11 @@ int main()
     keyTransform->SetPos(objPosition);
     objPosition = glm::vec3(z,x,y);
     keyTransform->SetRot(objPosition);
-    monkeys.push_back(new CGCore::Entity(OBJ_SAMPLE,yellow,keyTransform));
+    
+    // Load a model only once - no point to load a model more thanonce
+    CGCore::IndexedModel* MonkeyModel = CGCore::OBJModel(OBJ_SAMPLE).ToIndexedModel();
+    monkeys.push_back(new CGCore::Entity(MonkeyModel,yellow,keyTransform));
+    
     CGCore::GetTimePassed("* Created and init a monkey entity");
     for (int c=0; c < 499 ; c++)
     {   
@@ -87,7 +92,7 @@ int main()
         keyTransform->SetPos(objPosition);
         objPosition = glm::vec3(z,x,y);
         keyTransform->SetRot(objPosition);
-        monkeys.push_back(new CGCore::Entity(OBJ_SAMPLE,yellow,keyTransform));
+        monkeys.push_back(new CGCore::Entity(MonkeyModel,yellow,keyTransform));
     }    
     CGCore::GetTimePassed("* Created and init additional 499 monkey entities");
    
@@ -150,3 +155,59 @@ int main()
     CGCore::GetTimePassed("* Application time");
 
 }
+
+/*
+ * Created the display: 0.991116 s
+ * Created the textures and tranforms: 0.011737 s
+ * Created and init a monkey entity: 0.038391 s
+ * Created and init additional 499 monkey entities: 16.789991 s
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ * Initialized the engine: 0.003222 s
+ * Application time: 2.611147 s
+ Program ended with exit code: 0
+ 
+ 
+ 
+ * Created the display: 0.694693 s
+ * Created the textures and tranforms: 0.008868 s
+ * Created and init a monkey entity: 0.036070 s
+ * Created and init additional 499 monkey entities: 16.906564 s
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ * Initialized the engine: 0.003040 s
+ * Application time: 4.854484 s
+ Program ended with exit code: 0
+ 
+ 
+ * Created the display: 0.723031 s
+ * Created the textures and tranforms: 0.008789 s
+ * Created and init a monkey entity: 0.035092 s
+ * Created and init additional 499 monkey entities: 16.711917 s
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ * Initialized the engine: 0.003197 s
+ * Application time: 2.222323 s
+ Program ended with exit code: 0
+ 
+ 
+ * Created the display: 0.762908 s
+ * Created the textures and tranforms: 0.009015 s
+ * Created and init a monkey entity: 0.037832 s
+ * Created and init additional 499 monkey entities: 0.172046 s
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ Checking shaders...
+ * Initialized the engine: 0.004139 s
+ * Application time: 2.253051 s
+ Program ended with exit code: 0
+ 
+ */
+
