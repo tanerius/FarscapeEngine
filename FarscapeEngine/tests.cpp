@@ -11,6 +11,8 @@
 #include <ctime>
 #include "cginput.hpp"
 
+#include "farscape.hpp"
+
 #include <iostream>
 
 #ifdef WINDOWS
@@ -36,9 +38,11 @@ static const char* SHADER_FILE = "/Users/tanerselim/Dev/FarscapeEngine/FarscapeE
 
 int main()
 {
-    CGCore::InitHighPrecisionTimers(); // start timing functions
+    CGCore::FarscapeEngine* engine = CGCore::FarscapeEngine::getInstance();
+    
+    
 
-    CGCore::DisplayManager* Display = new CGCore::DisplayManager();
+    CGCore::DisplayManager* Display = CGCore::DisplayManager::getInstance();
     Display->CreateDisplay();
     Display->GetInfo();
 

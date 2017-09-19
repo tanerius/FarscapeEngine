@@ -10,15 +10,40 @@
 #include <GLFW/glfw3.h>
 
 
+
+/* Null, because instance will be initialized on demand. */
+CGCore::DisplayManager* CGCore::DisplayManager::instance = nullptr;
+
+CGCore::DisplayManager* CGCore::DisplayManager::getInstance()
+{
+    if ((instance == nullptr) || (instance == 0))
+    {
+        instance = new CGCore::DisplayManager();
+    }
+    
+    return instance;
+}
+
+
+CGCore::DisplayManager::DisplayManager()
+{
+}
+
+
 bool CGCore::DisplayManager::CloseRequested()
 {
     return glfwWindowShouldClose(GLFWWindowPtr);
 }
 
-void CGCore::DisplayManager::CreateDisplay(const bool UsingMouse)
+void CGCore::DisplayManager::CreateDisplay(const bool UsingMouse, short WidthRez, short HeightRez)
 {
     // Creating a display
     assert(GLFWWindowPtr == 0);
+    // set the screen resolution
+    DisplayWidth = WidthRez;
+    DisplayHeight = HeightRez;
+    
+    
     // Initialize GLFW, and if it fails to initialize for any reason, print it out to STDERR.
     // Initialise GLFW
 	if( !glfwInit() )
