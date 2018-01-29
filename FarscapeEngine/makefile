@@ -23,7 +23,7 @@ COMPILER_FLAGS = -std=c++14 -DAPPLE -DUSE_GLM -Wall -pedantic -arch x86_64 -fmes
 
 # LINKER_FLAGS specifies the libraries we're linking against
 # Cocoa, IOKit, and CoreVideo are needed for static GLFW3.
-LINKER_FLAGS = -framework OpenGL -lpng -framework Cocoa -framework IOKit -framework CoreVideo
+LINKER_FLAGS = -framework OpenGL -lpthread -lpng -lGLEW -lglfw -framework Cocoa -framework IOKit -framework CoreVideo
 
 # OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = cgdisplay
@@ -33,7 +33,7 @@ all : clean $(OBJS)
 
 
 tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh cginput cgobj callbacks
-	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o $(OUTPUTDIR)/cgobj.o $(OUTPUTDIR)/cgcallback.o $(LOC_LIB)
+	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o $(OUTPUTDIR)/cgobj.o $(OUTPUTDIR)/cgcallback.o
 
 cgcamera : cgcore.hpp cgcamera.hpp 
 	$(CC) cgcamera.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgcamera.o
