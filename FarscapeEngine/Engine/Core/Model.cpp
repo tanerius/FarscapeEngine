@@ -40,6 +40,7 @@ void Farscape::Model::AddData(const std::vector<GLfloat>& vertexPositions,
     AddVBO(3, vertexPositions);
     AddVBO(2, textureCoords);
     AddEBO(indices);
+    glBindVertexArray(0);
 }
 
 void Farscape::Model::AddVBO(int dimensions, const std::vector<GLfloat>& data)

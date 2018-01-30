@@ -1,4 +1,4 @@
-#version 410
+#version 330
 
 // VERTEX SHADER
 
@@ -13,6 +13,7 @@ uniform mat4 modelMatrix;
 
 void main(void)
 {
-    gl_Position = projViewMatrix * modelMatrix * vec4(inVertexPosition, 1.0);
+    gl_Position = vec4(inVertexPosition, 1.0);
+    
     passTextureCoord = inTextureCoord;
 }

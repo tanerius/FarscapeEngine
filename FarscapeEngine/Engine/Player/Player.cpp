@@ -7,6 +7,9 @@
 //
 
 #include "Player.h"
+#include "../Core/Event.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 Farscape::Player::Player()
 {
@@ -28,7 +31,31 @@ void Farscape::Player::Update(float dt)
 void Farscape::Player::KeyboardInput()
 {
     Vector3d change = {0,0,0};
-    //float speed = 0.5;
+    float speed = 0.5;
+    Event* m_events = Farscape::Event::GetInstance();
+    
+    if (m_events->CheckPressed(GLFW_KEY_W)){
+        change.x = glm::cos(glm::radians(rotation.y + 90)) * speed;
+        change.z = glm::sin(glm::radians(rotation.y + 90)) * speed;
+        printf("Pressed W\n");
+    }
+    if (m_events->CheckPressed(GLFW_KEY_S)){
+        change.x = -glm::cos(glm::radians(rotation.y + 90)) * speed;
+        change.z = -glm::sin(glm::radians(rotation.y + 90)) * speed;
+        printf("Pressed S\n");
+    }
+    if (m_events->CheckPressed(GLFW_KEY_A)){
+        change.x = glm::cos(glm::radians(rotation.y)) * speed;
+        change.z = glm::sin(glm::radians(rotation.y)) * speed;
+        printf("Pressed A\n");
+    }
+    if (m_events->CheckPressed(GLFW_KEY_D)){
+        change.x = -glm::cos(glm::radians(rotation.y)) * speed;
+        change.z = -glm::sin(glm::radians(rotation.y)) * speed;
+        printf("Pressed D\n");
+    }
+    
+    
     
     
     m_velocity += change;

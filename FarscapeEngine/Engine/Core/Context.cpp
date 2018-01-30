@@ -102,12 +102,12 @@ Farscape::ContextWrapper::ContextWrapper(const std::string& name, const int& w, 
     }
     
     // Setup cnotext and window properties/hints
-    #ifdef APPLE
+    
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Try 4
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1); // try 1
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    #endif
+    
     glfwWindowHint (GLFW_SAMPLES, 4);
     
     // Create a window to put our stuff in.

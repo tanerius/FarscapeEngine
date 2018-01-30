@@ -8,9 +8,20 @@
 
 #include "Engine/Application.h"
 
+bool test = false;
+
 int main()
 {
     Farscape::Application app("Minecraft");
-    app.Start();
+    if (test)
+    {
+        app.Test();
+    }
+    else{
+        app.Start();
+    }
+    
     return 0;
 }
+
+

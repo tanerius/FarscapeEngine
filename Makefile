@@ -6,16 +6,15 @@ OUTPUTDIR = build
 EXECUTABLE = farscape_demo
 
 OS := $(shell uname)
-ifeq ($(OS),Darwin)
-FLAGS=-framework OpenGL -lpthread -lpng -lGLEW -lglfw -L/usr/local/lib
-CC_FLAGS=-std=c++1y -O3 -pipe -ffast-math -fno-inline -mfpmath=sse -flto -fno-omit-frame-pointer -UGLFW_CDECL -march=native -mtune=native -I/usr/local/include
-else
-FLAGS=-lGL -lpthread -lSDL2 -lSDL2_image -lGLEW
-CC_FLAGS=-std=c++1y -O3 -pipe -ffast-math -fno-inline -mfpmath=sse -flto -fno-omit-frame-pointer -march=native -mtune=native
-endif
+
+FLAGS= -framework OpenGL -lpng -lpthread -lglfw -lglew 
+CC_FLAGS=-std=c++1y -O3 -w -pipe -ffast-math -fno-inline -mfpmath=sse -flto -fno-omit-frame-pointer -march=native -mtune=native
+LIBRARY_PATHS = -L/usr/local/lib -I/opt/X11/lib
+INCLUDE_PATHS = -I/usr/local/include -I/opt/X11/include
+
 
 $(TARGET): $(OFILES)
-	g++ -g -o $(TARGET) $(OFILES) $(FLAGS)
+	g++ $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(CC_FLAGS) $(FLAGS) -o $(TARGET) $(OFILES) 
 
 %.o: %.cpp
 	g++ $(CC_FLAGS) -o $@ -c $<

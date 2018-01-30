@@ -15,6 +15,11 @@
 
 Farscape::QuadRenderer::QuadRenderer()
 {
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glEnable(GL_TEXTURE_2D);
+    
     m_basicTexture.LoadFromFile("test");
     
     m_quadModel.AddData(
@@ -31,9 +36,11 @@ Farscape::QuadRenderer::QuadRenderer()
                             0, 0,
                         },
                         {
-                            0, 1, 2,
-                            2, 3, 0
+                            0, 2, 1,
+                            0, 3, 2
                         });
+    
+    
 }
 
 void Farscape::QuadRenderer::AddMesh(const glm::vec3& position)
@@ -43,6 +50,7 @@ void Farscape::QuadRenderer::AddMesh(const glm::vec3& position)
 
 void Farscape::QuadRenderer::RenderMeshes(const Camera& camera)
 {
+    //printf("Rendering meshes...\n");
     m_shader.UseProgram();
     m_quadModel.BindVAO();
     m_basicTexture.BindTexture();
@@ -54,6 +62,7 @@ void Farscape::QuadRenderer::RenderMeshes(const Camera& camera)
         m_shader.LoadModelMatrix(Farscape::Matrix::CreateModelMatrix(quad, {0,0,0}));
         
         glDrawElements(GL_TRIANGLES, m_quadModel.GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
+        //glDrawElementsBaseVertex(GL_TRIANGLES, m_quadModel.GetIndicesCount(), GL_UNSIGNED_INT, 0, 0);
     }
     
     m_quads.clear();

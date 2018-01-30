@@ -9,6 +9,12 @@
 #include "Application.h"
 #include "Core/Event.h"
 #include "States/PlayingState.h"
+#include "Core/TestGL.h"
+
+void Farscape::Application::Test()
+{
+    TestDraw(m_Context->GetContext().GLFWWindowPtr);
+}
 
 void Farscape::Application::popState()
 {
@@ -19,6 +25,7 @@ Farscape::Application::Application(std::string&& name)
 {
     // Context must come first
     m_Context = new Farscape::ContextWrapper(name, 1280, 720);
+    printf("Supported GLSL version is %s.\n", (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
     m_TimeSinceAppStart = glfwGetTime();
     glfwSetTime(0);
 }
@@ -36,6 +43,8 @@ void Farscape::Application::Initialize()
     m_masterRenderer = new Farscape::MasterRenderer(m_quad);
     m_events = Farscape::Event::GetInstance();
     m_Context->ShowStartupInfo();
+    
+    
     
     pushState<PlayingState>(*this);
     

@@ -36,6 +36,7 @@ namespace Farscape
                 //auto& s = m_states.back();
             }
             void popState();
+            void Test();
         
         protected:
             void Initialize();

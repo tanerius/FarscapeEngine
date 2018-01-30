@@ -25,13 +25,14 @@ namespace Farscape {
         
         ~BasicTexture();
         
-        void LoadFromFile (const std::string& file);
+        bool LoadFromFile (const std::string& file);
         
         void BindTexture() const;
         
         
     private:
         GLuint m_id;
+        void GenerateTexture(GLuint temp_width, GLuint temp_height, GLint format, GLubyte* image_data);
     };
 }
 
