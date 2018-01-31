@@ -15,15 +15,16 @@ INCLUDE_PATHS =  -I/usr/local/include
 LIBRARY_PATHS = -L/usr/local/lib 
 # LIB_P = /Users/tanerselim/Dev/antons_opengl_tutorials_book/common/osx_64/
 LIB_P = /usr/local/lib/
-LOC_LIB = $(LIB_P)libGLEW.a $(LIB_P)libglfw3.a
+
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -std=c++14 -DAPPLE -DUSE_GLM -Wall -pedantic -arch x86_64 -fmessage-length=0 -UGLFW_CDECL
+COMPILER_FLAGS = -std=c++1y -O3 -pipe -ffast-math -fno-inline -mfpmath=sse -flto -fno-omit-frame-pointer -UGLFW_CDECL -march=native -mtune=native
+
 
 # LINKER_FLAGS specifies the libraries we're linking against
 # Cocoa, IOKit, and CoreVideo are needed for static GLFW3.
-LINKER_FLAGS = -framework OpenGL -lpthread -lpng -lGLEW -lglfw -framework Cocoa -framework IOKit -framework CoreVideo
+LINKER_FLAGS = -framework OpenGL -lpthread -lpng -lGLEW -lglfw
 
 # OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = cgdisplay
@@ -32,8 +33,11 @@ OBJ_NAME = cgdisplay
 all : clean $(OBJS) 
 
 
-tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh cginput cgobj callbacks
-	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o $(OUTPUTDIR)/cgobj.o $(OUTPUTDIR)/cgcallback.o
+tests: cgdisplay rawmodel loader renderer shader texture helpers entity cgcamera mesh cginput cgobj callbacks farscape
+	$(CC) tests.cpp $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OUTPUTDIR)/$(EXECUTABLE) $(OUTPUTDIR)/cgdisplay.o $(OUTPUTDIR)/cgrawmodel.o $(OUTPUTDIR)/cgloader.o $(OUTPUTDIR)/cgrenderer.o $(OUTPUTDIR)/cgshader.o $(OUTPUTDIR)/cgtexture.o $(OUTPUTDIR)/cghelper.o $(OUTPUTDIR)/cgentity.o $(OUTPUTDIR)/cgcamera.o $(OUTPUTDIR)/cgmesh.o $(OUTPUTDIR)/cginput.o $(OUTPUTDIR)/cgobj.o $(OUTPUTDIR)/cgcallback.o $(OUTPUTDIR)/farscape.o
+
+farscape : cgcore.hpp farscape.hpp 
+	$(CC) farscape.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/farscape.o
 
 cgcamera : cgcore.hpp cgcamera.hpp 
 	$(CC) cgcamera.cpp $(INCLUDE_PATHS) $(COMPILER_FLAGS) -c -o $(OUTPUTDIR)/cgcamera.o

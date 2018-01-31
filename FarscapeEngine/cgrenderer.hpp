@@ -1,9 +1,8 @@
 #ifndef CG_RENDERER_HPP
 #define CG_RENDERER_HPP
 
-#ifdef USE_GLM
-    #include<glm/glm.hpp>
-#endif
+#include<glm/glm.hpp>
+
 #include <GL/glew.h>
 
 namespace CGCore

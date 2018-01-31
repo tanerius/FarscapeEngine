@@ -57,12 +57,11 @@ void CGCore::DisplayManager::CreateDisplay(const bool UsingMouse, short WidthRez
         CGCore::HandledKeys[c] = false;
     }
 
-#ifdef APPLE
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Try 4
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1); // try 1
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#endif
+
 
     // Create a window to put our stuff in.
     GLFWWindowPtr = glfwCreateWindow(DisplayWidth, DisplayHeight, "Farscape Demo: ", NULL, NULL);

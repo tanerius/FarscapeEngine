@@ -16,10 +16,9 @@
 #include<windows.h>
 #endif
 
-#ifdef USE_GLM
     #include <glm/glm.hpp>
     #include <glm/gtx/transform.hpp>
-#endif
+
 #include <GL/glew.h>
 
 namespace CGCore
