@@ -18,6 +18,7 @@ namespace Farscape {
         Camera();
         
         void Update();
+        // member that attaches a camera to the player
         void HookEntity(const Entity& entity);
         
         const glm::mat4& GetViewMatrix ()           const noexcept;

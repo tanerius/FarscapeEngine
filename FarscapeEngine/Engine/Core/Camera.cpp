@@ -25,10 +25,12 @@ void Farscape::Camera::Update()
     position = m_pEntity->position;
     rotation = m_pEntity->rotation;
     
-    m_viewMatrix = Farscape::Matrix::CreateViewMatrix(position, rotation);
+    //m_viewMatrix = Farscape::Matrix::CreateCameraViewMatrix(position, rotation);
+    m_viewMatrix = glm::lookAt(position, Vector3d(0.0f, 0.0f, 0.0f), Vector3d(0.0f, 1.0f, 0.0f));
     m_projViewMatrx = m_projectionMatrix * m_viewMatrix;
 }
 
+// Attach the camera to the player
 void Farscape::Camera::HookEntity(const Entity& entity)
 {
     m_pEntity = &entity;

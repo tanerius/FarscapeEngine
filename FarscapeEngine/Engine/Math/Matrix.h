@@ -38,6 +38,10 @@ namespace Farscape
                                        const Vector3d& Orientation // (pitch,yaw,roll) angles
                                         );
         
+        static Matrix4 CreateCameraViewMatrix(const Vector3d& Position,
+                                              const Vector3d& Orientation // (pitch,yaw,roll) angles in radians
+                                        );
+        
         static Matrix4 CreateViewMatrixDefaultPosition(
                                         const Vector3d& Position,
                                         const Vector3d& Rotation // (pitch,yaw,roll) angles
@@ -45,9 +49,9 @@ namespace Farscape
         
         static Matrix4 MakeProjectionMatrix(
                                             const float& fov,
-                                            const float& ratio,   // w/h
-                                            const float& near,    // 0.5
-                                            const float& far)     // 1000
+                                            const float& ratio = 4.0/3.0,   // w/h
+                                            const float& near = 0.5,    // 0.5
+                                            const float& far = 100.0)     // 1000
         {
             return glm::perspective(glm::radians(fov), ratio, near, far);
         }

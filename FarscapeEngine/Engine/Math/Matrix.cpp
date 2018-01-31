@@ -8,6 +8,7 @@
 
 #include "Matrix.h"
 
+// Farscape::Matrix4(1.0f) = identity matrix
 Farscape::Matrix4 Farscape::Matrix::CreateTransformationMatrix(const Vector3d& Translation,
                                                                const Vector3d& RotAxis,
                                                                const float& RotAngle,
@@ -23,6 +24,8 @@ Farscape::Matrix4 Farscape::Matrix::CreateTransformationMatrix(const Vector3d& T
 Farscape::Matrix4 Farscape::Matrix::CreateViewMatrix(const Vector3d& Position,
                                                      const Vector3d& Orientation)
 {
+    // The negative multiplication is like moving the entire world rather than camera
+    // "Engines dont move the ship they move the space around the ship" - Futurama
     Vector3d NegativePos = Vector3d(-1 * Position.x, -1 * Position.y, -1 * Position.z);
     Farscape::Matrix4 T = glm::translate(Farscape::Matrix4(1.0f), NegativePos); // Camera postion
     Farscape::Matrix4 RotMat = glm::rotate(Farscape::Matrix4(1.0), Orientation.x, Vector3d(1.0f,0.0f,0.0f)); // Pitch
@@ -32,16 +35,18 @@ Farscape::Matrix4 Farscape::Matrix::CreateViewMatrix(const Vector3d& Position,
     return ViewMatrix;
 }
 
-Farscape::Matrix4 Farscape::Matrix::CreateViewMatrixDefaultPosition(const Vector3d& Position,
-                                                     const Vector3d& Rotation)
+Farscape::Matrix4 Farscape::Matrix::CreateCameraViewMatrix(const Vector3d& Position,
+                                                     const Vector3d& Orientation)
 {
-    Farscape::Matrix4 matrix;
+    glm::vec3 front;
+    front.x = cos(glm::radians(Orientation.y)) * cos(glm::radians(Orientation.x));
+    front.y = sin(glm::radians(Orientation.x));
+    front.z = sin(glm::radians(Orientation.y)) * cos(glm::radians(Orientation.x));
+    front = glm::normalize(front); // where to look at
     
-    matrix = glm::rotate(matrix, glm::radians(Rotation.x), {1, 0, 0});
-    matrix = glm::rotate(matrix, glm::radians(Rotation.y), {0, 1, 0});
-    matrix = glm::rotate(matrix, glm::radians(Rotation.z), {0, 0, 1});
-    
-    matrix = glm::translate(matrix, Position);
-    
-    return matrix;
+    // (position, look towards, up vector)
+    // glm::lookAt(pos, pos + forward, up);
+    return glm::lookAt(Position, Position + front, Vector3d(0.0f, 1.0f, 0.0f));
 }
+
+
