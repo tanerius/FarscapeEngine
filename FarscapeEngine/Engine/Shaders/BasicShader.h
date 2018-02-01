@@ -9,7 +9,7 @@
 #ifndef BasicShader_h
 #define BasicShader_h
 
-#include "Shader.h"
+#include "../Core/Shader.h"
 
 namespace Farscape {
     class BasicShader : public Shader

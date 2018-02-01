@@ -13,7 +13,7 @@
 
 Farscape::Player::Player()
 {
-    position = {0, 0, -5};
+    position = Vector3d(0.0f , 0.0f , -5.0f);
 }
 
 void Farscape::Player::HandleInput()
@@ -24,7 +24,9 @@ void Farscape::Player::HandleInput()
 
 void Farscape::Player::Update(float dt)
 {
+    // Slow down velocity over time
     position += m_velocity * dt;
+    // reset velocity
     m_velocity *= 0.95;
 }
 

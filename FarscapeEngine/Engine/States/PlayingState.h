@@ -20,6 +20,7 @@ namespace Farscape {
     {
     public:
         PlayingState(Application& app);
+        ~PlayingState();
         
         virtual void HandleEvent() override;
         virtual void HandleInput() override;

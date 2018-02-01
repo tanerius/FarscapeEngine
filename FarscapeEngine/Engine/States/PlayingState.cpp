@@ -19,6 +19,12 @@ Farscape::PlayingState::PlayingState(Farscape::Application& app)
     app.GetCamera()->HookEntity(m_player);
 }
 
+Farscape::PlayingState::~PlayingState()
+{
+    // release memory
+    delete m_player;
+}
+
 void Farscape::PlayingState::HandleEvent()
 {
     
@@ -36,5 +42,5 @@ void Farscape::PlayingState::Update(float deltaTime)
 
 void Farscape::PlayingState::Render(MasterRenderer* renderer)
 {
-    renderer->DrawMesh({0, 0, 0});
+    renderer->DrawMesh(Vector3d(0.0f, 0.0f, 0.0f));
 }

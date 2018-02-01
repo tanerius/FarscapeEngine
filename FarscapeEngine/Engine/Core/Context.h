@@ -31,6 +31,7 @@ namespace Farscape
     {
         public:
             ContextWrapper(const std::string& AppName, const int& w, const int& h);
+            ~ContextWrapper();
             Context GetContext() {return m_context;}
         
             void SetShowInfo(const bool b) {m_showInfo = b;}

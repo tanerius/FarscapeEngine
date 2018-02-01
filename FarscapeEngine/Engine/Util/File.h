@@ -20,7 +20,8 @@ namespace Farscape
     {
         GLsizei m_width;
         GLsizei m_height;
-        GLvoid* data;
+        GLint m_format;
+        GLubyte* data;
     };
     
     class FilePNGHandler
@@ -34,13 +35,14 @@ namespace Farscape
             Image i;
             i.m_height = m_height;
             i.m_width = m_width;
+            i.m_format = m_format;
             i.data = image_data;
             return i;
         }
         bool IsSuccess() { return m_isRead; }
         
         private:
-        bool ReadPNG(const std::string& filename);
+            bool ReadPNG(const std::string& filename);
             FILE *fp = nullptr;
             png_uint_32 m_width;
             png_uint_32 m_height;
@@ -51,6 +53,7 @@ namespace Farscape
             png_infop end_info;
             png_byte ** row_pointers = nullptr;
             bool m_isRead = false;
+            GLint m_format = 0;
     };
     
     

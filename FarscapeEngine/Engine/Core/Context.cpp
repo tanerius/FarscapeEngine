@@ -22,6 +22,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+Farscape::ContextWrapper::~ContextWrapper()
+{
+    if(m_context.GLFWWindowPtr != 0)
+    {
+        Shutdown();
+    }
+}
+
 void Farscape::ContextWrapper::Shutdown()
 {
     assert(m_context.GLFWWindowPtr != 0);

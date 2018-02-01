@@ -42,18 +42,18 @@ namespace Farscape {
         
     private:
         const Entity* m_pEntity;
-        glm::mat4 projection;
-        glm::vec3 forward;
-        glm::vec3 up;
+        Matrix4 projection;
+        Vector3d forward;
+        Vector3d up;
 
         float m_fov; // Field of view
         float m_aspect;
         float m_near;
         float m_far;
         
-        glm::mat4 m_projectionMatrix;
-        glm::mat4 m_viewMatrix;
-        glm::mat4 m_projViewMatrx;
+        Matrix4 m_projectionMatrix;
+        Matrix4 m_viewMatrix;
+        Matrix4 m_projViewMatrx;
         
         
     };

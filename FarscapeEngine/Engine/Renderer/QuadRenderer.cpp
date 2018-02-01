@@ -13,6 +13,14 @@
 #include "../Core/Camera.h"
 #include "../Math/Matrix.h"
 
+Farscape::QuadRenderer::~QuadRenderer()
+{
+    m_quads.clear();
+    delete m_shader;
+    delete m_basicTexture;
+    delete m_quadModel;
+}
+
 Farscape::QuadRenderer::QuadRenderer()
 {
     glEnable(GL_DEPTH_TEST);

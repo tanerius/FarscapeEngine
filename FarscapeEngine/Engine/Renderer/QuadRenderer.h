@@ -23,6 +23,7 @@ namespace Farscape {
     {
         public:
             QuadRenderer();
+            ~QuadRenderer();
         
             virtual void AddMesh(const Vector3d& position) override;
             virtual void RenderMeshes(const Camera* camera) override;

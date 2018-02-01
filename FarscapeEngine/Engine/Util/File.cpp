@@ -174,6 +174,7 @@ bool Farscape::FilePNGHandler::ReadPNG(const std::string& file_name)
     png_read_image(png_ptr, row_pointers);
     m_width = temp_width;
     m_height = temp_height;
+    m_format = format;
     return true;
 }
 
