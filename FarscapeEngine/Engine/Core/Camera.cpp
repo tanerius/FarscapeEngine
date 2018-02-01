@@ -15,38 +15,140 @@ Farscape::Camera::Camera()
     m_projectionMatrix = Farscape::Matrix::MakeProjectionMatrix(90.0f,              // field of view
                                                                 1280.0f / 720.0f,   // w/h aspect ratio
                                                                 0.1f,               // near
-                                                                1000.0f);           // far
+                                                                300.0f);           // far
     
-    position = {0, 0, -3.5};
+    this->position = Vector3d(0.0f, 0.0f, -3.0f);
+    this->forward = Vector3d(0.0f, 0.0f, 1.0f);
+    this->up = Vector3d(0.0f, 1.0f, 0.0f);
+    this->rotation = Vector3d(0.0f,89.0f,0.0f); // (pitch, yaw, roll)
+    this->projection = Farscape::Matrix::MakeProjectionMatrix(90.0f,              // field of view
+                                                              1280.0f / 720.0f,   // w/h aspect ratio
+                                                              0.1f,               // near
+                                                              300.0f);           // far
+    this->m_fov = 90.0f;
+    this->m_aspect = 1280.0f / 720.0f;
+    this->m_near = 0.1f;
+    this->m_far = 300.0f;
 }
 
 void Farscape::Camera::Update()
 {
     position = m_pEntity->position;
     rotation = m_pEntity->rotation;
-    
-    //m_viewMatrix = Farscape::Matrix::CreateCameraViewMatrix(position, rotation);
-    m_viewMatrix = glm::lookAt(position, Vector3d(0.0f, 0.0f, 0.0f), Vector3d(0.0f, 1.0f, 0.0f));
-    m_projViewMatrx = m_projectionMatrix * m_viewMatrix;
 }
 
 // Attach the camera to the player
-void Farscape::Camera::HookEntity(const Entity& entity)
+void Farscape::Camera::HookEntity(const Entity* entity)
 {
-    m_pEntity = &entity;
+    m_pEntity = entity;
 }
 
-const glm::mat4& Farscape::Camera::GetViewMatrix() const noexcept
+const glm::mat4 Farscape::Camera::GetViewMatrix() const noexcept
 {
-    return m_viewMatrix;
+    return glm::lookAt(position, position + forward, up);
 }
 
-const glm::mat4& Farscape::Camera::GetProjMatrix() const noexcept
+const glm::mat4 Farscape::Camera::GetProjMatrix() const noexcept
 {
-    return m_projectionMatrix;
+    return projection;
 }
 
-const glm::mat4& Farscape::Camera::GetProjectionViewMatrix() const noexcept
+const glm::mat4 Farscape::Camera::GetProjectionViewMatrix() const noexcept
 {
-    return m_projViewMatrx;
+    return projection * glm::lookAt(position, position + forward, up);
+}
+
+////////////////////////// my implementation
+
+void Farscape::Camera::MoveLeft(float cameraSpeed)
+{
+    position -= glm::normalize(glm::cross(forward, up)) * cameraSpeed;
+}
+
+
+void Farscape::Camera::MoveRight(float cameraSpeed)
+{
+    position += glm::normalize(glm::cross(forward, up)) * cameraSpeed;
+}
+
+
+void Farscape::Camera::MoveIn(float cameraSpeed)
+{
+    position += cameraSpeed * forward;
+}
+
+void Farscape::Camera::MoveBack(float cameraSpeed)
+{
+    position -= cameraSpeed * forward;
+}
+
+
+void Farscape::Camera::MoveUp(float cameraSpeed)
+{
+    position += cameraSpeed * up;
+}
+
+void Farscape::Camera::MoveDown(float cameraSpeed)
+{
+    position -= cameraSpeed * up;
+}
+
+void Farscape::Camera::Rotate(const Vector3d angles)
+{
+    rotation += angles;
+    
+    
+    if(rotation.x > 89.0f)
+        rotation.x = 89.0f;
+    if(rotation.x < -89.0f)
+        rotation.x = -89.0f;
+    
+    glm::vec3 front;
+    front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    front.y = sin(glm::radians(rotation.x));
+    front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+    forward = glm::normalize(front);
+}
+
+
+void Farscape::Camera::Zoom(float zoomLevel)
+{
+    // printf("%f ->",this->fov);
+    this->m_fov += zoomLevel;
+    if(this->m_fov <= 1.0f)
+        this->m_fov = 1.0f;
+    if(this->m_fov >= 45.0f)
+        this->m_fov = 45.0f;
+    // printf(" %f \n...",this->fov);
+    this->projection = glm::perspective(this->m_fov, this->m_aspect, this->m_near, this->m_far);
+}
+
+
+void Farscape::Camera::Roll(float angle)
+{
+    // do roll
+    Rotate(glm::vec3(0.0f, 0.0f, angle));
+}
+
+void Farscape::Camera::Pitch(float angle)
+{
+    // do pitch
+    Rotate(glm::vec3(angle, 0.0f, 0.0f));
+}
+
+
+void Farscape::Camera::Yaw(float angle)
+{
+    // do yaw
+    Rotate(glm::vec3(0.0f, angle, 0.0f));
+}
+
+
+
+void Farscape::Camera::Reposition(Vector3d& positionDelta)
+{
+    position.x += positionDelta.x;
+    position.y += positionDelta.y;
+    position.z += positionDelta.z;
+    return;
 }

@@ -17,7 +17,7 @@ namespace Farscape {
     {
     public:
         virtual void AddMesh(const Vector3d& position) = 0;
-        virtual void RenderMeshes(const Camera& camera) = 0;
+        virtual void RenderMeshes(const Camera* camera) = 0;
     };
 }
 

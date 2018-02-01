@@ -25,14 +25,14 @@ namespace Farscape {
             QuadRenderer();
         
             virtual void AddMesh(const Vector3d& position) override;
-            virtual void RenderMeshes(const Camera& camera) override;
+            virtual void RenderMeshes(const Camera* camera) override;
         
         private:
             std::vector<Vector3d> m_quads;
         
-            Model m_quadModel;
-            BasicShader m_shader;
-            BasicTexture m_basicTexture;
+            Model* m_quadModel;
+            BasicShader* m_shader;
+            BasicTexture* m_basicTexture;
     };
 }
 

@@ -26,10 +26,10 @@ namespace Farscape {
         
         virtual void Update(float deltaTime) override;
         
-        void Render(MasterRenderer* renderer);
+        virtual void Render(MasterRenderer* renderer) override;
         
     private:
-        Player m_player;
+        Player* m_player;
     };
 }
 

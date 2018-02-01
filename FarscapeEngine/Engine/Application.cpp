@@ -43,6 +43,7 @@ void Farscape::Application::Initialize()
     m_masterRenderer = new Farscape::MasterRenderer(m_quad);
     m_events = Farscape::Event::GetInstance();
     m_Context->ShowStartupInfo();
+    m_camera = new Farscape::Camera();
     
     
     
@@ -70,7 +71,7 @@ void Farscape::Application::RunMainLoop()
         
         state.HandleInput();
         state.Update(deltaTime);
-        m_camera.Update();
+        m_camera->Update();
         state.Render(m_masterRenderer);
         m_masterRenderer->FinishRender(m_camera);
         

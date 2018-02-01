@@ -26,7 +26,7 @@ namespace Farscape
         public:
             Application(std::string&& name);
             void Start();
-            Camera& GetCamera() { return m_camera; }
+            Camera* GetCamera() { return m_camera; }
             const Context GetContext() { return m_Context->GetContext();}
         
             template<typename T, typename... Args>
@@ -49,7 +49,7 @@ namespace Farscape
             ContextWrapper* m_Context = nullptr;
             Event* m_events = nullptr;
             MasterRenderer* m_masterRenderer = nullptr;
-            Camera m_camera;
+            Camera* m_camera = nullptr;
             bool ShutdownRequested;
             bool EnableContextInfo = true;
             QuadRenderer* m_quad;

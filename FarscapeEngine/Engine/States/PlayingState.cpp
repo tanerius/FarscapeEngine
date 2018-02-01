@@ -15,7 +15,8 @@
 Farscape::PlayingState::PlayingState(Farscape::Application& app)
 :   StateBase   (app)
 {
-    app.GetCamera().HookEntity(m_player);
+    m_player = new Farscape::Player();
+    app.GetCamera()->HookEntity(m_player);
 }
 
 void Farscape::PlayingState::HandleEvent()
@@ -25,12 +26,12 @@ void Farscape::PlayingState::HandleEvent()
 
 void Farscape::PlayingState::HandleInput()
 {
-    m_player.HandleInput();
+    m_player->HandleInput();
 }
 
 void Farscape::PlayingState::Update(float deltaTime)
 {
-    m_player.Update(deltaTime);
+    m_player->Update(deltaTime);
 }
 
 void Farscape::PlayingState::Render(MasterRenderer* renderer)

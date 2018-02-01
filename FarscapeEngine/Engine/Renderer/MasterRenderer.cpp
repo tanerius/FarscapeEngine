@@ -13,7 +13,7 @@ void Farscape::MasterRenderer::DrawMesh(const Vector3d& pos)
 {
     m_MeshRenderer->AddMesh(pos);
 }
-void Farscape::MasterRenderer::FinishRender(const Camera& camera)
+void Farscape::MasterRenderer::FinishRender(const Camera* camera)
 {
     glClearColor(0.1, 0.5, 1.0, 1.0);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);

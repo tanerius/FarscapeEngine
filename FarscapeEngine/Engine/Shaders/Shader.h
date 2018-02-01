@@ -39,7 +39,7 @@ namespace Farscape
     protected:
         // This needs to be overriden from the specific shader child class
         virtual void GetUniforms() = 0;
-        GLuint m_id;
+        GLuint m_id; // prorgam id
     private:
         GLuint LoadShaders( const std::string& vertexShader,
                            const std::string& fragmentShader);
