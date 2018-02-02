@@ -12,6 +12,30 @@
 #include <GLFW/glfw3.h>
 
 bool Farscape::Event::HandledKeys[MAX_HANDLED_KEYS];
+bool Farscape::Event::MouseButtons[MAX_HANDLED_KEYS];
+
+Farscape::MousePos Farscape::Event::MousePosition = {0.0, 0.0, 0.0, 0.0};
+
+void Farscape::Event::MouseClickCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (action == GLFW_PRESS) // button == GLFW_MOUSE_BUTTON_RIGHT &&
+    {
+        MouseButtons[button] = true;
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        MouseButtons[button] = false;
+    }
+    
+}
+
+void Farscape::Event::MouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+    MousePosition.prevx = MousePosition.x;
+    MousePosition.prevy = MousePosition.y;
+    MousePosition.x = xpos;
+    MousePosition.y = ypos;
+}
 
 void Farscape::Event::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -44,4 +68,18 @@ bool Farscape::Event::CheckOncePressed(const int& key)
     HandledKeys[key] = false;
     
     return ret;
+}
+
+bool Farscape::Event::CheckClicked(const int& button)
+{
+    bool ret = HandledKeys[button];
+    MouseButtons[button] = false;
+    
+    return ret;
+}
+
+void Farscape::Event::GetDeltaMouseXY(double& x, double&y)
+{
+    x = MousePosition.x - MousePosition.prevx;
+    y = MousePosition.y - MousePosition.prevy;
 }

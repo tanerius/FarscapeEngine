@@ -45,28 +45,31 @@ void Farscape::Application::Initialize()
     m_Context->ShowStartupInfo();
     m_camera = new Farscape::Camera();
     
-    
-    
-    pushState<PlayingState>(*this);
-    
     if (!m_Context->GetContext().hasContext)
     {
         printf("Error: Could not get a context ready\n");
         exit(0);
     }
     ShutdownRequested = false;
+    pushState<PlayingState>(*this);
 }
 
 void Farscape::Application::RunMainLoop()
 {
     // Start main loop
-    double dtTimer = glfwGetTime();
+    double currentFrame;
+    double lastFrame = 0.0;
+    double deltaTime = 0.0;
+    
+    
     
     while(!ShutdownRequested && !m_states.empty())
     {
         
-        double deltaTime = glfwGetTime() - dtTimer;
-        dtTimer = deltaTime;
+        currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        
         auto& state = *m_states.back();
         
         state.HandleInput();

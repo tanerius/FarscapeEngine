@@ -17,10 +17,8 @@ Farscape::Camera::Camera()
                                                                 0.1f,               // near
                                                                 300.0f);           // far
     
-    this->position = Vector3d(0.0f, 0.0f, -3.0f);
     this->forward = Vector3d(0.0f, 0.0f, 1.0f);
     this->up = Vector3d(0.0f, 1.0f, 0.0f);
-    this->rotation = Vector3d(0.0f,89.0f,0.0f); // (pitch, yaw, roll)
     this->projection = Farscape::Matrix::MakeProjectionMatrix(90.0f,              // field of view
                                                               1280.0f / 720.0f,   // w/h aspect ratio
                                                               0.1f,               // near
@@ -29,18 +27,24 @@ Farscape::Camera::Camera()
     this->m_aspect = 1280.0f / 720.0f;
     this->m_near = 0.1f;
     this->m_far = 300.0f;
+    
+    position = Vector3d(0.0f, 0.0f, -5.0f);
+    rotation = Vector3d(0.0f, 0.0f, 0.0f);
+    scale = Vector3d(1.0f, 1.0f, 1.0f);
+
 }
 
 void Farscape::Camera::Update()
 {
-    position = m_pEntity->position;
-    rotation = m_pEntity->rotation;
+    position = m_pTransform->GetPos();
+    rotation = m_pTransform->GetRot();
+    scale = m_pTransform->GetScale();
 }
 
 // Attach the camera to the player
-void Farscape::Camera::HookEntity(const Entity* entity)
+void Farscape::Camera::HookEntity(Farscape::Transform* t)
 {
-    m_pEntity = entity;
+    m_pTransform = t;
 }
 
 const glm::mat4 Farscape::Camera::GetViewMatrix() const noexcept
@@ -55,7 +59,7 @@ const glm::mat4 Farscape::Camera::GetProjMatrix() const noexcept
 
 const glm::mat4 Farscape::Camera::GetProjectionViewMatrix() const noexcept
 {
-    return projection * glm::lookAt(position, position + forward, up);
+    return GetProjMatrix() * GetViewMatrix();
 }
 
 ////////////////////////// my implementation
@@ -113,13 +117,13 @@ void Farscape::Camera::Rotate(const Vector3d angles)
 
 void Farscape::Camera::Zoom(float zoomLevel)
 {
-    // printf("%f ->",this->fov);
+
     this->m_fov += zoomLevel;
     if(this->m_fov <= 1.0f)
         this->m_fov = 1.0f;
     if(this->m_fov >= 45.0f)
         this->m_fov = 45.0f;
-    // printf(" %f \n...",this->fov);
+
     this->projection = glm::perspective(this->m_fov, this->m_aspect, this->m_near, this->m_far);
 }
 

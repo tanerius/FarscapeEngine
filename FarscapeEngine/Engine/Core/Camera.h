@@ -9,21 +9,22 @@
 #ifndef Camera_h
 #define Camera_h
 
-#include "Entity.h"
+
+#include "Transform.h"
 
 namespace Farscape {
-    class Camera : public Entity
+    class Camera
     {
     public:
         Camera();
         
         void Update();
         // member that attaches a camera to the player
-        void HookEntity(const Entity* entity);
+        void HookEntity(Transform* transform);
         
-        const glm::mat4 GetViewMatrix ()           const noexcept;
-        const glm::mat4 GetProjMatrix ()           const noexcept;
-        const glm::mat4 GetProjectionViewMatrix () const noexcept;
+        const glm::mat4 GetViewMatrix ()            const noexcept;
+        const glm::mat4 GetProjMatrix ()            const noexcept;
+        const glm::mat4 GetProjectionViewMatrix ()  const noexcept;
         
         
         void MoveLeft(float cameraSpeed);
@@ -41,10 +42,16 @@ namespace Farscape {
         
         
     private:
-        const Entity* m_pEntity;
+        
+        Transform* m_pTransform;
         Matrix4 projection;
         Vector3d forward;
         Vector3d up;
+        
+        
+        Vector3d position;
+        Vector3d rotation;
+        Vector3d scale;
 
         float m_fov; // Field of view
         float m_aspect;

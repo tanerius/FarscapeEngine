@@ -50,6 +50,8 @@ namespace Farscape
             bool m_showInfo = false;
             bool m_UpdateTitle = false;
             bool m_isFullscreen = false;
+            // TODO: make this programmatic
+            bool m_UsingMouse = true; // Auto use mouse
         
         
     };

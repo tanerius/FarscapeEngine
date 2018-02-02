@@ -12,6 +12,9 @@
 
 #include "../Core/Camera.h"
 #include "../Math/Matrix.h"
+#include "../Core/Transform.h"
+
+
 
 Farscape::QuadRenderer::~QuadRenderer()
 {
@@ -46,16 +49,23 @@ Farscape::QuadRenderer::QuadRenderer()
                             0, 0,
                         },
                         {
-                            0, 2, 1,
-                            0, 3, 2
+                            0, 1, 2, // Use CW winding in opengl
+                            2, 3, 0
                         });
     
     
 }
 
-void Farscape::QuadRenderer::AddMesh(const glm::vec3& position)
+void Farscape::QuadRenderer::AddMesh(const Vector3d& position, const Vector3d& rotation, const Vector3d& scale)
 {
-    m_quads.push_back(position);
+
+    m_quads.push_back(std::unique_ptr<Transform>(new Transform(
+                                                                position, // Position
+                                                                rotation, // Rotation
+                                                                scale // Scale
+                                                                )
+                                                 )
+                      );
 }
 
 void Farscape::QuadRenderer::RenderMeshes(const Camera* camera)
@@ -69,7 +79,8 @@ void Farscape::QuadRenderer::RenderMeshes(const Camera* camera)
     
     for (auto& quad : m_quads)
     {
-        m_shader->LoadModelMatrix(Farscape::Matrix::CreateModelMatrix(quad, {0,0,0}));
+        //m_shader->LoadModelMatrix(Farscape::Matrix::CreateModelMatrix(quad, {0,0,0}));
+        m_shader->LoadModelMatrix(quad->GetModelMatrix());
         
         glDrawElements(GL_TRIANGLES, m_quadModel->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
         //glDrawElementsBaseVertex(GL_TRIANGLES, m_quadModel.GetIndicesCount(), GL_UNSIGNED_INT, 0, 0);

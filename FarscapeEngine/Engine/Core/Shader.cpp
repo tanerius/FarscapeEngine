@@ -38,7 +38,8 @@ GLuint LinkProgram(GLuint vertexShaderID, GLuint fragmentShaderID)
     auto id = glCreateProgram();
     
     glAttachShader(id, vertexShaderID);
-    glAttachShader(id, fragmentShaderID);
+    glAttachShader(id, fragmentShaderID);// Bind the location attrs from shader
+
     
     glLinkProgram(id);
     

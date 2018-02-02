@@ -10,10 +10,12 @@
 #include "../Core/Event.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/gtx/string_cast.hpp>
 
 Farscape::Player::Player()
+: Transform(Vector3d(0.0f , 0.0f , -5.0f),Vector3d(0.0f , 0.0f , 0.0f), Vector3d(1.0f , 1.0f , 1.0f))
 {
-    position = Vector3d(0.0f , 0.0f , -5.0f);
+    
 }
 
 void Farscape::Player::HandleInput()
@@ -25,9 +27,11 @@ void Farscape::Player::HandleInput()
 void Farscape::Player::Update(float dt)
 {
     // Slow down velocity over time
-    position += m_velocity * dt;
+    AddPos(m_velocity * dt);
+
     // reset velocity
     m_velocity *= 0.95;
+    
 }
 
 void Farscape::Player::KeyboardInput()
@@ -36,35 +40,73 @@ void Farscape::Player::KeyboardInput()
     float speed = 0.5;
     Event* m_events = Farscape::Event::GetInstance();
     
+    
     if (m_events->CheckPressed(GLFW_KEY_W)){
-        change.x = glm::cos(glm::radians(rotation.y + 90)) * speed;
-        change.z = glm::sin(glm::radians(rotation.y + 90)) * speed;
-        printf("Pressed W\n");
+        change.x += glm::cos(glm::radians(GetRot().y + 90)) * speed;
+        change.z += glm::sin(glm::radians(GetRot().y + 90)) * speed;
     }
+    
+    // Toggle full screen mode
     if (m_events->CheckPressed(GLFW_KEY_S)){
-        change.x = -glm::cos(glm::radians(rotation.y + 90)) * speed;
-        change.z = -glm::sin(glm::radians(rotation.y + 90)) * speed;
-        printf("Pressed S\n");
+        change.x += -glm::cos(glm::radians(GetRot().y + 90)) * speed;
+        change.z += -glm::sin(glm::radians(GetRot().y + 90)) * speed;
     }
-    if (m_events->CheckPressed(GLFW_KEY_A)){
-        change.x = glm::cos(glm::radians(rotation.y)) * speed;
-        change.z = glm::sin(glm::radians(rotation.y)) * speed;
-        printf("Pressed A\n");
+    if (m_events->CheckPressed(GLFW_KEY_A))
+    {
+        change.x += glm::cos(glm::radians(GetRot().y)) * speed;
+        change.z += glm::sin(glm::radians(GetRot().y)) * speed;
     }
-    if (m_events->CheckPressed(GLFW_KEY_D)){
-        change.x = -glm::cos(glm::radians(rotation.y)) * speed;
-        change.z = -glm::sin(glm::radians(rotation.y)) * speed;
-        printf("Pressed D\n");
+    if (m_events->CheckPressed(GLFW_KEY_D))
+    {
+        change.x += -glm::cos(glm::radians(GetRot().y)) * speed;
+        change.z += -glm::sin(glm::radians(GetRot().y)) * speed;
     }
-    
-    
     
     
     m_velocity += change;
+
 }
 
 void Farscape::Player::MouseInput()
 {
+    Event* m_events = Farscape::Event::GetInstance();
+    static auto const BOUND = 80;
+    double deltaX, deltaY;
+    // get mouse coords
+    m_events->GetDeltaMouseXY(deltaX, deltaY);
+    
+    
+    AddRot(Vector3d(deltaX * 0.05));
+    AddRot(Vector3d(deltaY * 0.05));
+    
+    Vector3d temp;
+    if      (GetRot().x >  BOUND)
+    {
+        temp = GetRot();
+        temp.x = BOUND;
+        SetRot(temp);
+    }
+    else if (GetRot().x < -BOUND)
+    {
+        temp = GetRot();
+        temp.x = -BOUND;
+        SetRot(temp);
+        
+    }
+    
+    if      (GetRot().y >  360)
+    {
+        temp = GetRot();
+        temp.y = 0;
+        SetRot(temp);
+    }
+    else if (GetRot().y < 0)
+    {
+        temp = GetRot();
+        temp.x = 360;
+        SetRot(temp);
+        
+    }
     
 }
 

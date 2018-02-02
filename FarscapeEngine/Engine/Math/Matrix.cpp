@@ -21,6 +21,7 @@ Farscape::Matrix4 Farscape::Matrix::CreateTransformationMatrix(const Vector3d& T
     return TransformationMat;
 }
 
+
 Farscape::Matrix4 Farscape::Matrix::CreateViewMatrix(const Vector3d& Position,
                                                      const Vector3d& Orientation)
 {
@@ -34,6 +35,8 @@ Farscape::Matrix4 Farscape::Matrix::CreateViewMatrix(const Vector3d& Position,
     Farscape::Matrix4 ViewMatrix = T * RotMat;
     return ViewMatrix;
 }
+
+
 
 Farscape::Matrix4 Farscape::Matrix::CreateCameraViewMatrix(const Vector3d& Position,
                                                      const Vector3d& Orientation)

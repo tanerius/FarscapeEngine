@@ -25,7 +25,7 @@ namespace Farscape
         ~Shader();
         
         void UseProgram() const;
-        
+
         void LoadInt(GLuint location,   int value);
         void LoadFloat(GLuint location, int value);
         
@@ -33,7 +33,6 @@ namespace Farscape
         void LoadVector2(GLuint location, const glm::vec2& vect);
         void LoadVector3(GLuint location, const glm::vec3& vect);
         void LoadVector4(GLuint location, const glm::vec4& vect);
-        
         void LoadMatrix4(GLuint location, const glm::mat4& matrix);
         
     protected:

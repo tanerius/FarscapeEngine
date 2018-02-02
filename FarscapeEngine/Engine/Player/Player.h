@@ -10,10 +10,10 @@
 #define Player_h
 
 #include "../Math/Definitions.h"
-#include "../Core/Entity.h"
+#include "../Core/Transform.h"
 
 namespace Farscape {
-    class Player : public Entity
+    class Player : public Transform
     {
     public:
         Player();

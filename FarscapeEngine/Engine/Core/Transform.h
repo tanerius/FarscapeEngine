@@ -14,9 +14,10 @@
 
 namespace Farscape {
     // Representation for the transformations
-    class Transform : public Entity
+    class Transform
     {
     public:
+
         Transform(const Vector3d& pos = Vector3d(), const Vector3d& rot = Vector3d(), const Vector3d& scale = Vector3d(1.0f, 1.0f, 1.0f))
         {
             this->position = position;
@@ -26,7 +27,7 @@ namespace Farscape {
         
         
         // Generate transformation matrix
-        inline glm::mat4 GetTransformationMatrix() const
+        inline glm::mat4 GetModelMatrix() const
         {
             Matrix4 posMat = glm::translate(position); // Translation matrix
             Matrix4 scaleMat = glm::scale(scale);
@@ -40,7 +41,7 @@ namespace Farscape {
         
         inline Matrix4 GetMVP(const Matrix4& VP) const
         {
-            Matrix4 M = GetTransformationMatrix();
+            Matrix4 M = GetModelMatrix();
             
             return VP * M;
             // for camera.GetViewProjection() * GetModel(); do return glm::mat4&
@@ -53,9 +54,15 @@ namespace Farscape {
         inline void SetPos(const Vector3d& pos) { this->position = pos; }
         inline void SetRot(const Vector3d& rot) { this->rotation = rot; }
         inline void SetScale(const Vector3d& scale) { this->scale = scale; }
+        
+        inline void AddPos(const Vector3d& pos) { this->position += pos; }
+        inline void AddRot(const Vector3d& rot) { this->rotation += rot; }
+        inline void AddScale(const Vector3d& scale) { this->scale += scale; }
     protected:
     private:
-        
+        Vector3d position;
+        Vector3d rotation;
+        Vector3d scale;
     };
 }
 

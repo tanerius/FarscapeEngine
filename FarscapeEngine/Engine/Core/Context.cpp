@@ -134,6 +134,16 @@ Farscape::ContextWrapper::ContextWrapper(const std::string& name, const int& w, 
     glfwSetKeyCallback(m_context.GLFWWindowPtr, Farscape::Event::KeyCallback);
     glfwSetErrorCallback(Farscape::Event::ErrorCallback);
     
+    // Set the mouse callback
+    if (m_UsingMouse)
+    {
+        glfwSetInputMode(m_context.GLFWWindowPtr, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(m_context.GLFWWindowPtr, Farscape::Event::MouseCallback);
+        // callback for mouse clicks
+        glfwSetMouseButtonCallback(m_context.GLFWWindowPtr, Farscape::Event::MouseClickCallback);
+        
+    }
+    
     // Initialize GLEW
     glewExperimental = GL_TRUE; // Needed for core profile
     if (glewInit() != GLEW_OK) {

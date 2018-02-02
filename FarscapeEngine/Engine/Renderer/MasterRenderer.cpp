@@ -9,9 +9,9 @@
 #include "MasterRenderer.h"
 #include <GL/glew.h>
 
-void Farscape::MasterRenderer::DrawMesh(const Vector3d& pos)
+void Farscape::MasterRenderer::DrawMesh(const Vector3d& pos, const Vector3d& rot, const Vector3d& scale)
 {
-    m_MeshRenderer->AddMesh(pos);
+    m_MeshRenderer->AddMesh(pos, rot, scale);
 }
 void Farscape::MasterRenderer::FinishRender(const Camera* camera)
 {

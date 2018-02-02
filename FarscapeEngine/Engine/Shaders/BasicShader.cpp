@@ -8,6 +8,8 @@
 
 #include "BasicShader.h"
 
+
+
 Farscape::BasicShader::BasicShader(const std::string& vertexFile, const std::string& fragmentFile)
 :   Shader(vertexFile, fragmentFile)
 {

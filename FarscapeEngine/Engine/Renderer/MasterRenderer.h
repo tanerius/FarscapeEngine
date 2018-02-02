@@ -23,7 +23,7 @@ namespace Farscape {
         public:
         MasterRenderer() = delete;
         MasterRenderer(MeshRendererBase* m) : m_MeshRenderer(m) {}
-        void DrawMesh(const Vector3d& pos);
+        void DrawMesh(const Vector3d& pos, const Vector3d& rot, const Vector3d& scale);
         void FinishRender(const Camera* camera);
     };
     
