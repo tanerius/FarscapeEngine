@@ -13,23 +13,19 @@
 #include <vector>
 
 #include "../Util/NoCopy.h"
+#include "../Core/Mesh.h"
 
 namespace Farscape {
     class Model : public NoCopy
     {
         public:
             Model() = default;
-            Model(const std::vector<GLfloat>& vertexPositions,
-                  const std::vector<GLfloat>& textureCoords,
-                  const std::vector<GLuint>&  indices);
+            Model(const Mesh& mesh);
             ~Model();
         
         
         
-            void AddData(const std::vector<GLfloat>& vertexPositions,
-                         const std::vector<GLfloat>& textureCoords,
-                         const std::vector<GLuint>&  indices);
-        
+            void AddData(const Mesh& mesh);
             void DeleteData();
         
             void AddVBO(int dimensions, const std::vector<GLfloat>& data);

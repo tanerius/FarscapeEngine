@@ -17,7 +17,7 @@
 
 namespace Farscape
 {
-
+    using Vector2di = glm::ivec2;
     using Vector2d = glm::vec2;
     using Vector3d = glm::vec3;
     using Matrix4 = glm::mat4;

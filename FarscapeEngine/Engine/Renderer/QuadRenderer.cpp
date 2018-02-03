@@ -26,16 +26,15 @@ Farscape::QuadRenderer::~QuadRenderer()
 
 Farscape::QuadRenderer::QuadRenderer()
 {
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glEnable(GL_TEXTURE_2D);
+    
     
     m_basicTexture = new Farscape::BasicTexture();
     m_basicTexture->LoadFromFile("test");
+    
+    
     m_shader = new Farscape::BasicShader("BasicVertex", "BasicFragment");
     
-    m_quadModel = new Farscape::Model(
+    m_quadModel = new Farscape::Model({
                         {
                             -0.5,  0.5, 0,
                             0.5,  0.5, 0,
@@ -51,7 +50,7 @@ Farscape::QuadRenderer::QuadRenderer()
                         {
                             0, 1, 2, // Use CW winding in opengl
                             2, 3, 0
-                        });
+                        }});
     
     
 }

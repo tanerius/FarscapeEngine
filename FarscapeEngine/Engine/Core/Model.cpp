@@ -8,11 +8,9 @@
 
 #include "Model.h"
 
-Farscape::Model::Model(const std::vector<GLfloat>& vertexPositions,
-             const std::vector<GLfloat>& textureCoords,
-             const std::vector<GLuint>&  indices)
+Farscape::Model::Model(const Farscape::Mesh& mesh)
 {
-    AddData(vertexPositions, textureCoords, indices);
+    AddData(mesh);
 }
 
 Farscape::Model::~Model()
@@ -25,21 +23,19 @@ void Farscape::Model::BindVAO() const
     glBindVertexArray(m_vao);
 }
 
-void Farscape::Model::AddData(const std::vector<GLfloat>& vertexPositions,
-                    const std::vector<GLfloat>& textureCoords,
-                    const std::vector<GLuint>&  indices)
+void Farscape::Model::AddData(const Farscape::Mesh& mesh)
 {
     if (m_vao != 0)
         DeleteData();
     
-    m_indicesCount = (GLsizei)indices.size();
+    m_indicesCount = (GLsizei)mesh.indices.size();
     
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
     
-    AddVBO(3, vertexPositions);
-    AddVBO(2, textureCoords);
-    AddEBO(indices);
+    AddVBO(3, mesh.vertexPositions);
+    AddVBO(2, mesh.textureCoords);
+    AddEBO(mesh.indices);
     glBindVertexArray(0);
 }
 
