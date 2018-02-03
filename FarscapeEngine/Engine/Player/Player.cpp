@@ -10,6 +10,7 @@
 #include "../Core/Event.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <cmath>
 #include <glm/gtx/string_cast.hpp>
 
 Farscape::Player::Player()
@@ -71,42 +72,25 @@ void Farscape::Player::MouseInput()
 {
     Event* m_events = Farscape::Event::GetInstance();
     static auto const BOUND = 80;
+    
     double deltaX, deltaY;
+    
+    
+    float mouseSensitivity = 0.05f;
     // get mouse coords
     m_events->GetDeltaMouseXY(deltaX, deltaY);
     
+    //printf("dx = %f, dy = %f\n",deltaX * mouseSensitivity, deltaY * mouseSensitivity);
     
-    AddRot(Vector3d(deltaX * 0.05));
-    AddRot(Vector3d(deltaY * 0.05));
-    
-    Vector3d temp;
-    if      (GetRot().x >  BOUND)
+    if((fabs(deltaX * mouseSensitivity) >= 0.1 ) || (fabs(deltaY*mouseSensitivity) >= 0.1 ))
     {
-        temp = GetRot();
-        temp.x = BOUND;
-        SetRot(temp);
+        SetRot(Vector3d(deltaY * mouseSensitivity, deltaX * mouseSensitivity, 0.0f));
     }
-    else if (GetRot().x < -BOUND)
-    {
-        temp = GetRot();
-        temp.x = -BOUND;
-        SetRot(temp);
-        
+    else{
+        SetRot(Vector3d(0.0f,0.0f,0.0f));
     }
     
-    if      (GetRot().y >  360)
-    {
-        temp = GetRot();
-        temp.y = 0;
-        SetRot(temp);
-    }
-    else if (GetRot().y < 0)
-    {
-        temp = GetRot();
-        temp.x = 360;
-        SetRot(temp);
-        
-    }
+    
     
 }
 

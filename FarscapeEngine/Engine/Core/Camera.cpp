@@ -9,6 +9,14 @@
 #include "Camera.h"
 
 #include "../Math/Matrix.h"
+#include <glm/gtx/string_cast.hpp>
+
+void Farscape::Camera::AdjustCamera()
+{
+    
+    
+   
+}
 
 Farscape::Camera::Camera()
 {
@@ -29,7 +37,7 @@ Farscape::Camera::Camera()
     this->m_far = 300.0f;
     
     position = Vector3d(0.0f, 0.0f, -5.0f);
-    rotation = Vector3d(0.0f, 0.0f, 0.0f);
+    rotation = Vector3d(0.0f, 89.0f, 0.0f);
     scale = Vector3d(1.0f, 1.0f, 1.0f);
 
 }
@@ -37,8 +45,11 @@ Farscape::Camera::Camera()
 void Farscape::Camera::Update()
 {
     position = m_pTransform->GetPos();
-    rotation = m_pTransform->GetRot();
-    scale = m_pTransform->GetScale();
+    Rotate(m_pTransform->GetRot());
+    // set player to face the same way as camera
+    //m_pTransform->SetPos(rotation);
+    
+    
 }
 
 // Attach the camera to the player

@@ -38,6 +38,8 @@ namespace Farscape
             void GetDeltaMouseXY(double& x, double&y);
         
         
+            // first mouse query to prevent initial jump to position
+            static bool isFirstMouseQuery;
         
             // Keyboard state
             static bool HandledKeys[MAX_HANDLED_KEYS];

@@ -15,6 +15,7 @@ bool Farscape::Event::HandledKeys[MAX_HANDLED_KEYS];
 bool Farscape::Event::MouseButtons[MAX_HANDLED_KEYS];
 
 Farscape::MousePos Farscape::Event::MousePosition = {0.0, 0.0, 0.0, 0.0};
+bool Farscape::Event::isFirstMouseQuery = true;
 
 void Farscape::Event::MouseClickCallback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -31,10 +32,21 @@ void Farscape::Event::MouseClickCallback(GLFWwindow* window, int button, int act
 
 void Farscape::Event::MouseCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    MousePosition.prevx = MousePosition.x;
-    MousePosition.prevy = MousePosition.y;
-    MousePosition.x = xpos;
-    MousePosition.y = ypos;
+    if(isFirstMouseQuery)
+    {
+        MousePosition.prevx = xpos;
+        MousePosition.prevy = ypos;
+        MousePosition.x = xpos;
+        MousePosition.y = ypos;
+        isFirstMouseQuery = false;
+    }
+    else
+    {
+        MousePosition.prevx = MousePosition.x;
+        MousePosition.prevy = MousePosition.y;
+        MousePosition.x = xpos;
+        MousePosition.y = ypos;
+    }
 }
 
 void Farscape::Event::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

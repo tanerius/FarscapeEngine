@@ -27,6 +27,7 @@ namespace Farscape {
         const glm::mat4 GetProjectionViewMatrix ()  const noexcept;
         
         
+        void AdjustCamera();
         void MoveLeft(float cameraSpeed);
         void MoveRight(float cameraSpeed);
         void MoveIn(float cameraSpeed);
