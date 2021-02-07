@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "name": "ReleaseSymbols",
+            "generator": "Visual Studio 15 2017 Win64",
+            "configurationType": "RelWithDebInfo",
+            "buildCommandArgs": "/p:PreferredToolArchitecture=x64",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "out\\build\\${name}",
+            "installRoot": "out\\install\\${name}",
+            "variables": []
+        },
+        {
+            "name": "Release",
+            "generator": "Visual Studio 15 2017 Win64",
+            "configurationType": "Release",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildCommandArgs": "-p:PreferredToolArchitecture=x64",
+            "buildRoot": "out\\build\\${name}",
+            "installRoot": "out\\install\\${name}",
+            "variables": []
+        },
+        {
+            "name": "Debug",
+            "generator": "Visual Studio 15 2017 Win64",
+            "configurationType": "Debug",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildCommandArgs": "-p:PreferredToolArchitecture=x64",
+            "buildRoot": "out\\build\\${name}",
+            "installRoot": "out\\install\\${name}",
+            "variables": []
+        }
+    ]
+}
