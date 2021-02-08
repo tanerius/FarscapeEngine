@@ -5,3 +5,4 @@ add_library(Farscape SHARED
 	src/test.h
 )
 
+add_library(Farscape::Engine ALIAS Farscape)
