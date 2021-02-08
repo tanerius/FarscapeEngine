@@ -24,8 +24,13 @@ message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 
 
 # add all required externals
-#add_subdirectory(external)
+add_subdirectory(external)
+
+# add shared
+add_subdirectory(shared)
+
 # add engine sources
-#add_subdirectory(engine)
+add_subdirectory(engine)
+
 # add sandbox sources
-#add_subdirectory(sandbox)
+add_subdirectory(sandbox)
