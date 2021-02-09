@@ -1,10 +1,20 @@
-namespace Farscape {
-	__declspec(dllimport) void Print();
-}
+#include "Farscape/Farscape.h"
 
-int main()
+class Sandbox : public Farscape::Application
 {
-	Farscape::Print();
+public:
+	Sandbox()
+	{
 
-	return 0;
+	}
+
+	~Sandbox()
+	{
+
+	}
+};
+
+Farscape::Application* Farscape::CreateApplication()
+{
+	return new Sandbox();
 }
