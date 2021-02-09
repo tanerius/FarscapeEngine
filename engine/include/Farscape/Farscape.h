@@ -2,6 +2,9 @@
 
 
 // Only to be used bu apps using engine
+#include "Engine/Log.h"
+
+// Only to be used bu apps using engine
 #include "Engine/Application.h"
 
 // The entry point definition

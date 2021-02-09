@@ -6,6 +6,7 @@ extern Farscape::Application* Farscape::CreateApplication();
 
 int main(int argc, char** argv)
 {
+	Farscape::Log::Init();
 	auto app = Farscape::CreateApplication();
 	app->Execute();
 	delete app;
@@ -16,6 +17,7 @@ int main(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
+	Farscape::Log::Init();
 	auto app = Farscape::CreateApplication();
 	app->Execute();
 	delete app;

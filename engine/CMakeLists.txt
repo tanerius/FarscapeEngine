@@ -2,13 +2,18 @@ cmake_minimum_required(VERSION 3.12)
 
 add_library(Farscape SHARED 
 	src/Application.cpp
+	src/Log.cpp
 )
 
 target_include_directories(Farscape 
 	PUBLIC include
 )
 
-add_library(Farscape::Engine ALIAS Farscape)
+target_link_libraries(Farscape
+	PUBLIC spdlog::spdlog
+)
+
+add_library(Farscape::Farscape ALIAS Farscape)
 
 # define the symbol stating we are using the declspec(dllexport) when
 # building on windows

@@ -5,5 +5,5 @@ add_executable(Sandbox
 )
 
 target_link_libraries(Sandbox
-	PRIVATE Farscape::Engine
+	PRIVATE Farscape::Farscape
 )
