@@ -6,6 +6,8 @@ project(Farscape
     LANGUAGES CXX
 )
 
+set(CMAKE_CXX_STANDARD 17)
+
 # Set some super global stuff here
 message(STATUS "Setting directories...")
 set(FARSCAPE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/out")

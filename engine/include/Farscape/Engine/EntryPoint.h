@@ -18,6 +18,8 @@ int main(int argc, char** argv)
 int main(int argc, char** argv)
 {
 	Farscape::Log::Init();
+	FS_CORE_WARN("Initialized Log!");
+	FS_INFO("Initialized Log");
 	auto app = Farscape::CreateApplication();
 	app->Execute();
 	delete app;
