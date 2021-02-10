@@ -1,10 +1,13 @@
 #pragma once
+
 #include <memory>
 #include "Core.h"
 #include "spdlog/spdlog.h"
 
-
 namespace Farscape {
+
+#pragma warning(push)
+#pragma warning(disable:4251)
 	class FARSCAPE_API Log
 	{
 	public:
@@ -15,7 +18,9 @@ namespace Farscape {
 		static std::shared_ptr<spdlog::logger> m_LoggerCore;
 		static std::shared_ptr<spdlog::logger> m_LoggerClient;
 	};
+#pragma warning(pop)
 }
+
 
 // Core log macros
 #define FS_CORE_FATAL(...) ::Farscape::Log::GetLoggerCore()->fatal(__VA_ARGS__)

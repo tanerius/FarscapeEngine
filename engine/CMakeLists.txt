@@ -15,6 +15,12 @@ target_link_libraries(Farscape
 
 target_compile_features(Farscape PRIVATE cxx_std_17)
 
+if(MSVC)
+  target_compile_options(Farscape PRIVATE /W4 /WX)
+else()
+  target_compile_options(Farscape PRIVATE -Wall -Wextra -pedantic -Werror)
+endif()
+
 add_library(Farscape::Farscape ALIAS Farscape)
 
 # define the symbol stating we are using the declspec(dllexport) when
