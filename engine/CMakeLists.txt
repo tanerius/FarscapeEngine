@@ -13,6 +13,8 @@ target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
 )
 
+target_compile_features(Farscape PRIVATE cxx_std_17)
+
 add_library(Farscape::Farscape ALIAS Farscape)
 
 # define the symbol stating we are using the declspec(dllexport) when
