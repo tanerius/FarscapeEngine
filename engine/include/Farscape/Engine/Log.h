@@ -5,9 +5,10 @@
 #include "spdlog/spdlog.h"
 
 namespace Farscape {
-
+#if defined(_WIN32)
 #pragma warning(push)
 #pragma warning(disable:4251)
+#endif
 	class FARSCAPE_API Log
 	{
 	public:
@@ -18,7 +19,9 @@ namespace Farscape {
 		static std::shared_ptr<spdlog::logger> m_LoggerCore;
 		static std::shared_ptr<spdlog::logger> m_LoggerClient;
 	};
+#if defined(_WIN32)
 #pragma warning(pop)
+#endif
 }
 
 
