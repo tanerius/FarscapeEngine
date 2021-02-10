@@ -26,3 +26,13 @@ add_library(Farscape::Farscape ALIAS Farscape)
 # define the symbol stating we are using the declspec(dllexport) when
 # building on windows
 target_compile_definitions(Farscape PRIVATE "FARSCAPE_BUILD_EXPORTS")
+
+install(TARGETS Farscape
+	CONFIGURATIONS Debug
+	DESTINATION "${FARSCAPE_BINARY_DIR}/Debug"
+)
+
+install(TARGETS Farscape
+	CONFIGURATIONS Release
+	DESTINATION "${FARSCAPE_BINARY_DIR}/Release"
+)
