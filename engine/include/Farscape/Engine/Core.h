@@ -9,3 +9,5 @@
 #else // non windows
 #  define FARSCAPE_API
 #endif
+
+#define BIT(x) (1 << x)
