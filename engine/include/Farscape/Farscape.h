@@ -4,6 +4,8 @@
 // Only to be used bu apps using engine
 #include "Engine/Log.h"
 
+#include "Events/Event.h"
+
 // Only to be used bu apps using engine
 #include "Engine/Application.h"
 
