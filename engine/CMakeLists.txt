@@ -1,13 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
 add_library(Farscape SHARED 
+	pch/fspch.h
+	pch/fspch.cpp
 	src/Application.cpp
 	src/Log.cpp
 )
 
 target_include_directories(Farscape 
 	PUBLIC include
+	PRIVATE pch
 )
+
+add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
 
 target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog

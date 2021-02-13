@@ -1,7 +1,6 @@
 #pragma once
 #include "Farscape/Engine/Core.h"
-#include <string>
-#include <functional>
+
 
 namespace Farscape {
 	enum class EventType

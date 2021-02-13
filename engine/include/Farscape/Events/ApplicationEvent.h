@@ -1,6 +1,6 @@
 #pragma once
 #include "Farscape/Events/Event.h"
-#include <sstream>
+
 
 namespace Farscape {
 	class FARSCAPE_API WindowResizeEvent : public Event
