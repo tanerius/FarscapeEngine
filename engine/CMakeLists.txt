@@ -16,6 +16,7 @@ add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
 
 target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
+	PUBLIC glfw
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)

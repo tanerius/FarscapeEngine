@@ -12,7 +12,6 @@ namespace Farscape {
 
 	Application::~Application()
 	{
-
 	}
 
 

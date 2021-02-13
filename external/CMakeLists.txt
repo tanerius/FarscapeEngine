@@ -24,3 +24,14 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/spdlog/CMakeLists.txt")
 else()
 	add_subdirectory(spdlog)
 endif()
+
+### glfw
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glfw/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule glfw not downloaded")
+else()
+	add_subdirectory(glfw)
+endif()
