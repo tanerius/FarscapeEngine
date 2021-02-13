@@ -10,7 +10,7 @@ namespace Farscape {
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased,
-		MouseBtnPressed, MouseBtnReleased, MouseBtnMoved, MouseBtnScrolled,
+		MouseBtnPressed, MouseBtnReleased, MouseMoved, MouseScrolled,
 		TimerFired
 	};
 
@@ -61,7 +61,6 @@ namespace Farscape {
 		EventDispatcher(Event& event)
 			: m_Event(event) { }
 
-		// F will be deduced by the compiler
 		template<typename T>
 		bool Dispatch(const EventFunction<T> func)
 		{
@@ -77,5 +76,8 @@ namespace Farscape {
 	};
 	
 
-
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
+		return os << e.ToString();
+	}
 }
