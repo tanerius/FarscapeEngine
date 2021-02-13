@@ -1,4 +1,5 @@
 #pragma once
+#include "fspch.h"
 #include "Core.h"
 
 namespace Farscape {

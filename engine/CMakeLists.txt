@@ -9,7 +9,7 @@ add_library(Farscape SHARED
 
 target_include_directories(Farscape 
 	PUBLIC include
-	PRIVATE pch
+	PUBLIC pch
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)

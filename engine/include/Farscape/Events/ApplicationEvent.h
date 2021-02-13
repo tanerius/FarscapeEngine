@@ -9,7 +9,6 @@ namespace Farscape {
 		WindowResizeEvent(unsigned int width, unsigned int height)
 			: m_Width(width)
 			, m_Height(height) {}
-
 		std::string ToString() const override
 		{
 			std::stringstream ss;
@@ -17,12 +16,12 @@ namespace Farscape {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(WindowResize)
-		
+		EVENT_CLASS_TYPE(WindowResize)	
 		EVENT_CLASS_CATEGORY(EC_Application)
+
 	private:
-		unsigned int m_Height;
 		unsigned int m_Width;
+		unsigned int m_Height;
 			
 	};
 
