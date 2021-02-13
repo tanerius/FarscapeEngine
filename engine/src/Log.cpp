@@ -1,3 +1,4 @@
+#include "fspch.h"
 #include "Farscape/Engine/Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
