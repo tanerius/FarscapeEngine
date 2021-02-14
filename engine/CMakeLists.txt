@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
+# Set the relevant platform
+if (WIN32)
+	set(WINDOW_HANDLER_SRC "platform/Windows/WindowsWindow.cpp")
+	set(WINDOW_HANDLER_HDR "platform/Windows/WindowsWindow.h")
+endif (WIN32)
+
 add_library(Farscape SHARED 
 	pch/fspch.h
 	pch/fspch.cpp
 	src/Application.cpp
 	src/Log.cpp
+	${WINDOW_HANDLER_HDR}
+	${WINDOW_HANDLER_SRC}
 )
 
 target_include_directories(Farscape 

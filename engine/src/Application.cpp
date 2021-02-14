@@ -1,12 +1,12 @@
 #include "fspch.h"
 #include "Farscape/Engine/Application.h"
 #include "Farscape/Events/ApplicationEvent.h"
-#include "Farscape/Engine/Log.h"
+#include <GLFW/glfw3.h>
 
 namespace Farscape {
 	Application::Application()
 	{
-
+		m_Window = Window::Create();
 	}
 
 
@@ -17,8 +17,11 @@ namespace Farscape {
 
 	void Application::Execute()
 	{
-		WindowResizeEvent e(1200, 720);
-		FS_TRACE(e);
-		while (true);
+		while (m_IsRunning)
+		{
+			//glClearColor(1, 0, 1, 1);
+			//glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
+		}
 	}
 }

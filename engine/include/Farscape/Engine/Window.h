@@ -34,8 +34,8 @@ namespace Farscape {
 		virtual unsigned int GetHeight() const = 0;
 
 		virtual void SetEventCallbacks(const EventCallbackFn& callback) = 0;
-		virtual void SetVSynch(bool enabled) = 0;
-		virtual void IsVSynch() const = 0;
+		virtual void SetVSync(bool enabled) = 0;
+		virtual bool IsVSync() const = 0;
 
 		// Creation function with reasonable defaults from the struct
 		// This should be implemented for every platform !!
