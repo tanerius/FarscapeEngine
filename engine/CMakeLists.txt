@@ -14,7 +14,7 @@ if (WIN32)
 elseif (APPLE)
 	set(WINDOW_HANDLER_SRC "platform/Macos/AppleWindow.cpp")
 	set(WINDOW_HANDLER_HDR "platform/Macos/AppleWindow.h")
-endif (WIN32)
+endif ()
 
 add_library(Farscape SHARED 
 	pch/fspch.h
