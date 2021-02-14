@@ -20,8 +20,15 @@ namespace Farscape {
 
 	void Application::OnEvent(Event& e)
 	{
-		// Just print the event for now
-		FS_CORE_INFO("{0}", e);
+		FS_CORE_TRACE("{0}", e);
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent&)
+	{
+		m_IsRunning = false;
+		return true;
 	}
 
 
