@@ -8,6 +8,13 @@ project(Farscape
 
 set(CMAKE_CXX_STANDARD 17)
 
+option(FARSCAPE_LINK_STATICALLY "Engine static library" OFF)
+
+if(FARSCAPE_LINK_STATICALLY)
+	message(STATUS "Farscape * Static linking")
+	add_definitions(-DFARSCAPE_STATIC)
+endif()
+
 # Set some super global stuff here
 message(STATUS "Setting directories...")
 set(FARSCAPE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/out")

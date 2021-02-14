@@ -1,16 +1,28 @@
 #pragma once
 
 #if defined(_WIN32)
-#  if defined(FARSCAPE_BUILD_EXPORTS)
-#    define FARSCAPE_API __declspec(dllexport)
+#  if !defined(FARSCAPE_STATIC)
+#    if defined(FARSCAPE_BUILD_EXPORTS)
+#      define FARSCAPE_API __declspec(dllexport)
+#    else
+#      define FARSCAPE_API __declspec(dllimport)
+#    endif
 #  else
-#    define FARSCAPE_API __declspec(dllimport)
+#    define FARSCAPE_API
 #  endif
-#define FS_PLATFORM Windows
 #else // non windows
 #  define FARSCAPE_API
-#define FS_PLATFORM Apple
+#  define FS_PLATFORM Apple
 #endif
+
+
+#if defined(_WIN32)
+#  define FS_PLATFORM Windows
+#else // non windows
+#  define FS_PLATFORM Apple
+#  define FARSCAPE_API
+#endif
+
 
 // TODO: come up with solution for mac __debugbreak()
 #if defined(FS_ENABLE_ASSERTS) && defined(_WIN32)

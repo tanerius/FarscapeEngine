@@ -7,23 +7,43 @@ if( NOT OpenGL_FOUND )
 endif()
 
 
-# Set the relevant platform
+# Set the relevant platform dependant sources
 if (WIN32)
-	set(WINDOW_HANDLER_SRC "platform/Windows/WindowsWindow.cpp")
-	set(WINDOW_HANDLER_HDR "platform/Windows/WindowsWindow.h")
+	set(FS_SPECIFIC_SOURCES 
+		"platform/Windows/WindowsWindow.cpp"
+		"platform/Windows/WindowsWindow.h"
+	)
 elseif (APPLE)
-	set(WINDOW_HANDLER_SRC "platform/Macos/AppleWindow.cpp")
-	set(WINDOW_HANDLER_HDR "platform/Macos/AppleWindow.h")
+	set(FS_SPECIFIC_SOURCES 
+		"platform/Macos/AppleWindow.cpp"
+	    "platform/Macos/AppleWindow.h"
+	)
 endif ()
 
-add_library(Farscape SHARED 
+set(FS_SOURCES 
 	pch/fspch.h
 	pch/fspch.cpp
 	src/Application.cpp
 	src/Log.cpp
-	${WINDOW_HANDLER_HDR}
-	${WINDOW_HANDLER_SRC}
+	src/Layer.cpp
+	${FS_SPECIFIC_SOURCES}
+	src/Layer.cpp
+	src/LayerStack.cpp
 )
+
+# check static vs dynamic
+if(FARSCAPE_LINK_STATICALLY)
+	add_library(Farscape STATIC 
+		${FS_SOURCES}
+	)
+else()
+	add_library(Farscape SHARED 
+		${FS_SOURCES}
+	)
+	# define the symbol stating we are using the declspec(dllexport) when
+	# building on windows
+	target_compile_definitions(Farscape PRIVATE "FARSCAPE_BUILD_EXPORTS")
+endif()
 
 target_include_directories(Farscape 
 	PUBLIC include
@@ -49,9 +69,7 @@ endif()
 
 add_library(Farscape::Farscape ALIAS Farscape)
 
-# define the symbol stating we are using the declspec(dllexport) when
-# building on windows
-target_compile_definitions(Farscape PRIVATE "FARSCAPE_BUILD_EXPORTS")
+
 
 install(TARGETS Farscape
 	CONFIGURATIONS Debug
