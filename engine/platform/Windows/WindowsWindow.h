@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Farscape/Engine/Window.h"
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
+
 
 namespace Farscape {
 

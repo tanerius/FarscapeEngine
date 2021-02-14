@@ -1,7 +1,8 @@
 #include "fspch.h"
 #include "Farscape/Engine/Application.h"
 #include "Farscape/Events/ApplicationEvent.h"
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Farscape {
 
@@ -11,6 +12,9 @@ namespace Farscape {
 	{
 		m_Window = Window::Create();
 		m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
+
+		unsigned int id;
+		glGenVertexArrays(1, &id);
 	}
 
 
@@ -55,9 +59,6 @@ namespace Farscape {
 	{
 		while (m_IsRunning)
 		{
-			//glClearColor(1, 0, 1, 1);
-			//glClear(GL_COLOR_BUFFER_BIT);
-
 			// run the onupdate on every layer in the layer stack
 			for (Layer* layer : m_layerStack)
 				layer->OnUpdate();

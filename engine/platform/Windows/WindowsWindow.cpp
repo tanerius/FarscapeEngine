@@ -7,6 +7,9 @@
 #include "Farscape/Events/KeyEvent.h"
 #include "Farscape/Events/MouseEvent.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace Farscape {
 
 	static bool s_GLFWInitialized = false;
@@ -56,6 +59,9 @@ namespace Farscape {
 
 		m_Window = glfwCreateWindow((int)p.Width, (int)p.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		status *= 1;
+		FS_CORE_ASSERT(status, "Failed to initialize GLAD!");
 		// Attach a user payload to the window handler with stuff we want to have  (m_Data in this case)
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
