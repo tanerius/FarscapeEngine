@@ -40,6 +40,17 @@ namespace Farscape {
 			int isOk = glfwInit();
 			isOk = isOk * 1;
 			FS_CORE_ASSERT(isOk, "Could not initialize GLFW!");
+
+			/*
+			* Set an error callback as well
+			*  @param[in] error_code An [error code](@ref errors).  Future releases may add
+			*  more error codes.
+			*  @param[in] description A UTF-8 encoded string describing the error.
+			*/
+			glfwSetErrorCallback([](int error_code, const char* msg)
+			{
+				FS_CORE_ERROR("GLFW Error ({0}): {1}", error_code, msg);
+			});
 			s_GLFWInitialized = true;
 		}
 
