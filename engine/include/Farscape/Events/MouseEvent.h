@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Farscape/Events/Event.h"
 
 namespace Farscape {
@@ -15,7 +14,7 @@ namespace Farscape {
 
 		std::string ToString() const override
 		{
-			str::stringstream ss;
+			std::stringstream ss;
 			ss << "MouseMovedEvent: " << m_Xpos << ", " << m_Ypos;
 			return ss.str();
 		}
@@ -39,7 +38,7 @@ namespace Farscape {
 
 		std::string ToString() const override
 		{
-			str::stringstream ss;
+			std::stringstream ss;
 			ss << "MouseScrolledEvent: " << m_Xoffset << ", " << m_Yoffset;
 			return ss.str();
 		}
@@ -73,7 +72,7 @@ namespace Farscape {
 
 		std::string ToString() const override
 		{
-			str::stringstream ss;
+			std::stringstream ss;
 			ss << "MouseButtonPressedEvent: " << m_Button ;
 			return ss.str();
 		}
@@ -90,7 +89,7 @@ namespace Farscape {
 
 		std::string ToString() const override
 		{
-			str::stringstream ss;
+			std::stringstream ss;
 			ss << "MouseButtonPressedEvent: " << m_Button;
 			return ss.str();
 		}
