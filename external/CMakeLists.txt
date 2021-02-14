@@ -35,3 +35,6 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glfw/CMakeLists.txt")
 else()
 	add_subdirectory(glfw)
 endif()
+
+### glad
+add_subdirectory(glad)
