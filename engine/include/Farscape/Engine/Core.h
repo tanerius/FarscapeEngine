@@ -6,8 +6,10 @@
 #  else
 #    define FARSCAPE_API __declspec(dllimport)
 #  endif
+#define FS_PLATFORM Windows
 #else // non windows
 #  define FARSCAPE_API
+#define FS_PLATFORM Apple
 #endif
 
 // TODO: come up with solution for mac __debugbreak()

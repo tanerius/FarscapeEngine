@@ -11,6 +11,9 @@ endif()
 if (WIN32)
 	set(WINDOW_HANDLER_SRC "platform/Windows/WindowsWindow.cpp")
 	set(WINDOW_HANDLER_HDR "platform/Windows/WindowsWindow.h")
+elseif (APPLE)
+	set(WINDOW_HANDLER_SRC "platform/Macos/AppleWindow.cpp")
+	set(WINDOW_HANDLER_HDR "platform/Macos/AppleWindow.h")
 endif (WIN32)
 
 add_library(Farscape SHARED 

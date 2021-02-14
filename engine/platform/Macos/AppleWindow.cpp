@@ -1,6 +1,6 @@
 #include "fspch.h"
 #include "Farscape/Engine/Log.h"
-#include "WindowsWindow.h"
+#include "AppleWindow.h"
 
 namespace Farscape {
 
@@ -8,22 +8,22 @@ namespace Farscape {
 
 	Window* Window::Create(const WindowProperties &p)
 	{
-		return new WindowsWindow(p);
+		return new AppleWindow(p);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProperties & p)
+	AppleWindow::AppleWindow(const WindowProperties & p)
 	{
 		Init(p);
 	}
 
-	WindowsWindow::~WindowsWindow() 
+	AppleWindow::~AppleWindow() 
 	{ 
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProperties& p)
+	void AppleWindow::Init(const WindowProperties& p)
 	{
-		m_Data.Title = p.Title + " (Windows)";
+		m_Data.Title = p.Title + " (MacOS)";
 		m_Data.Width = p.Width;
 		m_Data.Height = p.Height;
 
@@ -44,18 +44,18 @@ namespace Farscape {
 		SetVSync(true);
 	}
 
-	void WindowsWindow::Shutdown()
+	void AppleWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::OnUpdate()
+	void AppleWindow::OnUpdate()
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
+	void AppleWindow::SetVSync(bool enabled)
 	{
 		if (enabled)
 		{
@@ -68,7 +68,7 @@ namespace Farscape {
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const
+	bool AppleWindow::IsVSync() const
 	{
 		return m_Data.VSync;
 	}
