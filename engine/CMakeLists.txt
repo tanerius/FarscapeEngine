@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
+# Find opengl
+find_package(OpenGL REQUIRED)
+if( NOT OpenGL_FOUND )
+	message(FATAL_ERROR "OpenGL Not found")
+endif()
+
+
 # Set the relevant platform
 if (WIN32)
 	set(WINDOW_HANDLER_SRC "platform/Windows/WindowsWindow.cpp")
@@ -18,6 +25,7 @@ add_library(Farscape SHARED
 target_include_directories(Farscape 
 	PUBLIC include
 	PUBLIC pch
+	PUBLIC ${OPENGL_INCLUDE_DIRS}
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
@@ -25,6 +33,7 @@ add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
 target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
 	PUBLIC glfw
+	PUBLIC ${OPENGL_LIBRARIES}
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)
