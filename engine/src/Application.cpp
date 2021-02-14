@@ -5,11 +5,12 @@
 
 namespace Farscape {
 
-#define BIND_EVENT_FN(x) std::bind(&x, this std::placeholders::_1)
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 	Application::Application()
 	{
 		m_Window = Window::Create();
+		m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
 	}
 
 
@@ -19,8 +20,8 @@ namespace Farscape {
 
 	void Application::OnEvent(Event& e)
 	{
-		if (e.GetName() == nullptr)
-		{ }
+		// Just print the event for now
+		FS_CORE_INFO("{0}", e);
 	}
 
 

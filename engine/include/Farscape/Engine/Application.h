@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-#include "Farscape/Events/Event.h"
 #include "Window.h"
 
 namespace Farscape {
