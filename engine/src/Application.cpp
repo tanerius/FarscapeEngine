@@ -4,6 +4,9 @@
 #include <GLFW/glfw3.h>
 
 namespace Farscape {
+
+#define BIND_EVENT_FN(x) std::bind(&x, this std::placeholders::_1)
+
 	Application::Application()
 	{
 		m_Window = Window::Create();
@@ -12,6 +15,12 @@ namespace Farscape {
 
 	Application::~Application()
 	{
+	}
+
+	void Application::OnEvent(Event& e)
+	{
+		if (e.GetName() == nullptr)
+		{ }
 	}
 
 
