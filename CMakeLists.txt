@@ -8,7 +8,7 @@ project(Farscape
 
 set(CMAKE_CXX_STANDARD 17)
 
-option(FARSCAPE_LINK_STATICALLY "Engine static library" OFF)
+option(FARSCAPE_LINK_STATICALLY "Engine static library" On)
 
 if(FARSCAPE_LINK_STATICALLY)
 	message(STATUS "Farscape * Static linking")

@@ -43,6 +43,8 @@ namespace Farscape {
 		// TODO: This should only probably be in DEBUG
 		virtual std::string ToString() const { return GetName(); }
 
+		inline bool Handled() { return m_Handled; }
+
 		bool IsInCategory(EventCategory category)
 		{
 			return GetCategoryFlags() & category;
