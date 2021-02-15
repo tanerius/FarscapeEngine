@@ -37,6 +37,8 @@ namespace Farscape {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
+		virtual void* GetRawWindowPointer() const = 0;
+
 		// Creation function with reasonable defaults from the struct
 		// This should be implemented for every platform !!
 		static Window* Create(const WindowProperties& p = WindowProperties());

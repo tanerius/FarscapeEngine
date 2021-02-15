@@ -21,6 +21,8 @@ namespace Farscape {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		inline virtual void* GetRawWindowPointer() const override { return m_Window; }
+
 	private:
 		virtual void Init(const WindowProperties& props);
 		virtual void Shutdown();
