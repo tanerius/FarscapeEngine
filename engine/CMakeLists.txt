@@ -5,6 +5,8 @@ if (WIN32)
 	set(FS_SPECIFIC_SOURCES 
 		"platform/Windows/WindowsWindow.cpp"
 		"platform/Windows/WindowsWindow.h"
+		"platform/Windows/WindowsInput.cpp"
+		"platform/Windows/WindowsInput.h"
 	)
 elseif (APPLE)
 	set(FS_SPECIFIC_SOURCES 

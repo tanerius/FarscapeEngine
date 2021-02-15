@@ -10,6 +10,8 @@ public:
 	void OnUpdate() override
 	{
 		FS_INFO("ExampleLayer::Update");
+		if (Farscape::Input::IsKeyPressed(FS_KEY_TAB))
+			FS_TRACE("PRESSING TAB...");
 	}
 
 	void OnEvent(Farscape::Event& event) override

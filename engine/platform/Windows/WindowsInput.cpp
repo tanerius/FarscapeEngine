@@ -14,7 +14,7 @@ namespace Farscape {
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
 		int result = glfwGetKey(window, keycode);
 
-		return result == GLFW_PRESS || reult == GLFW_REPEAT;
+		return result == GLFW_PRESS || result == GLFW_REPEAT;
 	}
 
 	bool WindowsInput::IsMouseButtonPressedImpl(int button)

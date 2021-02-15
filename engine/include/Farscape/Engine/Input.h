@@ -12,8 +12,8 @@ namespace Farscape
 		inline static bool IsMouseButtonPressed(int button) { return s_Instance->IsMouseButtonPressedImpl(button); }
 		// these would look much better in a struct
 		inline static std::pair<double, double> GetMousePos() { return s_Instance->GetMousePosImpl(); }
-		inline static float GetMousePosX() { return s_Instance->GetMousePosXImpl(); }
-		inline static float GetMousePosY() { return s_Instance->GetMousePosYImpl(); }
+		inline static double GetMousePosX() { return s_Instance->GetMousePosXImpl(); }
+		inline static double GetMousePosY() { return s_Instance->GetMousePosYImpl(); }
 	protected:
 		virtual bool IsKeyPressedImpl(int keycode) = 0; // platform implement
 		virtual bool IsMouseButtonPressedImpl(int button) = 0;
