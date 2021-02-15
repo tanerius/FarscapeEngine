@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Farscape/Engine/Layer.h"
-
 namespace Farscape {
 
 

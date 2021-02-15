@@ -1,6 +1,8 @@
 #include "fspch.h"
 #include "Farscape/Engine/ImGuiLayer.h"
 
+
+
 #include <imgui.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <GLFW/glfw3.h>
@@ -22,18 +24,19 @@ namespace Farscape {
 
 	void ImGuiLayer::OnUpdate() 
 	{
-		// Start the Dear ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
-		//ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
+		
 		io.DisplaySize = ImVec2((float)app.GetWindowReference().GetWidth(), (float)app.GetWindowReference().GetHeight());
 
 		float time = (float)glfwGetTime();
 		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
 		m_Time = time;
+
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		//ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);

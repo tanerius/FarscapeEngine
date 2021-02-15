@@ -22,6 +22,13 @@ set(FS_SOURCES
 	${FS_SPECIFIC_SOURCES}
 	src/Layer.cpp
 	src/LayerStack.cpp
+
+	${FS_IMGUI_PATH}/imgui.cpp
+	${FS_IMGUI_PATH}/imgui_demo.cpp
+	${FS_IMGUI_PATH}/imgui_draw.cpp
+	${FS_IMGUI_PATH}/imgui_tables.cpp
+	${FS_IMGUI_PATH}/imgui_widgets.cpp
+	${FS_IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
 	src/ImGuiLayer.cpp
 )
 
@@ -39,9 +46,14 @@ else()
 	target_compile_definitions(Farscape PRIVATE "FARSCAPE_BUILD_EXPORTS")
 endif()
 
+target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
+
+
 target_include_directories(Farscape 
 	PUBLIC pch
 	PUBLIC include
+	PUBLIC ${FS_IMGUI_PATH}
+	PUBLIC ${FS_IMGUI_PATH}/backends
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
@@ -50,7 +62,7 @@ target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
 	PUBLIC glfw
 	PUBLIC Farscape::glad
-	PUBLIC Farscape::imgui
+	PUBLIC ${OPENGL_LIBRARIES}
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)

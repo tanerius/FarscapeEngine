@@ -31,9 +31,20 @@ message(STATUS "FARSCAPE_INSTALL_DIR         ${FARSCAPE_INSTALL_DIR}")
 message(STATUS "CMAKE_BINARY_DIR             ${CMAKE_BINARY_DIR}")
 message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 
+set(FS_IMGUI_PATH "${CMAKE_SOURCE_DIR}/external/imgui")
+
 
 # include support for pre 3.16 precompiled header support
 include(cmake_modules/PrecompiledHeader.cmake)
+
+# Include Needed packages
+# Enables ${OPENGL_INCLUDE_DIRS} and ${OPENGL_LIBRARIES}
+find_package(OpenGL REQUIRED)
+if( NOT OpenGL_FOUND )
+	message(FATAL_ERROR "OpenGL Not found")
+endif()
+
+
 
 # add all required externals
 add_subdirectory(external)
