@@ -96,26 +96,38 @@ namespace Farscape {
 		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
 		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
 		dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
+		// dispatcher.Dispatch<KeyTypedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
 
-	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent & )
+	bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[e.GetMouseButton()] = true;
+
+		return false; // event is not handled here only propagated thats why return false
+	}
+
+	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[e.GetMouseButton()] = false;
+
 		return false;
 	}
 
-	bool ImGuiLayer::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent & )
+	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2(e.GetX(), e.GetY());
 		return false;
 	}
 
-	bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent & )
+	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& e)
 	{
-		return false;
-	}
-
-	bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent & )
-	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheelH += e.GetXoffset();
+		io.MouseWheel += e.GetYoffset();
 		return false;
 	}
 
@@ -128,6 +140,8 @@ namespace Farscape {
 	{
 		return false;
 	}
+
+	//bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& ) {}
 
 	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent & )
 	{
