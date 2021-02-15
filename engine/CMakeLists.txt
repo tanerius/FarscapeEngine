@@ -62,7 +62,6 @@ target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
 	PUBLIC glfw
 	PUBLIC Farscape::glad
-	PUBLIC ${OPENGL_LIBRARIES}
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)
