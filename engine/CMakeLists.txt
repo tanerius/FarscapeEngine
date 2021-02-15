@@ -56,6 +56,7 @@ target_include_directories(Farscape
 	PUBLIC include
 	PUBLIC ${FS_IMGUI_PATH}
 	PUBLIC ${FS_IMGUI_PATH}/backends
+	PUBLIC glm::glm
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
