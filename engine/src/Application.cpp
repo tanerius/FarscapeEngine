@@ -1,20 +1,21 @@
 #include "fspch.h"
 #include "Farscape/Engine/Application.h"
 #include "Farscape/Events/ApplicationEvent.h"
-//#include <GLFW/glfw3.h>
+
 #include <glad/glad.h>
 
 namespace Farscape {
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
+		FS_CORE_ASSERT(!s_Instance, "Application already exists!");
+		s_Instance = this;
 		m_Window = Window::Create();
 		m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
-
-		unsigned int id;
-		glGenVertexArrays(1, &id);
 	}
 
 
@@ -25,6 +26,7 @@ namespace Farscape {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_layerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay)

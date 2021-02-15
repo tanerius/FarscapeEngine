@@ -38,3 +38,10 @@ endif()
 
 ### glad
 add_subdirectory(glad)
+
+### imgui
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/imgui/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule imgui not downloaded")
+else()
+	add_subdirectory(imgui)
+endif()

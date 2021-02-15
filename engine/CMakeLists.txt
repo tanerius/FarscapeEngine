@@ -22,6 +22,7 @@ set(FS_SOURCES
 	${FS_SPECIFIC_SOURCES}
 	src/Layer.cpp
 	src/LayerStack.cpp
+	src/ImGuiLayer.cpp
 )
 
 # check static vs dynamic
@@ -39,8 +40,8 @@ else()
 endif()
 
 target_include_directories(Farscape 
-	PUBLIC include
 	PUBLIC pch
+	PUBLIC include
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
@@ -49,6 +50,7 @@ target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
 	PUBLIC glfw
 	PUBLIC Farscape::glad
+	PUBLIC Farscape::imgui
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)

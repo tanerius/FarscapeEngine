@@ -10,6 +10,7 @@
 #include "Engine/Application.h"
 
 #include "Engine/Layer.h"
+#include "Engine/ImGuiLayer.h"
 
 // The entry point definition
 #include "Engine/EntryPoint.h"

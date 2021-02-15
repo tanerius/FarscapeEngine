@@ -19,6 +19,13 @@ namespace Farscape {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
 
+		inline static Application& Get()
+		{
+			return *s_Instance;
+		}
+
+		inline Window& GetWindowReference() { return *m_Window; }
+
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 	private:
@@ -26,6 +33,8 @@ namespace Farscape {
 		Window* m_Window = nullptr;
 		bool m_IsRunning = true;
 		LayerStack m_layerStack;
+	private:
+		static Application* s_Instance;
 	};
 
 	// Should be defined in a client
