@@ -60,6 +60,9 @@ namespace Farscape {
 	{
 		while (m_IsRunning)
 		{
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			// run the onupdate on every layer in the layer stack
 			for (Layer* layer : m_layerStack)
 				layer->OnUpdate();
