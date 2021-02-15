@@ -107,6 +107,9 @@ namespace Farscape {
 			// Here we need to call OnEvent
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
+			if (&data == nullptr)
+				return;
+
 			// check the action type
 			switch (action_type)
 			{
@@ -130,6 +133,15 @@ namespace Farscape {
 				break;
 			}
 			};
+		});
+
+
+		// key typed
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int key)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent event(key);
+			data.EventCallback(event);
 		});
 
 		// mouse button pressed

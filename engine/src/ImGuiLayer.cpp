@@ -5,10 +5,11 @@
 
 #include <imgui.h>
 #include <backends/imgui_impl_opengl3.h>
-#include <GLFW/glfw3.h>
-
 #include "Farscape/Engine/Application.h"
 
+// Temp stuff
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Farscape {
 
@@ -96,7 +97,7 @@ namespace Farscape {
 		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(ImGuiLayer::OnMouseScrolledEvent));
 		dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyPressedEvent));
 		dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyReleasedEvent));
-		// dispatcher.Dispatch<KeyTypedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
+		dispatcher.Dispatch<KeyTypedEvent>(BIND_EVENT_FN(ImGuiLayer::OnKeyTypedEvent));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(ImGuiLayer::OnWindowResizeEvent));
 	}
 
@@ -131,20 +132,40 @@ namespace Farscape {
 		return false;
 	}
 
-	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent & )
+	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = true;
+		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 		return false;
 	}
 
-	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent & )
+	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
 	{
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeysDown[e.GetKeyCode()] = false;
 		return false;
 	}
 
-	//bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& ) {}
-
-	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent & )
+	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e) 
 	{
+		ImGuiIO& io = ImGui::GetIO();
+		unsigned int c = e.GetKeyCode();
+		if (c > 0 && c < 0x10000)
+			io.AddInputCharacter((unsigned short)c);
+		return false;
+	}
+
+	bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e )
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.DisplaySize = ImVec2((float)e.GetWidth(), (float)e.GetHeight());
+		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);;
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
 	}
 }

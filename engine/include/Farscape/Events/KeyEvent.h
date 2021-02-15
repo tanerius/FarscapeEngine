@@ -7,13 +7,13 @@ namespace Farscape {
 	class FARSCAPE_API KeyEvent : public Event
 	{
 	public:
-		inline int GetKeyCode() const { return m_KeyCode; }
+		inline unsigned int GetKeyCode() const { return m_KeyCode; }
 		EVENT_CLASS_CATEGORY(EC_Keyboard | EC_Input)
 	protected:
-		int m_KeyCode;
+		unsigned int m_KeyCode;
 
 		// Constructor un protected to prevent direct initialization via this ctor
-		KeyEvent(int keycode) 
+		KeyEvent(unsigned int keycode) 
 			: m_KeyCode(keycode) {}
 	};
 
@@ -21,7 +21,7 @@ namespace Farscape {
 	class FARSCAPE_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatCount)
+		KeyPressedEvent(unsigned int keycode, int repeatCount)
 			: KeyEvent(keycode)
 			, m_RepeatCount(repeatCount) {}
 
@@ -45,7 +45,7 @@ namespace Farscape {
 	class FARSCAPE_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode)
+		KeyReleasedEvent(unsigned int keycode)
 			: KeyEvent(keycode) {}
 
 		std::string ToString() const override
@@ -55,6 +55,22 @@ namespace Farscape {
 			return ss.str();
 		}
 		
+		EVENT_CLASS_TYPE(KeyReleased)
+	};
+
+	class FARSCAPE_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(unsigned int keycode)
+			: KeyEvent(keycode) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 }
