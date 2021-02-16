@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
+add_subdirectory(libs)
+
 # Set the relevant platform dependant sources
 if (WIN32)
 	set(FS_SPECIFIC_SOURCES 
@@ -24,13 +26,6 @@ set(FS_SOURCES
 	${FS_SPECIFIC_SOURCES}
 	src/Layer.cpp
 	src/LayerStack.cpp
-
-	${FS_IMGUI_PATH}/imgui.cpp
-	${FS_IMGUI_PATH}/imgui_demo.cpp
-	${FS_IMGUI_PATH}/imgui_draw.cpp
-	${FS_IMGUI_PATH}/imgui_tables.cpp
-	${FS_IMGUI_PATH}/imgui_widgets.cpp
-	${FS_IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
 	src/ImGuiLayer.cpp
 )
 
@@ -54,8 +49,6 @@ target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
 target_include_directories(Farscape 
 	PUBLIC pch
 	PUBLIC include
-	PUBLIC ${FS_IMGUI_PATH}
-	PUBLIC ${FS_IMGUI_PATH}/backends
 	PUBLIC glm::glm
 )
 
@@ -63,6 +56,7 @@ add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
 
 target_link_libraries(Farscape
 	PUBLIC spdlog::spdlog
+	PUBLIC Farscape::imgui_gl3glfw
 	PUBLIC glfw
 	PUBLIC Farscape::glad
 )

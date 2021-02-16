@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Farscape/Engine/LayerStack.h"
 #include "Farscape/Events/Event.h"
+#include "Farscape/Engine/ImGuiLayer.h"
 
 namespace Farscape {
 	class WindowCloseEvent;
@@ -31,6 +32,7 @@ namespace Farscape {
 	private:
 		// a platform agnostic window - consider a unique pointer
 		Window* m_Window = nullptr;
+		ImGuiLayer* m_ImGuiLayer = nullptr;
 		bool m_IsRunning = true;
 		LayerStack m_layerStack;
 	private:

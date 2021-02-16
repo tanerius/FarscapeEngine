@@ -15,6 +15,10 @@ namespace Farscape {
 		s_Instance = this;
 		m_Window = Window::Create();
 		m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushLayer(m_ImGuiLayer);
+
 	}
 
 
@@ -66,6 +70,11 @@ namespace Farscape {
 			// run the onupdate on every layer in the layer stack
 			for (Layer* layer : m_layerStack)
 				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_layerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}
