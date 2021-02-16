@@ -39,8 +39,6 @@ endif()
 ### glad
 add_subdirectory(glad)
 
-
-
 ### glm
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glm/CMakeLists.txt")
     message(FATAL_ERROR "Submodule glm not downloaded")
