@@ -39,10 +39,7 @@ endif()
 ### glad
 add_subdirectory(glad)
 
-### imgui
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/imgui/imgui.h")
-    message(FATAL_ERROR "Submodule imgui not downloaded")
-endif()
+
 
 ### glm
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glm/CMakeLists.txt")

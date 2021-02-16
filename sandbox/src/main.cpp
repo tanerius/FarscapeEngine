@@ -25,8 +25,8 @@ class Sandbox : public Farscape::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
-		PushLayer(new Farscape::ImGuiLayer());
+		//PushLayer(new ExampleLayer());
+		//ushLayer(new Farscape::ImGuiLayer());
 	}
 
 	~Sandbox()
