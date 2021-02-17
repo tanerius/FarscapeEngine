@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "WindowsInput.h"
 #include "Core/Application.h"
-
+#include "Core/Window.h"
 #include <GLFW/glfw3.h>
 
 namespace Farscape {

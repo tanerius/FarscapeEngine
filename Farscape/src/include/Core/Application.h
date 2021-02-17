@@ -1,12 +1,13 @@
 #pragma once
 #include "Core.h"
-#include "Window.h"
 #include "LayerStack.h"
-#include "Events/Event.h"
-#include "ImGuiLayer.h"
 
 namespace Farscape {
 	class WindowCloseEvent;
+	class Window;
+	class Event;
+	class ImGuiLayer;
+
 	class FARSCAPE_API Application
 	{
 	public:

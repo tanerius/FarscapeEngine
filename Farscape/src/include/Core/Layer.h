@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
 
 namespace Farscape {
 
-	
+	class Event;
+
 	class FARSCAPE_API Layer
 	{
 	public:

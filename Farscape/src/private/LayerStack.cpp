@@ -1,5 +1,6 @@
 #include "fspch.h"
 #include "Core/LayerStack.h"
+#include "Core/Layer.h"
 
 namespace Farscape {
 

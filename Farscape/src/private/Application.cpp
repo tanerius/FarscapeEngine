@@ -1,5 +1,7 @@
 #include "fspch.h"
 #include "Core/Application.h"
+#include "Core/ImGuiLayer.h"
+#include "Core/Window.h"
 #include "Events/ApplicationEvent.h"
 
 #include <glad/glad.h>

@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Core.h"
-#include "Layer.h"
-
 #include <vector>
 
 namespace Farscape {
+	class Layer;
 
 	class FARSCAPE_API LayerStack
 	{

@@ -8,6 +8,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include "Core/Application.h"
+#include "Core/Window.h"
 
 // Temp stuff
 #include <glad/glad.h>
