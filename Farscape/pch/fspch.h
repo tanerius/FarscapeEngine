@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Farscape/Engine/Log.h"
+#include "Core/Log.h"
 
 #if defined(_WIN32)
 	#include <Windows.h>

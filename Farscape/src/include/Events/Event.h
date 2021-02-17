@@ -1,5 +1,5 @@
 #pragma once
-#include "Farscape/Engine/Core.h"
+#include "Core/Core.h"
 
 
 namespace Farscape {

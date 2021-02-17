@@ -1,4 +1,4 @@
-#include "Farscape/Farscape.h"
+#include "Farscape.h"
 
 // create an example layer
 class ExampleLayer : public Farscape::Layer

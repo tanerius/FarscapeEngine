@@ -20,13 +20,13 @@ endif ()
 set(FS_SOURCES 
 	pch/fspch.h
 	pch/fspch.cpp
-	src/Application.cpp
-	src/Log.cpp
-	src/Layer.cpp
+	src/private/Application.cpp
+	src/private/Log.cpp
+	src/private/Layer.cpp
 	${FS_SPECIFIC_SOURCES}
-	src/Layer.cpp
-	src/LayerStack.cpp
-	src/ImGuiLayer.cpp
+	src/private/Layer.cpp
+	src/private/LayerStack.cpp
+	src/private/ImGuiLayer.cpp
 )
 
 # check static vs dynamic
@@ -48,7 +48,7 @@ target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
 
 target_include_directories(Farscape 
 	PUBLIC pch
-	PUBLIC include
+	PUBLIC src/include
 	PUBLIC glm::glm
 	PUBLIC ${FARSCAPE_BINARY_DIR}/generated
 )

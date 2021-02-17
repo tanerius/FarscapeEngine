@@ -1,6 +1,6 @@
 #include "fspch.h"
-#include "Farscape/Engine/Application.h"
-#include "Farscape/Events/ApplicationEvent.h"
+#include "Core/Application.h"
+#include "Events/ApplicationEvent.h"
 
 #include <glad/glad.h>
 

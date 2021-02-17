@@ -1,6 +1,6 @@
 #include "fspch.h"
 #include "WindowsInput.h"
-#include "Farscape/Engine/Application.h"
+#include "Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "Core.h"
 #include "Window.h"
-#include "Farscape/Engine/LayerStack.h"
-#include "Farscape/Events/Event.h"
-#include "Farscape/Engine/ImGuiLayer.h"
+#include "LayerStack.h"
+#include "Events/Event.h"
+#include "ImGuiLayer.h"
 
 namespace Farscape {
 	class WindowCloseEvent;

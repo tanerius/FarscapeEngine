@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Farscape/Engine/Window.h"
+#include "Core/Window.h"
 struct GLFWwindow;
 
 

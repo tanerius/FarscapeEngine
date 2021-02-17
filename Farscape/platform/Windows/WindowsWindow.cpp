@@ -1,11 +1,11 @@
 #include "fspch.h"
-#include "Farscape/Engine/Log.h"
+#include "Core/Log.h"
 #include "WindowsWindow.h"
 
 // include events
-#include "Farscape/Events/ApplicationEvent.h"
-#include "Farscape/Events/KeyEvent.h"
-#include "Farscape/Events/MouseEvent.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

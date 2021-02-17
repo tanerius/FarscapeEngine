@@ -1,9 +1,6 @@
 #pragma once
 
-#include "Farscape/Engine/Layer.h"
-#include "Farscape/Events/MouseEvent.h"
-#include "Farscape/Events/keyevent.h"
-#include "Farscape/Events/ApplicationEvent.h"
+#include "Layer.h"
 
 namespace Farscape {
 

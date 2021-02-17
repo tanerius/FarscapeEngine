@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "Farscape/Engine/ImGuiLayer.h"
+#include "Core/ImGuiLayer.h"
 
 #include <imgui.h>
 
@@ -7,7 +7,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include "Farscape/Engine/Application.h"
+#include "Core/Application.h"
 
 // Temp stuff
 #include <glad/glad.h>

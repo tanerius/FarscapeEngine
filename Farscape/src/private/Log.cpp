@@ -1,6 +1,6 @@
 #include "fspch.h"
-#include "Farscape/Engine/Log.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include "Core/Log.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Farscape {
 	std::shared_ptr<spdlog::logger> Log::m_LoggerCore;

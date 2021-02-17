@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Farscape/Engine/Core.h"
-#include "Farscape/Events/Event.h"
+#include "Core.h"
+#include "Events/Event.h"
 
 namespace Farscape {
 

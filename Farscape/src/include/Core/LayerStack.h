@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Farscape/Engine/Core.h"
-#include "Farscape/Engine/Layer.h"
+#include "Core.h"
+#include "Layer.h"
 
 #include <vector>
 

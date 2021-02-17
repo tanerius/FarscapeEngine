@@ -1,5 +1,5 @@
 #pragma once
-#include "Farscape/Engine/Input.h"
+#include "Core/Input.h"
 
 namespace Farscape {
 	class WindowsInput : public Input
