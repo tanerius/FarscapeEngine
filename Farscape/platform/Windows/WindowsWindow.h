@@ -6,6 +6,8 @@ struct GLFWwindow;
 
 namespace Farscape {
 
+	class GfxContext;
+
 	class WindowsWindow : public Window
 	{
 	public:
@@ -29,6 +31,7 @@ namespace Farscape {
 
 	private:
 		GLFWwindow* m_Window;
+		GfxContext* m_Context;
 
 		struct WindowData
 		{

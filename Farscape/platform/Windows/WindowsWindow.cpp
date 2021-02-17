@@ -7,7 +7,8 @@
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "OpenGLContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Farscape {
@@ -58,10 +59,13 @@ namespace Farscape {
 		}
 
 		m_Window = glfwCreateWindow((int)p.Width, (int)p.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		status *= 1;
-		FS_CORE_ASSERT(status, "Failed to initialize GLAD!");
+
+		// create a graphics context
+		m_Context = new OpenGLContext(m_Window);
+
+		m_Context->Init();
+
+		
 		// Attach a user payload to the window handler with stuff we want to have  (m_Data in this case)
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -209,7 +213,7 @@ namespace Farscape {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

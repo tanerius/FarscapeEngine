@@ -9,6 +9,8 @@ if (WIN32)
 		"platform/Windows/WindowsWindow.h"
 		"platform/Windows/WindowsInput.cpp"
 		"platform/Windows/WindowsInput.h"
+		"platform/Windows/OpenGLContext.cpp"
+		"platform/Windows/OpenGLContext.h"
 	)
 elseif (APPLE)
 	set(FS_SPECIFIC_SOURCES 
