@@ -31,7 +31,6 @@ message(STATUS "FARSCAPE_INSTALL_DIR         ${FARSCAPE_INSTALL_DIR}")
 message(STATUS "CMAKE_BINARY_DIR             ${CMAKE_BINARY_DIR}")
 message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 
-set(FS_IMGUI_PATH "${CMAKE_SOURCE_DIR}/external/imgui")
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 
 # include support for pre 3.16 precompiled header support
@@ -48,13 +47,13 @@ endif()
 
 
 # add all required externals
-add_subdirectory(external)
+add_subdirectory(External)
 
 # add shared
-add_subdirectory(shared)
+add_subdirectory(Shared)
 
 # add engine sources
 add_subdirectory(Farscape)
 
 # add sandbox sources
-add_subdirectory(sandbox)
+add_subdirectory(Sandbox)

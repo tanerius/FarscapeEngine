@@ -19,7 +19,7 @@ endif()
 
 # 2. Check all submodules
 ### spdlog
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/spdlog/CMakeLists.txt")
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/spdlog/CMakeLists.txt")
     message(FATAL_ERROR "Submodule spdlog not downloaded")
 else()
 	add_subdirectory(spdlog)
@@ -30,7 +30,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glfw/CMakeLists.txt")
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/glfw/CMakeLists.txt")
     message(FATAL_ERROR "Submodule glfw not downloaded")
 else()
 	add_subdirectory(glfw)
@@ -40,7 +40,7 @@ endif()
 add_subdirectory(glad)
 
 ### glm
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/glm/CMakeLists.txt")
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/glm/CMakeLists.txt")
     message(FATAL_ERROR "Submodule glm not downloaded")
 else()
 	add_subdirectory(glm)
