@@ -35,6 +35,7 @@ namespace Farscape {
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
+			bool IsFullScreen;
 			EventCallbackFn EventCallback;
 		};
 
