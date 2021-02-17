@@ -50,6 +50,7 @@ target_include_directories(Farscape
 	PUBLIC pch
 	PUBLIC include
 	PUBLIC glm::glm
+	PUBLIC ${FARSCAPE_BINARY_DIR}/generated
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)

@@ -32,7 +32,7 @@ message(STATUS "CMAKE_BINARY_DIR             ${CMAKE_BINARY_DIR}")
 message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 
 set(FS_IMGUI_PATH "${CMAKE_SOURCE_DIR}/external/imgui")
-
+configure_file(engine/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 
 # include support for pre 3.16 precompiled header support
 include(cmake_modules/PrecompiledHeader.cmake)

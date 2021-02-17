@@ -1,4 +1,5 @@
 #pragma once
+#include "Versions.h"
 
 #if defined(_WIN32)
 #  if !defined(FARSCAPE_STATIC)
@@ -36,3 +37,11 @@
 #define BIT(x) (1 << x)
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+// An object interface which can lift any weight
+namespace Farscape {
+	class FARSCAPE_API IObject
+	{
+
+	};
+}
