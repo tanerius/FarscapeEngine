@@ -25,8 +25,9 @@ class Sandbox : public Farscape::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
-		//ushLayer(new Farscape::ImGuiLayer());
+		// PushLayer(new ExampleLayer());
+		// DO NOT CREATE AN IMGUI LAYER HERE
+		// PushLayer(new Farscape::ImGuiLayer());
 	}
 
 	~Sandbox()
