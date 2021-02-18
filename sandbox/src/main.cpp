@@ -9,14 +9,14 @@ public:
 
 	void OnUpdate() override
 	{
-		FS_INFO("ExampleLayer::Update");
+		//FS_INFO("ExampleLayer::Update");
 		if (Farscape::Input::IsKeyPressed(FS_KEY_TAB))
 			FS_TRACE("PRESSING TAB...");
 	}
 
 	void OnEvent(Farscape::Event& event) override
 	{
-		FS_TRACE("{0}", event);
+		//FS_TRACE("{0}", event);
 	}
 };
 
@@ -25,7 +25,7 @@ class Sandbox : public Farscape::Application
 public:
 	Sandbox()
 	{
-		//PushLayer(new ExampleLayer());
+		PushLayer(new ExampleLayer());
 		//ushLayer(new Farscape::ImGuiLayer());
 	}
 

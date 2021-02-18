@@ -20,6 +20,10 @@ namespace Farscape {
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		status *= 1;
 		FS_CORE_ASSERT(status, "Failed to initialize GLAD!");
+
+		FS_CORE_INFO("Vendor: {0} ", glGetString(GL_VENDOR));
+		FS_CORE_INFO("Renderer: {0} ", glGetString(GL_RENDERER));
+		FS_CORE_INFO("Version: {0} ", glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()
