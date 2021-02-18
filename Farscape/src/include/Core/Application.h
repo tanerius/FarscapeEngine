@@ -7,6 +7,7 @@ namespace Farscape {
 	class Window;
 	class Event;
 	class ImGuiLayer;
+	class Shader;
 
 	class FARSCAPE_API Application
 	{
@@ -40,6 +41,8 @@ namespace Farscape {
 		unsigned int m_VertexArray;
 		unsigned int m_VertexBuffer;
 		unsigned int m_IndexBuffer;
+
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

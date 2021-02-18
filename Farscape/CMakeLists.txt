@@ -29,6 +29,7 @@ set(FS_SOURCES
 	src/private/Layer.cpp
 	src/private/LayerStack.cpp
 	src/private/ImGuiLayer.cpp
+	src/private/Shader.cpp
 )
 
 # check static vs dynamic
