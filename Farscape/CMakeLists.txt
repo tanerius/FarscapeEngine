@@ -11,6 +11,8 @@ if (WIN32)
 		"platform/Windows/WindowsInput.h"
 		"platform/Windows/OpenGLContext.cpp"
 		"platform/Windows/OpenGLContext.h"
+		"platform/Windows/OpenGLBuffer.cpp"
+		"platform/Windows/OpenGLBuffer.h"
 	)
 elseif (APPLE)
 	set(FS_SPECIFIC_SOURCES 
@@ -30,6 +32,8 @@ set(FS_SOURCES
 	src/private/LayerStack.cpp
 	src/private/ImGuiLayer.cpp
 	src/private/Shader.cpp
+	src/private/Buffer.cpp
+	src/private/Renderer.cpp
 )
 
 # check static vs dynamic
@@ -54,6 +58,7 @@ target_include_directories(Farscape
 	PUBLIC src/include
 	PUBLIC glm::glm
 	PUBLIC ${FARSCAPE_BINARY_DIR}/generated
+	PUBLIC platform
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)

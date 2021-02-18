@@ -14,7 +14,7 @@ namespace Farscape {
 
 
 		// Shouold not belong  to 
-		static VertexBuffer* create(float* vertices, uint32_t arraySize);
+		static VertexBuffer* Create(float* vertices, uint32_t arraySize);
 	};
 
 	class IndexBuffer {
@@ -24,9 +24,10 @@ namespace Farscape {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual uint32_t GetCount() const = 0;
 
 		// Shouold not belong  to 
-		static IndexBuffer* create(uint32_t* indices, uint32_t arraySize);
+		static IndexBuffer* Create(uint32_t* indices, uint32_t count);
 	};
 
 }

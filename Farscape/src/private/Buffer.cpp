@@ -1,17 +1,48 @@
 #include "fspch.h"
-#include "Buffer.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/Renderer.h"
+#include "Windows/OpenGLBuffer.h"
 
 namespace Farscape {
 		
-	VertexBuffer* VertexBuffer::create(float* vertices, uint32_t arraySize)
+	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t arraySize)
 	{
 		// decide the API here!!!
+		switch (Renderer::GetAPI())
+		{
+			case RendererAPI::None:
+			{
+				FS_CORE_ASSERT(false, "No renderer selected");
+				return nullptr;
+			}
+			case RendererAPI::OpenGL:
+			{
+				return new OpenGLVertexBuffer(vertices, arraySize);
+			}
+		}
 
+
+		FS_CORE_ASSERT(false, "Invalid renderer selected!");
+		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::create(float* vertices, uint32_t arraySize)
+	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
 	{
+		switch (Renderer::GetAPI())
+		{
+			case RendererAPI::None:
+			{
+				FS_CORE_ASSERT(false, "No renderer selected");
+				return nullptr;
+			}
+			case RendererAPI::OpenGL:
+			{
+				return new OpenGLIndexBuffer(indices, count);
+			}
+		}
 
+		FS_CORE_ASSERT(false, "Invalid renderer selected!");
+		return nullptr;
 	}
 
 }
