@@ -50,13 +50,14 @@ namespace Farscape {
 
 		BufferElement(
 			ShaderDataType _type,
-			const std::string& _name
+			const std::string& _name,
+			const bool _normalized = false
 		)
 			: name(_name)
 			, type(_type)
 			, size(ShaderDataTypeSize(_type))
 			, offset(0)
-			, normalized(false)
+			, normalized(_normalized)
 		{ }
 
 		uint32_t GetComponentCount() const
