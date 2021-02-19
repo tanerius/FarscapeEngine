@@ -8,10 +8,13 @@ namespace Farscape {
 	
 	void Log::Init()
 	{
-		spdlog::set_pattern("%^[%T] %n: %v%$");
-		m_LoggerCore = spdlog::stdout_color_mt("FarscapeCore");
+		//("*** [%H:%M:%S %z] [thread %t] %v ***");
+		//spdlog::set_pattern("*** [%H:%M:%S %z] [thread %t] %v ***");
+		spdlog::set_pattern("%^[%T.%e] [thread %t] [%l] %n: %v%$");
+		//spdlog::set_pattern("%^[%T] %n: %v%$");
+		m_LoggerCore = spdlog::stdout_color_mt("Core");
 		m_LoggerCore->set_level(spdlog::level::trace);
-		m_LoggerClient = spdlog::stdout_color_mt("FarscapeClient");
+		m_LoggerClient = spdlog::stdout_color_mt("Client");
 		m_LoggerClient->set_level(spdlog::level::trace);
 	}
 }
