@@ -33,7 +33,8 @@ namespace Farscape {
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<VertexBuffer> triangleVertexBuffer;
+		triangleVertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		BufferLayout layout = {
 			{ShaderDataType::Float3, "a_Position"},
@@ -41,12 +42,42 @@ namespace Farscape {
 		};
 
 		// make sure to set layout BEFORE adding the vertex buffer
-		m_VertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+		triangleVertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(triangleVertexBuffer);
 		
 		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+		std::shared_ptr<IndexBuffer> triangleIndexBuffer;
+		triangleIndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(triangleIndexBuffer);
+
+
+
+		// **********************
+		// *********  Make a square using the new system
+		// *************************************************
+		m_SquareVA.reset(VertexArray::Create());
+
+		float squareVertices[4 * 3] = {
+			-0.75f, -0.75f, 0.0f, 
+			 0.75f, -0.75f, 0.0f, 
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB;
+		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+
+		BufferLayout squareLayout = {
+			{ShaderDataType::Float3, "a_Position"}
+		};
+
+		squareVB->SetLayout(squareLayout);
+		m_SquareVA->AddVertexBuffer(squareVB);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIndexBuffer; 
+		squareIndexBuffer.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		m_SquareVA->SetIndexBuffer(squareIndexBuffer);
 
 		// temp shader souece code
 		std::string vertexSrc = R"(
@@ -87,6 +118,41 @@ namespace Farscape {
 
 
 		m_Shader = std::make_unique<Shader>(vertexSrc, fragmentSrc);
+
+
+		std::string vertexSrcBlue = R"(
+
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_Position;
+			
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);
+			}
+
+	)";
+
+		std::string fragmentSrcBlue = R"(
+
+			#version 330 core
+
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+
+			void main()
+			{
+				color = vec4(0.2, 0.3, 0.8, 1.0);
+			}
+
+	)";
+
+
+		m_ShaderBlue = std::make_unique<Shader>(vertexSrcBlue, fragmentSrcBlue);
 
 
 	}
@@ -136,9 +202,13 @@ namespace Farscape {
 			glClearColor(0.1f, 0.1f, 0.1f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			m_ShaderBlue->Bind();
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 			m_Shader->Bind();
 			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			// run the onupdate on every layer in the layer stack
 			for (Layer* layer : m_layerStack)

@@ -54,6 +54,8 @@ else()
 endif()
 
 target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
+# TODO: REMOVE THIS 
+target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
 
 
 target_include_directories(Farscape 
