@@ -13,6 +13,27 @@ namespace Farscape {
 
 	Application* Application::s_Instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLType(ShaderDataType type)
+	{
+		switch (type)
+		{
+			case ShaderDataType::Float:		return GL_FLOAT;
+			case ShaderDataType::Float2:	return GL_FLOAT;
+			case ShaderDataType::Float3:	return GL_FLOAT;
+			case ShaderDataType::Float4:	return GL_FLOAT;
+			case ShaderDataType::Mat3:		return GL_FLOAT;
+			case ShaderDataType::Mat4:		return GL_FLOAT;
+			case ShaderDataType::Int:		return GL_INT;
+			case ShaderDataType::Int2:		return GL_INT;
+			case ShaderDataType::Int3:		return GL_INT;
+			case ShaderDataType::Int4:		return GL_INT;
+			case ShaderDataType::Bool:		return GL_BOOL;
+		}
+
+		FS_CORE_ASSERT(false, "Unknown ShaderDataTypeToOpenGLType!");
+		return 0;
+	}
+
 	Application::Application()
 	{
 		FS_CORE_ASSERT(!s_Instance, "Application already exists!");
@@ -36,8 +57,25 @@ namespace Farscape {
 
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		BufferLayout layout = {
+			{ShaderDataType::Float3, "a_Position"}
+		};
+
+		uint32_t index = 0;
+		for (auto& e : layout)
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(
+				index, 
+				e.GetComponentCount(), 
+				ShaderDataTypeToOpenGLType(e.type), 
+				e.normalized ? GL_TRUE : GL_FALSE, 
+				layout.GetStride(), 
+				(const void*)((uint64_t)e.offset));
+			index++;
+		}
+
+		
 		
 		uint32_t indices[3] = { 0, 1, 2 };
 		
