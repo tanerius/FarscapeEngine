@@ -10,12 +10,12 @@ namespace Farscape {
 		// decide the API here!!!
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None:
+			case RendererAPI::API::None:
 			{
 				FS_CORE_ASSERT(false, "No renderer selected");
 				return nullptr;
 			}
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 			{
 				return new OpenGLVertexArray();
 			}

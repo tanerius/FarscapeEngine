@@ -15,6 +15,8 @@ if (WIN32)
 		"platform/Windows/OpenGLBuffer.h"
 		"platform/Windows/OpenGLVertexArray.h"
 		"platform/Windows/OpenGLVertexArray.cpp"
+		"platform/Windows/OpenGLRendererAPI.h"
+		"platform/Windows/OpenGLRendererAPI.cpp"
 	)
 elseif (APPLE)
 	set(FS_SPECIFIC_SOURCES 
@@ -37,6 +39,8 @@ set(FS_SOURCES
 	src/private/Buffer.cpp
 	src/private/Renderer.cpp
 	src/private/VertexArray.cpp
+	src/private/RenderCommand.cpp
+	src/private/RendererAPI.cpp
 )
 
 # check static vs dynamic
@@ -61,7 +65,6 @@ target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
 target_include_directories(Farscape 
 	PUBLIC pch
 	PUBLIC src/include
-	PUBLIC glm::glm
 	PUBLIC ${FARSCAPE_BINARY_DIR}/generated
 	PUBLIC platform
 )
@@ -73,6 +76,7 @@ target_link_libraries(Farscape
 	PUBLIC Farscape::imgui_gl3glfw
 	PUBLIC glfw
 	PUBLIC Farscape::glad
+	PUBLIC glm::glm
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)

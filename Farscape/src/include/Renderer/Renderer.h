@@ -1,21 +1,21 @@
 #pragma once 
 
+#include "RenderCommand.h"
+
 namespace Farscape {
 
-	enum class RendererAPI {
-		None = 0,
-		OpenGL = 1,
-		DirectX = 2,
-		Metal = 3,
-		Vulcan = 4
-	};
+	
 
 	class Renderer
 	{
 	public:
-		static inline RendererAPI GetAPI() { return Renderer::s_RendererAPI;  }
-	private:
-		static RendererAPI s_RendererAPI;
+		static void BeginScene(); 
+		static void EndScene();
+
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+		static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI();  }
+	
 	};
 		
 }
