@@ -13,6 +13,8 @@ if (WIN32)
 		"platform/Windows/OpenGLContext.h"
 		"platform/Windows/OpenGLBuffer.cpp"
 		"platform/Windows/OpenGLBuffer.h"
+		"platform/Windows/OpenGLVertexArray.h"
+		"platform/Windows/OpenGLVertexArray.cpp"
 	)
 elseif (APPLE)
 	set(FS_SPECIFIC_SOURCES 
@@ -34,6 +36,7 @@ set(FS_SOURCES
 	src/private/Shader.cpp
 	src/private/Buffer.cpp
 	src/private/Renderer.cpp
+	src/private/VertexArray.cpp
 )
 
 # check static vs dynamic
