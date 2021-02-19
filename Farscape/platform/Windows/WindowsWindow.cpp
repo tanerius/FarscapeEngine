@@ -32,7 +32,7 @@ namespace Farscape {
 
 	void WindowsWindow::Init(const WindowProperties& p)
 	{
-		m_Data.Title = p.Title + " (Windows)";
+		m_Data.Title = p.Title + " v" + Farscape_VERSION + " (Windows)";
 		m_Data.Width = p.Width;
 		m_Data.Height = p.Height;
 
