@@ -109,7 +109,7 @@ namespace Farscape {
 			{
 				element.offset = offset;
 				offset += element.size;
-				m_strideOffset = element.size;
+				m_strideOffset += element.size;
 			}
 		}
 	private:

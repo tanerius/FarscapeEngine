@@ -47,8 +47,6 @@ namespace Farscape {
 		glGenVertexArrays(1, &m_VertexArray);
 		glBindVertexArray(m_VertexArray);
 
-		
-
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
@@ -69,9 +67,9 @@ namespace Farscape {
 
 		uint32_t index = 0;
 		const auto& layout = m_VertexBuffer->GetLayout();
+
 		for (const auto& e : layout)
 		{
-			BufferElement x = e;
 			glEnableVertexAttribArray(index);
 			glVertexAttribPointer(
 				index, 
@@ -103,6 +101,7 @@ namespace Farscape {
 			void main()
 			{
 				v_Position = a_Position;
+				v_Color = a_Color;
 				gl_Position = vec4(a_Position, 1.0);
 			}
 
