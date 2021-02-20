@@ -41,6 +41,7 @@ set(FS_SOURCES
 	src/private/VertexArray.cpp
 	src/private/RenderCommand.cpp
 	src/private/RendererAPI.cpp
+	src/private/Camera.cpp
 )
 
 # check static vs dynamic

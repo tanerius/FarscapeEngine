@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "LayerStack.h"
+#include "Renderer/Camera.h"
 
 namespace Farscape {
 	class WindowCloseEvent;
@@ -46,6 +47,8 @@ namespace Farscape {
 
 		std::shared_ptr<Shader> m_ShaderBlue;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 		
 	private:
 		static Application* s_Instance;

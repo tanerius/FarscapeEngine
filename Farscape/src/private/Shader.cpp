@@ -2,6 +2,10 @@
 #include "Renderer/Shader.h"
 #include <glad/glad.h>
 
+#pragma warning(disable:4201)
+#include <glm/gtc/type_ptr.hpp>
+#pragma warning(default:4201)
+
 namespace Farscape {
 
 	
@@ -125,4 +129,10 @@ namespace Farscape {
 		glUseProgram(0);
 	}
 
+	void Shader::UPloadUniformMat4(const std::string& name, const glm::mat4& matrix)
+	{
+		GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+		FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
+		glUniformMatrix4fv(result, 1, GL_FALSE, glm::value_ptr(matrix));
+	}
 }
