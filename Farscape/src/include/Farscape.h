@@ -5,6 +5,7 @@
 #include "Core/Log.h"
 
 #include "Events/Event.h"
+#include "Events/KeyEvent.h"
 
 // Only to be used bu apps using engine
 #include "Core/Application.h"

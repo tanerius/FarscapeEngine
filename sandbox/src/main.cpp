@@ -7,6 +7,7 @@ public:
 	ExampleLayer()
 		: Layer("Example")
 		, m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) 
+		, m_cameraPosition {0.0f}
 	{
 		m_VertexArray.reset(Farscape::VertexArray::Create());
 
@@ -145,11 +146,27 @@ public:
 	virtual void OnUpdate() override
 	{
 
+		if(Farscape::Input::IsKeyPressed(FS_KEY_A))
+			m_cameraPosition.x -= m_cameraSpeed;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_D))
+			m_cameraPosition.x += m_cameraSpeed;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_S))
+			m_cameraPosition.y -= m_cameraSpeed;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_W))
+			m_cameraPosition.y += m_cameraSpeed;
+
+		if (Farscape::Input::IsKeyPressed(FS_KEY_E))
+			m_cameraAngle -= m_cameraSpeed;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_Q))
+			m_cameraAngle += m_cameraSpeed;
+
+		
+
 		Farscape::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Farscape::RenderCommand::Clear();
 
-		m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
-		m_Camera.SetRotation(45.0f);
+		m_Camera.SetPosition(m_cameraPosition);
+		m_Camera.SetRotation(m_cameraAngle);
 
 
 		Farscape::Renderer::BeginScene(m_Camera);
@@ -167,9 +184,14 @@ public:
 
 	virtual void OnEvent(Farscape::Event& event) override
 	{
-		
+		Farscape::EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<Farscape::KeyPressedEvent>(BIND_EVENT_FN(ExampleLayer::OnKeyPreddesHandler));
 	}
 
+	bool OnKeyPreddesHandler(Farscape::KeyPressedEvent& event)
+	{
+		return false;
+	}
 private:
 	std::shared_ptr<Farscape::Shader> m_Shader;
 	std::shared_ptr<Farscape::VertexArray> m_VertexArray;
@@ -178,6 +200,9 @@ private:
 	std::shared_ptr<Farscape::VertexArray> m_SquareVA;
 
 	Farscape::OrthographicCamera m_Camera;
+	glm::vec3 m_cameraPosition;
+	float m_cameraSpeed = 0.05f;
+	float m_cameraAngle = 0.0f;
 };
 
 class Sandbox : public Farscape::Application

@@ -2,6 +2,9 @@
 
 #include "Event.h"
 
+#include <sstream>
+#include <string>
+
 namespace Farscape {
 
 	class FARSCAPE_API KeyEvent : public Event
