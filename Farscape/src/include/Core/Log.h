@@ -4,6 +4,10 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
+#if !defined(SPDLOG_ACTIVE_LEVEL)
+#define SPDLOG_ACTIVE_LEVEL 
+#endif
+
 namespace Farscape {
 #if defined(_WIN32)
 #pragma warning(push)
@@ -26,15 +30,18 @@ namespace Farscape {
 
 
 // Core log macros
-#define FS_CORE_FATAL(...) ::Farscape::Log::GetLoggerCore()->fatal(__VA_ARGS__)
-#define FS_CORE_ERROR(...) ::Farscape::Log::GetLoggerCore()->error(__VA_ARGS__)
-#define FS_CORE_WARN(...)  ::Farscape::Log::GetLoggerCore()->warn(__VA_ARGS__)
-#define FS_CORE_INFO(...)  ::Farscape::Log::GetLoggerCore()->info(__VA_ARGS__)
-#define FS_CORE_TRACE(...) ::Farscape::Log::GetLoggerCore()->trace(__VA_ARGS__)
+#define LOGCORE ::Farscape::Log::GetLoggerCore()
+#define FS_CORE_FATAL(...) SPDLOG_LOGGER_CRITICAL(LOGCORE, __VA_ARGS__)
+#define FS_CORE_ERROR(...) SPDLOG_LOGGER_ERROR(LOGCORE, __VA_ARGS__)
+#define FS_CORE_WARN(...)  SPDLOG_LOGGER_WARN(LOGCORE, __VA_ARGS__) //  ::Farscape::Log::GetLoggerCore()->warn(__VA_ARGS__)
+#define FS_CORE_INFO(...)  SPDLOG_LOGGER_INFO(LOGCORE, __VA_ARGS__)
+#define FS_CORE_TRACE(...) SPDLOG_LOGGER_TRACE(LOGCORE, __VA_ARGS__)
 
 // Client log macros
-#define FS_FATAL(...) ::Farscape::Log::GetLoggerClient()->fatal(__VA_ARGS__)
-#define FS_ERROR(...) ::Farscape::Log::GetLoggerClient()->error(__VA_ARGS__)
-#define FS_WARN(...)  ::Farscape::Log::GetLoggerClient()->warn(__VA_ARGS__)
-#define FS_INFO(...)  ::Farscape::Log::GetLoggerClient()->info(__VA_ARGS__)
-#define FS_TRACE(...) ::Farscape::Log::GetLoggerClient()->trace(__VA_ARGS__)
+#define LOGCLIENT ::Farscape::Log::GetLoggerClient()
+#define FS_FATAL(...) SPDLOG_LOGGER_CRITICAL(LOGCLIENT, __VA_ARGS__)
+#define FS_ERROR(...) SPDLOG_LOGGER_ERROR(LOGCLIENT, __VA_ARGS__)
+#define FS_WARN(...)  SPDLOG_LOGGER_WARN(LOGCLIENT, __VA_ARGS__) // ::Farscape::Log::GetLoggerClient()->warn(__VA_ARGS__)
+#define FS_INFO(...)  SPDLOG_LOGGER_INFO(LOGCLIENT, __VA_ARGS__)
+#define FS_TRACE(...) SPDLOG_LOGGER_TRACE(LOGCLIENT, __VA_ARGS__)
+
