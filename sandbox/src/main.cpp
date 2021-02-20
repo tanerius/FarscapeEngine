@@ -9,7 +9,6 @@ public:
 		: Layer("Example")
 		, m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) 
 		, m_cameraPosition {0.0f}
-		, m_SquarePosition {0.0f}
 	{
 		m_VertexArray.reset(Farscape::VertexArray::Create());
 
@@ -44,10 +43,10 @@ public:
 		m_SquareVA.reset(Farscape::VertexArray::Create());
 
 		float squareVertices[4 * 3] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f
 		};
 
 		std::shared_ptr<Farscape::VertexBuffer> squareVB;
@@ -162,18 +161,6 @@ public:
 			m_cameraAngle -= m_degPerSecRotation * deltaTime;
 		if (Farscape::Input::IsKeyPressed(FS_KEY_Q))
 			m_cameraAngle += m_degPerSecRotation * deltaTime;
-
-
-		// moving the square
-		if (Farscape::Input::IsKeyPressed(FS_KEY_J))
-			m_SquarePosition.x -= m_cameraSpeed * deltaTime;
-		if (Farscape::Input::IsKeyPressed(FS_KEY_L))
-			m_SquarePosition.x += m_cameraSpeed * deltaTime;
-		if (Farscape::Input::IsKeyPressed(FS_KEY_K))
-			m_SquarePosition.y -= m_cameraSpeed * deltaTime;
-		if (Farscape::Input::IsKeyPressed(FS_KEY_I))
-			m_SquarePosition.y += m_cameraSpeed * deltaTime;
-
 		
 
 		Farscape::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -184,12 +171,22 @@ public:
 
 
 		Farscape::Renderer::BeginScene(m_Camera);
+
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		for (int y = 0; y < 10; y++)
 		{
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_SquarePosition);
-			Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, transform);
-			Farscape::Renderer::Submit(m_Shader, m_VertexArray);
-			Farscape::Renderer::EndScene();
+			for (int x = 0; x < 10 ; x++)
+			{
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+				Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, transform);
+			}
 		}
+		
+		Farscape::Renderer::Submit(m_Shader, m_VertexArray);
+		
+		Farscape::Renderer::EndScene();
 	}
 
 	virtual void OnImGuiRender() override
@@ -220,7 +217,6 @@ private:
 	float m_degPerSecRotation = 180.0f;
 	float m_cameraAngle = 0.0f;
 
-	glm::vec3 m_SquarePosition;
 };
 
 class Sandbox : public Farscape::Application
