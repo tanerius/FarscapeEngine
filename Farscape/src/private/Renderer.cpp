@@ -3,6 +3,7 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/Camera.h"
 #include "Renderer/Shader.h"
+#include <glm/glm.hpp>
 
 namespace Farscape {
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
@@ -15,10 +16,15 @@ namespace Farscape {
 	void Renderer::EndScene()
 	{}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::Submit(
+		const std::shared_ptr<Shader>& shader, 
+		const std::shared_ptr<VertexArray>& vertexArray,
+		const glm::mat4& transform
+	)
 	{
 		shader->Bind();
 		shader->UPloadUniformMat4("u_ViewProjectionMat", s_SceneData->ViewProjectionMatrix);
+		shader->UPloadUniformMat4("u_Transform", transform);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

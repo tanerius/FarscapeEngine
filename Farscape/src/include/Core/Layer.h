@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Core.h"
+#include "Timestep.h"
 
 namespace Farscape {
 
 	class Event;
+
 
 	class FARSCAPE_API Layer
 	{
@@ -14,7 +16,7 @@ namespace Farscape {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event&) {}
 

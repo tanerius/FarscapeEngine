@@ -44,4 +44,3 @@ namespace Farscape {
 #define FS_WARN(...)  SPDLOG_LOGGER_WARN(LOGCLIENT, __VA_ARGS__) // ::Farscape::Log::GetLoggerClient()->warn(__VA_ARGS__)
 #define FS_INFO(...)  SPDLOG_LOGGER_INFO(LOGCLIENT, __VA_ARGS__)
 #define FS_TRACE(...) SPDLOG_LOGGER_TRACE(LOGCLIENT, __VA_ARGS__)
-

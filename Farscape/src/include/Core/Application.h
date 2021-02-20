@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "LayerStack.h"
 #include "Renderer/Camera.h"
+#include "Timestep.h"
 
 namespace Farscape {
 	class WindowCloseEvent;
@@ -41,7 +42,7 @@ namespace Farscape {
 		ImGuiLayer* m_ImGuiLayer = nullptr;
 		bool m_IsRunning = true;
 		LayerStack m_layerStack;
-
+		float m_LastTick = 0.0f;
 		
 		
 	private:

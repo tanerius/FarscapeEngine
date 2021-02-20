@@ -1,4 +1,5 @@
 #include "Farscape.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 // create an example layer
 class ExampleLayer : public Farscape::Layer
@@ -8,6 +9,7 @@ public:
 		: Layer("Example")
 		, m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) 
 		, m_cameraPosition {0.0f}
+		, m_SquarePosition {0.0f}
 	{
 		m_VertexArray.reset(Farscape::VertexArray::Create());
 
@@ -72,6 +74,7 @@ public:
 			layout(location = 1) in vec4 a_Color;
 
 			uniform mat4 u_ViewProjectionMat;
+			uniform mat4 u_Transform;
 
 			out vec3 v_Position;
 			out vec4 v_Color;
@@ -80,7 +83,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ViewProjectionMat * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjectionMat * u_Transform * vec4(a_Position, 1.0);
 			}
 
 	)";
@@ -113,13 +116,14 @@ public:
 			layout(location = 0) in vec3 a_Position;
 
 			uniform mat4 u_ViewProjectionMat;
+            uniform mat4 u_Transform;
 
 			out vec3 v_Position;
 			
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = u_ViewProjectionMat * vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjectionMat * u_Transform * vec4(a_Position, 1.0);
 			}
 
 	)";
@@ -143,22 +147,32 @@ public:
 		m_ShaderBlue = std::make_unique<Farscape::Shader>(vertexSrcBlue, fragmentSrcBlue);
 	}
 
-	virtual void OnUpdate() override
+	virtual void OnUpdate(Farscape::Timestep deltaTime) override
 	{
-
 		if(Farscape::Input::IsKeyPressed(FS_KEY_A))
-			m_cameraPosition.x -= m_cameraSpeed;
+			m_cameraPosition.x -= m_cameraSpeed * deltaTime;
 		if (Farscape::Input::IsKeyPressed(FS_KEY_D))
-			m_cameraPosition.x += m_cameraSpeed;
+			m_cameraPosition.x += m_cameraSpeed * deltaTime;
 		if (Farscape::Input::IsKeyPressed(FS_KEY_S))
-			m_cameraPosition.y -= m_cameraSpeed;
+			m_cameraPosition.y -= m_cameraSpeed * deltaTime;
 		if (Farscape::Input::IsKeyPressed(FS_KEY_W))
-			m_cameraPosition.y += m_cameraSpeed;
+			m_cameraPosition.y += m_cameraSpeed * deltaTime;
 
 		if (Farscape::Input::IsKeyPressed(FS_KEY_E))
-			m_cameraAngle -= m_cameraSpeed;
+			m_cameraAngle -= m_degPerSecRotation * deltaTime;
 		if (Farscape::Input::IsKeyPressed(FS_KEY_Q))
-			m_cameraAngle += m_cameraSpeed;
+			m_cameraAngle += m_degPerSecRotation * deltaTime;
+
+
+		// moving the square
+		if (Farscape::Input::IsKeyPressed(FS_KEY_J))
+			m_SquarePosition.x -= m_cameraSpeed * deltaTime;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_L))
+			m_SquarePosition.x += m_cameraSpeed * deltaTime;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_K))
+			m_SquarePosition.y -= m_cameraSpeed * deltaTime;
+		if (Farscape::Input::IsKeyPressed(FS_KEY_I))
+			m_SquarePosition.y += m_cameraSpeed * deltaTime;
 
 		
 
@@ -171,7 +185,8 @@ public:
 
 		Farscape::Renderer::BeginScene(m_Camera);
 		{
-			Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA);
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_SquarePosition);
+			Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, transform);
 			Farscape::Renderer::Submit(m_Shader, m_VertexArray);
 			Farscape::Renderer::EndScene();
 		}
@@ -201,8 +216,11 @@ private:
 
 	Farscape::OrthographicCamera m_Camera;
 	glm::vec3 m_cameraPosition;
-	float m_cameraSpeed = 0.05f;
+	float m_cameraSpeed = 1.0f;
+	float m_degPerSecRotation = 180.0f;
 	float m_cameraAngle = 0.0f;
+
+	glm::vec3 m_SquarePosition;
 };
 
 class Sandbox : public Farscape::Application

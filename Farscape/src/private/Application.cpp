@@ -8,6 +8,9 @@
 #include "Renderer/VertexArray.h"
 #include "Renderer/Renderer.h"
 
+// Used to get time
+// TODO: Remove from here make timing platform independant
+#include <GLFW/glfw3.h>
 
 
 namespace Farscape {
@@ -67,9 +70,13 @@ namespace Farscape {
 	{
 		while (m_IsRunning)
 		{
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastTick;
+			m_LastTick = time;
+
 			// run the onupdate on every layer in the layer stack
 			for (Layer* layer : m_layerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_layerStack)
