@@ -17,6 +17,8 @@ if (WIN32)
         "platform/Windows/OpenGLVertexArray.cpp"
         "platform/Windows/OpenGLRendererAPI.h"
         "platform/Windows/OpenGLRendererAPI.cpp"
+        "platform/Windows/OpenGLShader.h"
+        "platform/Windows/OpenGLShader.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 
@@ -48,7 +50,7 @@ set(FS_SOURCES
 if(FARSCAPE_LINK_STATICALLY)
     add_library(Farscape STATIC 
         ${FS_SOURCES}
-    )
+ )
 else()
     add_library(Farscape SHARED 
         ${FS_SOURCES}

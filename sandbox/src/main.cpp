@@ -1,5 +1,9 @@
 #include "Farscape.h"
+
+#include "Windows/OpenGLShader.h"
+#include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // create an example layer
 class ExampleLayer : public Farscape::Layer
@@ -105,10 +109,10 @@ public:
     )";
 
 
-        m_Shader = std::make_unique<Farscape::Shader>(vertexSrc, fragmentSrc);
+        m_Shader.reset(Farscape::Shader::Create(vertexSrc, fragmentSrc));
 
 
-        std::string vertexSrcBlue = R"(
+        std::string varColorVertexSrc = R"(
 
             #version 330 core
 
@@ -127,23 +131,25 @@ public:
 
     )";
 
-        std::string fragmentSrcBlue = R"(
+        std::string varColorFragmentSrc = R"(
 
             #version 330 core
 
             layout(location = 0) out vec4 color;
 
+            uniform vec3 u_Color;
+
             in vec3 v_Position;
 
             void main()
             {
-                color = vec4(0.2, 0.3, 0.8, 1.0);
+                color = vec4(u_Color, 1.0);
             }
 
     )";
 
 
-        m_ShaderBlue = std::make_unique<Farscape::Shader>(vertexSrcBlue, fragmentSrcBlue);
+        m_ShaderBlue.reset(Farscape::Shader::Create(varColorVertexSrc, varColorFragmentSrc)); // std::make_unique<Farscape::Shader>(varColorVertexSrc, varColorFragmentSrc);
     }
 
     virtual void OnUpdate(Farscape::Timestep deltaTime) override
@@ -174,6 +180,9 @@ public:
 
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_ShaderBlue)->Bind();
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_ShaderBlue)->UploadUniformFloat3("u_Color", m_SquareColor);
+
         for (int y = 0; y < 10; y++)
         {
             for (int x = 0; x < 10 ; x++)
@@ -191,7 +200,9 @@ public:
 
     virtual void OnImGuiRender() override
     {
-
+        ImGui::Begin("Farscape Setting");
+        ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+        ImGui::End();
     }
 
     virtual void OnEvent(Farscape::Event& event) override
@@ -216,6 +227,8 @@ private:
     float m_cameraSpeed = 1.0f;
     float m_degPerSecRotation = 180.0f;
     float m_cameraAngle = 0.0f;
+
+    glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 
 };
 

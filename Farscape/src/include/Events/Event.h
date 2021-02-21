@@ -16,11 +16,11 @@ namespace Farscape {
     enum EventCategory
     {
         None = 0,
-        EC_Application            = BIT(0),
+        EC_Application          = BIT(0),
         EC_Input                = BIT(1),
-        EC_Keyboard                = BIT(2),
+        EC_Keyboard             = BIT(2),
         EC_Mouse                = BIT(3),
-        EC_MouseBtn                = BIT(4),
+        EC_MouseBtn             = BIT(4),
         EC_Timer                = BIT(5)
     };
 

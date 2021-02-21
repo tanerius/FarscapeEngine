@@ -5,6 +5,8 @@
 #include "Renderer/Shader.h"
 #include <glm/glm.hpp>
 
+#include "Windows/OpenGLShader.h"
+
 namespace Farscape {
     Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
 
@@ -23,8 +25,9 @@ namespace Farscape {
     )
     {
         shader->Bind();
-        shader->UPloadUniformMat4("u_ViewProjectionMat", s_SceneData->ViewProjectionMatrix);
-        shader->UPloadUniformMat4("u_Transform", transform);
+        // for now do this
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjectionMat", s_SceneData->ViewProjectionMatrix);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
 
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
