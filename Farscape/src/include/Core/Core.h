@@ -1,5 +1,6 @@
 #pragma once
 #include "Versions.h"
+#include <memory>
 
 #if defined(_WIN32)
 #  if !defined(FARSCAPE_STATIC)
@@ -40,8 +41,107 @@
 
 // An object interface which can lift any weight
 namespace Farscape {
-    class FARSCAPE_API IObject
+    class FARSCAPE_API IFarscapeObject
     {
 
     };
+
+    class FARSCAPE_API IRendererObject : public IFarscapeObject
+    {
+
+    };
+
+    class FARSCAPE_API ICoreObject : public IFarscapeObject
+    {
+
+    };
+
+    class FARSCAPE_API ITypeObject : public IFarscapeObject
+    {
+
+    };
+
+    // #################################################
+
+    class FARSCAPE_API IType : public ITypeObject
+    {
+
+    };
+
+    class FARSCAPE_API IApplication : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API ITimestep : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API ILayer : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API IInput : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API ILayerstack : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API IWindow : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API ILog : public ICoreObject
+    {
+
+    };
+
+    class FARSCAPE_API IShader : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IContext : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API ICamera : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IBuffer : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IRenderer : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IRendererAPI : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IVertexArray : public IRendererObject
+    {
+
+    };
+
+
+    template<typename T>
+    using Scope = std::unique_ptr<T>;
+
+    template<typename T>
+    using Ref = std::shared_ptr<T>;
 }
