@@ -19,8 +19,8 @@ namespace Farscape {
     {}
 
     void Renderer::Submit(
-        const std::shared_ptr<Shader>& shader, 
-        const std::shared_ptr<VertexArray>& vertexArray,
+        const Farscape::Ref<Shader>& shader,
+        const Farscape::Ref<VertexArray>& vertexArray,
         const glm::mat4& transform
     )
     {

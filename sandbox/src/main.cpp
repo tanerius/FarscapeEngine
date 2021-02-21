@@ -22,7 +22,7 @@ public:
              0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
         };
 
-        std::shared_ptr<Farscape::VertexBuffer> triangleVertexBuffer;
+        Farscape::Ref<Farscape::VertexBuffer> triangleVertexBuffer;
         triangleVertexBuffer.reset(Farscape::VertexBuffer::Create(vertices, sizeof(vertices)));
 
         Farscape::BufferLayout layout = {
@@ -35,7 +35,7 @@ public:
         m_VertexArray->AddVertexBuffer(triangleVertexBuffer);
 
         uint32_t indices[3] = { 0, 1, 2 };
-        std::shared_ptr<Farscape::IndexBuffer> triangleIndexBuffer;
+        Farscape::Ref<Farscape::IndexBuffer> triangleIndexBuffer;
         triangleIndexBuffer.reset(Farscape::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         m_VertexArray->SetIndexBuffer(triangleIndexBuffer);
 
@@ -53,7 +53,7 @@ public:
             -0.5f,  0.5f, 0.0f
         };
 
-        std::shared_ptr<Farscape::VertexBuffer> squareVB;
+        Farscape::Ref<Farscape::VertexBuffer> squareVB;
         squareVB.reset(Farscape::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
         Farscape::BufferLayout squareLayout = {
@@ -64,7 +64,7 @@ public:
         m_SquareVA->AddVertexBuffer(squareVB);
 
         uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-        std::shared_ptr<Farscape::IndexBuffer> squareIndexBuffer;
+        Farscape::Ref<Farscape::IndexBuffer> squareIndexBuffer;
         squareIndexBuffer.reset(Farscape::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
         m_SquareVA->SetIndexBuffer(squareIndexBuffer);
 
@@ -216,11 +216,11 @@ public:
         return false;
     }
 private:
-    std::shared_ptr<Farscape::Shader> m_Shader;
-    std::shared_ptr<Farscape::VertexArray> m_VertexArray;
+    Farscape::Ref<Farscape::Shader> m_Shader;
+    Farscape::Ref<Farscape::VertexArray> m_VertexArray;
 
-    std::shared_ptr<Farscape::Shader> m_ShaderBlue;
-    std::shared_ptr<Farscape::VertexArray> m_SquareVA;
+    Farscape::Ref<Farscape::Shader> m_ShaderBlue;
+    Farscape::Ref<Farscape::VertexArray> m_SquareVA;
 
     Farscape::OrthographicCamera m_Camera;
     glm::vec3 m_cameraPosition;
