@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Core/Core.h"
+
 namespace Farscape {
 
-    class GfxContext
+    class GfxContext : public IContext
     {
     public:
         virtual void Init() = 0;

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Core/Core.h"
 #include <glm/glm.hpp>
 
 namespace Farscape {
@@ -11,7 +11,7 @@ namespace Farscape {
         E_ViewProjection
     };
 
-    class OrthographicCamera
+    class OrthographicCamera : public ICamera
     {
     public:
         OrthographicCamera(float left, float right, float top, float bottom);

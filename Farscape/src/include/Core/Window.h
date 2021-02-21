@@ -24,7 +24,7 @@ namespace Farscape {
     };
 
     // A window for desktops
-    class FARSCAPE_API Window
+    class Window : public IWindow
     {
     public:
         using EventCallbackFn = std::function<void(Event&)>;

@@ -1,10 +1,11 @@
 #pragma once
+#include "Core/Codes.h"
 #include <glm/glm.hpp>
 
 namespace Farscape {
     class VertexArray;
 
-    class RendererAPI
+    class RendererAPI : public IRendererAPI
     {
     public:
         enum class API {

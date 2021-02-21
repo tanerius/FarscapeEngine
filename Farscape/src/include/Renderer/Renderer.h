@@ -7,7 +7,7 @@ namespace Farscape {
     class OrthographicCamera;
     class Shader;
 
-    class Renderer
+    class Renderer : public IRenderer
     {
     public:
         static void BeginScene(OrthographicCamera& camera);

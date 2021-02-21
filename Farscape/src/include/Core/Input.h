@@ -5,7 +5,7 @@
 namespace Farscape
 {
     // Input will definitely be a singleton
-    class FARSCAPE_API Input
+    class Input : public IInput
     {
     public:
         inline static bool IsKeyPressed(int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }

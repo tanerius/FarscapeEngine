@@ -13,7 +13,7 @@ namespace Farscape {
 #pragma warning(push)
 #pragma warning(disable:4251)
 #endif
-    class FARSCAPE_API Log
+    class Log : public ILog
     {
     public:
         static void Init();

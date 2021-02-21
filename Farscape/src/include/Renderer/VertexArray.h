@@ -5,7 +5,7 @@
 namespace Farscape {
 
     // This is probably an OpenGL only thing so we need to think about the architecture here for platform agnisticnessnessness
-    class VertexArray
+    class VertexArray : public IVertexArray
     {
     public:
         virtual ~VertexArray() {}

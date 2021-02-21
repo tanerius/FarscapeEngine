@@ -1,9 +1,10 @@
 #pragma once
+#include "Core/Core.h"
 #include <string>
 
 namespace Farscape {
 
-    class Shader
+    class Shader : public IShader
     {
     public:
         virtual ~Shader() = default;

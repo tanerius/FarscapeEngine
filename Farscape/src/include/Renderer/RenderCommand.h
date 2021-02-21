@@ -5,7 +5,7 @@
 
 namespace Farscape {
 
-    class RenderCommand
+    class RenderCommand : public IRenderCommand
     {
     public:
         inline static void Clear() 

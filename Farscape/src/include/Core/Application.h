@@ -14,7 +14,7 @@ namespace Farscape {
     class IndexBuffer;
     class VertexArray;
 
-    class FARSCAPE_API Application
+    class Application : public IApplication
     {
     public:
         Application();

@@ -1,8 +1,9 @@
 #pragma once
+#include "Core.h"
 
 namespace Farscape {
 
-    class Timestep
+    class Timestep : public ITimestep
     {
     public:
         Timestep(float time = 0.0f)

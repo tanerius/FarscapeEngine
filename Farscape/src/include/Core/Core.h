@@ -98,10 +98,29 @@ namespace Farscape {
 
     };
 
+    class FARSCAPE_API IEvent : public ICoreObject
+    {
+
+    };
+
     class FARSCAPE_API ILog : public ICoreObject
     {
 
     };
+
+    class FARSCAPE_API ICommand : public ICoreObject
+    {
+
+    };
+
+
+    class FARSCAPE_API IRenderCommand : public ICommand
+    {
+
+    };
+
+
+    // #########################################
 
     class FARSCAPE_API IShader : public IRendererObject
     {
@@ -137,6 +156,12 @@ namespace Farscape {
     {
 
     };
+
+    class FARSCAPE_API IBufferLayout : public IRendererObject
+    {
+
+    };
+
 
 
     template<typename T>

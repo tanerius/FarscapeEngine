@@ -8,7 +8,7 @@ namespace Farscape {
     class Event;
 
 
-    class FARSCAPE_API Layer
+    class Layer : public ILayer
     {
     public:
         Layer(const std::string& name = "Layer");

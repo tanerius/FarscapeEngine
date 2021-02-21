@@ -6,7 +6,7 @@
 namespace Farscape {
     class Layer;
 
-    class FARSCAPE_API LayerStack
+    class LayerStack : public ILayerstack
     {
     public:
         LayerStack();

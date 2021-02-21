@@ -30,7 +30,7 @@ namespace Farscape {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-    class FARSCAPE_API Event
+    class Event : public IEvent
     {
         friend class EventDispatcher;
     public:

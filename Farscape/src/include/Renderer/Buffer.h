@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Core.h"
 
 namespace Farscape {
 
@@ -83,7 +84,7 @@ namespace Farscape {
     };
     
     // A class to describe the layout of a buffer 
-    class BufferLayout
+    class BufferLayout : public IBufferLayout
     {
     public:
         BufferLayout() {}
@@ -117,7 +118,7 @@ namespace Farscape {
         uint32_t m_strideOffset = 0;
     };
 
-    class VertexBuffer
+    class VertexBuffer : public IBuffer
     {
     public:
         virtual ~VertexBuffer() {}
@@ -133,7 +134,8 @@ namespace Farscape {
         static VertexBuffer* Create(float* vertices, uint32_t arraySize);
     };
 
-    class IndexBuffer {
+    class IndexBuffer : public IBuffer 
+    {
     public:
         virtual ~IndexBuffer() {}
 
