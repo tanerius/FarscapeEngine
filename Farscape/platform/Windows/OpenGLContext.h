@@ -5,14 +5,14 @@ struct GLFWwindow;
 
 namespace Farscape {
 
-	class OpenGLContext : public GfxContext
-	{
-	public:
-		OpenGLContext(GLFWwindow* windowHandle);
-		virtual void Init() override;
-		virtual void SwapBuffers() override;
-	private:
-		GLFWwindow* m_WindowHandle = nullptr;
-	};
+    class OpenGLContext : public GfxContext
+    {
+    public:
+        OpenGLContext(GLFWwindow* windowHandle);
+        virtual void Init() override;
+        virtual void SwapBuffers() override;
+    private:
+        GLFWwindow* m_WindowHandle = nullptr;
+    };
 
 }

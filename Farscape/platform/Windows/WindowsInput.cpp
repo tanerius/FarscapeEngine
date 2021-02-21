@@ -6,44 +6,44 @@
 
 namespace Farscape {
 
-	Input* Input::s_Instance = new WindowsInput();
+    Input* Input::s_Instance = new WindowsInput();
 
-	bool WindowsInput::IsKeyPressedImpl(int keycode)
-	{
-		// get the window reference then the raw pointer
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
-		int result = glfwGetKey(window, keycode);
+    bool WindowsInput::IsKeyPressedImpl(int keycode)
+    {
+        // get the window reference then the raw pointer
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
+        int result = glfwGetKey(window, keycode);
 
-		return result == GLFW_PRESS || result == GLFW_REPEAT;
-	}
+        return result == GLFW_PRESS || result == GLFW_REPEAT;
+    }
 
-	bool WindowsInput::IsMouseButtonPressedImpl(int button)
-	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
-		int result = glfwGetMouseButton(window, button);
-		return result == GLFW_PRESS;
-	}
+    bool WindowsInput::IsMouseButtonPressedImpl(int button)
+    {
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
+        int result = glfwGetMouseButton(window, button);
+        return result == GLFW_PRESS;
+    }
 
-	// Must use cpp-14 or more from here on 
-	std::pair<double, double> WindowsInput::GetMousePosImpl()
-	{
-		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
-		double x, y;
-		glfwGetCursorPos(window, &x, &y);
+    // Must use cpp-14 or more from here on 
+    std::pair<double, double> WindowsInput::GetMousePosImpl()
+    {
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
+        double x, y;
+        glfwGetCursorPos(window, &x, &y);
 
-		return { x, y };
-	}
+        return { x, y };
+    }
 
-	double WindowsInput::GetMousePosXImpl()
-	{
-		// only cpp_17 for this!
-		auto[x, y] = GetMousePosImpl();
-		return x;
-	}
+    double WindowsInput::GetMousePosXImpl()
+    {
+        // only cpp_17 for this!
+        auto[x, y] = GetMousePosImpl();
+        return x;
+    }
 
-	double WindowsInput::GetMousePosYImpl()
-	{
-		auto[x, y] = GetMousePosImpl();
-		return y;
-	}
+    double WindowsInput::GetMousePosYImpl()
+    {
+        auto[x, y] = GetMousePosImpl();
+        return y;
+    }
 }

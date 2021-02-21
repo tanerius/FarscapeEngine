@@ -5,25 +5,25 @@
 
 namespace Farscape {
 
-	VertexArray* VertexArray::Create()
-	{
-		// decide the API here!!!
-		switch (Renderer::GetAPI())
-		{
-			case RendererAPI::API::None:
-			{
-				FS_CORE_ASSERT(false, "No renderer selected");
-				return nullptr;
-			}
-			case RendererAPI::API::OpenGL:
-			{
-				return new OpenGLVertexArray();
-			}
-		}
+    VertexArray* VertexArray::Create()
+    {
+        // decide the API here!!!
+        switch (Renderer::GetAPI())
+        {
+            case RendererAPI::API::None:
+            {
+                FS_CORE_ASSERT(false, "No renderer selected");
+                return nullptr;
+            }
+            case RendererAPI::API::OpenGL:
+            {
+                return new OpenGLVertexArray();
+            }
+        }
 
 
-		FS_CORE_ASSERT(false, "Invalid renderer selected!");
-		return nullptr;
-	}
+        FS_CORE_ASSERT(false, "Invalid renderer selected!");
+        return nullptr;
+    }
 
 }

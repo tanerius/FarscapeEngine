@@ -4,18 +4,18 @@
 
 namespace Farscape {
 
-	class Shader
-	{
-	public:
-		Shader(std::string& vertexSrc, std::string& fragmentSrc);
-		~Shader();
+    class Shader
+    {
+    public:
+        Shader(std::string& vertexSrc, std::string& fragmentSrc);
+        ~Shader();
 
-		void Bind() const;
-		void Unbind() const;
+        void Bind() const;
+        void Unbind() const;
 
-		void UPloadUniformMat4(const std::string& name, const glm::mat4& matrix);
-	private:
-		uint32_t m_RendererID;
-	};
+        void UPloadUniformMat4(const std::string& name, const glm::mat4& matrix);
+    private:
+        uint32_t m_RendererID;
+    };
 
 }
