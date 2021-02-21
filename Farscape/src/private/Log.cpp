@@ -3,8 +3,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Farscape {
-    std::shared_ptr<spdlog::logger> Log::m_LoggerCore;
-    std::shared_ptr<spdlog::logger> Log::m_LoggerClient;
+    Ref<spdlog::logger> Log::m_LoggerCore;
+    Ref<spdlog::logger> Log::m_LoggerClient;
     
     void Log::Init()
     {

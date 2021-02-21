@@ -18,7 +18,7 @@ namespace Farscape {
             s_RendererAPI->SetClearColor(color);
         }
 
-        inline static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr)
+        inline static void DrawIndexed(const Ref<VertexArray>& vertexArr)
         {
             s_RendererAPI->DrawIndexed(vertexArr);
         }

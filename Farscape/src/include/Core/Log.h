@@ -17,11 +17,11 @@ namespace Farscape {
     {
     public:
         static void Init();
-        inline static std::shared_ptr<spdlog::logger>& GetLoggerCore() { return m_LoggerCore; }
-        inline static std::shared_ptr<spdlog::logger>& GetLoggerClient() { return m_LoggerClient; }
+        inline static Ref<spdlog::logger>& GetLoggerCore() { return m_LoggerCore; }
+        inline static Ref<spdlog::logger>& GetLoggerClient() { return m_LoggerClient; }
     private:
-        static std::shared_ptr<spdlog::logger> m_LoggerCore;
-        static std::shared_ptr<spdlog::logger> m_LoggerClient;
+        static Ref<spdlog::logger> m_LoggerCore;
+        static Ref<spdlog::logger> m_LoggerClient;
     };
 #if defined(_WIN32)
 #pragma warning(pop)
