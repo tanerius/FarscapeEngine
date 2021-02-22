@@ -18,7 +18,9 @@ namespace Farscape {
         void Begin();
         void End();
     private:
+    #if defined(WIN32)
         float m_Time = 0.0f;
+    #endif
     };
 
 }

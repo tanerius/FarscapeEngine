@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Farscape/Engine/Window.h"
+#include "Core/Window.h"
 #include <GLFW/glfw3.h>
 
 namespace Farscape {
@@ -19,6 +19,8 @@ namespace Farscape {
         inline void SetEventCallbacks(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         bool IsVSync() const override;
+
+        virtual void* GetRawWindowPointer() const override { return nullptr; }
 
     private:
         virtual void Init(const WindowProperties& props);

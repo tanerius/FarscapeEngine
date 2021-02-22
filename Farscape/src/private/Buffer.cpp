@@ -19,6 +19,11 @@ namespace Farscape {
             {
                 return new OpenGLVertexBuffer(vertices, arraySize);
             }
+            case RendererAPI::API::DirectX:
+            case RendererAPI::API::Metal:
+            case RendererAPI::API::Vulcan:
+                FS_CORE_ASSERT(false, "Not implementes API!");
+                return nullptr;
         }
 
 
@@ -39,6 +44,11 @@ namespace Farscape {
             {
                 return new OpenGLIndexBuffer(indices, count);
             }
+            case RendererAPI::API::DirectX:
+            case RendererAPI::API::Metal:
+            case RendererAPI::API::Vulcan:
+                FS_CORE_ASSERT(false, "Not implementes API!");
+                return nullptr;
         }
 
         FS_CORE_ASSERT(false, "Invalid renderer selected!");

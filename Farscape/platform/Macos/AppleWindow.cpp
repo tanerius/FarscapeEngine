@@ -1,5 +1,4 @@
 #include "fspch.h"
-#include "Farscape/Engine/Log.h"
 #include "AppleWindow.h"
 
 namespace Farscape {

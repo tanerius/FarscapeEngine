@@ -19,6 +19,11 @@ namespace Farscape {
             {
                 return new OpenGLVertexArray();
             }
+            case RendererAPI::API::DirectX:
+            case RendererAPI::API::Metal:
+            case RendererAPI::API::Vulcan:
+                FS_CORE_ASSERT(false, "Not implementes API!");
+                return nullptr;
         }
 
 
