@@ -46,18 +46,19 @@ public:
         // *************************************************
         m_SquareVA.reset(Farscape::VertexArray::Create());
 
-        float squareVertices[4 * 3] = {
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f
+        float squareVertices[5 * 4] = {
+            -0.5f, -0.5f, 0.0f, /* bot left     */ 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, /* top left     */ 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, /* top right    */ 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, /* bot right    */ 0.0f, 1.0f
         };
 
         Farscape::Ref<Farscape::VertexBuffer> squareVB;
         squareVB.reset(Farscape::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 
         Farscape::BufferLayout squareLayout = {
-            {Farscape::ShaderDataType::Float3, "a_Position"}
+            {Farscape::ShaderDataType::Float3, "a_Position"},
+            {Farscape::ShaderDataType::Float2, "a_TexCoord"}
         };
 
         squareVB->SetLayout(squareLayout);
@@ -193,7 +194,8 @@ public:
             }
         }
         
-        Farscape::Renderer::Submit(m_Shader, m_VertexArray);
+        //Farscape::Renderer::Submit(m_Shader, m_VertexArray);
+        Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
         
         Farscape::Renderer::EndScene();
     }
