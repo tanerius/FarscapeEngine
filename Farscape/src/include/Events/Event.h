@@ -22,6 +22,8 @@ namespace Farscape {
         EC_Mouse                = BIT(3),
         EC_MouseBtn             = BIT(4),
         EC_Timer                = BIT(5)
+		
+		
     };
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\

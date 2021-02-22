@@ -41,16 +41,19 @@ public:
 
 
 
-        // **********************
-        // *********  Make a square using the new system
-        // *************************************************
+        // *********************************************************
+        // *********  Make a square using the new system  **********
+        // *********************************************************
         m_SquareVA.reset(Farscape::VertexArray::Create());
 
-        float squareVertices[5 * 4] = {
-            -0.5f, -0.5f, 0.0f, /* bot left     */ 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, /* top left     */ 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, /* top right    */ 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, /* bot right    */ 0.0f, 1.0f
+
+        // 
+        float squareVertices[5 * 4] = {	
+                    /* Float3 : a_Position */       /* Float2 : a_TexCoord */
+            /* bl */   -0.5f, -0.5f, 0.0f,             0.0f, 0.0f,
+            /* tl */    0.5f, -0.5f, 0.0f,             1.0f, 0.0f,
+            /* tr */    0.5f,  0.5f, 0.0f,             1.0f, 1.0f,
+            /* br */   -0.5f,  0.5f, 0.0f,             0.0f, 1.0f
         };
 
         Farscape::Ref<Farscape::VertexBuffer> squareVB;
