@@ -44,7 +44,8 @@ set(FS_SOURCES
     src/private/RenderCommand.cpp
     src/private/RendererAPI.cpp
     src/private/Camera.cpp
-)
+    src/private/Texture.cpp
+ )
 
 # check static vs dynamic
 if(FARSCAPE_LINK_STATICALLY)
@@ -80,6 +81,7 @@ target_link_libraries(Farscape
     PUBLIC glfw
     PUBLIC Farscape::glad
     PUBLIC glm::glm
+    PUBLIC Farscape::stb
 )
 
 target_compile_features(Farscape PRIVATE cxx_std_17)

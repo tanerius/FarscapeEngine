@@ -61,7 +61,7 @@ namespace Farscape {
 
     };
 
-    // #################################################
+    // #################################################################
 
     class FARSCAPE_API IType : public ITypeObject
     {
@@ -120,7 +120,7 @@ namespace Farscape {
     };
 
 
-    // #########################################
+    // #################################################################
 
     class FARSCAPE_API IShader : public IRendererObject
     {
@@ -158,6 +158,11 @@ namespace Farscape {
     };
 
     class FARSCAPE_API IBufferLayout : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API ITexture : public IRendererObject
     {
 
     };

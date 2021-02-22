@@ -45,3 +45,10 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/glm/CMakeLists.txt")
 else()
 	add_subdirectory(glm)
 endif()
+
+### Farscape::stb
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/stb/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule stb not downloaded")
+else()
+	add_subdirectory(stb)
+endif()
