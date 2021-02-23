@@ -5,4 +5,4 @@
 #cmakedefine Farscape_VERSION_MINOR "@Farscape_VERSION_MINOR@"
 #cmakedefine Farscape_VERSION_BUILD "@Farscape_VERSION_BUILD@"
 #cmakedefine BUILD_DATE "@BUILD_DATE@"
-
+#cmakedefine DEBUG_TEXTURE_PATH "@DEBUG_TEXTURE_PATH@"

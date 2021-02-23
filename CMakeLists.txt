@@ -31,7 +31,11 @@ message(STATUS "FARSCAPE_INSTALL_DIR         ${FARSCAPE_INSTALL_DIR}")
 message(STATUS "CMAKE_BINARY_DIR             ${CMAKE_BINARY_DIR}")
 message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 
+
 string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
+
+# TODO : Do this only in debug!!!!
+set(DEBUG_TEXTURE_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/Checkerboard.png")
 
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 

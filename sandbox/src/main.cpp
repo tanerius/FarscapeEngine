@@ -186,8 +186,11 @@ public:
 
         m_TextureShader.reset(Farscape::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
+#if defined(DEBUG_TEXTURE_PATH)
+        m_Texture = Farscape::Texture2D::Create(DEBUG_TEXTURE_PATH);
+#else
         m_Texture = Farscape::Texture2D::Create("assets/textures/Checkerboard.png");
-
+#endif
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->Bind();
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
     }
