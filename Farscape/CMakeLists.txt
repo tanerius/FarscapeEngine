@@ -19,6 +19,8 @@ if (WIN32)
         "platform/Windows/OpenGLRendererAPI.cpp"
         "platform/Windows/OpenGLShader.h"
         "platform/Windows/OpenGLShader.cpp"
+        "platform/Windows/OpenGLTexture.h"
+        "platform/Windows/OpenGLTexture.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 

@@ -1,6 +1,7 @@
 #include "Farscape.h"
 
 #include "Windows/OpenGLShader.h"
+#include "Windows/OpenGLTexture.h"
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -154,6 +155,41 @@ public:
 
 
         m_ShaderBlue.reset(Farscape::Shader::Create(varColorVertexSrc, varColorFragmentSrc)); // std::make_unique<Farscape::Shader>(varColorVertexSrc, varColorFragmentSrc);
+
+        std::string textureShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+			uniform mat4 u_ViewProjectionMat;
+			uniform mat4 u_Transform;
+			out vec2 v_TexCoord;
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjectionMat * u_Transform * vec4(a_Position, 1.0);	
+			}
+		)";
+
+        std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+			in vec2 v_TexCoord;
+			
+			uniform sampler2D u_Texture;
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+        m_TextureShader.reset(Farscape::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+        m_Texture = Farscape::Texture2D::Create("assets/textures/Checkerboard.png");
+
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->Bind();
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
     }
 
     virtual void OnUpdate(Farscape::Timestep deltaTime) override
@@ -184,6 +220,7 @@ public:
 
         glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+        
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_ShaderBlue)->Bind();
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_ShaderBlue)->UploadUniformFloat3("u_Color", m_SquareColor);
 
@@ -197,8 +234,13 @@ public:
             }
         }
         
+
+        m_Texture->Bind();
+        Farscape::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+        
         //Farscape::Renderer::Submit(m_Shader, m_VertexArray);
-        Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+        //Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
         
         Farscape::Renderer::EndScene();
     }
@@ -221,10 +263,12 @@ public:
         return false;
     }
 private:
+    Farscape::Ref<Farscape::Texture2D> m_Texture;
     Farscape::Ref<Farscape::Shader> m_Shader;
     Farscape::Ref<Farscape::VertexArray> m_VertexArray;
 
     Farscape::Ref<Farscape::Shader> m_ShaderBlue;
+    Farscape::Ref<Farscape::Shader> m_TextureShader;
     Farscape::Ref<Farscape::VertexArray> m_SquareVA;
 
     Farscape::OrthographicCamera m_Camera;

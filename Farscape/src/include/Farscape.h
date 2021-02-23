@@ -18,6 +18,7 @@
 #include "Renderer/Buffer.h"
 #include "Renderer/Camera.h"
 #include "Renderer/GfxContext.h"
+#include "Renderer/Texture.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/RendererAPI.h"
