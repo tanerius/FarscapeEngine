@@ -18,6 +18,11 @@ namespace Farscape {
     void Renderer::EndScene()
     {}
 
+    void Renderer::Init()
+    {
+        RenderCommand::Init();
+    }
+
     void Renderer::Submit(
         const Farscape::Ref<Shader>& shader,
         const Farscape::Ref<VertexArray>& vertexArray,

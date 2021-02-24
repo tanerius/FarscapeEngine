@@ -15,6 +15,8 @@ namespace Farscape {
 
         static void Submit(const Farscape::Ref<Shader>& shader, const Farscape::Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
+        static void Init();
+
         static inline RendererAPI::API GetAPI() { return RendererAPI::GetAPI();  }
     private:
         struct SceneData

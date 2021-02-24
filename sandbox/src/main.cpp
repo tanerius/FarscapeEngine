@@ -188,9 +188,15 @@ public:
 
 #if defined(DEBUG_TEXTURE_PATH)
         m_Texture = Farscape::Texture2D::Create(DEBUG_TEXTURE_PATH);
+        m_RgbaTexture = Farscape::Texture2D::Create(DEBUG_TEXTURE_RGBA_PATH);
+        
 #else
         m_Texture = Farscape::Texture2D::Create("assets/textures/Checkerboard.png");
+        m_RgbaTexture = Farscape::Texture2D::Create("assets/textures/rgba.png");
 #endif
+
+        
+
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->Bind();
         std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
     }
@@ -241,6 +247,9 @@ public:
         m_Texture->Bind();
         Farscape::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+        m_RgbaTexture->Bind();
+        Farscape::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
         
         //Farscape::Renderer::Submit(m_Shader, m_VertexArray);
         //Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
@@ -267,6 +276,7 @@ public:
     }
 private:
     Farscape::Ref<Farscape::Texture2D> m_Texture;
+    Farscape::Ref<Farscape::Texture2D> m_RgbaTexture;
     Farscape::Ref<Farscape::Shader> m_Shader;
     Farscape::Ref<Farscape::VertexArray> m_VertexArray;
 

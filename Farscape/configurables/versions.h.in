@@ -6,3 +6,4 @@
 #cmakedefine Farscape_VERSION_BUILD "@Farscape_VERSION_BUILD@"
 #cmakedefine BUILD_DATE "@BUILD_DATE@"
 #cmakedefine DEBUG_TEXTURE_PATH "@DEBUG_TEXTURE_PATH@"
+#cmakedefine DEBUG_TEXTURE_RGBA_PATH "@DEBUG_TEXTURE_RGBA_PATH@"

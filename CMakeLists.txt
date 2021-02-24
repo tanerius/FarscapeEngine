@@ -36,6 +36,9 @@ string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
 
 # TODO : Do this only in debug!!!!
 set(DEBUG_TEXTURE_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/Checkerboard.png")
+set(DEBUG_TEXTURE_RGBA_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/rgba.png")
+
+
 
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 

@@ -26,6 +26,8 @@ namespace Farscape {
         m_Window = Window::Create();
         m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
 
+        Renderer::Init();
+
         m_ImGuiLayer = new ImGuiLayer();
         PushLayer(m_ImGuiLayer);
     }
