@@ -30,6 +30,7 @@ namespace Farscape {
         std::vector<Ref<VertexBuffer>> m_VertexBufferRefList;
         Ref<IndexBuffer> m_IndexBufferRef;
         uint32_t m_RendererID;
+        uint32_t m_VertexBufferIndex = 0;
     };
 
 }

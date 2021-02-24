@@ -54,20 +54,19 @@ namespace Farscape {
         glBindVertexArray(m_RendererID);
         vertexBuffer->Bind();
 
-        uint32_t index = 0;
         const auto& layout = vertexBuffer->GetLayout();
 
         for (const auto& e : layout)
         {
-            glEnableVertexAttribArray(index);
+            glEnableVertexAttribArray(m_VertexBufferIndex);
             glVertexAttribPointer(
-                index,
+                m_VertexBufferIndex,
                 e.GetComponentCount(),
                 ShaderDataTypeToOpenGLType(e.type),
                 e.normalized ? GL_TRUE : GL_FALSE,
                 layout.GetStride(),
                 (const void*)((uint64_t)e.offset));
-            index++;
+            m_VertexBufferIndex++;
         }
         m_VertexBufferRefList.push_back(vertexBuffer);
     }
