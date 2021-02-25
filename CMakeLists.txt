@@ -35,6 +35,8 @@ message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
 
 # TODO : Do this only in debug!!!!
+set(DEBUG_ASSETS_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets")
+set(DEBUG_SHADER_PATH "${DEBUG_ASSETS_PATH}/Shaders/Texture.glsl")
 set(DEBUG_TEXTURE_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/Checkerboard.png")
 set(DEBUG_TEXTURE_RGBA_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/rgba.png")
 

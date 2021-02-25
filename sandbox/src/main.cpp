@@ -156,13 +156,14 @@ public:
 
         m_ShaderBlue.reset(Farscape::Shader::Create(varColorVertexSrc, varColorFragmentSrc)); // std::make_unique<Farscape::Shader>(varColorVertexSrc, varColorFragmentSrc);
                 
-        m_TextureShader.reset(Farscape::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+        //m_TextureShader.reset(Farscape::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
 #if defined(DEBUG_TEXTURE_PATH)
+        m_TextureShader.reset(Farscape::Shader::Create(DEBUG_SHADER_PATH));
         m_Texture = Farscape::Texture2D::Create(DEBUG_TEXTURE_PATH);
         m_RgbaTexture = Farscape::Texture2D::Create(DEBUG_TEXTURE_RGBA_PATH);
-        
 #else
+        m_TextureShader.reset(Farscape::Shader::Create("assets/Shaders/Texture.glsl"));
         m_Texture = Farscape::Texture2D::Create("assets/textures/Checkerboard.png");
         m_RgbaTexture = Farscape::Texture2D::Create("assets/textures/rgba.png");
 #endif

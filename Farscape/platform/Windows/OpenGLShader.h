@@ -3,6 +3,9 @@
 #include "Renderer/Shader.h"
 #include <glm/glm.hpp>
 
+// TODO: Have to remove
+typedef unsigned int GLenum;
+
 namespace Farscape {
 
 	class OpenGLShader : public Shader
@@ -26,7 +29,9 @@ namespace Farscape {
         void UploadUniformFloat4(const std::string& name, const glm::vec4& vector);
     private:
         OpenGLShader() = delete;
-        void Compile();
+        std::string ReadFile(const std::string& filepath);
+        std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
+        void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
     private:
         uint32_t m_RendererID;
 	};
