@@ -5,7 +5,7 @@ Farscape is a 3D game engine, the purpose of which is to make it easier for the 
 0.2.92-dev (early development)
 
 ### Inspiration
-Being a software engineer and an avid gamer myself was enough reason to start experimenting with games and gaming. After countless hours spent downloading and playing around with some commercially available game engine solutions online I started compiling a list of things that I found particularly irritating or difficult to work with using other game engines. It was a coincidence that all of these thigs were somehow connected to working with objects related to space. I.e. big objects and vast spaces. 
+Being a software engineer and an avid gamer myself was enough reason to start experimenting with games and gaming. After countless hours spent downloading and playing around with some commercially available game engine solutions online I started compiling a list of things that I found particularly irritating or difficult to work with using other game engines. It was a coincidence that all of these things were somehow connected to working with objects related to space. I.e. big objects and vast spaces. 
 
 Being a fan of astronomy and scifi resulted in the name of this project - **Farscape Engine**. 
 
