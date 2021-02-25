@@ -51,25 +51,23 @@ namespace Farscape {
         {
             return GetCategoryFlags() & category;
         }
-    protected:
+    public:
         bool m_Handled = false;
     };
 
     
     class EventDispatcher
     {
-        template<typename T>
-        using EventFunction = std::function<bool(T&)>;
     public:
         EventDispatcher(Event& event)
             : m_Event(event) { }
 
-        template<typename T>
-        bool Dispatch(const EventFunction<T> func)
+        template<typename T, typename F>
+        bool Dispatch(const F& func)
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.m_Handled |= func(*(T*)&(m_Event));
+                m_Event.m_Handled = func(static_cast<T&>(m_Event));
                 return true;
             }
             return false;
