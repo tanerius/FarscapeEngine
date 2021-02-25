@@ -1,6 +1,7 @@
 #include "fspch.h"
 #include "OpenGLShader.h"
 
+#include <fstream>
 #include <glad/glad.h>
 
 #pragma warning(disable:4201)
@@ -114,6 +115,24 @@ namespace Farscape {
         glDetachShader(m_RendererID, fragmentShader);
     }
 
+    OpenGLShader::OpenGLShader(const std::string& shaderfile)
+    {
+        std::string result;
+        std::ifstream in(shaderfile, std::ios::in, std::ios::binary);
+        if (in)
+        {
+            in.seekg(0, std::ios::end);
+            result.resize(in.tellg());
+            in.seekg(0, std::ios::beg);
+            in.read(&result[0], result.size());
+            in.close();
+        }
+        else
+        {
+            FS_CORE_ASSERT("Could not load shader {0}", shaderfile);
+        }
+    }
+
     OpenGLShader::~OpenGLShader()
     {
         glDeleteProgram(m_RendererID);
@@ -176,6 +195,11 @@ namespace Farscape {
         GLint result = glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform4f(result, vector.x, vector.y, vector.z, vector.w);
+    }
+
+    void OpenGLShader::Compile()
+    {
+
     }
 
 }

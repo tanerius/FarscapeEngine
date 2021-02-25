@@ -23,5 +23,21 @@ namespace Farscape {
         FS_CORE_ASSERT(false, "Invalid renderer API chosen!"); 
         return nullptr;
     }
+
+    Shader* Shader::Create(const std::string& path)
+    {
+        switch (Renderer::GetAPI())
+        {
+        case RendererAPI::API::None: FS_CORE_ASSERT(false, "None renderer chosen!"); return nullptr;
+        case RendererAPI::API::OpenGL: return new OpenGLShader(path);
+        case RendererAPI::API::DirectX:
+        case RendererAPI::API::Metal:
+        case RendererAPI::API::Vulcan:
+            FS_CORE_ASSERT(false, "DirectX not implemented!"); return nullptr;
+        }
+
+        FS_CORE_ASSERT(false, "Invalid renderer API chosen!");
+        return nullptr;
+    }
     
 }

@@ -9,6 +9,7 @@ namespace Farscape {
 	{
     public:
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(const std::string& shaderfile);
         virtual ~OpenGLShader();
 
         virtual void Bind() const override;
@@ -25,6 +26,7 @@ namespace Farscape {
         void UploadUniformFloat4(const std::string& name, const glm::vec4& vector);
     private:
         OpenGLShader() = delete;
+        void Compile();
     private:
         uint32_t m_RendererID;
 	};
