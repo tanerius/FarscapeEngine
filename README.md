@@ -24,6 +24,9 @@ I do plan on extending the functionality for mobile development too, but it is a
 
 The code itself is in object-oriented C++11 and using [OpenGL 4.1 API](https://khronos.org/registry/OpenGL/index_gl.php) for the main implementation, GLSL for the shaders  and the help from a few fairly standalone open source helpers like GLM, GLEW2 and GLFW3.
  
+ ### Non-github Contributors
+ * Nathalie Hess - proofreading
+ 
 ### TODOs and input
 As mentioned before, being in the very early stages of development so I will be updating this document as I progress. The things I am currently working on are:
 
