@@ -37,5 +37,5 @@ namespace Farscape {
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }
-    
+
 }

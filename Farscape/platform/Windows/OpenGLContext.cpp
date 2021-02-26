@@ -8,7 +8,7 @@ namespace Farscape {
 
 
 
-    OpenGLContext::OpenGLContext(GLFWwindow * windowHandle)
+    OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
         : m_WindowHandle(windowHandle)
     {
         FS_CORE_ASSERT(windowHandle, "Window handle is null!");

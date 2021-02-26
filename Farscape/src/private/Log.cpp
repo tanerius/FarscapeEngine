@@ -5,7 +5,7 @@
 namespace Farscape {
     Ref<spdlog::logger> Log::m_LoggerCore;
     Ref<spdlog::logger> Log::m_LoggerClient;
-    
+
     void Log::Init()
     {
         //("*** [%H:%M:%S %z] [thread %t] %v ***");

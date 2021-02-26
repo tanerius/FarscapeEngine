@@ -42,7 +42,7 @@ namespace Farscape {
         glBindVertexArray(m_RendererID);
     }
 
-    void OpenGLVertexArray::Unbind() const 
+    void OpenGLVertexArray::Unbind() const
     {
         glBindVertexArray(0);
     }

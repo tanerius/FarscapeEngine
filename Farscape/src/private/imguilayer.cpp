@@ -16,7 +16,7 @@
 
 namespace Farscape {
 
-    ImGuiLayer::ImGuiLayer() 
+    ImGuiLayer::ImGuiLayer()
         : Layer("ImGuiLayer")
     {
     }
@@ -25,8 +25,8 @@ namespace Farscape {
     {
 
     }
-    
-    void ImGuiLayer::OnAttach() 
+
+    void ImGuiLayer::OnAttach()
     {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
@@ -60,7 +60,7 @@ namespace Farscape {
 
     }
 
-    void ImGuiLayer::OnDetach() 
+    void ImGuiLayer::OnDetach()
     {
         // just destroy stuff
         ImGui_ImplOpenGL3_Shutdown();
@@ -98,6 +98,6 @@ namespace Farscape {
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
     }
-    
+
 }
 

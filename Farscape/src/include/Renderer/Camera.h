@@ -22,7 +22,7 @@ namespace Farscape {
         const glm::vec3& GetPosition() const { return m_Position; }
         float GetRotation() const { return m_Rotation; }
 
-        const glm::mat4& GetMatrix(EMatrixType type) const; 
+        const glm::mat4& GetMatrix(EMatrixType type) const;
         void UpdateViewMatrix();
     private:
         glm::mat4 m_ProjectionMatrix;

@@ -15,18 +15,18 @@ namespace Farscape {
 
     static bool s_GLFWInitialized = false;
 
-    Window* Window::Create(const WindowProperties &p)
+    Window* Window::Create(const WindowProperties& p)
     {
         return new WindowsWindow(p);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProperties & p)
+    WindowsWindow::WindowsWindow(const WindowProperties& p)
     {
         Init(p);
     }
 
-    WindowsWindow::~WindowsWindow() 
-    { 
+    WindowsWindow::~WindowsWindow()
+    {
         Shutdown();
     }
 
@@ -65,7 +65,7 @@ namespace Farscape {
 
         m_Context->Init();
 
-        
+
         // Attach a user payload to the window handler with stuff we want to have  (m_Data in this case)
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -97,7 +97,7 @@ namespace Farscape {
         });
 
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int , int action_type, int)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int, int action_type, int)
         {
             /*
             *  @param[in] window The window that received the event.
@@ -163,18 +163,18 @@ namespace Farscape {
             */
             switch (action_type)
             {
-                case GLFW_PRESS:
-                {
-                    MouseButtonPressedEvent event(which_btn);
-                    data.EventCallback(event);
-                    break;
-                }
-                case GLFW_RELEASE:
-                {
-                    MouseButtonReleasedEvent event(which_btn);
-                    data.EventCallback(event);
-                    break;
-                }
+            case GLFW_PRESS:
+            {
+                MouseButtonPressedEvent event(which_btn);
+                data.EventCallback(event);
+                break;
+            }
+            case GLFW_RELEASE:
+            {
+                MouseButtonReleasedEvent event(which_btn);
+                data.EventCallback(event);
+                break;
+            }
             }
         });
 
@@ -194,7 +194,7 @@ namespace Farscape {
             data.EventCallback(event);
         });
 
-        
+
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -202,7 +202,7 @@ namespace Farscape {
             data.EventCallback(event);
         });
 
-        
+
     }
 
     void WindowsWindow::Shutdown()

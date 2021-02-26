@@ -8,8 +8,8 @@ typedef unsigned int GLenum;
 
 namespace Farscape {
 
-	class OpenGLShader : public Shader
-	{
+    class OpenGLShader : public Shader
+    {
     public:
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
         OpenGLShader(const std::string& shaderfile);
@@ -34,6 +34,6 @@ namespace Farscape {
         void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
     private:
         uint32_t m_RendererID;
-	};
+    };
 
 }

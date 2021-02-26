@@ -19,8 +19,8 @@ namespace Farscape {
         inline unsigned int GetWidth() const { return m_Width;  }
         inline unsigned int GetHeight() const { return m_Height; }
 
-        EVENT_CLASS_TYPE(WindowResize)    
-        EVENT_CLASS_CATEGORY(EC_Application)
+        EVENT_CLASS_TYPE(WindowResize);
+        EVENT_CLASS_CATEGORY(EC_Application);
 
     private:
         unsigned int m_Width;

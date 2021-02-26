@@ -18,7 +18,7 @@ namespace Farscape {
 
     Application* Application::s_Instance = nullptr;
 
-    
+
     Application::Application()
     {
         FS_CORE_ASSERT(!s_Instance, "Application already exists!");
