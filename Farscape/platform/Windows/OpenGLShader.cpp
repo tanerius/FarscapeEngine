@@ -105,7 +105,7 @@ namespace Farscape {
     std::string OpenGLShader::ReadFile(const std::string& filepath)
     {
         std::string result;
-        std::ifstream in(filepath, std::ios::in, std::ios::binary);
+        std::ifstream in(filepath, std::ios::in | std::ios::binary);
         if (in)
         {
             // TODO REFACTOR THIS - make a custom filesyystem --- one day
@@ -149,7 +149,11 @@ namespace Farscape {
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
         GLuint program = glCreateProgram();
-        std::vector<GLenum> glShaderIDs(shaderSources.size());
+        // TODO: support more than 2 shader source types
+        FS_CORE_ASSERT(shaderSources.size() <= 2, "Only 2 shared sources maximum supported atm");
+        std::array<GLenum, 2> glShaderIDs;
+        int shaderIndex = 0;
+        
         for (auto& kv : shaderSources)
         {
             GLenum type = kv.first;
@@ -180,7 +184,7 @@ namespace Farscape {
             }
 
             glAttachShader(program, shader);
-            glShaderIDs.push_back(shader);
+            glShaderIDs[shaderIndex++] = shader;
         }
 
         m_RendererID = program;
