@@ -5,6 +5,7 @@
 
 // TODO: Have to remove
 typedef unsigned int GLenum;
+typedef int GLint;
 
 namespace Farscape {
 
@@ -34,9 +35,12 @@ namespace Farscape {
         std::string ReadFile(const std::string& filepath);
         std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
         void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
+
+        GLint GetUniformLocation(const std::string& name) const;
     private:
         uint32_t m_RendererID;
         std::string m_Name;
+        mutable std::unordered_map<std::string, GLint> m_UniformLocationCache;
     };
 
 }

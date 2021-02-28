@@ -68,49 +68,49 @@ namespace Farscape {
 
     void OpenGLShader::UploadUniformInt(const std::string& name, const int value)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform1i(result, value);
     }
 
     void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniformMatrix3fv(result, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
     void OpenGLShader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniformMatrix4fv(result, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
     void OpenGLShader::UploadUniformFloat(const std::string& name, const float value)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform1f(result, value);
     }
 
     void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& vector)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform2f(result, vector.x, vector.y);
     }
 
     void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& vector)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform3f(result, vector.x, vector.y, vector.z);
     }
 
     void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& vector)
     {
-        GLint result = glGetUniformLocation(m_RendererID, name.c_str());
+        GLint result = GetUniformLocation(name); // glGetUniformLocation(m_RendererID, name.c_str());
         FS_CORE_ASSERT(result >= 0, "UniformLocation not found");
         glUniform4f(result, vector.x, vector.y, vector.z, vector.w);
     }
@@ -121,7 +121,7 @@ namespace Farscape {
         std::ifstream in(filepath, std::ios::in | std::ios::binary);
         if (in)
         {
-            // TODO REFACTOR THIS - make a custom filesyystem --- one day
+            // TODO REFACTOR THIS - make a custom filesystem --- one day
             in.seekg(0, std::ios::end);
             result.resize(in.tellg());
             in.seekg(0, std::ios::beg);
@@ -232,5 +232,18 @@ namespace Farscape {
             glDetachShader(program, id);
     }
 
+    GLint OpenGLShader::GetUniformLocation(const std::string& name) const
+    {
+        if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+            return m_UniformLocationCache[name];
+        GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+        if (loc == -1)
+        {
+            FS_CORE_WARN("Uniform location for {0} does not exist", name);
+            return -1;
+        }
+        m_UniformLocationCache[name] = loc;
+        return loc;
+    }
 
 }
