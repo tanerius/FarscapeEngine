@@ -66,6 +66,11 @@ namespace Farscape {
 
     };
 
+    class FARSCAPE_API IController : public IFarscapeObject
+    {
+
+    };
+
     // #################################################################
 
     class FARSCAPE_API IType : public ITypeObject
@@ -170,6 +175,14 @@ namespace Farscape {
     class FARSCAPE_API ITexture : public IRendererObject
     {
 
+    };
+
+    // #################################################################
+
+    class FARSCAPE_API ICameraController : public IController
+    {
+    public:
+        virtual const ICamera* GetCameraInterface() = 0;
     };
 
 

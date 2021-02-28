@@ -15,6 +15,8 @@
 #include "Core/Layer.h"
 #include "Core/ImGuiLayer.h"
 
+#include "Controllers/OrthographicCameraController.h"
+
 #include "Renderer/Buffer.h"
 #include "Renderer/Camera.h"
 #include "Renderer/GfxContext.h"

@@ -47,6 +47,7 @@ set(FS_SOURCES
     src/private/RendererAPI.cpp
     src/private/Camera.cpp
     src/private/Texture.cpp
+    src/private/OrthographicCameraController.cpp
  )
 
 # check static vs dynamic
