@@ -22,7 +22,8 @@ namespace Farscape {
     }
 
 
-    OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+        : m_Name(name)
     {
 
         std::unordered_map<GLenum, std::string> sources;
@@ -36,6 +37,18 @@ namespace Farscape {
         std::string source = ReadFile(shaderfile);
         auto shaderSources = PreProcess(source);
         Compile(shaderSources);
+
+        // Extract the shader name from the filepath
+        auto last = shaderfile.find_last_of("/\\"); // finds the last  slash or backslash
+
+        if (last == std::string::npos)
+            last = 0; // no traioling slash
+        else
+            last += 1; // get 1 past the slash
+
+        auto dot = shaderfile.rfind('.');
+        size_t count = dot == std::string::npos ? shaderfile.size() - last : dot - last;
+        m_Name = shaderfile.substr(last, count);
     }
 
     OpenGLShader::~OpenGLShader()
@@ -153,7 +166,7 @@ namespace Farscape {
         FS_CORE_ASSERT(shaderSources.size() <= 2, "Only 2 shared sources maximum supported atm");
         std::array<GLenum, 2> glShaderIDs;
         int shaderIndex = 0;
-        
+
         for (auto& kv : shaderSources)
         {
             GLenum type = kv.first;
