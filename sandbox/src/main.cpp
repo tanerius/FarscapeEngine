@@ -73,51 +73,7 @@ public:
         squareIndexBuffer.reset(Farscape::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
         m_SquareVA->SetIndexBuffer(squareIndexBuffer);
 
-        // temp shader souece code
-        std::string vertexSrc = R"(
-
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Position;
-            layout(location = 1) in vec4 a_Color;
-
-            uniform mat4 u_ViewProjectionMat;
-            uniform mat4 u_Transform;
-
-            out vec3 v_Position;
-            out vec4 v_Color;
-            
-            void main()
-            {
-                v_Position = a_Position;
-                v_Color = a_Color;
-                gl_Position = u_ViewProjectionMat * u_Transform * vec4(a_Position, 1.0);
-            }
-
-    )";
-
-        std::string fragmentSrc = R"(
-
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 v_Position;
-            in vec4 v_Color;            
-
-            void main()
-            {
-                color = vec4(v_Position * 0.5 + 0.5, 1.0);
-                color = v_Color;
-            }
-
-    )";
-
-
-        m_Shader = Farscape::Shader::Create("color_sample", vertexSrc, fragmentSrc);
-
-
-        std::string varColorVertexSrc = R"(
+         std::string varColorVertexSrc = R"(
 
             #version 330 core
 
@@ -129,6 +85,7 @@ public:
             out vec3 v_Position;
             
             void main()
+
             {
                 v_Position = a_Position;
                 gl_Position = u_ViewProjectionMat * u_Transform * vec4(a_Position, 1.0);
@@ -159,19 +116,20 @@ public:
         //m_TextureShader.reset(Farscape::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
 #if defined(DEBUG_TEXTURE_PATH)
-        m_TextureShader = Farscape::Shader::Create(DEBUG_SHADER_PATH);
+        m_ShaderLibrary.Load(DEBUG_SHADER_PATH);
         m_Texture = Farscape::Texture2D::Create(DEBUG_TEXTURE_PATH);
         m_RgbaTexture = Farscape::Texture2D::Create(DEBUG_TEXTURE_RGBA_PATH);
 #else
-        m_TextureShader = Farscape::Shader::Create("assets/Shaders/Texture.glsl");
+
+        m_ShaderLibrary.Load("assets/Shaders/Texture.glsl");
         m_Texture = Farscape::Texture2D::Create("assets/textures/Checkerboard.png");
         m_RgbaTexture = Farscape::Texture2D::Create("assets/textures/rgba.png");
 #endif
 
-        
+        auto textureSHader = m_ShaderLibrary.Get("Texture");
 
-        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->Bind();
-        std::dynamic_pointer_cast<Farscape::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(textureSHader)->Bind();
+        std::dynamic_pointer_cast<Farscape::OpenGLShader>(textureSHader)->UploadUniformInt("u_Texture", 0);
     }
 
     virtual void OnUpdate(Farscape::Timestep deltaTime) override
@@ -216,16 +174,13 @@ public:
             }
         }
         
+        auto textureSHader = m_ShaderLibrary.Get("Texture");
 
         m_Texture->Bind();
-        Farscape::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+        Farscape::Renderer::Submit(textureSHader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
         m_RgbaTexture->Bind();
-        Farscape::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-        
-        //Farscape::Renderer::Submit(m_Shader, m_VertexArray);
-        //Farscape::Renderer::Submit(m_ShaderBlue, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+        Farscape::Renderer::Submit(textureSHader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
         
         Farscape::Renderer::EndScene();
     }
@@ -248,13 +203,16 @@ public:
         return false;
     }
 private:
+    // use the new shader library 
+    Farscape::ShaderLibrary m_ShaderLibrary;
+
     Farscape::Ref<Farscape::Texture2D> m_Texture;
     Farscape::Ref<Farscape::Texture2D> m_RgbaTexture;
-    Farscape::Ref<Farscape::Shader> m_Shader;
+
     Farscape::Ref<Farscape::VertexArray> m_VertexArray;
 
     Farscape::Ref<Farscape::Shader> m_ShaderBlue;
-    Farscape::Ref<Farscape::Shader> m_TextureShader;
+    
     Farscape::Ref<Farscape::VertexArray> m_SquareVA;
 
     Farscape::OrthographicCamera m_Camera;
