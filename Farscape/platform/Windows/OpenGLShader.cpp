@@ -229,7 +229,10 @@ namespace Farscape {
         }
 
         for (auto id : glShaderIDs)
+        {
             glDetachShader(program, id);
+            glDeleteShader(id);
+        }
     }
 
     GLint OpenGLShader::GetUniformLocation(const std::string& name) const
