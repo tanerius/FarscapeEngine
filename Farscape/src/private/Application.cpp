@@ -51,6 +51,7 @@ namespace Farscape {
     {
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
         for (auto it = m_layerStack.end(); it != m_layerStack.begin(); )
         {
@@ -83,9 +84,28 @@ namespace Farscape {
             m_ImGuiLayer->Begin();
             for (Layer* layer : m_layerStack)
                 layer->OnImGuiRender();
+            if (!m_IsMinimized)
+            {
+                for (Layer* layer : m_layerStack)
+                    layer->OnUpdate(timestep);
+            }
             m_ImGuiLayer->End();
 
             m_Window->OnUpdate();
         }
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e)
+    {
+        if (e.GetWidth() == 0 || e.GetHeight() == 0)
+        {
+            m_IsMinimized = true;
+            return false;
+        }
+
+        m_IsMinimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+        return false;
     }
 }

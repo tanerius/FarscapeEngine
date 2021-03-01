@@ -6,6 +6,7 @@
 
 namespace Farscape {
     class WindowCloseEvent;
+    class WindowResizeEvent;
     class Window;
     class Event;
     class ImGuiLayer;
@@ -36,6 +37,7 @@ namespace Farscape {
 
     private:
         bool OnWindowClose(WindowCloseEvent& e);
+        bool OnWindowResize(WindowResizeEvent& e);
     private:
         // a platform agnostic window - consider a unique pointer
         Window* m_Window = nullptr;
@@ -43,6 +45,7 @@ namespace Farscape {
         bool m_IsRunning = true;
         LayerStack m_layerStack;
         float m_LastTick = 0.0f;
+        bool m_IsMinimized = false;
         
         
     private:
