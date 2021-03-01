@@ -32,8 +32,14 @@ namespace Farscape {
         {
             if (Input::IsKeyPressed(FS_KEY_Q))
                 m_CameraRotation += m_CameraRotationSpeed * deltaTime;
-            else if (Input::IsKeyPressed(FS_KEY_E))
+            if (Input::IsKeyPressed(FS_KEY_E))
                 m_CameraRotation -= m_CameraRotationSpeed * deltaTime;
+
+            // Prevent getting huge values when constantly rotating by essentially modding them
+            if (m_CameraRotation > 180.0f)
+                m_CameraRotation -= 360.0f;
+            else if (m_CameraRotation <= -180.0f)
+                m_CameraRotation += 360.0f;
 
             m_Camera.SetRotation(m_CameraRotation);
         }
