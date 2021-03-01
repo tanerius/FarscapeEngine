@@ -29,7 +29,7 @@
         #error "IOS is not supported!"
     #elif TARGET_OS_MAC == 1
         #define FS_PLATFORM MacOS
-        #error "MacOS is not supported!"
+        // #error "MacOS is not supported!"
     #else
         #define HAZEL_API __declspec(dllimport)
         #error "Unknown Apple platform!"
@@ -41,8 +41,8 @@
         #define FS_ASSERT(x, ...) { if(!(x)) {FS_ERROR("Assertion failed! {0}", __VA_ARGS__); __debugbreak(); } }
         #define FS_CORE_ASSERT(x, ...) { if(!(x)) {FS_CORE_ERROR("Assertion failed! {0}", __VA_ARGS__); __debugbreak(); } }
     #elif FS_PLATFORM == MacOS
-        #define FS_ASSERT(x, ...) { if(!(x)) {FS_ERROR("Assertion failed! {0}", __VA_ARGS__); __asm__("int $3"); } }
-        #define FS_CORE_ASSERT(x, ...) {FS_CORE_ERROR("Assertion failed! {0}", __VA_ARGS__); __asm__("int $3"); } }
+        #define FS_ASSERT(x, ...) //{ if(!(x)) {FS_ERROR("Assertion failed! {0}", __VA_ARGS__); __asm__("int $3"); } }
+        #define FS_CORE_ASSERT(x, ...) //{FS_CORE_ERROR("Assertion failed! {0}", __VA_ARGS__); __asm__("int $3"); } }
     #endif
 #endif
 

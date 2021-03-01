@@ -12,7 +12,8 @@ namespace Farscape {
     class OrthographicCameraController : public ICameraController
     {
     public:
-        OrthographicCameraController(float aspectRatio, float hasRotation = false); // default zoom level 1.0  with 2 units space
+        // hasRotation = true default means that this controller will have a rotatable camera by default
+        OrthographicCameraController(float aspectRatio, bool hasRotation = true); // default zoom level 1.0  with 2 units space
         virtual ~OrthographicCameraController() {}
 
         void OnUpdate(Timestep deltaTime);
