@@ -12,7 +12,7 @@ class ExampleLayer : public Farscape::Layer
 public:
     ExampleLayer()
         : Layer("Example")
-        , m_CameraController(1280.0f,720.0f) 
+        , m_CameraController(1280.0f / 720.0f) 
     {
         m_VertexArray.reset(Farscape::VertexArray::Create());
 
