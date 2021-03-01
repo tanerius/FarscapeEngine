@@ -18,29 +18,42 @@ namespace Farscape {
     void OrthographicCameraController::OnUpdate(Timestep deltaTime)
     {
         if (Input::IsKeyPressed(FS_KEY_A))               // Pressed A
-            m_CameraPosition.x -= m_CameraMoveSpeed * deltaTime;
+        {
+            m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+            m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+        }
         else if (Input::IsKeyPressed(FS_KEY_D))          // Pressed A
-            m_CameraPosition.x += m_CameraMoveSpeed * deltaTime;
+        {
+            m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+            m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+        }
 
         if (Input::IsKeyPressed(FS_KEY_W))               // Pressed W
-            m_CameraPosition.y += m_CameraMoveSpeed * deltaTime;
+        {
+            m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+            m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+        }
         else if (Input::IsKeyPressed(FS_KEY_S))          // Pressed S
-            m_CameraPosition.y -= m_CameraMoveSpeed * deltaTime;
+        {
+            m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+            m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * deltaTime;
+        }
 
         // Do rotation
-        if (m_HasRotation)
+        //if (m_HasRotation)
         {
             if (Input::IsKeyPressed(FS_KEY_Q))
                 m_CameraRotation += m_CameraRotationSpeed * deltaTime;
             if (Input::IsKeyPressed(FS_KEY_E))
                 m_CameraRotation -= m_CameraRotationSpeed * deltaTime;
 
+            
             // Prevent getting huge values when constantly rotating by essentially modding them
             if (m_CameraRotation > 180.0f)
                 m_CameraRotation -= 360.0f;
             else if (m_CameraRotation <= -180.0f)
                 m_CameraRotation += 360.0f;
-
+            
             m_Camera.SetRotation(m_CameraRotation);
         }
 
