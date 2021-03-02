@@ -40,7 +40,7 @@ set(DEBUG_SHADER_PATH "${DEBUG_ASSETS_PATH}/Shaders/Texture.glsl")
 set(DEBUG_TEXTURE_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/Checkerboard.png")
 set(DEBUG_TEXTURE_RGBA_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/rgba.png")
 
-
+set(ASSETS_PATH ${DEBUG_ASSETS_PATH})
 
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 

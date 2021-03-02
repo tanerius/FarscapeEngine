@@ -1,10 +1,13 @@
 #include "Farscape.h"
+#include <Core/EntryPoint.h>
 
 #include "Windows/OpenGLShader.h"
 #include "Windows/OpenGLTexture.h"
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "DemoLayer2D.h"
 
 // create an example layer
 class ExampleLayer : public Farscape::Layer
@@ -14,7 +17,7 @@ public:
         : Layer("Example")
         , m_CameraController(1280.0f / 720.0f) 
     {
-        m_VertexArray.reset(Farscape::VertexArray::Create());
+        m_VertexArray = Farscape::VertexArray::Create();
 
         float vertices[3 * 7] = {
             -0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -44,7 +47,7 @@ public:
         // *********************************************************
         // *********  Make a square using the new system  **********
         // *********************************************************
-        m_SquareVA.reset(Farscape::VertexArray::Create());
+        m_SquareVA = Farscape::VertexArray::Create();
 
 
         // 
@@ -206,8 +209,7 @@ public:
     Sandbox()
     {
         PushLayer(new ExampleLayer());
-        // DO NOT CREATE AN IMGUI LAYER HERE
-        // PushLayer(new Farscape::ImGuiLayer());
+        PushLayer(new DemoLayer2D());
     }
 
     ~Sandbox()
