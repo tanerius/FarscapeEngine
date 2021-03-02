@@ -7,7 +7,7 @@
 
 namespace Farscape {
 
-    OrthographicCameraController::OrthographicCameraController(float aspectRatio, float hasRotation)
+    OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool hasRotation)
         : m_AspectRatio(aspectRatio)
         , m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio* m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel)
         , m_HasRotation(hasRotation)
@@ -40,7 +40,7 @@ namespace Farscape {
         }
 
         // Do rotation
-        //if (m_HasRotation)
+        if (m_HasRotation)
         {
             if (Input::IsKeyPressed(FS_KEY_Q))
                 m_CameraRotation += m_CameraRotationSpeed * deltaTime;
