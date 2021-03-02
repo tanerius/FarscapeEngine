@@ -5,7 +5,7 @@
 
 namespace Farscape {
 
-    VertexArray* VertexArray::Create()
+    Ref<VertexArray> VertexArray::Create()
     {
         // decide the API here!!!
         switch (Renderer::GetAPI())
@@ -17,7 +17,7 @@ namespace Farscape {
         }
         case RendererAPI::API::OpenGL:
         {
-            return new OpenGLVertexArray();
+            return std::make_shared<OpenGLVertexArray>();
         }
         case RendererAPI::API::DirectX:
         case RendererAPI::API::Metal:

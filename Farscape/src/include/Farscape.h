@@ -29,4 +29,4 @@
 
 
 // The entry point definition
-#include "Core/EntryPoint.h"
+//#include "Core/EntryPoint.h"
