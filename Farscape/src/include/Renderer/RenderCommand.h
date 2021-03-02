@@ -33,7 +33,7 @@ namespace Farscape {
             s_RendererAPI->DrawIndexed(vertexArr);
         }
     private:
-        static RendererAPI* s_RendererAPI;
+        static Scope<RendererAPI> s_RendererAPI;
     };
 
 }

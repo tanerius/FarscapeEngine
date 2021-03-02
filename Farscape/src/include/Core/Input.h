@@ -12,6 +12,7 @@ namespace Farscape
     public:
         Input(const Input&) = delete;
         Input& operator=(const Input&) = delete;
+        virtual ~Input() {}
 
         inline static bool IsKeyPressed(int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }
         inline static bool IsMouseButtonPressed(int button) { return s_Instance->IsMouseButtonPressedImpl(button); }
@@ -28,6 +29,6 @@ namespace Farscape
         
 
     private:
-        static Input* s_Instance;
+        static Scope<Input> s_Instance;
     };
 }

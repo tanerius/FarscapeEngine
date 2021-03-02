@@ -61,7 +61,7 @@ namespace Farscape {
         m_Window = glfwCreateWindow((int)p.Width, (int)p.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
         // create a graphics context
-        m_Context = new OpenGLContext(m_Window);
+        m_Context = CreateScope<OpenGLContext>(m_Window);
 
         m_Context->Init();
 

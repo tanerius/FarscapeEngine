@@ -31,7 +31,7 @@ namespace Farscape {
 
     private:
         GLFWwindow* m_Window;
-        GfxContext* m_Context;
+        Scope<GfxContext> m_Context;
 
         struct WindowData
         {
