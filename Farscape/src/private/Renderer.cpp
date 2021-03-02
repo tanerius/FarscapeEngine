@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "Windows/OpenGLShader.h"
+#include "Renderer/Renderer2D.h"
 
 namespace Farscape {
     Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
@@ -26,6 +27,7 @@ namespace Farscape {
     void Renderer::Init()
     {
         RenderCommand::Init();
+        Renderer2D::Init();
     }
 
     void Renderer::Submit(
