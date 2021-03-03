@@ -11,6 +11,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <imgui.h>
+
 namespace Farscape {
 
     static bool s_GLFWInitialized = false;
@@ -202,6 +204,15 @@ namespace Farscape {
             data.EventCallback(event);
         });
 
+        
+        m_Cursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        m_Cursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        m_Cursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+        m_Cursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+        m_Cursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+        m_Cursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_Cursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_Cursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
 
     }
 
@@ -214,6 +225,10 @@ namespace Farscape {
     {
         glfwPollEvents();
         m_Context->SwapBuffers();
+
+        ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
+        glfwSetCursor(m_Window, m_Cursors[imgui_cursor] ? m_Cursors[imgui_cursor] : m_Cursors[ImGuiMouseCursor_Arrow]);
+        glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
 
     void WindowsWindow::SetVSync(bool enabled)

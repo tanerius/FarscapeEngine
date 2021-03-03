@@ -1,7 +1,7 @@
 #pragma once
 #include "Core/Window.h"
 struct GLFWwindow;
-
+struct GLFWcursor;
 
 namespace Farscape {
 
@@ -15,7 +15,7 @@ namespace Farscape {
 
         void OnUpdate() override;
 
-        inline unsigned int GetWidth() const override { return m_Data.Width;  }
+        inline unsigned int GetWidth() const override { return m_Data.Width; }
         inline unsigned int GetHeight() const override { return m_Data.Height; }
 
         inline void SetEventCallbacks(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
@@ -30,6 +30,7 @@ namespace Farscape {
 
     private:
         GLFWwindow* m_Window;
+        GLFWcursor* m_Cursors[9] = { 0 };
         Scope<GfxContext> m_Context;
 
         struct WindowData

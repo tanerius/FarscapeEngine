@@ -29,6 +29,7 @@ elseif (APPLE)
     )
 endif ()
 
+
 set(FS_SOURCES 
     src/pch/fspch.h
     src/pch/fspch.cpp
@@ -66,8 +67,11 @@ else()
     target_compile_definitions(Farscape PRIVATE "FARSCAPE_BUILD_EXPORTS")
 endif()
 
+# Farscape engine if c++17
+target_compile_features(Farscape PRIVATE cxx_std_17)
+
 target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
-# TODO: REMOVE THIS 
+# TODO: REMOVE THIS OR PUT IN DEBUG
 target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
 
 
@@ -88,8 +92,6 @@ target_link_libraries(Farscape
     PUBLIC glm::glm
     PUBLIC Farscape::stb
 )
-
-target_compile_features(Farscape PRIVATE cxx_std_17)
 
 if(MSVC)
   target_compile_options(Farscape PRIVATE /W4 /WX)
