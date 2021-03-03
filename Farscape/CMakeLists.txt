@@ -44,6 +44,7 @@ set(FS_SOURCES
     src/private/Shader.cpp
     src/private/Buffer.cpp
     src/private/Renderer.cpp
+    src/private/RenderCommandQueue
     src/private/Renderer2D.cpp
     src/private/VertexArray.cpp
     src/private/RenderCommand.cpp

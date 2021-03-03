@@ -145,6 +145,10 @@ namespace Farscape {
 
     };
 
+    class FARSCAPE_API IRenderCommandQueue : public ICoreObject
+    {
+
+    };
 
     // #################################################################
 
