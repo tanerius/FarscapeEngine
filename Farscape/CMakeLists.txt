@@ -34,6 +34,7 @@ set(FS_SOURCES
     pch/fspch.cpp
     src/private/Application.cpp
     src/private/Log.cpp
+    src/private/Core.cpp
     src/private/Layer.cpp
     ${FS_SPECIFIC_SOURCES}
     src/private/Layer.cpp

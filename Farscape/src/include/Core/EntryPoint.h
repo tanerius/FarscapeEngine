@@ -1,14 +1,13 @@
 #pragma once
 
 extern Farscape::Application* Farscape::CreateApplication();
+extern void Farscape::Initialize();
 
 #if defined(_WIN32)
 
 int main(int argc, char** argv)
 {
-    Farscape::Log::Init();
-    FS_CORE_WARN("Initialized Log!");
-    FS_INFO("Initialized Log");
+    Farscape::Initialize();
     auto app = Farscape::CreateApplication();
     app->Execute();
     delete app;
@@ -19,9 +18,7 @@ int main(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-    Farscape::Log::Init();
-    FS_CORE_WARN("Initialized Log!");
-    FS_INFO("Initialized Log");
+    Farscape::Initialize();
     auto app = Farscape::CreateApplication();
     app->Execute();
     delete app;

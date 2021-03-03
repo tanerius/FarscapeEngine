@@ -52,6 +52,11 @@
 
 // An object interface which can lift any weight
 namespace Farscape {
+
+    void Initialize();
+    
+    void Shutdown();
+
     class FARSCAPE_API IFarscapeObject
     {
 

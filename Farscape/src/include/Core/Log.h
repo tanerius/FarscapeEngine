@@ -9,10 +9,6 @@
 #endif
 
 namespace Farscape {
-#if defined(_WIN32)
-#pragma warning(push)
-#pragma warning(disable:4251)
-#endif
     class Log : public ILog
     {
     public:
@@ -23,9 +19,6 @@ namespace Farscape {
         static Ref<spdlog::logger> m_LoggerCore;
         static Ref<spdlog::logger> m_LoggerClient;
     };
-#if defined(_WIN32)
-#pragma warning(pop)
-#endif
 }
 
 
