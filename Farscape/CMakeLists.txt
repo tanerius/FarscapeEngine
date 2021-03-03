@@ -5,33 +5,33 @@ add_subdirectory(libs)
 # Set the relevant platform dependant sources
 if (WIN32)
     set(FS_SPECIFIC_SOURCES 
-        "platform/Windows/WindowsWindow.cpp"
-        "platform/Windows/WindowsWindow.h"
-        "platform/Windows/WindowsInput.cpp"
-        "platform/Windows/WindowsInput.h"
-        "platform/Windows/OpenGLContext.cpp"
-        "platform/Windows/OpenGLContext.h"
-        "platform/Windows/OpenGLBuffer.cpp"
-        "platform/Windows/OpenGLBuffer.h"
-        "platform/Windows/OpenGLVertexArray.h"
-        "platform/Windows/OpenGLVertexArray.cpp"
-        "platform/Windows/OpenGLRendererAPI.h"
-        "platform/Windows/OpenGLRendererAPI.cpp"
-        "platform/Windows/OpenGLShader.h"
-        "platform/Windows/OpenGLShader.cpp"
-        "platform/Windows/OpenGLTexture.h"
-        "platform/Windows/OpenGLTexture.cpp"
+        "src/platform/Windows/WindowsWindow.cpp"
+        "src/platform/Windows/WindowsWindow.h"
+        "src/platform/Windows/WindowsInput.cpp"
+        "src/platform/Windows/WindowsInput.h"
+        "src/platform/Windows/OpenGLContext.cpp"
+        "src/platform/Windows/OpenGLContext.h"
+        "src/platform/Windows/OpenGLBuffer.cpp"
+        "src/platform/Windows/OpenGLBuffer.h"
+        "src/platform/Windows/OpenGLVertexArray.h"
+        "src/platform/Windows/OpenGLVertexArray.cpp"
+        "src/platform/Windows/OpenGLRendererAPI.h"
+        "src/platform/Windows/OpenGLRendererAPI.cpp"
+        "src/platform/Windows/OpenGLShader.h"
+        "src/platform/Windows/OpenGLShader.cpp"
+        "src/platform/Windows/OpenGLTexture.h"
+        "src/platform/Windows/OpenGLTexture.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 
-        "platform/Macos/AppleWindow.cpp"
-        "platform/Macos/AppleWindow.h"
+        "src/platform/Macos/AppleWindow.cpp"
+        "src/platform/Macos/AppleWindow.h"
     )
 endif ()
 
 set(FS_SOURCES 
-    pch/fspch.h
-    pch/fspch.cpp
+    src/pch/fspch.h
+    src/pch/fspch.cpp
     src/private/Application.cpp
     src/private/Log.cpp
     src/private/Core.cpp
@@ -72,13 +72,13 @@ target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
 
 
 target_include_directories(Farscape 
-    PUBLIC pch
+    PUBLIC src/pch
     PUBLIC src/include
     PUBLIC ${FARSCAPE_BINARY_DIR}/generated
-    PUBLIC platform
+    PUBLIC src/platform
 )
 
-add_precompiled_header(Farscape fspch.h SOURCE_CXX pch/fspch.cpp FORCEINCLUDE)
+add_precompiled_header(Farscape fspch.h SOURCE_CXX src/pch/fspch.cpp FORCEINCLUDE)
 
 target_link_libraries(Farscape
     PUBLIC spdlog::spdlog

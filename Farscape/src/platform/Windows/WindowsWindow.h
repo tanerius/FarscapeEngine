@@ -25,7 +25,7 @@ namespace Farscape {
         inline virtual void* GetRawWindowPointer() const override { return m_Window; }
 
     private:
-        virtual void Init(const WindowProperties& props);
+        virtual void Initialize(const WindowProperties& props);
         virtual void Shutdown();
 
     private:

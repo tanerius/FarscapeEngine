@@ -16,7 +16,7 @@ namespace Farscape {
         WindowProperties(
             const std::string& title = "Farscape Engine",
             unsigned int width = 1280,
-            unsigned int height = 780
+            unsigned int height = 720
         )
             : Title(title)
             , Width(width)
