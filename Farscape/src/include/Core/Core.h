@@ -205,7 +205,7 @@ namespace Farscape {
         virtual const ICamera* GetCameraInterface() = 0;
     };
 
-
+    using byte = uint8_t;
 
     template<typename T>
     using Scope = std::unique_ptr<T>;
