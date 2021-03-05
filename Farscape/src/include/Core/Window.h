@@ -34,6 +34,9 @@ namespace Farscape {
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
 
+        virtual std::pair<uint32_t, uint32_t> GetSize() const = 0;
+        virtual std::pair<float, float> GetWindowPos() const = 0;
+
         virtual void SetEventCallbacks(const EventCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;
         virtual bool IsVSync() const = 0;
