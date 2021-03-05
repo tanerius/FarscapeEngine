@@ -42,7 +42,7 @@ set(FS_SOURCES
     ${FS_SPECIFIC_SOURCES}
     src/Farscape/Core/Layer.cpp
     src/Farscape/Core/LayerStack.cpp
-    src/Farscape/Core/ImGuiLayer.cpp
+    src/Farscape/ImGui/ImGuiLayer.cpp
     src/Farscape/Renderer/Shader.cpp
     src/Farscape/Renderer/Buffer.cpp
     src/Farscape/Renderer/Renderer.cpp
@@ -54,6 +54,7 @@ set(FS_SOURCES
     src/Farscape/Renderer/Camera.cpp
     src/Farscape/Renderer/Texture.cpp
     src/Farscape/Controllers/OrthographicCameraController.cpp
+    src/Farscape/ImGui/ImGuizmo.cpp
  )
 
 # check static vs dynamic

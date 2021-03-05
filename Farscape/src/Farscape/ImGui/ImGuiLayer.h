@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Layer.h"
+#include "Core/Layer.h"
 
 namespace Farscape {
 
@@ -9,6 +9,7 @@ namespace Farscape {
     {
     public:
         ImGuiLayer();
+        ImGuiLayer(const std::string& name);
         ~ImGuiLayer();
 
         virtual void OnAttach() override;

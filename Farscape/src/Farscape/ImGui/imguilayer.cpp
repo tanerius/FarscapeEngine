@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "Core/ImGuiLayer.h"
+#include "ImGuiLayer.h"
 
 #include <imgui.h>
 
@@ -18,6 +18,11 @@ namespace Farscape {
 
     ImGuiLayer::ImGuiLayer()
         : Layer("ImGuiLayer")
+    {
+    }
+
+    ImGuiLayer::ImGuiLayer(const std::string& name)
+        : Layer(name)
     {
     }
 
