@@ -81,6 +81,7 @@ target_include_directories(Farscape
     PUBLIC src/include
     PUBLIC ${FARSCAPE_BINARY_DIR}/generated
     PUBLIC src/platform
+    PUBLIC src/Farscape
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX src/pch/fspch.cpp FORCEINCLUDE)
