@@ -15,20 +15,32 @@ namespace Farscape {
     class IndexBuffer;
     class VertexArray;
 
+    struct ApplicationProps
+    {
+        std::string Name;
+        uint32_t WindowWidth, WindowHeight;
+    };
+
+
     class Application : public IApplication
     {
     public:
-        Application();
+        Application(const ApplicationProps& props = { "Farscape Engine", 1280, 720 });
         virtual ~Application();
 
         void Execute();
 
+        virtual void OnInit() {}
+        virtual void OnShutdown() {}
         void OnEvent(Event& e);
 
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
+        void RenderImGui();
 
-        inline static Application& Get()
+        std::string OpenFile(const std::string& filter) const;
+
+        static inline Application& Get()
         {
             return *s_Instance;
         }
@@ -40,7 +52,7 @@ namespace Farscape {
         bool OnWindowResize(WindowResizeEvent& e);
     private:
         // a platform agnostic window - consider a unique pointer
-        Window* m_Window = nullptr;
+        std::unique_ptr<Window> m_Window;
         ImGuiLayer* m_ImGuiLayer = nullptr;
         bool m_IsRunning = true;
         LayerStack m_layerStack;

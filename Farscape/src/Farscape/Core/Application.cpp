@@ -19,11 +19,11 @@ namespace Farscape {
     Application* Application::s_Instance = nullptr;
 
 
-    Application::Application()
+    Application::Application(const ApplicationProps& props)
     {
         FS_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
-        m_Window = Window::Create();
+        m_Window = std::unique_ptr<Window>(Window::Create(WindowProperties(props.Name, props.WindowWidth, props.WindowHeight)));
         m_Window->SetEventCallbacks(BIND_EVENT_FN(Application::OnEvent));
 
         Renderer::Init();
