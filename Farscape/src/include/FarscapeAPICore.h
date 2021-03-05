@@ -3,6 +3,7 @@
 #pragma once
 #include "Versions.h"
 #include <memory>
+#include "API/types.h"
 
 #if defined(_WIN32) // Any windows 32 or 64 bit
 #if defined(_WIN64) //Windows 64bit

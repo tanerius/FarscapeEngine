@@ -23,6 +23,8 @@ if (WIN32)
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLFramebuffer.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLFramebuffer.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 
@@ -55,6 +57,7 @@ set(FS_SOURCES
     src/Farscape/Renderer/Texture.cpp
     src/Farscape/Controllers/OrthographicCameraController.cpp
     src/Farscape/ImGui/ImGuizmo.cpp
+    src/Farscape/Renderer/Framebuffer.cpp
  )
 
 # check static vs dynamic
