@@ -2,7 +2,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Renderer.h"
 
-#include "Windows/OpenGLShader.h"
+#include "platform/Windows/OpenGLShader.h"
 
 
 namespace Farscape {

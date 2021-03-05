@@ -2,30 +2,32 @@ cmake_minimum_required(VERSION 3.12)
 
 add_subdirectory(libs)
 
+set(FS_PLATFORM_SPECIFIC_SRC_PATH "src/Farscape/platform")
+
 # Set the relevant platform dependant sources
 if (WIN32)
     set(FS_SPECIFIC_SOURCES 
-        "src/platform/Windows/WindowsWindow.cpp"
-        "src/platform/Windows/WindowsWindow.h"
-        "src/platform/Windows/WindowsInput.cpp"
-        "src/platform/Windows/WindowsInput.h"
-        "src/platform/Windows/OpenGLContext.cpp"
-        "src/platform/Windows/OpenGLContext.h"
-        "src/platform/Windows/OpenGLBuffer.cpp"
-        "src/platform/Windows/OpenGLBuffer.h"
-        "src/platform/Windows/OpenGLVertexArray.h"
-        "src/platform/Windows/OpenGLVertexArray.cpp"
-        "src/platform/Windows/OpenGLRendererAPI.h"
-        "src/platform/Windows/OpenGLRendererAPI.cpp"
-        "src/platform/Windows/OpenGLShader.h"
-        "src/platform/Windows/OpenGLShader.cpp"
-        "src/platform/Windows/OpenGLTexture.h"
-        "src/platform/Windows/OpenGLTexture.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLContext.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLContext.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRendererAPI.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRendererAPI.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 
-        "src/platform/Macos/AppleWindow.cpp"
-        "src/platform/Macos/AppleWindow.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Macos/AppleWindow.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Macos/AppleWindow.h"
     )
 endif ()
 
@@ -33,25 +35,25 @@ endif ()
 set(FS_SOURCES 
     src/pch/fspch.h
     src/pch/fspch.cpp
-    src/private/Application.cpp
-    src/private/Log.cpp
-    src/private/Core.cpp
-    src/private/Layer.cpp
+    src/Farscape/Core/Application.cpp
+    src/Farscape/Core/Log.cpp
+    src/Farscape/Core/Core.cpp
+    src/Farscape/Core/Layer.cpp
     ${FS_SPECIFIC_SOURCES}
-    src/private/Layer.cpp
-    src/private/LayerStack.cpp
-    src/private/ImGuiLayer.cpp
-    src/private/Shader.cpp
-    src/private/Buffer.cpp
-    src/private/Renderer.cpp
-    src/private/RenderCommandQueue
-    src/private/Renderer2D.cpp
-    src/private/VertexArray.cpp
-    src/private/RenderCommand.cpp
-    src/private/RendererAPI.cpp
-    src/private/Camera.cpp
-    src/private/Texture.cpp
-    src/private/OrthographicCameraController.cpp
+    src/Farscape/Core/Layer.cpp
+    src/Farscape/Core/LayerStack.cpp
+    src/Farscape/Core/ImGuiLayer.cpp
+    src/Farscape/Renderer/Shader.cpp
+    src/Farscape/Renderer/Buffer.cpp
+    src/Farscape/Renderer/Renderer.cpp
+    src/Farscape/Renderer/RenderCommandQueue
+    src/Farscape/Renderer/Renderer2D.cpp
+    src/Farscape/Renderer/VertexArray.cpp
+    src/Farscape/Renderer/RenderCommand.cpp
+    src/Farscape/Renderer/RendererAPI.cpp
+    src/Farscape/Renderer/Camera.cpp
+    src/Farscape/Renderer/Texture.cpp
+    src/Farscape/Controllers/OrthographicCameraController.cpp
  )
 
 # check static vs dynamic
@@ -79,6 +81,7 @@ target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
 target_include_directories(Farscape 
     PUBLIC src/pch
     PUBLIC src/include
+    PUBLIC src/Farscape
     PUBLIC ${FARSCAPE_BINARY_DIR}/generated
     PUBLIC src/platform
 )

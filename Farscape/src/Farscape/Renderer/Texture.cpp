@@ -2,7 +2,7 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Renderer.h"
 
-#include "Windows/OpenGLTexture.h"
+#include "platform/Windows/OpenGLTexture.h"
 
 namespace Farscape {
 

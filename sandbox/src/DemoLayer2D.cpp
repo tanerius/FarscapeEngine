@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Windows/OpenGLShader.h"
+#include "platform/Windows/OpenGLShader.h"
 
 DemoLayer2D::DemoLayer2D()
 	: Layer("DemoLayer2D")

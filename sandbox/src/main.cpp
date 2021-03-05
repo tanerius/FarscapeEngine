@@ -1,8 +1,8 @@
 #include "Farscape.h"
 #include <Core/EntryPoint.h>
 
-#include "Windows/OpenGLShader.h"
-#include "Windows/OpenGLTexture.h"
+#include "platform/Windows/OpenGLShader.h"
+#include "platform/Windows/OpenGLTexture.h"
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

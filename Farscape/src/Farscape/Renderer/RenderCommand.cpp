@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "Renderer/RenderCommand.h"
 
-#include "Windows/OpenGLRendererAPI.h"
+#include "platform/Windows/OpenGLRendererAPI.h"
 
 namespace Farscape {
 
