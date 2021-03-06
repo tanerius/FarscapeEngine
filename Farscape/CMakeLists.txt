@@ -11,13 +11,10 @@ if (WIN32)
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLContext.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLContext.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRendererAPI.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRendererAPI.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.cpp"
@@ -27,6 +24,8 @@ if (WIN32)
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLFramebuffer.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRenderPass.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRenderPass.cpp"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShaderUniform.h"
+        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShaderUniform.cpp"
     )
 elseif (APPLE)
     set(FS_SPECIFIC_SOURCES 

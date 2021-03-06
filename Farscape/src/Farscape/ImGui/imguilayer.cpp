@@ -2,28 +2,27 @@
 #include "ImGuiLayer.h"
 
 #include <imgui.h>
+#include "ImGuizmo.h"
 
-
+#define IMGUI_IMPL_API
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
 #include "Core/Application.h"
-#include "Core/Window.h"
-
-// Temp stuff
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "Renderer/Renderer.h"
 
 namespace Farscape {
 
     ImGuiLayer::ImGuiLayer()
-        : Layer("ImGuiLayer")
     {
+
     }
 
     ImGuiLayer::ImGuiLayer(const std::string& name)
-        : Layer(name)
     {
+
     }
 
     ImGuiLayer::~ImGuiLayer()
@@ -41,8 +40,11 @@ namespace Farscape {
         //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-        //io.ConfigViewportsNoAutoMerge = true;
-        //io.ConfigViewportsNoTaskBarIcon = true;
+        //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+        //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
+
+        ImFont* pFont = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
+        io.FontDefault = io.Fonts->Fonts.back();
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
@@ -55,19 +57,18 @@ namespace Farscape {
             style.WindowRounding = 0.0f;
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
+        style.Colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, style.Colors[ImGuiCol_WindowBg].w);
 
         Application& app = Application::Get();
-        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindowReference().GetRawWindowPointer());
+        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
-        // Setup Platform/Renderer backends
+        // Setup Platform/Renderer bindings
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
-
     }
 
     void ImGuiLayer::OnDetach()
     {
-        // just destroy stuff
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
@@ -78,17 +79,19 @@ namespace Farscape {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGuizmo::BeginFrame();
     }
 
     void ImGuiLayer::End()
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
-        io.DisplaySize = ImVec2((float)app.GetWindowReference().GetWidth(), (float)app.GetWindowReference().GetHeight());
+        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-        //Rendering
+        // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();
@@ -100,8 +103,6 @@ namespace Farscape {
 
     void ImGuiLayer::OnImGuiRender()
     {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
     }
 
 }

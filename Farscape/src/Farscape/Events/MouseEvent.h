@@ -1,8 +1,9 @@
 #pragma once
 #include "Event.h"
+#include <sstream>
 
 namespace Farscape {
-    class FARSCAPE_API MouseMovedEvent : public Event
+    class MouseMovedEvent : public Event
     {
     public:
         MouseMovedEvent(float x, float y)
