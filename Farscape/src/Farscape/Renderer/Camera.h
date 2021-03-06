@@ -23,7 +23,11 @@ namespace Farscape {
 
         const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
         const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-        const glm::mat4& GetViewProjection() const { return m_ProjectionMatrix * m_ViewMatrix; }
+        const glm::mat4& GetViewProjection() 
+        { 
+            m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+            return m_ViewProjectionMatrix; 
+        }
 
         glm::vec3 GetUpDirection();
         glm::vec3 GetRightDirection();
@@ -48,7 +52,7 @@ namespace Farscape {
         float RotationSpeed() const;
         float ZoomSpeed() const;
     private:
-        glm::mat4 m_ProjectionMatrix, m_ViewMatrix;
+        glm::mat4 m_ProjectionMatrix, m_ViewMatrix, m_ViewProjectionMatrix;
         glm::vec3 m_Position, m_Rotation, m_FocalPoint;
 
         bool m_Panning, m_Rotating;

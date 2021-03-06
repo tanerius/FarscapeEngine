@@ -56,7 +56,7 @@ namespace Farscape {
         geoFramebufferSpec.ClearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 
         RenderPassSpecification geoRenderPassSpec;
-        geoRenderPassSpec.TargetFramebuffer = Hazel::Framebuffer::Create(geoFramebufferSpec);
+        geoRenderPassSpec.TargetFramebuffer = Farscape::Framebuffer::Create(geoFramebufferSpec);
         s_Data.GeoPass = RenderPass::Create(geoRenderPassSpec);
 
         FramebufferSpecification compFramebufferSpec;
@@ -66,7 +66,7 @@ namespace Farscape {
         compFramebufferSpec.ClearColor = { 0.5f, 0.1f, 0.1f, 1.0f };
 
         RenderPassSpecification compRenderPassSpec;
-        compRenderPassSpec.TargetFramebuffer = Hazel::Framebuffer::Create(compFramebufferSpec);
+        compRenderPassSpec.TargetFramebuffer = Farscape::Framebuffer::Create(compFramebufferSpec);
         s_Data.CompositePass = RenderPass::Create(compRenderPassSpec);
 
         s_Data.CompositeShader = Shader::Create("assets/shaders/SceneComposite.glsl");
@@ -158,9 +158,9 @@ namespace Farscape {
 
         Renderer::Submit([envUnfiltered, envFiltered, cubemapSize]() {
             const float deltaRoughness = 1.0f / glm::max((float)(envFiltered->GetMipLevelCount() - 1.0f), 1.0f);
-            for (int level = 1, size = cubemapSize / 2; level < envFiltered->GetMipLevelCount(); level++, size /= 2) // <= ?
+            for (unsigned int level = 1, size = cubemapSize / 2; level < envFiltered->GetMipLevelCount(); level++, size /= 2) // <= ?
             {
-                const GLuint numGroups = glm::max(1, size / 32);
+                const GLuint numGroups = glm::max((unsigned int)1, size / 32);
                 glBindImageTexture(0, envFiltered->GetRendererID(), level, GL_TRUE, 0, GL_WRITE_ONLY, GL_RGBA16F);
                 glProgramUniform1f(envFilteringShader->GetRendererID(), 0, level * deltaRoughness);
                 glDispatchCompute(numGroups, numGroups, 6);

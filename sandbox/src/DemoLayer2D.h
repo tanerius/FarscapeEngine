@@ -15,7 +15,6 @@ public:
 	virtual void OnImGuiRender() override;
 	void OnEvent(Farscape::Event& e) override;
 private:
-	Farscape::OrthographicCameraController m_CameraController;
 
 	Farscape::Ref<Farscape::VertexArray> m_SquareVA;
 	Farscape::Ref<Farscape::Shader> m_FlatColorShader;

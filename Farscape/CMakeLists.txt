@@ -4,6 +4,11 @@ add_subdirectory(libs)
 
 set(FS_PLATFORM_SPECIFIC_SRC_PATH "src/Farscape/platform")
 
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set(BUILD_SHARED_LIBS TRUE)
+endif()
+
 # Set the relevant platform dependant sources
 if (WIN32)
     set(FS_SPECIFIC_SOURCES 
@@ -64,7 +69,11 @@ set(FS_SOURCES
     src/Farscape/Renderer/SceneRenderer.cpp
     src/Farscape/Scene/Entity.cpp
     src/Farscape/Scene/Scene.cpp
+    src/Farscape/Core/Timestep.cpp
  )
+
+ # OpenGL
+find_package(OpenGL REQUIRED)
 
 # check static vs dynamic
 if(FARSCAPE_LINK_STATICALLY)
@@ -83,7 +92,9 @@ endif()
 # Farscape engine if c++17
 target_compile_features(Farscape PRIVATE cxx_std_17)
 
-target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
+target_compile_definitions(Farscape 
+    PUBLIC "_CRT_SECURE_NO_WARNINGS"
+)
 # TODO: REMOVE THIS OR PUT IN DEBUG
 target_compile_definitions(Farscape PUBLIC "FS_DEBUG")
 
@@ -94,6 +105,7 @@ target_include_directories(Farscape
     PUBLIC src/Farscape
     PUBLIC ${FARSCAPE_BINARY_DIR}/generated
     PUBLIC src/platform
+    PUBLIC ${OPENGL_INCLUDE_DIRS}
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX src/pch/fspch.cpp FORCEINCLUDE)
@@ -106,6 +118,7 @@ target_link_libraries(Farscape
     PUBLIC glm::glm
     PUBLIC Farscape::stb
     PUBLIC assimp::assimp
+    ${OPENGL_LIBRARIES}
 )
 
 if(MSVC)

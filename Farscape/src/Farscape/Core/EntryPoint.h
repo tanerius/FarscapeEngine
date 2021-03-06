@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
     Farscape::InitializeEngine();
     auto app = Farscape::CreateApplication();
-    app->Execute();
+    app->Run();
     delete app;
     return 0;
 }
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 {
     Farscape::InitializeEngine();
     auto app = Farscape::CreateApplication();
-    app->Execute();
+    app->Run();
     delete app;
     return 0;
 }
