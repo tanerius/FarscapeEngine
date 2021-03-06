@@ -102,6 +102,7 @@ target_link_libraries(Farscape
     PUBLIC Farscape::glad
     PUBLIC glm::glm
     PUBLIC Farscape::stb
+    PUBLIC assimp::assimp
 )
 
 if(MSVC)

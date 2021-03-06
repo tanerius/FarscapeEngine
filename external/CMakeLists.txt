@@ -52,3 +52,10 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/stb/CMakeLists.txt")
 else()
 	add_subdirectory(stb)
 endif()
+
+### assimp
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/assimp/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule assimp not downloaded")
+else()
+	add_subdirectory(assimp)
+endif()
