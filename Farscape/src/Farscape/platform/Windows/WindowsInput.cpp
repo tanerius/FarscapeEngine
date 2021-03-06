@@ -1,49 +1,46 @@
 #include "fspch.h"
-#include "WindowsInput.h"
+#include "Core/Input.h"
+#include "WindowsWindow.h"
 #include "Core/Application.h"
-#include "Core/Window.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Farscape {
 
-    Scope<Input> Input::s_Instance = CreateScope<WindowsInput>();
-
-    bool WindowsInput::IsKeyPressedImpl(int keycode)
+    bool Input::IsKeyPressed(int keycode)
     {
-        // get the window reference then the raw pointer
-        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
-        int result = glfwGetKey(window, keycode);
-
-        return result == GLFW_PRESS || result == GLFW_REPEAT;
+        auto& window = static_cast<WindowsWindow&>(Application::Get().GetWindow());
+        auto state = glfwGetKey(static_cast<GLFWwindow*>(window.GetNativeWindow()), keycode);
+        return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
-    bool WindowsInput::IsMouseButtonPressedImpl(int button)
+    bool Input::IsMouseButtonPressed(int button)
     {
-        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
-        int result = glfwGetMouseButton(window, button);
-        return result == GLFW_PRESS;
+        auto& window = static_cast<WindowsWindow&>(Application::Get().GetWindow());
+
+        auto state = glfwGetMouseButton(static_cast<GLFWwindow*>(window.GetNativeWindow()), button);
+        return state == GLFW_PRESS;
     }
 
-    // Must use cpp-14 or more from here on 
-    std::pair<double, double> WindowsInput::GetMousePosImpl()
+    float Input::GetMouseX()
     {
-        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindowReference().GetRawWindowPointer());
+        auto [x, y] = GetMousePosition();
+        return (float)x;
+    }
+
+    float Input::GetMouseY()
+    {
+        auto [x, y] = GetMousePosition();
+        return (float)y;
+    }
+
+    std::pair<float, float> Input::GetMousePosition()
+    {
+        auto& window = static_cast<WindowsWindow&>(Application::Get().GetWindow());
+
         double x, y;
-        glfwGetCursorPos(window, &x, &y);
+        glfwGetCursorPos(static_cast<GLFWwindow*>(window.GetNativeWindow()), &x, &y);
+        return { (float)x, (float)y };
 
-        return { x, y };
-    }
-
-    double WindowsInput::GetMousePosXImpl()
-    {
-        // only cpp_17 for this!
-        auto[x, y] = GetMousePosImpl();
-        return x;
-    }
-
-    double WindowsInput::GetMousePosYImpl()
-    {
-        auto[x, y] = GetMousePosImpl();
-        return y;
     }
 }

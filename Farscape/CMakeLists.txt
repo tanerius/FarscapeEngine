@@ -10,7 +10,6 @@ if (WIN32)
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.h"

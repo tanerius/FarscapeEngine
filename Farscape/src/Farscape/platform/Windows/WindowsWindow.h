@@ -1,16 +1,13 @@
 #pragma once
 #include "Core/Window.h"
-struct GLFWwindow;
-struct GLFWcursor;
+#include <GLFW/glfw3.h>
 
 namespace Farscape {
-
-    class GfxContext;
 
     class WindowsWindow : public Window
     {
     public:
-        WindowsWindow(const WindowProperties& p);
+        WindowsWindow(const WindowProps& props);
         virtual ~WindowsWindow();
 
         void OnUpdate() override;
@@ -18,31 +15,33 @@ namespace Farscape {
         inline unsigned int GetWidth() const override { return m_Data.Width; }
         inline unsigned int GetHeight() const override { return m_Data.Height; }
 
-        inline void SetEventCallbacks(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-        void SetVSync(bool enabled) override;
-        bool IsVSync() const override;
+        virtual std::pair<uint32_t, uint32_t> GetSize() const override { return { m_Data.Width, m_Data.Height }; }
+        virtual std::pair<float, float> GetWindowPos() const override;
 
-        inline virtual void* GetRawWindowPointer() const override { return m_Window; }
+        // Window attributes
+        inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+        void SetVSync(bool enabled);
+        bool IsVSync() const;
 
+        inline void* GetNativeWindow() const { return m_Window; }
     private:
-        virtual void Initialize(const WindowProperties& props);
+        virtual void Init(const WindowProps& props);
         virtual void Shutdown();
-
     private:
         GLFWwindow* m_Window;
-        GLFWcursor* m_Cursors[9] = { 0 };
-        Scope<GfxContext> m_Context;
+        GLFWcursor* m_ImGuiMouseCursors[9] = { 0 };
 
         struct WindowData
         {
             std::string Title;
-            unsigned int Width, Height;
+            uint32_t Width, Height;
             bool VSync;
-            bool IsFullScreen;
+
             EventCallbackFn EventCallback;
         };
 
         WindowData m_Data;
+        float m_LastFrameTime = 0.0f;
     };
 }
 

@@ -1,5 +1,5 @@
 #include "fspch.h"
-#include "Core/Log.h"
+#include <glad/glad.h>
 #include "WindowsWindow.h"
 
 // include events
@@ -7,117 +7,80 @@
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
 
-#include "OpenGLContext.h"
-
-#include <GLFW/glfw3.h>
-
 #include <imgui.h>
 
 namespace Farscape {
 
-    static bool s_GLFWInitialized = false;
-
-    Window* Window::Create(const WindowProperties& p)
+    static void GLFWErrorCallback(int error, const char* description)
     {
-        return new WindowsWindow(p);
+        FS_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProperties& p)
+    static bool s_GLFWInitialized = false;
+
+    Window* Window::Create(const WindowProps& props)
     {
-        Initialize(p);
+        return new WindowsWindow(props);
+    }
+
+    WindowsWindow::WindowsWindow(const WindowProps& props)
+    {
+        Init(props);
     }
 
     WindowsWindow::~WindowsWindow()
     {
-        Shutdown();
     }
 
-    void WindowsWindow::Initialize(const WindowProperties& p)
+    void WindowsWindow::Init(const WindowProps& props)
     {
-        m_Data.Title = p.Title + " v" + Farscape_VERSION + " (Windows)";
-        m_Data.Width = p.Width;
-        m_Data.Height = p.Height;
+        m_Data.Title = props.Title;
+        m_Data.Width = props.Width;
+        m_Data.Height = props.Height;
 
-        FS_CORE_INFO("Creating window {0} ({1}, {2})", m_Data.Title, p.Width, p.Height);
+        FS_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
         if (!s_GLFWInitialized)
         {
-            // TODO: glfwterminate 
-            int isOk = glfwInit();
-            isOk = isOk * 1;
-            FS_CORE_ASSERT(isOk, "Could not initialize GLFW!");
+            // TODO: glfwTerminate on system shutdown
+            int success = glfwInit();
+            FS_CORE_ASSERT(success, "Could not intialize GLFW!");
+            glfwSetErrorCallback(GLFWErrorCallback);
 
-            /*
-            * Set an error callback as well
-            *  @param[in] error_code An [error code](@ref errors).  Future releases may add
-            *  more error codes.
-            *  @param[in] description A UTF-8 encoded string describing the error.
-            */
-            glfwSetErrorCallback([](int error_code, const char* msg)
-            {
-                FS_CORE_ERROR("GLFW Error ({0}): {1}", error_code, msg);
-            });
             s_GLFWInitialized = true;
         }
 
-        m_Window = glfwCreateWindow((int)p.Width, (int)p.Height, m_Data.Title.c_str(), nullptr, nullptr);
-
-        // create a graphics context
-        m_Context = CreateScope<OpenGLContext>(m_Window);
-
-        m_Context->Init();
-
-
-        // Attach a user payload to the window handler with stuff we want to have  (m_Data in this case)
+        m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+        glfwMakeContextCurrent(m_Window);
+        glfwMaximizeWindow(m_Window);
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        FS_CORE_ASSERT(status, "Failed to initialize Glad!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
-        SetVSync(true);
 
-        // Set Callbacks for window events
-
-        // RESIZE
-        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int w, int h)
+        // Set GLFW callbacks
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
         {
-            // Here we need to call OnEvent
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            data.Width = w;
-            data.Height = h;
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
 
-            WindowResizeEvent event(w, h);
-            // dispatch the event
+            WindowResizeEvent event((unsigned int)width, (unsigned int)height);
             data.EventCallback(event);
+            data.Width = width;
+            data.Height = height;
         });
 
-
-        // CLOSE
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
         {
-            // Here we need to call OnEvent
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
+
             WindowCloseEvent event;
-            // dispatch the event
             data.EventCallback(event);
         });
 
-
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int, int action_type, int)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            /*
-            *  @param[in] window The window that received the event.
-            *  @param[in] key The [keyboard key](@ref keys) that was pressed or released.
-            *  @param[in] scancode The system-specific scancode of the key.
-            *  @param[in] action `GLFW_PRESS`, `GLFW_RELEASE` or `GLFW_REPEAT`.  Future
-            *  releases may add more actions.
-            *  @param[in] mods Bit field describing which [modifier keys](@ref mods) were
-            *  held down.
-            */
-            // Here we need to call OnEvent
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
 
-            if (&data == nullptr)
-                return;
-
-            // check the action type
-            switch (action_type)
+            switch (action)
             {
             case GLFW_PRESS:
             {
@@ -133,114 +96,109 @@ namespace Farscape {
             }
             case GLFW_REPEAT:
             {
-                // The repeat count can be extracted from the win_api 
                 KeyPressedEvent event(key, 1);
                 data.EventCallback(event);
                 break;
             }
-            };
+            }
         });
 
-
-        // key typed
-        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int key)
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int codepoint)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            KeyTypedEvent event(key);
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
+
+            KeyTypedEvent event((int)codepoint);
             data.EventCallback(event);
         });
 
-        // mouse button pressed
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int which_btn, int action_type, int)
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            /*
-            * @param[in] window The window that received the event.
-            *  @param[in] button The[mouse button](@ref buttons) that was pressed or
-            *released.
-            *  @param[in] action One of `GLFW_PRESS` or `GLFW_RELEASE`.  Future releases
-            *  may add more actions.
-            *  @param[in] mods Bit field describing which[modifier keys](@ref mods) were
-            *  held down.
-            */
-            switch (action_type)
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
+
+            switch (action)
             {
             case GLFW_PRESS:
             {
-                MouseButtonPressedEvent event(which_btn);
+                MouseButtonPressedEvent event(button);
                 data.EventCallback(event);
                 break;
             }
             case GLFW_RELEASE:
             {
-                MouseButtonReleasedEvent event(which_btn);
+                MouseButtonReleasedEvent event(button);
                 data.EventCallback(event);
                 break;
             }
             }
         });
 
-
-        // mouse scroll
-        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset)
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            /*
-             *  @param[in] window The window that received the event.
-             *  @param[in] xoffset The scroll offset along the x-axis.
-             *  @param[in] yoffset The scroll offset along the y-axis.
-            */
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
 
-            // TODO: COnsider doubles instead of floats in the event classes
-            MouseScrolledEvent event((float)xoffset, (float)yoffset);
+            MouseScrolledEvent event((float)xOffset, (float)yOffset);
             data.EventCallback(event);
         });
 
-
-        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double x, double y)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            MouseMovedEvent event((float)xPos, (float)yPos);
+            auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
+
+            MouseMovedEvent event((float)x, (float)y);
             data.EventCallback(event);
         });
 
-        
-        m_Cursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-        m_Cursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
-        m_Cursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
-        m_Cursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
-        m_Cursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
-        m_Cursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
-        m_Cursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
-        m_Cursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
 
+        // Update window size to actual size
+        {
+            int width, height;
+            glfwGetWindowSize(m_Window, &width, &height);
+            m_Data.Width = width;
+            m_Data.Height = height;
+        }
     }
 
     void WindowsWindow::Shutdown()
     {
-        glfwDestroyWindow(m_Window);
+
+    }
+
+    inline std::pair<float, float> WindowsWindow::GetWindowPos() const
+    {
+        int x, y;
+        glfwGetWindowPos(m_Window, &x, &y);
+        return { x, y };
     }
 
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        m_Context->SwapBuffers();
+        glfwSwapBuffers(m_Window);
 
         ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
-        glfwSetCursor(m_Window, m_Cursors[imgui_cursor] ? m_Cursors[imgui_cursor] : m_Cursors[ImGuiMouseCursor_Arrow]);
+        glfwSetCursor(m_Window, m_ImGuiMouseCursors[imgui_cursor] ? m_ImGuiMouseCursors[imgui_cursor] : m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]);
         glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+        float time = glfwGetTime();
+        float delta = time - m_LastFrameTime;
+        m_LastFrameTime = time;
     }
 
     void WindowsWindow::SetVSync(bool enabled)
     {
         if (enabled)
-        {
             glfwSwapInterval(1);
-        }
         else
-        {
             glfwSwapInterval(0);
-        }
+
         m_Data.VSync = enabled;
     }
 
