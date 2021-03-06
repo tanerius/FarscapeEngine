@@ -86,7 +86,7 @@ target_compile_features(Farscape PRIVATE cxx_std_17)
 
 target_compile_definitions(Farscape PUBLIC "_CRT_SECURE_NO_WARNINGS")
 # TODO: REMOVE THIS OR PUT IN DEBUG
-target_compile_definitions(Farscape PUBLIC "FS_ENABLE_ASSERTS")
+target_compile_definitions(Farscape PUBLIC "FS_DEBUG")
 
 
 target_include_directories(Farscape 

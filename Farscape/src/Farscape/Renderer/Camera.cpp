@@ -90,7 +90,7 @@ namespace Farscape {
     void Camera::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(Camera::OnMouseScroll));
+        dispatcher.Dispatch<MouseScrolledEvent>(FS_BIND_EVENT_FN(Camera::OnMouseScroll));
     }
 
     bool Camera::OnMouseScroll(MouseScrolledEvent& e)

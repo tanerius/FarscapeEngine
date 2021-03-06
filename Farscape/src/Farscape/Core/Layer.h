@@ -6,9 +6,6 @@
 
 namespace Farscape {
 
-    class Event;
-
-
     class Layer : public ILayer
     {
     public:

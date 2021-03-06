@@ -43,9 +43,9 @@ namespace Farscape {
 
 }
 
-#ifndef FS_PLATFORM_WINDOWS
-#error Farscape only supports Windows!
-#endif
+//#ifndef FS_PLATFORM_WINDOWS
+//#error Farscape only supports Windows!
+//#endif
 
 // __VA_ARGS__ expansion to get past MSVC "bug"
 #define FS_EXPAND_VARGS(x) x
