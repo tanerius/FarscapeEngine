@@ -1,6 +1,7 @@
 #include "fspch.h"
 
 #include "Application.h"
+
 #include "Renderer/Renderer.h"
 #include "Renderer/Framebuffer.h"
 #include <GLFW/glfw3.h>
@@ -15,7 +16,7 @@
 namespace Farscape {
 
 
-#define BIND_EVENT_FN(fn) std::bind(&Application::##fn, this, std::placeholders::_1)
+#define BIND_EVENT_FN_LOCAL(fn) std::bind(&Application::##fn, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
 
@@ -24,7 +25,7 @@ namespace Farscape {
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create(WindowProps(props.Name, props.WindowWidth, props.WindowHeight)));
-        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_Window->SetEventCallback(BIND_EVENT_FN_LOCAL(OnEvent));
         m_Window->SetVSync(true);
 
         m_ImGuiLayer = new ImGuiLayer("ImGui");
@@ -97,8 +98,8 @@ namespace Farscape {
     void Application::OnEvent(Event& event)
     {
         EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN_LOCAL(OnWindowResize));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN_LOCAL(OnWindowClose));
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
         {

@@ -56,7 +56,6 @@ set(FS_SOURCES
     src/Farscape/Renderer/RendererAPI.cpp
     src/Farscape/Renderer/Camera.cpp
     src/Farscape/Renderer/Texture.cpp
-    src/Farscape/Controllers/OrthographicCameraController.cpp
     src/Farscape/ImGui/ImGuizmo.cpp
     src/Farscape/Renderer/Framebuffer.cpp
     src/Farscape/Renderer/RenderPass.cpp
