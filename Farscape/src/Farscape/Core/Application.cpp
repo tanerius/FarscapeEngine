@@ -71,28 +71,28 @@ namespace Farscape {
 
     void Application::Execute()
     {
+        OnInit();
+
         while (m_IsRunning)
         {
-            float time = (float)glfwGetTime();
-            Timestep timestep = time - m_LastTick;
-            m_LastTick = time;
-
-            // run the onupdate on every layer in the layer stack
-            for (Layer* layer : m_layerStack)
-                layer->OnUpdate(timestep);
-
-            m_ImGuiLayer->Begin();
-            for (Layer* layer : m_layerStack)
-                layer->OnImGuiRender();
             if (!m_IsMinimized)
             {
                 for (Layer* layer : m_layerStack)
-                    layer->OnUpdate(timestep);
-            }
-            m_ImGuiLayer->End();
+                    layer->OnUpdate(m_TimeStep);
 
+                // Render ImGui on render thread
+                Application* app = this;
+                Renderer::Submit([app]() { app->RenderImGui(); });
+
+                Renderer::WaitAndRender();
+            }
             m_Window->OnUpdate();
+
+            float time = GetTime();
+            m_TimeStep = time - m_LastFrameTime;
+            m_LastFrameTime = time;
         }
+        OnShutdown();
     }
 
     bool Application::OnWindowResize(WindowResizeEvent& e)

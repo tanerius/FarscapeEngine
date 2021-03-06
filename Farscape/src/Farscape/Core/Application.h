@@ -47,6 +47,8 @@ namespace Farscape {
 
         inline Window& GetWindowReference() { return *m_Window; }
 
+        virtual float GetTime() const = 0;
+
     private:
         bool OnWindowClose(WindowCloseEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
@@ -58,6 +60,7 @@ namespace Farscape {
         LayerStack m_layerStack;
         float m_LastTick = 0.0f;
         bool m_IsMinimized = false;
+        Timestep m_TimeStep;
         
         
     private:

@@ -1,6 +1,7 @@
 #pragma once 
 
-#include "RenderCommand.h"
+#include "RenderCommandQueue.h"
+#include "RenderPass.h"
 
 namespace Farscape {
 
