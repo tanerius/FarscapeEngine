@@ -47,6 +47,7 @@ set(FS_SOURCES
     src/Farscape/Core/Core.cpp
     src/Farscape/Core/Layer.cpp
     src/Farscape/Core/Window.cpp
+    src/Farscape/Renderer/Framebuffer.cpp
     ${FS_SPECIFIC_SOURCES}
     src/Farscape/Core/Layer.cpp
     src/Farscape/Core/LayerStack.cpp
@@ -61,7 +62,6 @@ set(FS_SOURCES
     src/Farscape/Renderer/Camera.cpp
     src/Farscape/Renderer/Texture.cpp
     src/Farscape/ImGui/ImGuizmo.cpp
-    src/Farscape/Renderer/Framebuffer.cpp
     src/Farscape/Renderer/RenderPass.cpp
     src/Farscape/Renderer/Material.cpp
     src/Farscape/Renderer/Mesh.cpp
