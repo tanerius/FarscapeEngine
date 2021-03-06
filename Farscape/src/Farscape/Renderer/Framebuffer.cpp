@@ -12,7 +12,9 @@ namespace Farscape {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:				return nullptr;
-        case RendererAPIType::OpenGL:			result = std::make_shared<OpenGLFramebuffer>(spec);
+        case RendererAPIType::OpenGL:			
+            result = std::make_shared<OpenGLFramebuffer>(spec); 
+            break;
         case RendererAPIType::Metal:			FS_CORE_FATAL("Metal not implemented yet"); return nullptr;
         case RendererAPIType::DirectX:			FS_CORE_FATAL("DirectX not implemented yet"); return nullptr;
         case RendererAPIType::Vulcan:			FS_CORE_FATAL("Vulcan not implemented yet"); return nullptr;

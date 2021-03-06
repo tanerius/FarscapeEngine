@@ -17,7 +17,9 @@ namespace Farscape {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:	    return nullptr;
-        case RendererAPIType::OpenGL:   result = std::make_shared<OpenGLShader>(filepath);
+        case RendererAPIType::OpenGL:   
+            result = std::make_shared<OpenGLShader>(filepath);
+            break;
         case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
         case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
         case RendererAPIType::Vulcan:   FS_CORE_FATAL("Vulcan not supported yet!"); return nullptr;
@@ -33,7 +35,9 @@ namespace Farscape {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None: return nullptr;
-        case RendererAPIType::OpenGL: result = OpenGLShader::CreateFromString(source);
+        case RendererAPIType::OpenGL: 
+            result = OpenGLShader::CreateFromString(source);
+            break;
         case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
         case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
         case RendererAPIType::Vulcan:   FS_CORE_FATAL("Vulcan not supported yet!"); return nullptr;

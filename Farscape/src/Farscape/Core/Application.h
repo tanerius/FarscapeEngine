@@ -18,7 +18,7 @@ namespace Farscape {
     class Application
     {
     public:
-        Application(const ApplicationProps& props = { "Hazel Engine", 1280, 720 });
+        Application(const ApplicationProps& props = { "Farscape Engine", 1280, 720 });
         virtual ~Application();
 
         void Run();

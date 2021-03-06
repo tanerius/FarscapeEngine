@@ -107,7 +107,7 @@ namespace Farscape {
         s_Data.WhiteTexture->GetWriteableBuffer().Write(&whiteTextureData, sizeof(uint32_t));
         s_Data.WhiteTexture->Unlock();
 
-        s_Data.TextureShader = Shader::Create("assets/shaders/Renderer2D.glsl");
+        s_Data.TextureShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/Renderer2D.glsl");
 
         // Set all texture slots to 0
         s_Data.TextureSlots[0] = s_Data.WhiteTexture;
@@ -118,7 +118,7 @@ namespace Farscape {
         s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
         // Lines
-        s_Data.LineShader = Shader::Create("assets/shaders/Renderer2D_Line.glsl");
+        s_Data.LineShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/Renderer2D_Line.glsl");
         s_Data.LineVertexArray = VertexArray::Create();
 
         s_Data.LineVertexBuffer = VertexBuffer::Create(s_Data.MaxLineVertices * sizeof(LineVertex));

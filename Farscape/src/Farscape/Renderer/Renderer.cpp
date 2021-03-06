@@ -26,8 +26,10 @@ namespace Farscape {
         s_Data.m_ShaderLibrary = std::make_unique<ShaderLibrary>();
         Renderer::Submit([]() { RendererAPI::Init(); });
 
-        Renderer::GetShaderLibrary()->Load("assets/shaders/FsPBR_Static.glsl");
-        Renderer::GetShaderLibrary()->Load("assets/shaders/FsPBR_Anim.glsl");
+        std::string assetPath = ASSETS_PATH;
+
+        Renderer::GetShaderLibrary()->Load(assetPath + "/shaders/FsPBR_Static.glsl");
+        Renderer::GetShaderLibrary()->Load(assetPath + "/shaders/FsPBR_Anim.glsl");
 
         SceneRenderer::Init();
 

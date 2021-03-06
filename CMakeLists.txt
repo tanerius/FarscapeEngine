@@ -9,6 +9,7 @@ project(Farscape
 set(CMAKE_CXX_STANDARD 17)
 
 option(FARSCAPE_LINK_STATICALLY "Engine static library" On)
+OPTION(FARSCAPE_DEBUG "Enable debugging logs and asserts" On)
 
 if(FARSCAPE_LINK_STATICALLY)
 	message(STATUS "Farscape * Static linking")
@@ -24,6 +25,7 @@ set(FARSCAPE_BUILD_DIR "${FARSCAPE_OUTPUT_DIR}/build")
 set(FARSCAPE_INTERMEDIATE_DIR "${FARSCAPE_OUTPUT_DIR}/intermediate")
 set(FARSCAPE_INSTALL_DIR "${FARSCAPE_OUTPUT_DIR}/install")
 
+message(STATUS "*** The Farscape build type is: ${CMAKE_BUILD_TYPE}")
 message(STATUS "FARSCAPE_OUTPUT_DIR          ${FARSCAPE_OUTPUT_DIR}")
 message(STATUS "FARSCAPE_BINARY_DIR          ${FARSCAPE_BINARY_DIR}")
 message(STATUS "FARSCAPE_INTERMEDIATE_DIR    ${FARSCAPE_INTERMEDIATE_DIR}")
@@ -35,12 +37,14 @@ message(STATUS "CMAKE_INSTALL_PREFIX         ${CMAKE_INSTALL_PREFIX}")
 string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
 
 # TODO : Do this only in debug!!!!
-set(DEBUG_ASSETS_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets")
-set(DEBUG_SHADER_PATH "${DEBUG_ASSETS_PATH}/Shaders/Texture.glsl")
-set(DEBUG_TEXTURE_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/Checkerboard.png")
-set(DEBUG_TEXTURE_RGBA_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets/textures/rgba.png")
+if( CONFIG_TYPE STREQUAL "Debug")
+	set(ASSETS_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets")
+else()
+	set(ASSETS_PATH "assets")
+endif()
 
-set(ASSETS_PATH ${DEBUG_ASSETS_PATH})
+
+message(STATUS "ASSETS_PATH         ${ASSETS_PATH}")
 
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 

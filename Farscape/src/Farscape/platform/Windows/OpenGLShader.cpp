@@ -762,6 +762,7 @@ namespace Farscape {
                 Renderer::Submit([=]() {
                     UploadUniformFloat(name, value);
                 });
+                break;
             }
             case UniformType::Float3:
             {
@@ -770,6 +771,7 @@ namespace Farscape {
                 Renderer::Submit([=]() {
                     UploadUniformFloat3(name, values);
                 });
+                break;
             }
             case UniformType::Float4:
             {
@@ -778,6 +780,7 @@ namespace Farscape {
                 Renderer::Submit([=]() {
                     UploadUniformFloat4(name, values);
                 });
+                break;
             }
             case UniformType::Matrix4x4:
             {
@@ -786,6 +789,7 @@ namespace Farscape {
                 Renderer::Submit([=]() {
                     UploadUniformMat4(name, values);
                 });
+                break;
             }
             }
         }
