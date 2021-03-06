@@ -25,7 +25,7 @@ namespace Farscape {
 
         virtual void OnInit() {}
         virtual void OnShutdown() {}
-        virtual void OnUpdate(Timestep ts) {}
+        virtual void OnUpdate(Timestep) {}
 
         virtual void OnEvent(Event& event);
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "FarscapeAPICore.h"
 
 namespace Farscape {
 

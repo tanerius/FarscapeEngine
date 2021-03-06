@@ -48,4 +48,6 @@ namespace Farscape {
 
         static Window* Create(const WindowProps& props = WindowProps());
 
-    }
+    };
+
+}
