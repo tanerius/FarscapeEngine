@@ -1,13 +1,13 @@
 #pragma once
 
 extern Farscape::Application* Farscape::CreateApplication();
-extern void Farscape::Initialize();
+
 
 #if defined(_WIN32)
 
 int main(int argc, char** argv)
 {
-    Farscape::Initialize();
+    Farscape::InitializeEngine();
     auto app = Farscape::CreateApplication();
     app->Execute();
     delete app;
@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-    Farscape::Initialize();
+    Farscape::InitializeEngine();
     auto app = Farscape::CreateApplication();
     app->Execute();
     delete app;

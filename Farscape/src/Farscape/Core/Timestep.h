@@ -7,10 +7,7 @@ namespace Farscape {
     {
     public:
         Timestep() {}
-        Timestep(float time)
-        {
-
-        }
+        Timestep(float) {}
 
         operator float() const { return m_Time; }
 
