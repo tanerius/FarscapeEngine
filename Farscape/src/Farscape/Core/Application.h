@@ -1,72 +1,60 @@
 #pragma once
-#include "Core.h"
-#include "LayerStack.h"
-#include "Renderer/Camera.h"
-#include "Timestep.h"
+#include "Core/Core.h"
+#include "Core/Timestep.h"
+#include "Core/Window.h"
+#include "Core/LayerStack.h"
+
+#include "Events/ApplicationEvent.h"
+
+#include "ImGui/ImGuiLayer.h"
 
 namespace Farscape {
-    class WindowCloseEvent;
-    class WindowResizeEvent;
-    class Window;
-    class Event;
-    class ImGuiLayer;
-    class Shader;
-    class VertexBuffer;
-    class IndexBuffer;
-    class VertexArray;
-
     struct ApplicationProps
     {
         std::string Name;
         uint32_t WindowWidth, WindowHeight;
     };
 
-
-    class Application : public IApplication
+    class Application
     {
     public:
-        Application(const ApplicationProps& props = { "Farscape Engine", 1280, 720 });
+        Application(const ApplicationProps& props = { "Hazel Engine", 1280, 720 });
         virtual ~Application();
 
-        void Execute();
+        void Run();
 
         virtual void OnInit() {}
         virtual void OnShutdown() {}
-        void OnEvent(Event& e);
+        virtual void OnUpdate(Timestep ts) {}
+
+        virtual void OnEvent(Event& event);
 
         void PushLayer(Layer* layer);
-        void PushOverlay(Layer* overlay);
+        void PushOverlay(Layer* layer);
         void RenderImGui();
 
         std::string OpenFile(const std::string& filter) const;
 
-        static inline Application& Get()
-        {
-            return *s_Instance;
-        }
+        inline Window& GetWindow() { return *m_Window; }
 
-        inline Window& GetWindowReference() { return *m_Window; }
+        static inline Application& Get() { return *s_Instance; }
 
-        virtual float GetTime() const = 0;
-
+        float GetTime() const; // TODO: This should be in "Platform"
     private:
-        bool OnWindowClose(WindowCloseEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
+        bool OnWindowClose(WindowCloseEvent& e);
     private:
-        // a platform agnostic window - consider a unique pointer
         std::unique_ptr<Window> m_Window;
-        ImGuiLayer* m_ImGuiLayer = nullptr;
-        bool m_IsRunning = true;
-        LayerStack m_layerStack;
-        float m_LastTick = 0.0f;
-        bool m_IsMinimized = false;
+        bool m_Running = true, m_Minimized = false;
+        LayerStack m_LayerStack;
+        ImGuiLayer* m_ImGuiLayer;
         Timestep m_TimeStep;
-        
-        
-    private:
+
+        float m_LastFrameTime = 0.0f;
+
         static Application* s_Instance;
     };
 
-    // Should be defined in a client
+    // Implemented by CLIENT
     Application* CreateApplication();
 }

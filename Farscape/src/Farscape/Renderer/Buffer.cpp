@@ -1,58 +1,41 @@
 #include "fspch.h"
-#include "Renderer/Buffer.h"
 #include "Renderer/Renderer.h"
 #include "platform/Windows/OpenGLBuffer.h"
 
 namespace Farscape {
 
-    VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t arraySize)
+    Ref<VertexBuffer> VertexBuffer::Create(void* data, uint32_t size, VertexBufferUsage usage)
     {
-        // decide the API here!!!
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::Current())
         {
-        case RendererAPI::API::None:
-        {
-            FS_CORE_ASSERT(false, "No renderer selected");
-            return nullptr;
+        case RendererAPIType::None:    return nullptr;
+        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLVertexBuffer>(data, size, usage);
         }
-        case RendererAPI::API::OpenGL:
-        {
-            return new OpenGLVertexBuffer(vertices, arraySize);
-        }
-        case RendererAPI::API::DirectX:
-        case RendererAPI::API::Metal:
-        case RendererAPI::API::Vulcan:
-            FS_CORE_ASSERT(false, "Not implementes API!");
-            return nullptr;
-        }
-
-
-        FS_CORE_ASSERT(false, "Invalid renderer selected!");
+        FS_CORE_ASSERT(false, "Unknown RendererAPI");
         return nullptr;
     }
 
-    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
+    Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, VertexBufferUsage usage)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::Current())
         {
-        case RendererAPI::API::None:
-        {
-            FS_CORE_ASSERT(false, "No renderer selected");
-            return nullptr;
+        case RendererAPIType::None:    return nullptr;
+        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLVertexBuffer>(size, usage);
         }
-        case RendererAPI::API::OpenGL:
-        {
-            return new OpenGLIndexBuffer(indices, count);
-        }
-        case RendererAPI::API::DirectX:
-        case RendererAPI::API::Metal:
-        case RendererAPI::API::Vulcan:
-            FS_CORE_ASSERT(false, "Not implementes API!");
-            return nullptr;
-        }
-
-        FS_CORE_ASSERT(false, "Invalid renderer selected!");
+        FS_CORE_ASSERT(false, "Unknown RendererAPI");
         return nullptr;
+    }
+
+    Ref<IndexBuffer> IndexBuffer::Create(void* data, uint32_t size)
+    {
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None:    return nullptr;
+        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLIndexBuffer>(data, size);
+        }
+        FS_CORE_ASSERT(false, "Unknown RendererAPI");
+        return nullptr;
+
     }
 
 }

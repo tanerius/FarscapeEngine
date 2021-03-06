@@ -3,6 +3,7 @@
 #pragma once
 #include "Versions.h"
 #include <memory>
+#include "API/macros.h"
 #include "API/types.h"
 
 #if defined(_WIN32) // Any windows 32 or 64 bit
@@ -191,6 +192,11 @@ namespace Farscape {
     };
 
     class FARSCAPE_API ITexture : public IRendererObject
+    {
+
+    };
+
+    class FARSCAPE_API IMesh : public IRendererObject
     {
 
     };

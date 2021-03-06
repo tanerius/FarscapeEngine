@@ -43,6 +43,7 @@ set(FS_SOURCES
     src/Farscape/Core/Log.cpp
     src/Farscape/Core/Core.cpp
     src/Farscape/Core/Layer.cpp
+    src/Farscape/Core/Window.cpp
     ${FS_SPECIFIC_SOURCES}
     src/Farscape/Core/Layer.cpp
     src/Farscape/Core/LayerStack.cpp
@@ -61,6 +62,12 @@ set(FS_SOURCES
     src/Farscape/ImGui/ImGuizmo.cpp
     src/Farscape/Renderer/Framebuffer.cpp
     src/Farscape/Renderer/RenderPass.cpp
+    src/Farscape/Renderer/Material.cpp
+    src/Farscape/Renderer/Mesh.cpp
+    src/Farscape/Core/Math/Mat4.cpp
+    src/Farscape/Renderer/SceneRenderer.cpp
+    src/Farscape/Scene/Entity.cpp
+    src/Farscape/Scene/Scene.cpp
  )
 
 # check static vs dynamic

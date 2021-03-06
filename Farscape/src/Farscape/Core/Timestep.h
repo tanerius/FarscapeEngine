@@ -6,8 +6,8 @@ namespace Farscape {
     class Timestep : public ITimestep
     {
     public:
-        Timestep(float time = 0.0f)
-            : m_Time(time)
+        Timestep() {}
+        Timestep(float time)
         {
 
         }
@@ -17,7 +17,7 @@ namespace Farscape {
         float GetSeconds() const { return m_Time; }
         float GetMiliseconds() const { return m_Time * 1000.0f; }
     private:
-        float m_Time;
+        float m_Time = 0.0f;
     };
 
 }

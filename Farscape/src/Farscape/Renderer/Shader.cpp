@@ -8,76 +8,73 @@
 namespace Farscape {
 
 
-    Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
-    {
-        switch (Renderer::GetAPI())
-        {
-        case RendererAPI::API::None: FS_CORE_ASSERT(false, "None renderer chosen!"); return nullptr;
-        case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
-        case RendererAPI::API::DirectX:
-        case RendererAPI::API::Metal:
-        case RendererAPI::API::Vulcan:
-            FS_CORE_ASSERT(false, "DirectX not implemented!"); return nullptr;
-        }
+    std::vector<Ref<Shader>> Shader::s_AllShaders;
 
-        FS_CORE_ASSERT(false, "Invalid renderer API chosen!");
-        return nullptr;
+    Ref<Shader> Shader::Create(const std::string& filepath)
+    {
+        Ref<Shader> result = nullptr;
+
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None:	    return nullptr;
+        case RendererAPIType::OpenGL:   result = std::make_shared<OpenGLShader>(filepath);
+        case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
+        case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
+        case RendererAPIType::Vulcan:   FS_CORE_FATAL("Vulcan not supported yet!"); return nullptr;
+        }
+        s_AllShaders.push_back(result);
+        return result;
     }
 
-    Ref<Shader> Shader::Create(const std::string& path)
+    Ref<Shader> Shader::CreateFromString(const std::string& source)
     {
-        switch (Renderer::GetAPI())
-        {
-        case RendererAPI::API::None: FS_CORE_ASSERT(false, "None renderer chosen!"); return nullptr;
-        case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(path);
-        case RendererAPI::API::DirectX:
-        case RendererAPI::API::Metal:
-        case RendererAPI::API::Vulcan:
-            FS_CORE_ASSERT(false, "DirectX not implemented!"); return nullptr;
-        }
+        Ref<Shader> result = nullptr;
 
-        FS_CORE_ASSERT(false, "Invalid renderer API chosen!");
-        return nullptr;
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None: return nullptr;
+        case RendererAPIType::OpenGL: result = OpenGLShader::CreateFromString(source);
+        case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
+        case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
+        case RendererAPIType::Vulcan:   FS_CORE_FATAL("Vulcan not supported yet!"); return nullptr;
+        }
+        s_AllShaders.push_back(result);
+        return result;
     }
 
-
-    void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)
+    ShaderLibrary::ShaderLibrary()
     {
-        FS_CORE_ASSERT(!Exists(name), "Shader name already exixts");
-        m_Shaders[name] = shader;
+    }
+
+    ShaderLibrary::~ShaderLibrary()
+    {
     }
 
     void ShaderLibrary::Add(const Ref<Shader>& shader)
     {
-        auto name = shader->GetName();
-        Add(name, shader);
+        auto& name = shader->GetName();
+        FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
+        m_Shaders[name] = shader;
     }
 
-    Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& path)
+    void ShaderLibrary::Load(const std::string& path)
     {
-        auto shader = Shader::Create(path);
-        Add(name, shader);
-        return shader;
+        auto shader = Ref<Shader>(Shader::Create(path));
+        auto& name = shader->GetName();
+        FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
+        m_Shaders[name] = shader;
     }
 
-
-    Ref<Shader> ShaderLibrary::Load(const std::string& path)
+    void ShaderLibrary::Load(const std::string& name, const std::string& path)
     {
-        auto shader = Shader::Create(path);
-        Add(shader);
-        return shader;
+        FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
+        m_Shaders[name] = Ref<Shader>(Shader::Create(path));
     }
 
-
-    Ref<Shader> ShaderLibrary::Get(const std::string& name)
+    Ref<Shader>& ShaderLibrary::Get(const std::string& name)
     {
-        FS_CORE_ASSERT(Exists(name), "Shader name does not exixt");
+        FS_CORE_ASSERT(m_Shaders.find(name) != m_Shaders.end(), "Shader not found");
         return m_Shaders[name];
-    }
-
-    bool ShaderLibrary::Exists(const std::string& name) const
-    {
-        return m_Shaders.find(name) != m_Shaders.end();
     }
 
 }

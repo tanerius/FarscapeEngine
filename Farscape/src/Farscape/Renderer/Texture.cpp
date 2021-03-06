@@ -1,24 +1,68 @@
 #include "fspch.h"
 #include "Renderer/Texture.h"
-#include "Renderer/Renderer.h"
+#include "Renderer/RendererAPI.h"
 
 #include "platform/Windows/OpenGLTexture.h"
 
 namespace Farscape {
 
-    Ref<Texture2D> Texture2D::Create(const std::string& path)
+    Ref<Texture2D> Texture2D::Create(TextureFormat format, unsigned int width, unsigned int height, TextureWrap wrap)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::Current())
         {
-        case RendererAPI::API::None:    FS_CORE_ASSERT(false, "RendererAPI::None not supported!"); return nullptr;
-        case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLTexture2D>(path);
-        case RendererAPI::API::DirectX:
-        case RendererAPI::API::Metal:
-        case RendererAPI::API::Vulcan:  FS_CORE_ASSERT(false, "RendererAPI::None implemented!"); return nullptr;
+        case RendererAPIType::None: return nullptr;
+        case RendererAPIType::OpenGL: return CreateRef<OpenGLTexture2D>(format, width, height, wrap);
         }
-
-        FS_CORE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
+    }
+
+    Ref<Texture2D> Texture2D::Create(const std::string& path, bool srgb)
+    {
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None: return nullptr;
+        case RendererAPIType::OpenGL: return CreateRef<OpenGLTexture2D>(path, srgb);
+        }
+        return nullptr;
+    }
+
+    Ref<TextureCube> TextureCube::Create(TextureFormat format, uint32_t width, uint32_t height)
+    {
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None: return nullptr;
+        case RendererAPIType::OpenGL: return CreateRef<OpenGLTextureCube>(format, width, height);
+        }
+        return nullptr;
+    }
+
+    Ref<TextureCube> TextureCube::Create(const std::string& path)
+    {
+        switch (RendererAPI::Current())
+        {
+        case RendererAPIType::None: return nullptr;
+        case RendererAPIType::OpenGL: return CreateRef<OpenGLTextureCube>(path);
+        }
+        return nullptr;
+    }
+
+    uint32_t Texture::GetBPP(TextureFormat format)
+    {
+        switch (format)
+        {
+        case TextureFormat::RGB:    return 3;
+        case TextureFormat::RGBA:   return 4;
+        }
+        return 0;
+    }
+
+    uint32_t Texture::CalculateMipMapCount(uint32_t width, uint32_t height)
+    {
+        uint32_t levels = 1;
+        while ((width | height) >> levels)
+            levels++;
+
+        return levels;
     }
 
 }

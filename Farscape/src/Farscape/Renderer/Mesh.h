@@ -125,7 +125,7 @@ namespace Farscape {
         std::string NodeName, MeshName;
     };
 
-    class Mesh
+    class Mesh : public IMesh
     {
     public:
         Mesh(const std::string& filename);

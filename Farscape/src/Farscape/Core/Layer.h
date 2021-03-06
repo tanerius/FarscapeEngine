@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
-#include "Timestep.h"
+#include "Core/Core.h"
+#include "Core/Timestep.h"
 
 namespace Farscape {
 
