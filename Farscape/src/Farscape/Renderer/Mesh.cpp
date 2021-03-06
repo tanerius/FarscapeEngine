@@ -3,12 +3,14 @@
 
 #include <glad/glad.h>
 
+#pragma warning(disable:4201)
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
+#pragma warning(default:4201)
 
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -162,6 +164,7 @@ namespace Farscape {
             }
 
             // Indices
+            unsigned int mui = (unsigned int)m;
             for (size_t i = 0; i < mesh->mNumFaces; i++)
             {
                 FS_CORE_ASSERT(mesh->mFaces[i].mNumIndices == 3, "Must have 3 indices.");
@@ -169,7 +172,7 @@ namespace Farscape {
                 m_Indices.push_back(index);
 
                 if (!m_IsAnimated)
-                    m_TriangleCache[m].emplace_back(m_StaticVertices[index.V1 + submesh.BaseVertex], m_StaticVertices[index.V2 + submesh.BaseVertex], m_StaticVertices[index.V3 + submesh.BaseVertex]);
+                    m_TriangleCache[mui].emplace_back(m_StaticVertices[index.V1 + submesh.BaseVertex], m_StaticVertices[index.V2 + submesh.BaseVertex], m_StaticVertices[index.V3 + submesh.BaseVertex]);
             }
 
 
@@ -235,6 +238,7 @@ namespace Farscape {
                 FS_MESH_LOG("  {0} (Index = {1})", aiMaterialName.data, i);
                 aiString aiTexPath;
                 uint32_t textureCount = aiMaterial->GetTextureCount(aiTextureType_DIFFUSE);
+                textureCount += 0;
                 FS_MESH_LOG("    TextureCount = {0}", textureCount);
 
                 aiColor3D aiColor;
@@ -362,9 +366,9 @@ namespace Farscape {
 #endif
 
                 bool metalnessTextureFound = false;
-                for (uint32_t i = 0; i < aiMaterial->mNumProperties; i++)
+                for (uint32_t j = 0; i < aiMaterial->mNumProperties; j++)
                 {
-                    auto prop = aiMaterial->mProperties[i];
+                    auto prop = aiMaterial->mProperties[j];
 
 #if DEBUG_PRINT_ALL_PROPS
                     FS_MESH_LOG("Material Property:");
@@ -464,7 +468,7 @@ namespace Farscape {
         m_VertexArray = VertexArray::Create();
         if (m_IsAnimated)
         {
-            auto vb = VertexBuffer::Create(m_AnimatedVertices.data(), m_AnimatedVertices.size() * sizeof(AnimatedVertex));
+            auto vb = VertexBuffer::Create(m_AnimatedVertices.data(), (uint32_t)(m_AnimatedVertices.size() * sizeof(AnimatedVertex)));
             vb->SetLayout({
                 { ShaderDataType::Float3, "a_Position" },
                 { ShaderDataType::Float3, "a_Normal" },
@@ -478,7 +482,7 @@ namespace Farscape {
         }
         else
         {
-            auto vb = VertexBuffer::Create(m_StaticVertices.data(), m_StaticVertices.size() * sizeof(Vertex));
+            auto vb = VertexBuffer::Create(m_StaticVertices.data(), (uint32_t)(m_StaticVertices.size() * sizeof(Vertex)));
             vb->SetLayout({
                 { ShaderDataType::Float3, "a_Position" },
                 { ShaderDataType::Float3, "a_Normal" },
@@ -489,7 +493,7 @@ namespace Farscape {
             m_VertexArray->AddVertexBuffer(vb);
         }
 
-        auto ib = IndexBuffer::Create(m_Indices.data(), m_Indices.size() * sizeof(Index));
+        auto ib = IndexBuffer::Create(m_Indices.data(), (uint32_t)(m_Indices.size() * sizeof(Index)));
         m_VertexArray->SetIndexBuffer(ib);
     }
 
@@ -515,6 +519,7 @@ namespace Farscape {
         }
     }
 
+#if 0
     static std::string LevelToSpaces(uint32_t level)
     {
         std::string result = "";
@@ -522,6 +527,7 @@ namespace Farscape {
             result += "--";
         return result;
     }
+#endif
 
     void Mesh::TraverseNodes(aiNode* node, const glm::mat4& parentTransform, uint32_t level)
     {
@@ -716,6 +722,8 @@ namespace Farscape {
             for (size_t i = 0; i < m_AnimatedVertices.size(); i++)
             {
                 auto& vertex = m_AnimatedVertices[i];
+                auto xx = vertex.IDs[0];
+                xx += 0;
                 FS_MESH_LOG("Vertex: {0}", i);
                 FS_MESH_LOG("Position: {0}, {1}, {2}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
                 FS_MESH_LOG("Normal: {0}, {1}, {2}", vertex.Normal.x, vertex.Normal.y, vertex.Normal.z);
@@ -730,6 +738,8 @@ namespace Farscape {
             for (size_t i = 0; i < m_StaticVertices.size(); i++)
             {
                 auto& vertex = m_StaticVertices[i];
+                auto xx = vertex.Binormal.b;
+                xx += 0;
                 FS_MESH_LOG("Vertex: {0}", i);
                 FS_MESH_LOG("Position: {0}, {1}, {2}", vertex.Position.x, vertex.Position.y, vertex.Position.z);
                 FS_MESH_LOG("Normal: {0}, {1}, {2}", vertex.Normal.x, vertex.Normal.y, vertex.Normal.z);

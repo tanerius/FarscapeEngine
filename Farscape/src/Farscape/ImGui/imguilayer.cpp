@@ -4,7 +4,7 @@
 #include <imgui.h>
 #include "ImGuizmo.h"
 
-#define IMGUI_IMPL_API
+//#define IMGUI_IMPL_API
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
@@ -20,7 +20,7 @@ namespace Farscape {
 
     }
 
-    ImGuiLayer::ImGuiLayer(const std::string& name)
+    ImGuiLayer::ImGuiLayer(const std::string&)
     {
 
     }
@@ -43,7 +43,8 @@ namespace Farscape {
         //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
         //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
-        ImFont* pFont = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
+        //ImFont* pFont = 
+        io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
         io.FontDefault = io.Fonts->Fonts.back();
 
         // Setup Dear ImGui style
@@ -86,7 +87,7 @@ namespace Farscape {
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
-        io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
+        io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
         // Rendering
         ImGui::Render();

@@ -31,7 +31,7 @@ namespace Farscape {
     OpenGLTexture2D::OpenGLTexture2D(TextureFormat format, uint32_t width, uint32_t height, TextureWrap wrap)
         : m_Format(format), m_Width(width), m_Height(height), m_Wrap(wrap)
     {
-        auto self = this;
+        //auto self = this;
         Renderer::Submit([this]()
         {
             glGenTextures(1, &m_RendererID);
@@ -280,7 +280,7 @@ namespace Farscape {
 
     OpenGLTextureCube::~OpenGLTextureCube()
     {
-        auto self = this;
+        //auto self = this;
         Renderer::Submit([this]() {
             glDeleteTextures(1, &m_RendererID);
         });

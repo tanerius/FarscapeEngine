@@ -76,7 +76,7 @@ namespace Farscape {
             data.EventCallback(event);
         });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int, int action, int)
         {
             auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
 
@@ -111,7 +111,7 @@ namespace Farscape {
             data.EventCallback(event);
         });
 
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int)
         {
             auto& data = *((WindowData*)glfwGetWindowUserPointer(window));
 
@@ -175,7 +175,7 @@ namespace Farscape {
     {
         int x, y;
         glfwGetWindowPos(m_Window, &x, &y);
-        return { x, y };
+        return { (float)x, (float)y };
     }
 
     void WindowsWindow::OnUpdate()
@@ -187,8 +187,8 @@ namespace Farscape {
         glfwSetCursor(m_Window, m_ImGuiMouseCursors[imgui_cursor] ? m_ImGuiMouseCursors[imgui_cursor] : m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]);
         glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-        float time = glfwGetTime();
-        float delta = time - m_LastFrameTime;
+        float time = (float)glfwGetTime();
+        // float delta = time - m_LastFrameTime;
         m_LastFrameTime = time;
     }
 

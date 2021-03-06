@@ -4,11 +4,13 @@
 #include "Core/Input.h"
 
 #include <glfw/glfw3.h>
+
+#pragma warning(disable:4201)
 #include <glm/gtc/quaternion.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
-
+#pragma warning(default:4201)
 
 namespace Farscape {
 
@@ -95,7 +97,7 @@ namespace Farscape {
 
     bool Camera::OnMouseScroll(MouseScrolledEvent& e)
     {
-        float delta = e.GetYoffset() * 0.1f;
+        float delta = e.GetYOffset() * 0.1f;
         MouseZoom(delta);
         return false;
     }

@@ -162,7 +162,7 @@ namespace Farscape {
 
     void Renderer2D::EndScene()
     {
-        uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
         if (dataSize)
         {
             s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
@@ -178,7 +178,7 @@ namespace Farscape {
             s_Data.Stats.DrawCalls++;
         }
 
-        dataSize = (uint8_t*)s_Data.LineVertexBufferPtr - (uint8_t*)s_Data.LineVertexBufferBase;
+        dataSize = (uint32_t)((uint8_t*)s_Data.LineVertexBufferPtr - (uint8_t*)s_Data.LineVertexBufferBase);
         if (dataSize)
         {
             s_Data.LineVertexBuffer->SetData(s_Data.LineVertexBufferBase, dataSize);
@@ -279,7 +279,7 @@ namespace Farscape {
         DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, tintColor);
     }
 
-    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             FlushAndReset();
@@ -394,7 +394,7 @@ namespace Farscape {
         DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, texture, tilingFactor, tintColor);
     }
 
-    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             FlushAndReset();

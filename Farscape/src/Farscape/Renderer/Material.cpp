@@ -46,10 +46,12 @@ namespace Farscape {
     void Material::OnShaderReloaded()
     {
         return;
+#if 0
         AllocateStorage();
 
         for (auto mi : m_MaterialInstances)
             mi->OnShaderReloaded();
+#endif
     }
 
     ShaderUniformDeclaration* Material::FindUniformDeclaration(const std::string& name)
@@ -118,7 +120,7 @@ namespace Farscape {
         {
             auto& texture = m_Textures[i];
             if (texture)
-                texture->Bind(i);
+                texture->Bind((uint32_t)i);
         }
     }
 
@@ -215,7 +217,7 @@ namespace Farscape {
         {
             auto& texture = m_Textures[i];
             if (texture)
-                texture->Bind(i);
+                texture->Bind((uint32_t)i);
         }
     }
 

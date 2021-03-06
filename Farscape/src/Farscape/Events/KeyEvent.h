@@ -1,54 +1,49 @@
 #pragma once
 
 #include "Event.h"
-
+#include "Core/Codes/KeyCodes.h"
 #include <sstream>
-#include <string>
+
 
 namespace Farscape {
 
-    class FARSCAPE_API KeyEvent : public Event
+    class KeyEvent : public Event
     {
     public:
-        inline unsigned int GetKeyCode() const { return m_KeyCode; }
-        EVENT_CLASS_CATEGORY(EC_Keyboard | EC_Input)
-    protected:
-        unsigned int m_KeyCode;
+        inline int GetKeyCode() const { return m_KeyCode; }
 
-        // Constructor un protected to prevent direct initialization via this ctor
-        KeyEvent(unsigned int keycode) 
+        EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+    protected:
+        KeyEvent(int keycode)
             : m_KeyCode(keycode) {}
+
+        int m_KeyCode;
     };
 
-
-    class FARSCAPE_API KeyPressedEvent : public KeyEvent
+    class KeyPressedEvent : public KeyEvent
     {
     public:
-        KeyPressedEvent(unsigned int keycode, int repeatCount)
-            : KeyEvent(keycode)
-            , m_RepeatCount(repeatCount) {}
+        KeyPressedEvent(int keycode, int repeatCount)
+            : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
         inline int GetRepeatCount() const { return m_RepeatCount; }
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "KeyPressedEvent: " << m_KeyCode << " x " << m_RepeatCount;
+            ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
             return ss.str();
         }
 
         EVENT_CLASS_TYPE(KeyPressed)
-
-    protected:
+    private:
         int m_RepeatCount;
-
     };
 
-
-    class FARSCAPE_API KeyReleasedEvent : public KeyEvent
+    class KeyReleasedEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent(unsigned int keycode)
+        KeyReleasedEvent(int keycode)
             : KeyEvent(keycode) {}
 
         std::string ToString() const override
@@ -57,14 +52,14 @@ namespace Farscape {
             ss << "KeyReleasedEvent: " << m_KeyCode;
             return ss.str();
         }
-        
+
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
-    class FARSCAPE_API KeyTypedEvent : public KeyEvent
+    class KeyTypedEvent : public KeyEvent
     {
     public:
-        KeyTypedEvent(unsigned int keycode)
+        KeyTypedEvent(int keycode)
             : KeyEvent(keycode) {}
 
         std::string ToString() const override
@@ -74,6 +69,6 @@ namespace Farscape {
             return ss.str();
         }
 
-        EVENT_CLASS_TYPE(KeyReleased)
+        EVENT_CLASS_TYPE(KeyTyped)
     };
 }

@@ -128,13 +128,13 @@ namespace Farscape {
         return false;
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent& e)
+    bool Application::OnWindowClose(WindowCloseEvent&)
     {
         m_Running = false;
         return true;
     }
 
-    std::string Application::OpenFile(const std::string& filter) const
+    std::string Application::OpenFile(const std::string&) const
     {
         OPENFILENAMEA ofn;       // common dialog box structure
         CHAR szFile[260] = { 0 };       // if using TCHAR macros

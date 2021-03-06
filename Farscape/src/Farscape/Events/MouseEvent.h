@@ -7,86 +7,64 @@ namespace Farscape {
     {
     public:
         MouseMovedEvent(float x, float y)
-            : m_Xpos(x)
-            , m_Ypos(y) {}
+            : m_MouseX(x), m_MouseY(y) {}
 
-        inline float GetX() const { return m_Xpos; }
-        inline float GetY() const { return m_Ypos; }
+        inline float GetX() const { return m_MouseX; }
+        inline float GetY() const { return m_MouseY; }
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "MouseMovedEvent: " << m_Xpos << ", " << m_Ypos;
+            ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
             return ss.str();
         }
 
         EVENT_CLASS_TYPE(MouseMoved)
-        EVENT_CLASS_CATEGORY(EC_Mouse | EC_Input)
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     private:
-        float m_Xpos, m_Ypos;
+        float m_MouseX, m_MouseY;
     };
 
-
-    class FARSCAPE_API MouseScrolledEvent : public Event
+    class MouseScrolledEvent : public Event
     {
     public:
-        MouseScrolledEvent(float x, float y)
-            : m_Xoffset(x)
-            , m_Yoffset(y) {}
+        MouseScrolledEvent(float xOffset, float yOffset)
+            : m_XOffset(xOffset), m_YOffset(yOffset) {}
 
-        inline float GetXoffset() const { return m_Xoffset; }
-        inline float GetYoffset() const { return m_Yoffset; }
+        inline float GetXOffset() const { return m_XOffset; }
+        inline float GetYOffset() const { return m_YOffset; }
 
         std::string ToString() const override
         {
             std::stringstream ss;
-            ss << "MouseScrolledEvent: " << m_Xoffset << ", " << m_Yoffset;
+            ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
             return ss.str();
         }
 
         EVENT_CLASS_TYPE(MouseScrolled)
-        EVENT_CLASS_CATEGORY(EC_Mouse | EC_Input)
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     private:
-        float m_Xoffset, m_Yoffset;
+        float m_XOffset, m_YOffset;
     };
 
-
-    // No direct initialize
-    class FARSCAPE_API MouseButtonEvent : public Event
+    class MouseButtonEvent : public Event
     {
     public:
         inline int GetMouseButton() const { return m_Button; }
-        EVENT_CLASS_CATEGORY(EC_Mouse | EC_Input)
+
+        EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     protected:
-        MouseButtonEvent(int btn)
-            : m_Button(btn) {}
+        MouseButtonEvent(int button)
+            : m_Button(button) {}
 
         int m_Button;
     };
 
-
-    class FARSCAPE_API MouseButtonPressedEvent : public MouseButtonEvent
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonPressedEvent(int btn)
-            : MouseButtonEvent(btn) {}
-
-        std::string ToString() const override
-        {
-            std::stringstream ss;
-            ss << "MouseButtonPressedEvent: " << m_Button ;
-            return ss.str();
-        }
-
-        EVENT_CLASS_TYPE(MouseBtnPressed)
-    };
-
-
-    class FARSCAPE_API MouseButtonReleasedEvent : public MouseButtonEvent
-    {
-    public:
-        MouseButtonReleasedEvent(int btn)
-            : MouseButtonEvent(btn) {}
+        MouseButtonPressedEvent(int button)
+            : MouseButtonEvent(button) {}
 
         std::string ToString() const override
         {
@@ -95,6 +73,22 @@ namespace Farscape {
             return ss.str();
         }
 
-        EVENT_CLASS_TYPE(MouseBtnReleased)
+        EVENT_CLASS_TYPE(MouseButtonPressed)
+    };
+
+    class MouseButtonReleasedEvent : public MouseButtonEvent
+    {
+    public:
+        MouseButtonReleasedEvent(int button)
+            : MouseButtonEvent(button) {}
+
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "MouseButtonReleasedEvent: " << m_Button;
+            return ss.str();
+        }
+
+        EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 }

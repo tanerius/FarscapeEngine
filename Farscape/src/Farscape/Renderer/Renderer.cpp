@@ -95,7 +95,7 @@ namespace Farscape {
         Clear(1, 0, 1);
     }
 
-    void Renderer::SetClearColor(float r, float g, float b, float a)
+    void Renderer::SetClearColor(float, float, float, float)
     {
     }
 
@@ -171,14 +171,14 @@ namespace Farscape {
         Renderer::DrawIndexed(6, PrimitiveType::Triangles, depthTest);
     }
 
-    void Renderer::SubmitMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const Ref<MaterialInstance>& overrideMaterial)
+    void Renderer::SubmitMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const Ref<MaterialInstance>& /* overrideMaterial */)
     {
         // auto material = overrideMaterial ? overrideMaterial : mesh->GetMaterialInstance();
         // auto shader = material->GetShader();
         // TODO: Sort this out
         mesh->m_VertexArray->Bind();
 
-        auto& materials = mesh->GetMaterials();
+        auto materials = mesh->GetMaterials();
         for (Submesh& submesh : mesh->m_Submeshes)
         {
             // Material
@@ -207,7 +207,7 @@ namespace Farscape {
         }
     }
 
-    void Renderer::DrawAABB(const Ref<Mesh>& mesh, const glm::mat4& transform, const glm::vec4& color)
+    void Renderer::DrawAABB(const Ref<Mesh>& mesh, const glm::mat4& transform, const glm::vec4& /* color */)
     {
         for (Submesh& submesh : mesh->m_Submeshes)
         {

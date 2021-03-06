@@ -52,7 +52,6 @@ set(FS_SOURCES
     src/Farscape/Renderer/RenderCommandQueue
     src/Farscape/Renderer/Renderer2D.cpp
     src/Farscape/Renderer/VertexArray.cpp
-    src/Farscape/Renderer/RenderCommand.cpp
     src/Farscape/Renderer/RendererAPI.cpp
     src/Farscape/Renderer/Camera.cpp
     src/Farscape/Renderer/Texture.cpp

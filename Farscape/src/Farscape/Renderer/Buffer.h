@@ -75,7 +75,7 @@ namespace Farscape {
             case ShaderDataType::Bool:    return 1;
             }
 
-            HZ_CORE_ASSERT(false, "Unknown ShaderDataType!");
+            FS_CORE_ASSERT(false, "Unknown ShaderDataType!");
             return 0;
         }
     };

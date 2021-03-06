@@ -139,7 +139,8 @@ namespace Farscape {
     const char* FindToken(const char* str, const std::string& token)
     {
         const char* t = str;
-        while (t = strstr(t, token.c_str()))
+        t = strstr(t, token.c_str());
+        while (t)
         {
             bool left = str == t || isspace(t[-1]);
             bool right = !t[token.size()] || isspace(t[token.size()]);
@@ -147,6 +148,7 @@ namespace Farscape {
                 return t;
 
             t += token.size();
+            t = strstr(t, token.c_str());
         }
         return nullptr;
     }
@@ -202,7 +204,7 @@ namespace Farscape {
 
         if (outPosition)
             *outPosition = end;
-        uint32_t length = end - str + 1;
+        uint32_t length = (uint32_t)(end - str + 1);
         return std::string(str, length);
     }
 
@@ -214,7 +216,7 @@ namespace Farscape {
 
         if (outPosition)
             *outPosition = end;
-        uint32_t length = end - str + 1;
+        uint32_t length = (uint32_t)(end - str + 1);
         return std::string(str, length);
     }
 
@@ -355,8 +357,8 @@ namespace Farscape {
 
         uint32_t index = 0;
         index++; // struct
-        std::string name = tokens[index++];
-        ShaderStruct* uniformStruct = new ShaderStruct(name);
+        std::string token = tokens[index++];
+        ShaderStruct* uniformStruct = new ShaderStruct(token);
         index++; // {
         while (index < tokens.size())
         {
