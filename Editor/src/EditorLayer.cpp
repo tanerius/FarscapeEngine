@@ -77,7 +77,7 @@ namespace Farscape {
 
 		using namespace glm;
 
-		auto environment = Environment::Load(m_assetPath + "/env/birchwood_4k.hdr");
+		auto environment = Environment::Load("assets/env/birchwood_4k.hdr");
 
 		// Model Scene
 		{
@@ -88,14 +88,14 @@ namespace Farscape {
 
 			m_MeshEntity = m_Scene->CreateEntity("Test Entity");
 
-			auto mesh = CreateRef<Mesh>(m_assetPath + "/meshes/TestScene.fbx");
+			auto mesh = CreateRef<Mesh>("assets/meshes/TestScene.fbx");
 			m_MeshEntity->SetMesh(mesh);
 
 			m_MeshMaterial = mesh->GetMaterial();
 
 			auto secondEntity = m_Scene->CreateEntity("Gun Entity");
 			secondEntity->Transform() = glm::translate(glm::mat4(1.0f), { 5, 5, 5 }) * glm::scale(glm::mat4(1.0f), {10, 10, 10});
-			mesh = CreateRef<Mesh>(m_assetPath + "/models/m1911/M1911Materials.fbx");
+			mesh = CreateRef<Mesh>("assets/models/m1911/M1911Materials.fbx");
 			secondEntity->SetMesh(mesh);
 		}
 
@@ -106,7 +106,7 @@ namespace Farscape {
 
 			m_SphereScene->SetEnvironment(environment);
 
-			auto sphereMesh = CreateRef<Mesh>(m_assetPath + "/models/Sphere1m.fbx");
+			auto sphereMesh = CreateRef<Mesh>("assets/models/Sphere1m.fbx");
 			m_SphereBaseMaterial = sphereMesh->GetMaterial();
 
 			float x = -4.0f;
@@ -149,10 +149,10 @@ namespace Farscape {
 		m_ActiveScene = m_Scene;
 		m_SceneHierarchyPanel = CreateScope<SceneHierarchyPanel>(m_ActiveScene);
 
-		m_PlaneMesh.reset(new Mesh(m_assetPath + "/models/Plane1m.obj"));
+		m_PlaneMesh.reset(new Mesh("assets/models/Plane1m.obj"));
 
 		// Editor
-		m_CheckerboardTex = Texture2D::Create(m_assetPath + "/editor/Checkerboard.tga");
+		m_CheckerboardTex = Texture2D::Create("assets/editor/Checkerboard.tga");
 
 		// Set lights
 		auto& light = m_Scene->GetLight();

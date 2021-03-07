@@ -134,10 +134,8 @@ add_library(Farscape::Farscape ALIAS Farscape)
 
 
 
-add_custom_command(TARGET Farscape POST_BUILD        # Adds a post-build event to MyTest
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${FARSCAPE_ASSIMP_DLL}"      # <--this is in-file
-        "${FARSCAPE_BINARY_DIR}/$<CONFIGURATION>")                 # <--this is out-file path
+     
+
 
 install(TARGETS Farscape
     CONFIGURATIONS Debug

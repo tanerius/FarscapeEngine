@@ -2,6 +2,7 @@
 
 #include "Scene/Scene.h"
 
+
 namespace Farscape {
 
     class SceneHierarchyPanel

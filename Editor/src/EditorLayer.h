@@ -68,9 +68,6 @@ namespace Farscape {
 
         Ref<Material> m_MeshMaterial;
 
-        std::string m_assetPath = EDITOR_ASSETS_PATH;
-        std::string m_masterPath = EDITOR_MASTER_PATH;
-
         std::vector<Ref<MaterialInstance>> m_MetalSphereMaterialInstances;
         std::vector<Ref<MaterialInstance>> m_DielectricSphereMaterialInstances;
 

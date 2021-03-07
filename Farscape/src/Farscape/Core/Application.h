@@ -37,6 +37,8 @@ namespace Farscape {
 
         inline Window& GetWindow() { return *m_Window; }
 
+        inline float GetFPS() const { return m_fps; }
+
         static inline Application& Get() { return *s_Instance; }
 
         float GetTime() const; // TODO: This should be in "Platform"
@@ -49,6 +51,7 @@ namespace Farscape {
         LayerStack m_LayerStack;
         ImGuiLayer* m_ImGuiLayer;
         Timestep m_TimeStep;
+        float m_fps = 60.0f;
 
         float m_LastFrameTime = 0.0f;
 

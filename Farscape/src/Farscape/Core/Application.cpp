@@ -56,6 +56,7 @@ namespace Farscape {
     {
         m_ImGuiLayer->Begin();
 
+        /* 
         ImGui::Begin("Renderer");
         auto& caps = RendererAPI::GetCapabilities();
         ImGui::Text("Vendor: %s", caps.Vendor.c_str());
@@ -63,7 +64,7 @@ namespace Farscape {
         ImGui::Text("Version: %s", caps.Version.c_str());
         ImGui::Text("Frame Time: %.2fms\n", m_TimeStep.GetMilliseconds());
         ImGui::End();
-
+        */
         for (Layer* layer : m_LayerStack)
             layer->OnImGuiRender();
 
@@ -91,6 +92,11 @@ namespace Farscape {
             float time = GetTime();
             m_TimeStep = time - m_LastFrameTime;
             m_LastFrameTime = time;
+
+            if (m_TimeStep.GetMilliseconds() > 0.001f)
+                m_fps = 1000.0f / m_TimeStep.GetMilliseconds();
+            else
+                m_fps = 500.0f;
         }
         OnShutdown();
     }

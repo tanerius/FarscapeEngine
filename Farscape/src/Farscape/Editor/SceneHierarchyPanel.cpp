@@ -12,6 +12,8 @@
 #include <glm/gtx/matrix_decompose.hpp>
 #pragma warning(default:4201)
 
+#include "Core/Application.h"
+
 // TODO:
 // - Eventually change imgui node IDs to be entity/asset GUID
 
@@ -22,6 +24,7 @@ namespace Farscape {
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 		: m_Context(context)
 	{
+
 	}
 
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& scene)
@@ -31,6 +34,15 @@ namespace Farscape {
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
+		// A dockable withdow for renderer info 
+		ImGui::Begin("Renderer Info");
+		auto& caps = RendererAPI::GetCapabilities();
+		ImGui::Text("Vendor: %s", caps.Vendor.c_str());
+		ImGui::Text("Renderer: %s", caps.Renderer.c_str());
+		ImGui::Text("Version: %s", caps.Version.c_str());
+		ImGui::Text("FPS: %.2fms\n", Application::Get().GetFPS());
+		ImGui::End();
+
 		ImGui::Begin("Scene Hierarchy");
 
 		uint32_t entityCount = 0, meshCount = 0;

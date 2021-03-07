@@ -8,7 +8,7 @@
 // - Unreal Engine 4 PBR notes (https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf)
 // - Frostbite's SIGGRAPH 2014 paper (https://seblagarde.wordpress.com/2015/07/14/siggraph-2014-moving-frostbite-to-physically-based-rendering/)
 // - Michał Siejak's PBR project (https://github.com/Nadrin)
-// - My implementation from years ago in the Sparky engine (https://github.com/TheCherno/Sparky)
+// - The Sparky engine (https://github.com/TheCherno/Sparky)
 #type vertex
 #version 430 core
 

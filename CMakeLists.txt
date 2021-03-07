@@ -25,19 +25,13 @@ set(FARSCAPE_EXTERNALS_DIR "${CMAKE_SOURCE_DIR}/external")
 
 string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
 
-# TODO : Do this only in debug!!!!
+# TODO: Make this platform independant
 if( CONFIG_TYPE STREQUAL "Debug")
 	message(STATUS "*** Build type is:				DEBUG")
-	set(EDITOR_ASSETS_PATH "${CMAKE_SOURCE_DIR}/Editor/assets")
-	set(EDITOR_MASTER_PATH "${CMAKE_SOURCE_DIR}/Editor/master")
-	set(ASSETS_PATH ${EDITOR_ASSETS_PATH})
 	set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.lib")
 	set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll")
 else()
 	message(STATUS "*** Build type is:				RELEASE")
-	set(EDITOR_ASSETS_PATH "assets")
-	set(EDITOR_MASTER_PATH "master")
-	set(ASSETS_PATH "assets")
 	set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.lib")
 	set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll")
 endif()
@@ -57,8 +51,6 @@ message(STATUS "CMAKE_INSTALL_PREFIX				${CMAKE_INSTALL_PREFIX}")
 message(STATUS "FARSCAPE_EXTERNALS_DIR			${FARSCAPE_EXTERNALS_DIR}")
 message(STATUS "FARSCAPE_ASSIMP_LIB				${FARSCAPE_ASSIMP_LIB}")
 message(STATUS "FARSCAPE_ASSIMP_DLL				${FARSCAPE_ASSIMP_DLL}")
-message(STATUS "ASSETS_PATH						${ASSETS_PATH}")
-message(STATUS "EDITOR_ASSETS_PATH				${EDITOR_ASSETS_PATH}")
 
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 

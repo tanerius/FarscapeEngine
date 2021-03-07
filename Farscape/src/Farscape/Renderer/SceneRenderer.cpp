@@ -70,11 +70,11 @@ namespace Farscape {
         compRenderPassSpec.TargetFramebuffer = Farscape::Framebuffer::Create(compFramebufferSpec);
         s_Data.CompositePass = RenderPass::Create(compRenderPassSpec);
 
-        s_Data.CompositeShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/SceneComposite.glsl");
-        s_Data.BRDFLUT = Texture2D::Create(std::string(ASSETS_PATH) + "/textures/BRDF_LUT.tga");
+        s_Data.CompositeShader = Shader::Create("assets/shaders/SceneComposite.glsl");
+        s_Data.BRDFLUT = Texture2D::Create("assets/textures/BRDF_LUT.tga");
 
         // Grid
-        auto gridShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/Grid.glsl");
+        auto gridShader = Shader::Create("assets/shaders/Grid.glsl");
         s_Data.GridMaterial = MaterialInstance::Create(Material::Create(gridShader));
         float gridScale = 16.025f, gridSize = 0.025f;
         s_Data.GridMaterial->Set("u_Scale", gridScale);
@@ -128,7 +128,7 @@ namespace Farscape {
 
         Ref<TextureCube> envUnfiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
         if (!equirectangularConversionShader)
-            equirectangularConversionShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/EquirectangularToCubeMap.glsl");
+            equirectangularConversionShader = Shader::Create("assets/shaders/EquirectangularToCubeMap.glsl");
         Ref<Texture2D> envEquirect = Texture2D::Create(filepath);
         FS_CORE_ASSERT(envEquirect->GetFormat() == TextureFormat::Float16, "Texture is not HDR!");
 
@@ -143,7 +143,7 @@ namespace Farscape {
 
 
         if (!envFilteringShader)
-            envFilteringShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/EnvironmentMipFilter.glsl");
+            envFilteringShader = Shader::Create("assets/shaders/EnvironmentMipFilter.glsl");
 
         Ref<TextureCube> envFiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
 
@@ -169,7 +169,7 @@ namespace Farscape {
         });
 
         if (!envIrradianceShader)
-            envIrradianceShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/EnvironmentIrradiance.glsl");
+            envIrradianceShader = Shader::Create("assets/shaders/EnvironmentIrradiance.glsl");
 
         Ref<TextureCube> irradianceMap = TextureCube::Create(TextureFormat::Float16, irradianceMapSize, irradianceMapSize);
         envIrradianceShader->Bind();

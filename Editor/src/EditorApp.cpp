@@ -3,10 +3,10 @@
 
 #include "EditorLayer.h"
 
-class HazelnutApplication : public Farscape::Application
+class PilotApplication: public Farscape::Application
 {
 public:
-	HazelnutApplication(const Farscape::ApplicationProps& props)
+	PilotApplication(const Farscape::ApplicationProps& props)
 		: Application(props)
 	{
 	}
@@ -19,5 +19,5 @@ public:
 
 Farscape::Application* Farscape::CreateApplication()
 {
-	return new HazelnutApplication({"Pilot - Farscape Editor", 1600, 900});
+	return new PilotApplication({"Pilot - The Farscape Engine Editor", 1600, 900});
 }
