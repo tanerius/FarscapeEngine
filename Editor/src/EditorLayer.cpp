@@ -106,7 +106,7 @@ namespace Farscape {
 
 			m_SphereScene->SetEnvironment(environment);
 
-			auto sphereMesh = CreateRef<Mesh>(m_assetPath + "models/Sphere1m.fbx");
+			auto sphereMesh = CreateRef<Mesh>(m_assetPath + "/models/Sphere1m.fbx");
 			m_SphereBaseMaterial = sphereMesh->GetMaterial();
 
 			float x = -4.0f;

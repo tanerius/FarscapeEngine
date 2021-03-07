@@ -4,6 +4,7 @@ add_subdirectory(libs)
 
 set(FS_PLATFORM_SPECIFIC_SRC_PATH "src/Farscape/platform")
 
+
 if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
     set(BUILD_SHARED_LIBS TRUE)
@@ -118,8 +119,9 @@ target_link_libraries(Farscape
     PUBLIC Farscape::glad
     PUBLIC glm::glm
     PUBLIC Farscape::stb
-    PUBLIC assimp::assimp
+    PUBLIC Farscape::assimp
     ${OPENGL_LIBRARIES}
+    PUBLIC ${FARSCAPE_ASSIMP_LIB}
 )
 
 if(MSVC)
@@ -131,6 +133,11 @@ endif()
 add_library(Farscape::Farscape ALIAS Farscape)
 
 
+
+add_custom_command(TARGET Farscape POST_BUILD        # Adds a post-build event to MyTest
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+        "${FARSCAPE_ASSIMP_DLL}"      # <--this is in-file
+        "${FARSCAPE_BINARY_DIR}/$<CONFIGURATION>")                 # <--this is out-file path
 
 install(TARGETS Farscape
     CONFIGURATIONS Debug

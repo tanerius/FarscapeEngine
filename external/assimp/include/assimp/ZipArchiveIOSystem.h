@@ -5,6 +5,8 @@ Open Asset Import Library (assimp)
 
 Copyright (c) 2006-2021, assimp team
 
+
+
 All rights reserved.
 
 Redistribution and use of this software in source and binary forms,
@@ -39,67 +41,54 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
 
+/** @file ZipArchiveIOSystem.h
+ *  @brief Implementation of IOSystem to read a ZIP file from another IOSystem
+*/
+
 #pragma once
+#ifndef AI_ZIPARCHIVEIOSYSTEM_H_INC
+#define AI_ZIPARCHIVEIOSYSTEM_H_INC
 
 #ifdef __GNUC__
 #   pragma GCC system_header
 #endif
 
-/** @file  MathFunctions.h
-*  @brief Implementation of math utility functions.
- *
-*/
-
-#include <limits>
+#include <assimp/IOStream.hpp>
+#include <assimp/IOSystem.hpp>
 
 namespace Assimp {
-namespace Math {
 
-/// @brief  Will return the greatest common divisor.
-/// @param  a   [in] Value a.
-/// @param  b   [in] Value b.
-/// @return The greatest common divisor.
-template <typename IntegerType>
-inline IntegerType gcd( IntegerType a, IntegerType b ) {
-	const IntegerType zero = (IntegerType)0;
-	while ( true ) {
-		if ( a == zero ) {
-			return b;
-        }
-		b %= a;
+class ZipArchiveIOSystem : public IOSystem {
+public:
+    //! Open a Zip using the proffered IOSystem
+    ZipArchiveIOSystem(IOSystem* pIOHandler, const char *pFilename, const char* pMode = "r");
+    ZipArchiveIOSystem(IOSystem* pIOHandler, const std::string& rFilename, const char* pMode = "r");
+    virtual ~ZipArchiveIOSystem();
+    bool Exists(const char* pFilename) const override;
+    char getOsSeparator() const override;
+    IOStream* Open(const char* pFilename, const char* pMode = "rb") override;
+    void Close(IOStream* pFile) override;
 
-		if ( b == zero ) {
-			return a;
-        }
-		a %= b;
-	}
-}
+    // Specific to ZIP
+    //! The file was opened and is a ZIP
+    bool isOpen() const;
 
-/// @brief  Will return the greatest common divisor.
-/// @param  a   [in] Value a.
-/// @param  b   [in] Value b.
-/// @return The greatest common divisor.
-template < typename IntegerType >
-inline IntegerType lcm( IntegerType a, IntegerType b ) {
-	const IntegerType t = gcd (a,b);
-	if (!t) {
-        return t;
-    }
-	return a / t * b;
-}
-/// @brief  Will return the smallest epsilon-value for the requested type. 
-/// @return The numercical limit epsilon depending on its type.
-template<class T>
-inline T getEpsilon() {
-    return std::numeric_limits<T>::epsilon();
-}
+    //! Get the list of all files with their simplified paths
+    //! Intended for use within Assimp library boundaries
+    void getFileList(std::vector<std::string>& rFileList) const;
 
-/// @brief  Will return the constant PI for the requested type.
-/// @return Pi
-template<class T>
-inline T PI() {
-    return static_cast<T>(3.14159265358979323846);
-}
+    //! Get the list of all files with extension (must be lowercase)
+    //! Intended for use within Assimp library boundaries
+    void getFileListExtension(std::vector<std::string>& rFileList, const std::string& extension) const;
 
-} // namespace Math
-} // namespace Assimp
+    static bool isZipArchive(IOSystem* pIOHandler, const char *pFilename);
+    static bool isZipArchive(IOSystem* pIOHandler, const std::string& rFilename);
+
+private:
+    class Implement;
+    Implement *pImpl = nullptr;
+};
+
+} // Namespace Assimp
+
+#endif // AI_ZIPARCHIVEIOSYSTEM_H_INC

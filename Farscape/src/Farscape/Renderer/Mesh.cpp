@@ -366,7 +366,7 @@ namespace Farscape {
 #endif
 
                 bool metalnessTextureFound = false;
-                for (uint32_t j = 0; i < aiMaterial->mNumProperties; j++)
+                for (uint32_t j = 0; j < aiMaterial->mNumProperties; j++)
                 {
                     auto prop = aiMaterial->mProperties[j];
 

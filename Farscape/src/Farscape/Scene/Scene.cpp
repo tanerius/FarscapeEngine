@@ -22,7 +22,7 @@ namespace Farscape {
     void Scene::Init()
     {
         // TODO: Figure out a way to load stuff properly without an install
-        auto skyboxShader = Shader::Create("assets/shaders/Skybox.glsl");
+        auto skyboxShader = Shader::Create(std::string(ASSETS_PATH) + "/shaders/Skybox.glsl");
         m_SkyboxMaterial = MaterialInstance::Create(Material::Create(skyboxShader));
         m_SkyboxMaterial->SetFlag(MaterialFlag::DepthTest, false);
     }

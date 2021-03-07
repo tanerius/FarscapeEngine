@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
 
-add_library(assimp SHARED IMPORTED )
+add_library(assimp INTERFACE )
 
-set_target_properties(assimp PROPERTIES
-  IMPORTED_LOCATION "win64/"
-  IMPORTED_IMPLIB "win64/assimp.lib"
-  INTERFACE_INCLUDE_DIRECTORIES include/
+target_include_directories(assimp 
+    INTERFACE include/
 )
 
-add_library(assimp::assimp ALIAS assimp)
+add_library(Farscape::assimp ALIAS assimp)
+# $<IF:$<CONFIG:Debug>,"${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll","${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll">
+# $<IF:$<CONFIG:Debug>,${FARSCAPE_ASSIMP_LIB},${FARSCAPE_ASSIMP_LIB}>
+
+
