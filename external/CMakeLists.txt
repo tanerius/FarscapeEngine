@@ -53,12 +53,4 @@ else()
 	add_subdirectory(stb)
 endif()
 
-### assimp
-set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/assimp/CMakeLists.txt")
-    message(FATAL_ERROR "Submodule assimp not downloaded")
-else()
-	add_subdirectory(assimp)
-endif()
+add_subdirectory(assimp)

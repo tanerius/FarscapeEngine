@@ -1,7 +1,9 @@
 #pragma once
 #include "Core/Timestep.h"
 #include "Events/MouseEvent.h"
+#pragma warning(disable:4201)
 #include <glm/glm.hpp>
+#pragma warning(default:4201)
 
 namespace Farscape {
 

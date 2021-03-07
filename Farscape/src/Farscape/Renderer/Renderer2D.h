@@ -1,6 +1,7 @@
 #pragma once
-
+#pragma warning(disable:4201)
 #include <glm/glm.hpp>
+#pragma warning(default:4201)
 
 #include "Renderer/Texture.h"
 

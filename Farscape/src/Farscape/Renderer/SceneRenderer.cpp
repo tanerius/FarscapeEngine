@@ -4,8 +4,9 @@
 #include "Renderer.h"
 
 #include <glad/glad.h>
-
+#pragma warning(disable:4201)
 #include <glm/gtc/matrix_transform.hpp>
+#pragma warning(default:4201)
 
 #include "Renderer2D.h"
 

@@ -38,8 +38,12 @@ string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
 
 # TODO : Do this only in debug!!!!
 if( CONFIG_TYPE STREQUAL "Debug")
+	set(EDITOR_ASSETS_PATH "${CMAKE_SOURCE_DIR}/Editor/assets")
+	set(EDITOR_MASTER_PATH "${CMAKE_SOURCE_DIR}/Editor/master")
 	set(ASSETS_PATH "${CMAKE_SOURCE_DIR}/Sandbox/assets")
 else()
+	set(EDITOR_ASSETS_PATH "assets")
+	set(EDITOR_MASTER_PATH "master")
 	set(ASSETS_PATH "assets")
 endif()
 
@@ -72,3 +76,6 @@ add_subdirectory(Farscape)
 
 # add sandbox sources
 add_subdirectory(Sandbox)
+
+# add Editor sources
+add_subdirectory(Editor)

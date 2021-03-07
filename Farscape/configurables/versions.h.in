@@ -7,3 +7,5 @@
 #cmakedefine BUILD_DATE "@BUILD_DATE@"
 
 #cmakedefine ASSETS_PATH "@ASSETS_PATH@"
+#cmakedefine EDITOR_ASSETS_PATH "@EDITOR_ASSETS_PATH@"
+#cmakedefine EDITOR_MASTER_PATH "@EDITOR_MASTER_PATH@"

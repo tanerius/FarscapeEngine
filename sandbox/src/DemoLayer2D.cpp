@@ -1,8 +1,10 @@
 #include "DemoLayer2D.h"
 #include <imgui.h>
 
+#pragma warning(disable:4201)
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(default:4201)
 
 #include "platform/Windows/OpenGLShader.h"
 
