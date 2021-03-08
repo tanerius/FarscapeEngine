@@ -53,4 +53,9 @@ else()
 	add_subdirectory(stb)
 endif()
 
+### Assimp
 add_subdirectory(assimp)
+
+### Mono
+add_subdirectory(mono)
+

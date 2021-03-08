@@ -12,11 +12,10 @@ option(FARSCAPE_LINK_STATICALLY "Engine static library" On)
 OPTION(FARSCAPE_DEBUG "Enable debugging logs and asserts" On)
 
 
-
+set(FARSCAPE_PLATFORM "Win64")
 # Set some super global stuff here
 message(STATUS "Setting directories...")
 set(FARSCAPE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/out")
-
 set(FARSCAPE_BINARY_DIR "${FARSCAPE_OUTPUT_DIR}/bin")
 set(FARSCAPE_BUILD_DIR "${FARSCAPE_OUTPUT_DIR}/build")
 set(FARSCAPE_INTERMEDIATE_DIR "${FARSCAPE_OUTPUT_DIR}/intermediate")
@@ -36,6 +35,8 @@ else()
 	set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll")
 endif()
 
+
+message(STATUS "FARSCAPE_PLATFORM					${FARSCAPE_PLATFORM}")
 if(FARSCAPE_LINK_STATICALLY)
 	message(STATUS "Farscape linking type				STATIC ")
 	add_definitions(-DFARSCAPE_STATIC)
@@ -52,10 +53,13 @@ message(STATUS "FARSCAPE_EXTERNALS_DIR			${FARSCAPE_EXTERNALS_DIR}")
 message(STATUS "FARSCAPE_ASSIMP_LIB				${FARSCAPE_ASSIMP_LIB}")
 message(STATUS "FARSCAPE_ASSIMP_DLL				${FARSCAPE_ASSIMP_DLL}")
 
+
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 
 # include support for pre 3.16 precompiled header support
 include(cmake_modules/PrecompiledHeader.cmake)
+# include helpers
+include(cmake_modules/Helpers.cmake)
 
 #[[
 # Include Needed packages

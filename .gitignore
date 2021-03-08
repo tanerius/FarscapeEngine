@@ -49,3 +49,5 @@ out
 
 CMakeSettings.json
 
+external/mono/*
+!external/mono/CMakeLists.txt
