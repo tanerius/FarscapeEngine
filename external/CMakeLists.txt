@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.18)
 
 # Before adding externals make sure we grab the latest from github
 # 1. Download all the submodules
