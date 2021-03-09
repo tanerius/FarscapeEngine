@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
+message(STATUS "Setting up: mono")
 set(fs_mono_lib_locations
     "${PROJECT_SOURCE_DIR}/External/mono/bin"
     "${PROJECT_SOURCE_DIR}/External/mono/include"
