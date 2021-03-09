@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
+message(STATUS "Setting up: assimp")
 set(fs_assimp_lib_locations
     "${PROJECT_SOURCE_DIR}/External/assimp/include"
     "${PROJECT_SOURCE_DIR}/External/assimp/lib"
