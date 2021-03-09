@@ -6,74 +6,39 @@ project(Farscape
     LANGUAGES CXX C
 )
 
-# TODO: DON'T USE GLOBALS LIKE AN ASSHOLE
-set(CMAKE_CXX_STANDARD 17)
-
-option(FARSCAPE_LINK_STATICALLY "Engine static library" On)
-OPTION(FARSCAPE_DEBUG "Enable debugging logs and asserts" On)
-
-
-set(FARSCAPE_PLATFORM "Win64")
-# Set some super global stuff here
-message(STATUS "Setting directories...")
-set(FARSCAPE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/out")
-set(FARSCAPE_BINARY_DIR "${FARSCAPE_OUTPUT_DIR}/bin")
-set(FARSCAPE_BUILD_DIR "${FARSCAPE_OUTPUT_DIR}/build")
-set(FARSCAPE_INTERMEDIATE_DIR "${FARSCAPE_OUTPUT_DIR}/intermediate")
-set(FARSCAPE_INSTALL_DIR "${FARSCAPE_OUTPUT_DIR}/install")
-set(FARSCAPE_EXTERNALS_DIR "${CMAKE_SOURCE_DIR}/external")
-
-string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
-
-# TODO: Make this platform independant
-if( CONFIG_TYPE STREQUAL "Debug")
-	message(STATUS "*** Build type is:				DEBUG")
-	set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.lib")
-	set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll")
-else()
-	message(STATUS "*** Build type is:				RELEASE")
-	set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.lib")
-	set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll")
-endif()
-
-
-message(STATUS "FARSCAPE_PLATFORM					${FARSCAPE_PLATFORM}")
-if(FARSCAPE_LINK_STATICALLY)
-	message(STATUS "Farscape linking type				STATIC ")
-	add_definitions(-DFARSCAPE_STATIC)
-else()
-	message(STATUS "Farscape linking type				DYNAMIC ")
-endif()
-message(STATUS "FARSCAPE_OUTPUT_DIR				${FARSCAPE_OUTPUT_DIR}")
-message(STATUS "FARSCAPE_BINARY_DIR				${FARSCAPE_BINARY_DIR}")
-message(STATUS "FARSCAPE_INTERMEDIATE_DIR			${FARSCAPE_INTERMEDIATE_DIR}")
-message(STATUS "FARSCAPE_INSTALL_DIR				${FARSCAPE_INSTALL_DIR}")
-message(STATUS "CMAKE_BINARY_DIR					${CMAKE_BINARY_DIR}")
-message(STATUS "CMAKE_INSTALL_PREFIX				${CMAKE_INSTALL_PREFIX}")
-message(STATUS "FARSCAPE_EXTERNALS_DIR			${FARSCAPE_EXTERNALS_DIR}")
-message(STATUS "FARSCAPE_ASSIMP_LIB				${FARSCAPE_ASSIMP_LIB}")
-message(STATUS "FARSCAPE_ASSIMP_DLL				${FARSCAPE_ASSIMP_DLL}")
-
-
-configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
-
 # include support for pre 3.16 precompiled header support
 include(cmake_modules/PrecompiledHeader.cmake)
 # include helpers
 include(cmake_modules/Helpers.cmake)
+#First set the platform
+set_farscape_platform()
 
-#[[
-# Include Needed packages
-# Enables ${OPENGL_INCLUDE_DIRS} and ${OPENGL_LIBRARIES}
-find_package(OpenGL REQUIRED)
-if( NOT OpenGL_FOUND )
-	message(FATAL_ERROR "OpenGL Not found")
+# TODO: DON'T USE GLOBALS LIKE AN ASSHOLE
+set(CMAKE_CXX_STANDARD 17)
+
+OPTION(FARSCAPE_LINK_STATICALLY "Engine static library" On)
+OPTION(FARSCAPE_DEBUG "Enable debugging logs and asserts" On)
+
+# Set some super global stuff here
+if (FARSCAPE_PLATFORM STREQUAL "Win64")
+	if( CONFIG_TYPE STREQUAL "Debug")
+		message(STATUS "*** Build type is:				DEBUG")
+		set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.lib")
+		set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll")
+	else()
+		message(STATUS "*** Build type is:				RELEASE")
+		set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.lib")
+		set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll")
+	endif()
+else()
+	message(FATAL_ERROR "STOP! Non Win64 platform is currently not supported")
 endif()
-]]
 
 
+configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 
-
+#print the configuration 
+print_farscape_environment()
 
 # add all required externals
 add_subdirectory(External)

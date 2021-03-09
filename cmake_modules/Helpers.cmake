@@ -46,3 +46,53 @@ function(congifure_prebuilt_lib test_locations url filename dest)
         file(REMOVE_RECURSE "${dest}/${filename}")
     endif()
 endfunction()
+
+
+macro(set_farscape_platform)
+    if(APPLE)
+        # MacOS, iOS, watchOS, tvOS
+        set(FARSCAPE_PLATFORM "Apple")
+    elseif(WIN32 OR WIN64)
+        # Any windows
+        set(FARSCAPE_PLATFORM "Win64")
+    elseif(UNIX AND NOT APPLE)
+        # Nix
+        set(FARSCAPE_PLATFORM "Linux")
+    else()
+        # Nix
+        set(FARSCAPE_PLATFORM "NA")
+    endif()
+    
+endmacro()
+
+
+function(print_farscape_environment)
+    message(STATUS "FARSCAPE_PLATFORM					${FARSCAPE_PLATFORM}")
+    if(FARSCAPE_LINK_STATICALLY)
+        message(STATUS "Farscape linking type				STATIC ")
+        add_definitions(-DFARSCAPE_STATIC)
+    else()
+        message(STATUS "Farscape linking type				DYNAMIC ")
+    endif()
+    message(STATUS "FARSCAPE_OUTPUT_DIR				${FARSCAPE_OUTPUT_DIR}")
+    message(STATUS "FARSCAPE_BINARY_DIR				${FARSCAPE_BINARY_DIR}")
+    message(STATUS "FARSCAPE_INTERMEDIATE_DIR			${FARSCAPE_INTERMEDIATE_DIR}")
+    message(STATUS "FARSCAPE_INSTALL_DIR				${FARSCAPE_INSTALL_DIR}")
+    message(STATUS "CMAKE_BINARY_DIR					${CMAKE_BINARY_DIR}")
+    message(STATUS "CMAKE_INSTALL_PREFIX				${CMAKE_INSTALL_PREFIX}")
+    message(STATUS "FARSCAPE_EXTERNALS_DIR			${FARSCAPE_EXTERNALS_DIR}")
+    message(STATUS "FARSCAPE_ASSIMP_LIB				${FARSCAPE_ASSIMP_LIB}")
+    message(STATUS "FARSCAPE_ASSIMP_DLL				${FARSCAPE_ASSIMP_DLL}")
+endfunction()
+
+
+macro(set_farscape_globals)
+    message(STATUS "Setting directories...")
+    set(FARSCAPE_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/out")
+    set(FARSCAPE_BINARY_DIR "${FARSCAPE_OUTPUT_DIR}/bin")
+    set(FARSCAPE_BUILD_DIR "${FARSCAPE_OUTPUT_DIR}/build")
+    set(FARSCAPE_INTERMEDIATE_DIR "${FARSCAPE_OUTPUT_DIR}/intermediate")
+    set(FARSCAPE_INSTALL_DIR "${FARSCAPE_OUTPUT_DIR}/install")
+    set(FARSCAPE_EXTERNALS_DIR "${CMAKE_SOURCE_DIR}/external")
+    string(TIMESTAMP BUILD_DATE "%Y-%m-%d %H:%M" UTC)
+endmacro()
