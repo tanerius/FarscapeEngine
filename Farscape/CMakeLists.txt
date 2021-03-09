@@ -111,6 +111,7 @@ target_include_directories(Farscape
 )
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX src/pch/fspch.cpp FORCEINCLUDE)
+get_target_property(FARSCAPE_ASSIMP_LIB Farscape::assimp "assimp_library")
 
 target_link_libraries(Farscape
     PUBLIC spdlog::spdlog
@@ -124,6 +125,8 @@ target_link_libraries(Farscape
     PUBLIC ${FARSCAPE_ASSIMP_LIB}
     PUBLIC Farscape::entt
 )
+
+
 
 if(MSVC)
   target_compile_options(Farscape PRIVATE /W4 /WX)

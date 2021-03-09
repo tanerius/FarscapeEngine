@@ -15,26 +15,10 @@ include(cmake_modules/Helpers.cmake)
 set_farscape_platform()
 set_farscape_globals()
 
-# TODO: DON'T USE GLOBALS LIKE AN ASSHOLE
-set(CMAKE_CXX_STANDARD 17)
 OPTION(FARSCAPE_LINK_STATICALLY "Engine static library" On)
 OPTION(FARSCAPE_DEBUG "Enable debugging logs and asserts" On)
 
 # Set some super global stuff here
-if (FARSCAPE_PLATFORM STREQUAL "Win64")
-	if( CONFIG_TYPE STREQUAL "Debug")
-		message(STATUS "*** Build type is:				DEBUG")
-		set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.lib")
-		set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll")
-	else()
-		message(STATUS "*** Build type is:				RELEASE")
-		set(FARSCAPE_ASSIMP_LIB "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.lib")
-		set(FARSCAPE_ASSIMP_DLL "${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll")
-	endif()
-else()
-	message(FATAL_ERROR "STOP! Non Win64 platform is currently not supported")
-endif()
-
 configure_file(Farscape/configurables/versions.h.in ${FARSCAPE_BINARY_DIR}/generated/Versions.h @ONLY)
 
 #print the configuration 

@@ -7,8 +7,13 @@ add_executable(FarscapeEditor
     src/EditorApp.cpp
 )
 
+# Force this to c++17 
+target_compile_features(FarscapeEditor PRIVATE cxx_std_17)
 
 # A command to copy the Assimp DLL to the exe of the editor
+
+get_target_property(FARSCAPE_ASSIMP_DLL Farscape::assimp "assimp_dll")
+
 add_custom_command(TARGET FarscapeEditor POST_BUILD         # Adds a post-build event to MyTest
     COMMAND ${CMAKE_COMMAND} -E copy_if_different           # which executes "cmake - E copy_if_different..."
           ${FARSCAPE_ASSIMP_DLL}                            # <--this is in-file
