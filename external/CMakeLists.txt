@@ -59,3 +59,5 @@ add_subdirectory(assimp)
 ### Mono
 add_subdirectory(mono)
 
+### entt
+add_subdirectory(entt)

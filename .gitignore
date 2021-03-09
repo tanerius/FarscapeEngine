@@ -51,3 +51,6 @@ CMakeSettings.json
 
 external/mono/*
 !external/mono/CMakeLists.txt
+
+external/assimp/*
+!external/assimp/CMakeLists.txt

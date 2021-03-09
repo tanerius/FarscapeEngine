@@ -122,6 +122,7 @@ target_link_libraries(Farscape
     PUBLIC Farscape::assimp
     ${OPENGL_LIBRARIES}
     PUBLIC ${FARSCAPE_ASSIMP_LIB}
+    PUBLIC Farscape::entt
 )
 
 if(MSVC)
