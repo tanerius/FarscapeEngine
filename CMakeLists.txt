@@ -6,6 +6,7 @@ project(Farscape
     LANGUAGES CXX C
 )
 
+# TODO: DON'T USE GLOBALS LIKE AN ASSHOLE
 set(CMAKE_CXX_STANDARD 17)
 
 option(FARSCAPE_LINK_STATICALLY "Engine static library" On)
