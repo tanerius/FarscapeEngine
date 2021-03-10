@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.18)
 add_executable(Sandbox 
     "src/Sandbox.cpp")
 
+# Farscape engine if c++17
+target_compile_features(Sandbox PRIVATE cxx_std_17)
+
 target_link_libraries(Sandbox
     PRIVATE Farscape::Farscape
 )
