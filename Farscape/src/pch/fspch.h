@@ -12,6 +12,7 @@
 #include <functional>
 #include <algorithm>
 #include <fstream>
+#include <random>
 
 #include "Core/Log.h"
 #include "Core/Core.h"

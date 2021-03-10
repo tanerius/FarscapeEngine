@@ -72,6 +72,7 @@ set(FS_SOURCES
     src/Farscape/Scene/Scene.cpp
     src/Farscape/Core/Timestep.cpp
     src/Farscape/Editor/SceneHierarchyPanel.cpp
+    src/Farscape/Core/Uuid.cpp
  )
 
  # OpenGL
