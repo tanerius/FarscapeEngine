@@ -61,3 +61,10 @@ add_subdirectory(mono)
 
 ### entt
 add_subdirectory(entt)
+
+### FastNoiseLite
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/FastNoiseLite/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule FastNoiseLite not downloaded")
+else()
+	add_subdirectory(FastNoiseLite)
+endif()

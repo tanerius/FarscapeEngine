@@ -68,6 +68,7 @@ endmacro()
 
 function(print_farscape_environment)
     message(STATUS "FARSCAPE_PLATFORM					${FARSCAPE_PLATFORM}")
+    message(STATUS "CONFIG_TYPE					    ${CONFIG_TYPE}")
     if(FARSCAPE_LINK_STATICALLY)
         message(STATUS "Farscape linking type				STATIC ")
         add_definitions(-DFARSCAPE_STATIC)
