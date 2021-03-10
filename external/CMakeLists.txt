@@ -61,3 +61,6 @@ add_subdirectory(mono)
 
 ### entt
 add_subdirectory(entt)
+
+### FastNoiseLite
+add_subdirectory(FastNoiseLite)
