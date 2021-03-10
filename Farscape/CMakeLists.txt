@@ -73,6 +73,7 @@ set(FS_SOURCES
     src/Farscape/Core/Timestep.cpp
     src/Farscape/Editor/SceneHierarchyPanel.cpp
     src/Farscape/Core/Uuid.cpp
+    src/Farscape/Core/Math/Noise.cpp
  )
 
  # OpenGL
@@ -125,6 +126,7 @@ target_link_libraries(Farscape
     ${OPENGL_LIBRARIES}
     PUBLIC ${FARSCAPE_ASSIMP_LIB}
     PUBLIC Farscape::entt
+    PUBLIC Farscape::FastNoiseLite
 )
 
 
