@@ -10,6 +10,3 @@
 	path = external/glm
 	url = https://github.com/g-truc/glm
 	branch = master
-[submodule ".\\external\\FastNoiseLite"]
-	path = .\\external\\FastNoiseLite
-	url = git@github.com:Auburn/FastNoiseLite.git
