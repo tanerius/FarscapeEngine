@@ -1,6 +1,7 @@
 #pragma once
 #include "Versions.h"
 #include <memory>
+#include "Ref.h"
 
 #if defined(_WIN32) // Any windows 32 or 64 bit
 #if defined(_WIN64) //Windows 64bit
@@ -71,13 +72,5 @@ namespace Farscape {
         return std::make_unique<T>(std::forward<Args>(args)...);
     }
 
-    template<typename T>
-    using Ref = std::shared_ptr<T>;
-    template<typename T, typename ... Args>
-    constexpr Ref<T> CreateRef(Args&& ... args)
-    {
-        return std::make_shared<T>(std::forward<Args>(args)...);
-    }
-
     using byte = uint8_t;
-}
+};
