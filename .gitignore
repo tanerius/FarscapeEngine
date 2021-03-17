@@ -54,3 +54,5 @@ external/mono/*
 
 external/assimp/*
 !external/assimp/CMakeLists.txt
+
+Editor/mono/*

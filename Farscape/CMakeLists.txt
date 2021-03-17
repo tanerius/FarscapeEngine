@@ -74,6 +74,9 @@ set(FS_SOURCES
     src/Farscape/Editor/SceneHierarchyPanel.cpp
     src/Farscape/Core/Uuid.cpp
     src/Farscape/Core/Math/Noise.cpp
+    src/Farscape/Scripting/ScriptEngine.cpp
+    src/Farscape/Scripting/ScriptEngineRegistry.cpp
+    src/Farscape/Scripting/ScriptWrappers.cpp
  )
 
  # OpenGL
@@ -127,6 +130,7 @@ target_link_libraries(Farscape
     PUBLIC ${FARSCAPE_ASSIMP_LIB}
     PUBLIC Farscape::entt
     PUBLIC Farscape::FastNoiseLite
+    PUBLIC Farscape::mono
 )
 
 

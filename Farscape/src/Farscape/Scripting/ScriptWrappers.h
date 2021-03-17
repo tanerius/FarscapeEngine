@@ -1,0 +1,56 @@
+#pragma once
+
+#include "Scripting/ScriptEngine.h"
+#include "Core/Codes.h"
+
+#include <glm/glm.hpp>
+
+extern "C" {
+    typedef struct _MonoString MonoString;
+    typedef struct _MonoArray MonoArray;
+}
+
+namespace Farscape {
+    namespace Script {
+
+        // Math
+        float Farscape_Noise_PerlinNoise(float x, float y);
+
+        // Input
+        bool Farscape_Input_IsKeyPressed(KeyCode key);
+
+        // Entity
+        void Farscape_Entity_GetTransform(uint32_t sceneID, uint32_t entityID, glm::mat4* outTransform);
+        void Farscape_Entity_SetTransform(uint32_t sceneID, uint32_t entityID, glm::mat4* inTransform);
+        void Farscape_Entity_CreateComponent(uint32_t sceneID, uint32_t entityID, void* type);
+        bool Farscape_Entity_HasComponent(uint32_t sceneID, uint32_t entityID, void* type);
+
+        void* Farscape_MeshComponent_GetMesh(uint32_t sceneID, uint32_t entityID);
+        void Farscape_MeshComponent_SetMesh(uint32_t sceneID, uint32_t entityID, Ref<Mesh>* inMesh);
+
+        // Renderer
+        // Texture2D
+        void* Farscape_Texture2D_Constructor(uint32_t width, uint32_t height);
+        void Farscape_Texture2D_Destructor(Ref<Texture2D>* _this);
+        void Farscape_Texture2D_SetData(Ref<Texture2D>* _this, MonoArray* inData, int32_t count);
+
+        // Material
+        void Farscape_Material_Destructor(Ref<Material>* _this);
+        void Farscape_Material_SetFloat(Ref<Material>* _this, MonoString* uniform, float value);
+        void Farscape_Material_SetTexture(Ref<Material>* _this, MonoString* uniform, Ref<Texture2D>* texture);
+
+        void Farscape_MaterialInstance_Destructor(Ref<MaterialInstance>* _this);
+        void Farscape_MaterialInstance_SetFloat(Ref<MaterialInstance>* _this, MonoString* uniform, float value);
+        void Farscape_MaterialInstance_SetVector3(Ref<MaterialInstance>* _this, MonoString* uniform, glm::vec3* value);
+        void Farscape_MaterialInstance_SetTexture(Ref<MaterialInstance>* _this, MonoString* uniform, Ref<Texture2D>* texture);
+
+        // Mesh
+        Ref<Mesh>* Farscape_Mesh_Constructor(MonoString* filepath);
+        void Farscape_Mesh_Destructor(Ref<Mesh>* _this);
+        Ref<Material>* Farscape_Mesh_GetMaterial(Ref<Mesh>* inMesh);
+        Ref<MaterialInstance>* Farscape_Mesh_GetMaterialByIndex(Ref<Mesh>* inMesh, int index);
+        int Farscape_Mesh_GetMaterialCount(Ref<Mesh>* inMesh);
+
+        void* Farscape_MeshFactory_CreatePlane(float width, float height);
+    }
+}
