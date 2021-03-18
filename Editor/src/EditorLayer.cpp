@@ -69,8 +69,7 @@ namespace Farscape {
 		colors[ImGuiCol_PlotHistogram] = ImVec4(0.73f, 0.6f, 0.15f, 1.0f);
 		colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.0f, 0.6f, 0.0f, 1.0f);
 		colors[ImGuiCol_TextSelectedBg] = ImVec4(0.87f, 0.87f, 0.87f, 0.35f);
-		colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.8f, 0.8f, 0.8f, 0.35f);
-		//colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.8f, 0.8f, 0.8f, 0.35f);
+		colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.8f, 0.8f, 0.8f, 0.35f);
 		colors[ImGuiCol_DragDropTarget] = ImVec4(1.0f, 1.0f, 0.0f, 0.9f);
 		colors[ImGuiCol_NavHighlight] = ImVec4(0.60f, 0.6f, 0.6f, 1.0f);
 		colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
@@ -81,32 +80,40 @@ namespace Farscape {
 
 		// Model Scene
 		{
-			m_Scene = CreateRef<Scene>("Model Scene");
-			m_Scene->SetCamera(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
+			m_Scene = Ref<Scene>::Create("Model Scene");
+			m_CameraEntity = m_Scene->CreateEntity("Camera");
+			m_CameraEntity.AddComponent<CameraComponent>(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
 
 			m_Scene->SetEnvironment(environment);
 
 			m_MeshEntity = m_Scene->CreateEntity("Test Entity");
 
-			auto mesh = CreateRef<Mesh>("assets/meshes/TestScene.fbx");
-			m_MeshEntity->SetMesh(mesh);
+			auto mesh = Ref<Mesh>::Create("assets/meshes/TestScene.fbx");
+			m_MeshEntity.AddComponent<MeshComponent>(mesh);
 
 			m_MeshMaterial = mesh->GetMaterial();
 
-			auto secondEntity = m_Scene->CreateEntity("Gun Entity");
-			secondEntity->Transform() = glm::translate(glm::mat4(1.0f), { 5, 5, 5 }) * glm::scale(glm::mat4(1.0f), {10, 10, 10});
-			mesh = CreateRef<Mesh>("assets/models/m1911/M1911Materials.fbx");
-			secondEntity->SetMesh(mesh);
+			m_MeshEntity.AddComponent<ScriptComponent>("Example.Script");
+
+			// Test Sandbox
+			auto mapGenerator = m_Scene->CreateEntity("Map Generator");
+			mapGenerator.AddComponent<ScriptComponent>("Example.MapGenerator");
+
+			//auto secondEntity = m_Scene->CreateEntity("Gun Entity");
+			//secondEntity->Transform() = glm::translate(glm::mat4(1.0f), { 5, 5, 5 }) * glm::scale(glm::mat4(1.0f), {10, 10, 10});
+			//mesh = CreateRef<Mesh>("assets/models/m1911/M1911Materials.fbx");
+			//secondEntity->SetMesh(mesh);
 		}
 
 		// Sphere Scene
 		{
-			m_SphereScene = CreateRef<Scene>("PBR Sphere Scene");
-			m_SphereScene->SetCamera(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
+			m_SphereScene = Ref<Scene>::Create("PBR Sphere Scene");
+			auto cameraEntity = m_SphereScene->CreateEntity("Camera");
+			cameraEntity.AddComponent<CameraComponent>(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
 
 			m_SphereScene->SetEnvironment(environment);
 
-			auto sphereMesh = CreateRef<Mesh>("assets/models/Sphere1m.fbx");
+			auto sphereMesh = Ref<Mesh>::Create("assets/models/Sphere1m.fbx");
 			m_SphereBaseMaterial = sphereMesh->GetMaterial();
 
 			float x = -4.0f;
@@ -115,16 +122,16 @@ namespace Farscape {
 			{
 				auto sphereEntity = m_SphereScene->CreateEntity();
 
-				Ref<MaterialInstance> mi = CreateRef<MaterialInstance>(m_SphereBaseMaterial);
+				Ref<MaterialInstance> mi = Ref<MaterialInstance>::Create(m_SphereBaseMaterial);
 				mi->Set("u_Metalness", 1.0f);
 				mi->Set("u_Roughness", roughness);
 				x += 1.1f;
 				roughness += 0.15f;
 				m_MetalSphereMaterialInstances.push_back(mi);
 
-				sphereEntity->SetMesh(sphereMesh);
-				sphereEntity->SetMaterial(mi);
-				sphereEntity->Transform() = translate(mat4(1.0f), vec3(x, 0.0f, 0.0f));
+				// sphereEntity->SetMesh(sphereMesh);
+				// sphereEntity->SetMaterial(mi);
+				// sphereEntity->Transform() = translate(mat4(1.0f), vec3(x, 0.0f, 0.0f));
 			}
 
 			x = -4.0f;
@@ -140,16 +147,14 @@ namespace Farscape {
 				roughness += 0.15f;
 				m_DielectricSphereMaterialInstances.push_back(mi);
 
-				sphereEntity->SetMesh(sphereMesh);
-				sphereEntity->SetMaterial(mi);
-				sphereEntity->Transform() = translate(mat4(1.0f), vec3(x, 1.2f, 0.0f));
+				// sphereEntity->SetMesh(sphereMesh);
+				// sphereEntity->SetMaterial(mi);
+				// sphereEntity->Transform() = translate(mat4(1.0f), vec3(x, 1.2f, 0.0f));
 			}
 		}
 
 		m_ActiveScene = m_Scene;
 		m_SceneHierarchyPanel = CreateScope<SceneHierarchyPanel>(m_ActiveScene);
-
-		m_PlaneMesh.reset(new Mesh("assets/models/Plane1m.obj"));
 
 		// Editor
 		m_CheckerboardTex = Texture2D::Create("assets/editor/Checkerboard.tga");
@@ -159,7 +164,7 @@ namespace Farscape {
 		light.Direction = { -0.5f, -0.5f, 1.0f };
 		light.Radiance = { 1.0f, 1.0f, 1.0f };
 
-		m_CurrentlySelectedTransform = &m_MeshEntity->Transform();
+		m_CurrentlySelectedTransform = &m_MeshEntity.Transform();
 	}
 
 	void EditorLayer::OnDetach()
@@ -201,28 +206,31 @@ namespace Farscape {
 		if (m_RoughnessInput.TextureMap)
 			m_MeshMaterial->Set("u_RoughnessTexture", m_RoughnessInput.TextureMap);
 
-		if (m_AllowViewportCameraEvents)
-			m_Scene->GetCamera().OnUpdate(ts);
+		// if (m_AllowViewportCameraEvents)
+		// 	m_Scene->GetCamera().OnUpdate(ts);
 
 		m_ActiveScene->OnUpdate(ts);
 
 		if (m_DrawOnTopBoundingBoxes)
 		{
 			Farscape::Renderer::BeginRenderPass(Farscape::SceneRenderer::GetFinalRenderPass(), false);
-			auto viewProj = m_Scene->GetCamera().GetViewProjection();
+			auto viewProj = m_CameraEntity.GetComponent<CameraComponent>().Camera.GetViewProjection();
 			Farscape::Renderer2D::BeginScene(viewProj, false);
-			Renderer::DrawAABB(m_MeshEntity->GetMesh(), m_MeshEntity->Transform());
+			Renderer::DrawAABB(m_MeshEntity.GetComponent<MeshComponent>(), m_MeshEntity.GetComponent<TransformComponent>());
 			Farscape::Renderer2D::EndScene();
 			Farscape::Renderer::EndRenderPass();
 		}
 
-		if (m_SelectedSubmeshes.size())
+		if (m_SelectionContext.size())
 		{
+			auto& selection = m_SelectionContext[0];
+
 			Farscape::Renderer::BeginRenderPass(Farscape::SceneRenderer::GetFinalRenderPass(), false);
-			auto viewProj = m_Scene->GetCamera().GetViewProjection();
+			auto viewProj = m_CameraEntity.GetComponent<CameraComponent>().Camera.GetViewProjection();
 			Farscape::Renderer2D::BeginScene(viewProj, false);
-			auto& submesh = m_SelectedSubmeshes[0];
-			Renderer::DrawAABB(submesh.Mesh->BoundingBox, m_MeshEntity->GetTransform() * submesh.Mesh->Transform);
+			glm::vec4 color = (m_SelectionMode == SelectionMode::Entity) ? glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f } : glm::vec4{ 0.2f, 0.9f, 0.2f, 1.0f };
+			Renderer::DrawAABB(selection.Mesh->BoundingBox, selection.Entity.GetComponent<TransformComponent>().Transform * selection.Mesh->Transform, color);
+
 			Farscape::Renderer2D::EndScene();
 			Farscape::Renderer::EndRenderPass();
 		}
@@ -239,7 +247,7 @@ namespace Farscape {
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
-		
+
 		return result;
 	}
 
@@ -302,7 +310,6 @@ namespace Farscape {
 
 	void EditorLayer::Property(const std::string& name, glm::vec4& value, float min, float max, EditorLayer::PropertyFlag flags)
 	{
-
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
@@ -391,7 +398,7 @@ namespace Farscape {
 		Property("Light Direction", light.Direction);
 		Property("Light Radiance", light.Radiance, PropertyFlag::ColorProperty);
 		Property("Light Multiplier", light.Multiplier, 0.0f, 5.0f);
-		Property("Exposure", m_ActiveScene->GetCamera().GetExposure(), 0.0f, 5.0f);
+		Property("Exposure", m_CameraEntity.GetComponent<CameraComponent>().Camera.GetExposure(), 0.0f, 5.0f);
 
 		Property("Radiance Prefiltering", m_RadiancePrefilter);
 		Property("Env Map Rotation", m_EnvMapRotation, -360.0f, 360.0f);
@@ -401,6 +408,12 @@ namespace Farscape {
 		if (m_UIShowBoundingBoxes && Property("On Top", m_UIShowBoundingBoxesOnTop))
 			ShowBoundingBoxes(m_UIShowBoundingBoxes, m_UIShowBoundingBoxesOnTop);
 
+		char* label = m_SelectionMode == SelectionMode::Entity ? "Entity" : "Mesh";
+		if (ImGui::Button(label))
+		{
+			m_SelectionMode = m_SelectionMode == SelectionMode::Entity ? SelectionMode::SubMesh : SelectionMode::Entity;
+		}
+
 		ImGui::Columns(1);
 
 		ImGui::End();
@@ -408,8 +421,8 @@ namespace Farscape {
 		ImGui::Separator();
 		{
 			ImGui::Text("Mesh");
-			auto mesh = m_MeshEntity->GetMesh();
-			std::string fullpath = mesh ? mesh->GetFilePath() : "None";
+			auto meshComponent = m_MeshEntity.GetComponent<MeshComponent>();
+			std::string fullpath = meshComponent.Mesh ? meshComponent.Mesh->GetFilePath() : "None";
 			size_t found = fullpath.find_last_of("/\\");
 			std::string path = found != std::string::npos ? fullpath.substr(found + 1) : fullpath;
 			ImGui::Text(path.c_str()); ImGui::SameLine();
@@ -418,10 +431,10 @@ namespace Farscape {
 				std::string filename = Application::Get().OpenFile("");
 				if (filename != "")
 				{
-					auto newMesh = CreateRef<Mesh>(filename);
+					auto newMesh = Ref<Mesh>::Create(filename);
 					// m_MeshMaterial.reset(new MaterialInstance(newMesh->GetMaterial()));
 					// m_MeshEntity->SetMaterial(m_MeshMaterial);
-					m_MeshEntity->SetMesh(newMesh);
+					meshComponent.Mesh = newMesh;
 				}
 			}
 		}
@@ -585,8 +598,8 @@ namespace Farscape {
 		auto viewportOffset = ImGui::GetCursorPos(); // includes tab bar
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		SceneRenderer::SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		m_ActiveScene->GetCamera().SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
-		m_ActiveScene->GetCamera().SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		m_CameraEntity.GetComponent<CameraComponent>().Camera.SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
+		m_CameraEntity.GetComponent<CameraComponent>().Camera.SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 		ImGui::Image((void*)SceneRenderer::GetFinalColorBufferRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
 
 		static int counter = 0;
@@ -601,23 +614,47 @@ namespace Farscape {
 		m_AllowViewportCameraEvents = ImGui::IsMouseHoveringRect(minBound, maxBound);
 
 		// Gizmos
-		if (m_GizmoType != -1 && m_CurrentlySelectedTransform)
+		if (m_GizmoType != -1 && m_SelectionContext.size())
 		{
+			auto& selection = m_SelectionContext[0];
+
 			float rw = (float)ImGui::GetWindowWidth();
 			float rh = (float)ImGui::GetWindowHeight();
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, rw, rh);
 
+			auto& camera = m_CameraEntity.GetComponent<CameraComponent>().Camera;
 			bool snap = Input::IsKeyPressed(FS_KEY_LEFT_CONTROL);
-			ImGuizmo::Manipulate(glm::value_ptr(m_ActiveScene->GetCamera().GetViewMatrix() * m_MeshEntity->Transform()),
-				glm::value_ptr(m_ActiveScene->GetCamera().GetProjectionMatrix()),
-				(ImGuizmo::OPERATION)m_GizmoType,
-				ImGuizmo::LOCAL,
-				glm::value_ptr(*m_CurrentlySelectedTransform),
-				nullptr,
-				snap ? &m_SnapValue : nullptr);
+
+			auto& entityTransform = selection.Entity.Transform();
+			float snapValue[3] = { m_SnapValue, m_SnapValue, m_SnapValue };
+			if (m_SelectionMode == SelectionMode::Entity)
+			{
+				ImGuizmo::Manipulate(glm::value_ptr(camera.GetViewMatrix()),
+					glm::value_ptr(camera.GetProjectionMatrix()),
+					(ImGuizmo::OPERATION)m_GizmoType,
+					ImGuizmo::LOCAL,
+					glm::value_ptr(entityTransform),
+					nullptr,
+					snap ? snapValue : nullptr);
+			}
+			else
+			{
+				glm::mat4 transformBase = entityTransform * selection.Mesh->Transform;
+				ImGuizmo::Manipulate(glm::value_ptr(camera.GetViewMatrix()),
+					glm::value_ptr(camera.GetProjectionMatrix()),
+					(ImGuizmo::OPERATION)m_GizmoType,
+					ImGuizmo::LOCAL,
+					glm::value_ptr(transformBase),
+					nullptr,
+					snap ? snapValue : nullptr);
+
+				selection.Mesh->Transform = glm::inverse(entityTransform) * transformBase;
+			}
 		}
+
+
 
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -658,8 +695,10 @@ namespace Farscape {
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		if (m_AllowViewportCameraEvents)
-			m_Scene->GetCamera().OnEvent(e);
+		// if (m_AllowViewportCameraEvents)
+		// 	m_CameraEntity.GetComponent<CameraComponent>().OnEvent(e);
+
+		m_Scene->OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(FS_BIND_EVENT_FN(EditorLayer::OnKeyPressedEvent));
@@ -670,31 +709,31 @@ namespace Farscape {
 	{
 		switch (e.GetKeyCode())
 		{
-			case FS_KEY_Q:
-				m_GizmoType = -1;
-				break;
-			case FS_KEY_W:
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
-				break;
-			case FS_KEY_E:
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
-				break;
-			case FS_KEY_R:
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
-				break;
-			case FS_KEY_G:
-				// Toggle grid
-				if (Farscape::Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
-					SceneRenderer::GetOptions().ShowGrid = !SceneRenderer::GetOptions().ShowGrid;
-				break;
-			case FS_KEY_B:
-				// Toggle bounding boxes 
-				if (Farscape::Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
-				{
-					m_UIShowBoundingBoxes = !m_UIShowBoundingBoxes;
-					ShowBoundingBoxes(m_UIShowBoundingBoxes, m_UIShowBoundingBoxesOnTop);
-				}
-				break;
+		case KeyCode::Q:
+			m_GizmoType = -1;
+			break;
+		case KeyCode::W:
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		case KeyCode::E:
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		case KeyCode::R:
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
+		case KeyCode::G:
+			// Toggle grid
+			if (Farscape::Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
+				SceneRenderer::GetOptions().ShowGrid = !SceneRenderer::GetOptions().ShowGrid;
+			break;
+		case KeyCode::B:
+			// Toggle bounding boxes 
+			if (Farscape::Input::IsKeyPressed(FS_KEY_LEFT_CONTROL))
+			{
+				m_UIShowBoundingBoxes = !m_UIShowBoundingBoxes;
+				ShowBoundingBoxes(m_UIShowBoundingBoxes, m_UIShowBoundingBoxesOnTop);
+			}
+			break;
 		}
 		return false;
 	}
@@ -702,48 +741,52 @@ namespace Farscape {
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
 		auto [mx, my] = Input::GetMousePosition();
-		if (e.GetMouseButton() == FS_MOUSE_BUTTON_LEFT && !Input::IsKeyPressed(FS_KEY_LEFT_ALT) && !ImGuizmo::IsOver())
+		if (e.GetMouseButton() == FS_MOUSE_BUTTON_LEFT && !Input::IsKeyPressed(KeyCode::LeftAlt) && !ImGuizmo::IsOver())
 		{
 			auto [mouseX, mouseY] = GetMouseViewportSpace();
 			if (mouseX > -1.0f && mouseX < 1.0f && mouseY > -1.0f && mouseY < 1.0f)
 			{
 				auto [origin, direction] = CastRay(mouseX, mouseY);
 
-				m_SelectedSubmeshes.clear();
-				auto mesh = m_MeshEntity->GetMesh();
-				auto& submeshes = mesh->GetSubmeshes();
-				float lastT = std::numeric_limits<float>::max();
-				for (uint32_t i = 0; i < submeshes.size(); i++)
+				m_SelectionContext.clear();
+				auto meshEntities = m_Scene->GetAllEntitiesWith<MeshComponent>();
+				for (auto e : meshEntities)
 				{
-					auto& submesh = submeshes[i];
-					Ray ray = {
-						glm::inverse(m_MeshEntity->GetTransform() * submesh.Transform) * glm::vec4(origin, 1.0f),
-						glm::inverse(glm::mat3(m_MeshEntity->GetTransform()) * glm::mat3(submesh.Transform)) * direction
-					};
+					Entity entity = { e, m_Scene.Raw() };
+					auto mesh = entity.GetComponent<MeshComponent>().Mesh;
+					if (!mesh)
+						continue;
 
-					float t;
-					bool intersects = ray.IntersectsAABB(submesh.BoundingBox, t);
-					if (intersects)
+					auto& submeshes = mesh->GetSubmeshes();
+					float lastT = std::numeric_limits<float>::max();
+					for (uint32_t i = 0; i < submeshes.size(); i++)
 					{
-						const auto& triangleCache = mesh->GetTriangleCache(i);
-						for (const auto& triangle : triangleCache)
+						auto& submesh = submeshes[i];
+						Ray ray = {
+							glm::inverse(entity.Transform() * submesh.Transform) * glm::vec4(origin, 1.0f),
+							glm::inverse(glm::mat3(entity.Transform()) * glm::mat3(submesh.Transform)) * direction
+						};
+
+						float t;
+						bool intersects = ray.IntersectsAABB(submesh.BoundingBox, t);
+						if (intersects)
 						{
-							if (ray.IntersectsTriangle(triangle.V0.Position, triangle.V1.Position, triangle.V2.Position, t))
+							const auto& triangleCache = mesh->GetTriangleCache(i);
+							for (const auto& triangle : triangleCache)
 							{
-								FS_WARN("INTERSECTION: {0}, t={1}", submesh.NodeName, t);
-								m_SelectedSubmeshes.push_back({ &submesh, t });
-								break;
+								if (ray.IntersectsTriangle(triangle.V0.Position, triangle.V1.Position, triangle.V2.Position, t))
+								{
+									FS_WARN("INTERSECTION: {0}, t={1}", submesh.NodeName, t);
+									m_SelectionContext.push_back({ entity, &submesh, t });
+									break;
+								}
 							}
 						}
 					}
 				}
-				std::sort(m_SelectedSubmeshes.begin(), m_SelectedSubmeshes.end(), [](auto& a, auto& b) { return a.Distance < b.Distance; });
-
-				// TODO: Handle mesh being deleted, etc.
-				if (m_SelectedSubmeshes.size())
-					m_CurrentlySelectedTransform = &m_SelectedSubmeshes[0].Mesh->Transform;
-				else
-					m_CurrentlySelectedTransform = &m_MeshEntity->Transform();
+				std::sort(m_SelectionContext.begin(), m_SelectionContext.end(), [](auto& a, auto& b) { return a.Distance < b.Distance; });
+				if (m_SelectionContext.size())
+					OnSelected(m_SelectionContext[0]);
 
 			}
 		}
@@ -764,15 +807,31 @@ namespace Farscape {
 	std::pair<glm::vec3, glm::vec3> EditorLayer::CastRay(float mx, float my)
 	{
 		glm::vec4 mouseClipPos = { mx, my, -1.0f, 1.0f };
-		
-		auto inverseProj = glm::inverse(m_Scene->GetCamera().GetProjectionMatrix());
-		auto inverseView = glm::inverse(glm::mat3(m_Scene->GetCamera().GetViewMatrix()));
+
+		auto inverseProj = glm::inverse(m_CameraEntity.GetComponent<CameraComponent>().Camera.GetProjectionMatrix());
+		auto inverseView = glm::inverse(glm::mat3(m_CameraEntity.GetComponent<CameraComponent>().Camera.GetViewMatrix()));
 
 		glm::vec4 ray = inverseProj * mouseClipPos;
-		glm::vec3 rayPos = m_Scene->GetCamera().GetPosition();
+		glm::vec3 rayPos = m_CameraEntity.GetComponent<CameraComponent>().Camera.GetPosition();
 		glm::vec3 rayDir = inverseView * glm::vec3(ray);
-			
+
 		return { rayPos, rayDir };
+	}
+
+	void EditorLayer::OnSelected(const SelectedSubmesh& selectionContext)
+	{
+		m_SceneHierarchyPanel->SetSelected(selectionContext.Entity);
+	}
+
+	Ray EditorLayer::CastMouseRay()
+	{
+		auto [mouseX, mouseY] = GetMouseViewportSpace();
+		if (mouseX > -1.0f && mouseX < 1.0f && mouseY > -1.0f && mouseY < 1.0f)
+		{
+			auto [origin, direction] = CastRay(mouseX, mouseY);
+			return Ray(origin, direction);
+		}
+		return Ray::Zero();
 	}
 
 }
