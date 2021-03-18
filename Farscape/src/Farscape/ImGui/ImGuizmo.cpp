@@ -858,12 +858,14 @@ namespace ImGuizmo
         }
     }
 
+#if 0
     static float GetUniform(const vec_t& position, const matrix_t& mat)
     {
         vec_t trf = makeVect(position.x, position.y, position.z, 1.f);
         trf.Transform(mat);
         return trf.w;
     }
+#endif
 
     static void ComputeContext(const float* view, const float* projection, float* matrix, MODE mode)
     {
@@ -1107,6 +1109,7 @@ namespace ImGuizmo
         }
     }
 
+#if 0
     static void DrawHatchedAxis(const vec_t& axis)
     {
         for (int j = 1; j < 10; j++)
@@ -1116,6 +1119,7 @@ namespace ImGuizmo
             gContext.mDrawList->AddLine(baseSSpace2, worldDirSSpace2, 0x80000000, 6.f);
         }
     }
+#endif
 
     static void DrawScaleGizmo(int type)
     {
@@ -2019,7 +2023,7 @@ namespace ImGuizmo
     {
         matrix_t viewInverse;
         viewInverse.Inverse(*(matrix_t*)view);
-        const matrix_t& model = *(matrix_t*)matrix;
+        //const matrix_t& model = *(matrix_t*)matrix;
         matrix_t res = *(matrix_t*)matrix * *(matrix_t*)view * *(matrix_t*)projection;
         matrix_t modelView = *(matrix_t*)matrix * *(matrix_t*)view;
 

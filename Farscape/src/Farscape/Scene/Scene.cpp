@@ -21,9 +21,9 @@ namespace Farscape {
 
     static uint32_t s_SceneIDCounter = 0;
 
-    void OnTransformConstruct(entt::registry& registry, entt::entity entity)
+    void OnTransformConstruct(entt::registry& /*registry*/, entt::entity /*entity*/)
     {
-        // HZ_CORE_TRACE("Transform Component constructed!");
+        // FS_CORE_TRACE("Transform Component constructed!");
     }
 
     void OnScriptComponentConstruct(entt::registry& registry, entt::entity entity)
@@ -31,9 +31,9 @@ namespace Farscape {
         // Note: there should be exactly one scene component per registry
         auto view = registry.view<SceneComponent>();
         uint32_t sceneID = 0;
-        for (auto entity : view)
+        for (auto i : view)
         {
-            auto& scene = registry.get<SceneComponent>(entity);
+            auto& scene = registry.get<SceneComponent>(i);
             sceneID = scene.SceneID;
         }
 
@@ -123,11 +123,13 @@ namespace Farscape {
 
         // Update all entities
         auto entities = m_Registry.view<MeshComponent>();
+        
+#if 0
         for (auto entity : entities)
         {
-            auto& meshComponent = m_Registry.get<MeshComponent>(entity);
+             auto& meshComponent = m_Registry.get<MeshComponent>(entity);
         }
-
+#endif
 
         auto group = m_Registry.group<MeshComponent>(entt::get<TransformComponent>);
         SceneRenderer::BeginScene(this, *camera);

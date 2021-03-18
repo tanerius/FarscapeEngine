@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Hazel;
+using Farscape;
 
 namespace Example
 {

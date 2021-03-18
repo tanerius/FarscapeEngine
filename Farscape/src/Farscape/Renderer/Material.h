@@ -16,7 +16,7 @@ namespace Farscape {
         Blend = BIT(2)
     };
 
-    class Material : public IRendererObject, RefCounted
+    class Material : public IRendererObject, public RefCounted
     {
         friend class MaterialInstance;
     public:
@@ -80,7 +80,7 @@ namespace Farscape {
         uint32_t m_MaterialFlags;
     };
 
-    class MaterialInstance : public IRendererObject, RefCounted
+    class MaterialInstance : public IRendererObject, public RefCounted
     {
         friend class Material;
     public:

@@ -20,7 +20,7 @@ namespace Farscape {
         Repeat = 2
     };
 
-    class Texture : public ITexture, RefCounted
+    class Texture : public ITexture, public RefCounted
     {
     public:
         virtual ~Texture() {}

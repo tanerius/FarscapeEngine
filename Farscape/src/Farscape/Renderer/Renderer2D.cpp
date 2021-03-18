@@ -252,7 +252,7 @@ namespace Farscape {
         s_Data.Stats.QuadCount++;
     }
 
-    void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& /*tintColor*/)
     {
         constexpr size_t quadVertexCount = 4;
         constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };

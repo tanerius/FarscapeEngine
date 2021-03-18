@@ -4,8 +4,10 @@
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 
+#pragma warning(disable:4201)
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#pragma warning(default:4201)
 
 #include "Scene/Entity.h"
 #include "ScriptWrappers.h"
@@ -22,11 +24,11 @@ namespace Farscape {
 	{\
 		MonoType* type = mono_reflection_type_from_name("Farscape." #Type, s_CoreAssemblyImage);\
 		if (type) {\
-			uint32_t id = mono_type_get_type(type);\
+			mono_type_get_type(type);\
 			s_HasComponentFuncs[type] = [](Entity& entity) { return entity.HasComponent<Type>(); };\
 			s_CreateComponentFuncs[type] = [](Entity& entity) { entity.AddComponent<Type>(); };\
 		} else {\
-			HZ_CORE_ERROR("No C# component class found for " #Type "!");\
+			FS_CORE_ERROR("No C# component class found for " #Type "!");\
 		}\
 	}
 

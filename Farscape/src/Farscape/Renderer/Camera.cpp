@@ -68,7 +68,7 @@ namespace Farscape {
         return speed;
     }
 
-    void Camera::OnUpdate(Timestep ts)
+    void Camera::OnUpdate(Timestep)
     {
         if (Input::IsKeyPressed(KeyCode::LeftAlt))
         {

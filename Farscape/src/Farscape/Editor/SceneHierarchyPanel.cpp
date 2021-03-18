@@ -40,7 +40,7 @@ namespace Farscape {
     void SceneHierarchyPanel::OnImGuiRender()
     {
         ImGui::Begin("Scene Hierarchy");
-        uint32_t entityCount = 0, meshCount = 0;
+        //uint32_t entityCount = 0, meshCount = 0;
         m_Context->m_Registry.each([&](auto entity)
         {
             DrawEntityNode(Entity(entity, m_Context.Raw()));
@@ -108,7 +108,7 @@ namespace Farscape {
             name = entity.GetComponent<TagComponent>().Tag.c_str();
 
         ImGuiTreeNodeFlags node_flags = (entity == m_SelectionContext ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
-        bool opened = ImGui::TreeNodeEx((void*)(uint32_t)entity, node_flags, name);
+        bool opened = ImGui::TreeNodeEx((void*)(uint64_t)entity, node_flags, name);
         if (ImGui::IsItemClicked())
             m_SelectionContext = entity;
 
@@ -216,6 +216,7 @@ namespace Farscape {
         ImGui::Columns(2);
     }
 
+#if 0
     static bool Property(const char* label, std::string& value)
     {
         bool modified = false;
@@ -230,7 +231,7 @@ namespace Farscape {
         s_IDBuffer[0] = '#';
         s_IDBuffer[1] = '#';
         memset(s_IDBuffer + 2, 0, 14);
-        itoa(s_Counter++, s_IDBuffer + 2, 16);
+        _itoa(s_Counter++, s_IDBuffer + 2, 16);
         if (ImGui::InputText(s_IDBuffer, buffer, 256))
         {
             value = buffer;
@@ -242,6 +243,7 @@ namespace Farscape {
 
         return modified;
     }
+#endif
 
     static void Property(const char* label, const char* value)
     {
@@ -252,7 +254,7 @@ namespace Farscape {
         s_IDBuffer[0] = '#';
         s_IDBuffer[1] = '#';
         memset(s_IDBuffer + 2, 0, 14);
-        itoa(s_Counter++, s_IDBuffer + 2, 16);
+        _itoa(s_Counter++, s_IDBuffer + 2, 16);
         ImGui::InputText(s_IDBuffer, (char*)value, 256, ImGuiInputTextFlags_ReadOnly);
 
         ImGui::PopItemWidth();
@@ -270,7 +272,7 @@ namespace Farscape {
         s_IDBuffer[0] = '#';
         s_IDBuffer[1] = '#';
         memset(s_IDBuffer + 2, 0, 14);
-        itoa(s_Counter++, s_IDBuffer + 2, 16);
+        _itoa(s_Counter++, s_IDBuffer + 2, 16);
         if (ImGui::DragInt(s_IDBuffer, &value))
             modified = true;
 
@@ -291,7 +293,7 @@ namespace Farscape {
         s_IDBuffer[0] = '#';
         s_IDBuffer[1] = '#';
         memset(s_IDBuffer + 2, 0, 14);
-        itoa(s_Counter++, s_IDBuffer + 2, 16);
+        _itoa(s_Counter++, s_IDBuffer + 2, 16);
         if (ImGui::DragFloat(s_IDBuffer, &value, delta))
             modified = true;
 
@@ -312,7 +314,7 @@ namespace Farscape {
         s_IDBuffer[0] = '#';
         s_IDBuffer[1] = '#';
         memset(s_IDBuffer + 2, 0, 14);
-        itoa(s_Counter++, s_IDBuffer + 2, 16);
+        _itoa(s_Counter++, s_IDBuffer + 2, 16);
         if (ImGui::DragFloat2(s_IDBuffer, glm::value_ptr(value), delta))
             modified = true;
 
@@ -404,7 +406,7 @@ namespace Farscape {
 
         if (entity.HasComponent<CameraComponent>())
         {
-            auto& cc = entity.GetComponent<CameraComponent>();
+            //auto& cc = entity.GetComponent<CameraComponent>();
             if (ImGui::TreeNodeEx((void*)((uint32_t)entity | typeid(CameraComponent).hash_code()), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
             {
 
@@ -415,7 +417,7 @@ namespace Farscape {
 
         if (entity.HasComponent<SpriteRendererComponent>())
         {
-            auto& src = entity.GetComponent<SpriteRendererComponent>();
+            //auto& src = entity.GetComponent<SpriteRendererComponent>();
             if (ImGui::TreeNodeEx((void*)((uint32_t)entity | typeid(SpriteRendererComponent).hash_code()), ImGuiTreeNodeFlags_DefaultOpen, "Sprite Renderer"))
             {
 

@@ -127,6 +127,10 @@ namespace Farscape {
         void Farscape_Mesh_Destructor(Ref<Mesh>* _this)
         {
             Ref<Mesh>* instance = (Ref<Mesh>*)_this;
+            
+            if (instance == nullptr)
+                FS_CORE_INFO("Instance is null");
+
             delete _this;
         }
 
@@ -149,7 +153,7 @@ namespace Farscape {
         {
             Ref<Mesh>& mesh = *(Ref<Mesh>*)inMesh;
             const auto& materials = mesh->GetMaterials();
-            return materials.size();
+            return (int)materials.size();
         }
 
         void* Farscape_Texture2D_Constructor(uint32_t width, uint32_t height)
@@ -174,8 +178,8 @@ namespace Farscape {
             FS_CORE_ASSERT(dataSize <= buffer.Size);
             // Convert RGBA32F color to RGBA8
             uint8_t* pixels = (uint8_t*)buffer.Data;
-            uint32_t index = 0;
-            for (int i = 0; i < instance->GetWidth() * instance->GetHeight(); i++)
+            //uint32_t index = 0;
+            for (unsigned int i = 0; i < instance->GetWidth() * instance->GetHeight(); i++)
             {
                 glm::vec4& value = mono_array_get(inData, glm::vec4, i);
                 *pixels++ = (uint32_t)(value.x * 255.0f);
@@ -227,7 +231,7 @@ namespace Farscape {
             instance->Set(mono_string_to_utf8(uniform), *texture);
         }
 
-        void* Farscape_MeshFactory_CreatePlane(float width, float height)
+        void* Farscape_MeshFactory_CreatePlane(float /*width*/, float /*height*/)
         {
             // TODO: Implement properly with MeshFactory class!
             return new Ref<Mesh>(new Mesh("assets/models/Plane1m.obj"));

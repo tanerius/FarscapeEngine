@@ -1,4 +1,4 @@
-#include "hzpch.h"
+#include "fspch.h"
 #include "ScriptEngine.h"
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
@@ -18,6 +18,9 @@
 
 namespace Farscape {
 
+#pragma warning(disable:4554)
+#pragma warning(disable:4189)
+#pragma warning(disable:4505)
     static MonoDomain* s_MonoDomain = nullptr;
     static std::string s_AssemblyPath;
 
@@ -113,7 +116,7 @@ namespace Farscape {
     {
         mono_set_assemblies_path("mono/lib");
         // mono_jit_set_trace_options("--verbose");
-        auto domain = mono_jit_init("Farscape");
+        // auto domain = mono_jit_init("Farscape");
 
         char* name = (char*)"FarscapeRuntime";
         s_MonoDomain = mono_domain_create_appdomain(name, nullptr);
@@ -188,7 +191,7 @@ namespace Farscape {
         {
             printf("--------------------------------\n");
             const char* name = mono_method_get_name(iter);
-            MonoMethodDesc* methodDesc = mono_method_desc_from_method(iter);
+            //MonoMethodDesc* methodDesc = mono_method_desc_from_method(iter);
 
             const char* paramNames = "";
             mono_method_get_param_names(iter, &paramNames);
@@ -216,10 +219,12 @@ namespace Farscape {
     MonoImage* s_AppAssemblyImage = nullptr;
     MonoImage* s_CoreAssemblyImage = nullptr;
 
+
     static MonoString* GetName()
     {
         return mono_string_new(s_MonoDomain, "Hello!");
     }
+
 
     static void LoadFarscapeRuntimeAssembly(const std::string& path)
     {
@@ -264,7 +269,7 @@ namespace Farscape {
 
     void ScriptEngine::OnUpdateEntity(uint32_t entityID, Timestep ts)
     {
-        HZ_CORE_ASSERT(s_EntityInstanceMap.find(entityID) != s_EntityInstanceMap.end(), "Could not find entity in instance map!");
+        FS_CORE_ASSERT(s_EntityInstanceMap.find(entityID) != s_EntityInstanceMap.end(), "Could not find entity in instance map!");
 
         auto& entity = s_EntityInstanceMap[entityID];
 
@@ -375,5 +380,7 @@ namespace Farscape {
     {
         mono_field_get_value(m_EntityInstance->GetInstance(), m_MonoClassField, outValue);
     }
-
+#pragma warning(default:4554)
+#pragma warning(default:4189)
+#pragma warning(default:4505)
 }

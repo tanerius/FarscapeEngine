@@ -104,10 +104,12 @@ namespace Farscape {
 
     };
 
-    class Shader : public IShader, RefCounted
+    class Shader : public IShader, public RefCounted
     {
     public:
         using ShaderReloadedCallback = std::function<void()>;
+
+        virtual ~Shader() {};
 
         virtual void Reload() = 0;
 
@@ -151,7 +153,7 @@ namespace Farscape {
     };
 
     // This should be eventually handled by the Asset Manager
-    class ShaderLibrary : public ICollection, RefCounted
+    class ShaderLibrary : public ICollection, public RefCounted
     {
     public:
         ShaderLibrary();
