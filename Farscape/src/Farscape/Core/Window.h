@@ -24,7 +24,7 @@ namespace Farscape {
     };
 
     // Interface representing a desktop system based Window
-    class Window
+    class Window : public RefCounted
     {
     public:
         using EventCallbackFn = std::function<void(Event&)>;

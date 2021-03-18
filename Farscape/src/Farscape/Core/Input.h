@@ -1,4 +1,5 @@
 #pragma once
+#include "Codes.h"
 
 namespace Farscape
 {
@@ -6,7 +7,7 @@ namespace Farscape
     class Input : public IInput
     {
     public:
-        static bool IsKeyPressed(int keycode);
+        static bool IsKeyPressed(KeyCode keycode);
 
         static bool IsMouseButtonPressed(int button);
         static float GetMouseX();

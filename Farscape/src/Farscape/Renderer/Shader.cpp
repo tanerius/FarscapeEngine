@@ -18,7 +18,7 @@ namespace Farscape {
         {
         case RendererAPIType::None:	    return nullptr;
         case RendererAPIType::OpenGL:   
-            result = std::make_shared<OpenGLShader>(filepath);
+            result = Ref<OpenGLShader>::Create(filepath);
             break;
         case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
         case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
@@ -75,10 +75,10 @@ namespace Farscape {
         m_Shaders[name] = Ref<Shader>(Shader::Create(path));
     }
 
-    Ref<Shader>& ShaderLibrary::Get(const std::string& name)
+    const Ref<Shader>& ShaderLibrary::Get(const std::string& name) const
     {
         FS_CORE_ASSERT(m_Shaders.find(name) != m_Shaders.end(), "Shader not found");
-        return m_Shaders[name];
+        return m_Shaders.at(name);
     }
 
 }
