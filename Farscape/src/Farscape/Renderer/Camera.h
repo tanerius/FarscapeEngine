@@ -25,19 +25,23 @@ namespace Farscape {
 
         const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
         const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-        const glm::mat4& GetViewProjection() 
-        { 
+        glm::mat4& GetViewProjection() const
+        {
             m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-            return m_ViewProjectionMatrix; 
+            return m_ViewProjectionMatrix; // modifies a mutable so ok i guess
         }
 
         glm::vec3 GetUpDirection();
         glm::vec3 GetRightDirection();
         glm::vec3 GetForwardDirection();
         const glm::vec3& GetPosition() const { return m_Position; }
+        glm::quat GetOrientation() const;
 
         float GetExposure() const { return m_Exposure; }
         float& GetExposure() { return m_Exposure; }
+
+        float GetPitch() const { return m_Pitch; }
+        float GetYaw() const { return m_Yaw; }
     private:
         void UpdateCameraView();
 
@@ -48,13 +52,13 @@ namespace Farscape {
         void MouseZoom(float delta);
 
         glm::vec3 CalculatePosition();
-        glm::quat GetOrientation();
 
         std::pair<float, float> PanSpeed() const;
         float RotationSpeed() const;
         float ZoomSpeed() const;
     private:
-        glm::mat4 m_ProjectionMatrix, m_ViewMatrix, m_ViewProjectionMatrix;
+        glm::mat4 m_ProjectionMatrix, m_ViewMatrix;
+        mutable glm::mat4 m_ViewProjectionMatrix;
         glm::vec3 m_Position, m_Rotation, m_FocalPoint;
 
         bool m_Panning, m_Rotating;

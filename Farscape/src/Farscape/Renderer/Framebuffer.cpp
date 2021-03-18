@@ -13,7 +13,7 @@ namespace Farscape {
         {
         case RendererAPIType::None:				return nullptr;
         case RendererAPIType::OpenGL:			
-            result = std::make_shared<OpenGLFramebuffer>(spec); 
+            result = Ref<OpenGLFramebuffer>::Create(spec); 
             break;
         case RendererAPIType::Metal:			FS_CORE_FATAL("Metal not implemented yet"); return nullptr;
         case RendererAPIType::DirectX:			FS_CORE_FATAL("DirectX not implemented yet"); return nullptr;
@@ -41,7 +41,7 @@ namespace Farscape {
         return std::weak_ptr<Framebuffer>();
     }
 
-    void FramebufferPool::Add(std::weak_ptr<Framebuffer> framebuffer)
+    void FramebufferPool::Add(const Ref<Framebuffer> framebuffer)
     {
         m_Pool.push_back(framebuffer);
     }
