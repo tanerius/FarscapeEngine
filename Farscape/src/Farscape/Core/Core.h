@@ -32,7 +32,7 @@
 #define FS_PLATFORM MacOS
 // #error "MacOS is not supported!"
 #else
-#define HAZEL_API __declspec(dllimport)
+#define FARSCAPE_API __declspec(dllimport)
 #error "Unknown Apple platform!"
 #endif
 #endif

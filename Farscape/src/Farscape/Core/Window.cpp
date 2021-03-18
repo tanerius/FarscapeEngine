@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "Window.h"
 
-namespace Hazel {
+namespace Farscape {
 
 
 
