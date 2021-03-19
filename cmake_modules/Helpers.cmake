@@ -1,5 +1,4 @@
 function(congifure_prebuilt_lib test_locations url filename dest)
-    message(STATUS "Setting up a prebuilt library ...")
     foreach(ONE_PATH ${test_locations})
         if( NOT EXISTS ${ONE_PATH} )
             set(DO_DL 1)
@@ -13,7 +12,7 @@ function(congifure_prebuilt_lib test_locations url filename dest)
             ${dest}/*
         )
 
-        message(STATUS "Cleaning destination ${dest} except CMakeLists")
+        message(STATUS " * * * Cleaning destination ${dest} except CMakeLists")
 
         list(REMOVE_ITEM file_list_pbl "${dest}/CMakeLists.txt")
         list(LENGTH file_list_pbl lib_dir_list_size)
@@ -24,25 +23,25 @@ function(congifure_prebuilt_lib test_locations url filename dest)
             endforeach()
         endif()
     
-        message(STATUS "Downloading prebuilt libraries from ${url} ...")
+        message(STATUS " * * * Downloading package from ${url} ...")
 
         file(DOWNLOAD ${url} ${dest}/${filename} STATUS DL_RESULT)
         list(GET DL_RESULT 0 DL_RESULT_CODE)
     
         if(NOT DL_RESULT_CODE EQUAL 0)
-            message(FATAL_ERROR "Failed downloading! Error: ${DL_RESULT}.")
+            message(FATAL_ERROR " * * * Failed downloading! Error: ${DL_RESULT}.")
         endif()
     
-        message(STATUS "Extracting file ${dest}/${filename} ...")
+        message(STATUS " * * * Extracting file ${dest}/${filename} ...")
 
         file(ARCHIVE_EXTRACT INPUT "${dest}/${filename}"
             DESTINATION "${dest}"
         )
 
-        message(STATUS "Removing file ${dest}/${filename} ...")
+        message(STATUS " * * * Removing file ${dest}/${filename} ...")
         file(REMOVE_RECURSE "${dest}/${filename}")
     else()
-        message(STATUS "Prebuilt libraries already downloaded.")
+        message(STATUS " * * * Package ${url} appears to be set up already.")
         file(REMOVE_RECURSE "${dest}/${filename}")
     endif()
 endfunction()

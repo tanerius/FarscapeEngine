@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
+# Add the assets for sandbox
+add_subdirectory(assets)
+
 add_executable(Sandbox 
     "src/Sandbox.cpp")
 

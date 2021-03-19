@@ -57,3 +57,6 @@ external/assimp/*
 
 Editor/assets/*
 !Editor/assets/CMakeLists.txt
+
+sandbox/assets/*
+!sandbox/assets/CMakeLists.txt
