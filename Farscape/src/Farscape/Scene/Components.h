@@ -44,14 +44,14 @@ namespace Farscape {
 
     struct MeshComponent
     {
-        Ref<Hazel::Mesh> Mesh;
+        Ref<Farscape::Mesh> Mesh;
 
         MeshComponent() = default;
         MeshComponent(const MeshComponent& other) = default;
-        MeshComponent(const Ref<Hazel::Mesh>& mesh)
+        MeshComponent(const Ref<Farscape::Mesh>& mesh)
             : Mesh(mesh) {}
 
-        operator Ref<Hazel::Mesh>() { return Mesh; }
+        operator Ref<Farscape::Mesh>() { return Mesh; }
     };
 
     struct ScriptComponent

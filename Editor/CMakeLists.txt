@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
+# Download and generate the assets structure
+add_subdirectory(assets)
+
 # The definitions for the editor
 add_executable(FarscapeEditor 
     src/EditorLayer.h
@@ -29,7 +32,7 @@ add_custom_command(
 ) 
 
 # a commad to copy assets 
-add_custom_command(TARGET FarscapeEditor PRE_BUILD
+add_custom_command(TARGET FarscapeEditor POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/Editor/assets 
                        $<TARGET_FILE_DIR:FarscapeEditor>/assets

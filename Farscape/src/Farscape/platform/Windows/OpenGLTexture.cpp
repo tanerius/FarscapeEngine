@@ -14,7 +14,7 @@
 
 namespace Farscape {
 
-    static GLenum HazelToOpenGLTextureFormat(TextureFormat format)
+    static GLenum FarscapeToOpenGLTextureFormat(TextureFormat format)
     {
         switch (format)
         {
@@ -46,7 +46,7 @@ namespace Farscape {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
             glTextureParameterf(m_RendererID, GL_TEXTURE_MAX_ANISOTROPY, RendererAPI::GetCapabilities().MaxAnisotropy);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, HazelToOpenGLTextureFormat(m_Format), m_Width, m_Height, 0, HazelToOpenGLTextureFormat(m_Format), GL_UNSIGNED_BYTE, nullptr);
+            glTexImage2D(GL_TEXTURE_2D, 0, FarscapeToOpenGLTextureFormat(m_Format), m_Width, m_Height, 0, FarscapeToOpenGLTextureFormat(m_Format), GL_UNSIGNED_BYTE, nullptr);
 
             glBindTexture(GL_TEXTURE_2D, 0);
         });
@@ -106,8 +106,8 @@ namespace Farscape {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-                GLenum internalFormat = HazelToOpenGLTextureFormat(m_Format);
-                GLenum format = srgb ? GL_SRGB8 : (m_IsHDR ? GL_RGB : HazelToOpenGLTextureFormat(m_Format)); // HDR = GL_RGB for now
+                GLenum internalFormat = FarscapeToOpenGLTextureFormat(m_Format);
+                GLenum format = srgb ? GL_SRGB8 : (m_IsHDR ? GL_RGB : FarscapeToOpenGLTextureFormat(m_Format)); // HDR = GL_RGB for now
                 GLenum type = internalFormat == GL_RGBA16F ? GL_FLOAT : GL_UNSIGNED_BYTE;
                 glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, format, type, m_ImageData.Data);
                 glGenerateMipmap(GL_TEXTURE_2D);
@@ -141,7 +141,7 @@ namespace Farscape {
     {
         m_Locked = false;
         Renderer::Submit([this]() {
-            glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, HazelToOpenGLTextureFormat(m_Format), GL_UNSIGNED_BYTE, m_ImageData.Data);
+            glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, FarscapeToOpenGLTextureFormat(m_Format), GL_UNSIGNED_BYTE, m_ImageData.Data);
         });
     }
 
@@ -180,7 +180,7 @@ namespace Farscape {
 
         Renderer::Submit([=]() {
             glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &m_RendererID);
-            glTextureStorage2D(m_RendererID, levels, HazelToOpenGLTextureFormat(m_Format), width, height);
+            glTextureStorage2D(m_RendererID, levels, FarscapeToOpenGLTextureFormat(m_Format), width, height);
             glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, levels > 1 ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);
             glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -259,7 +259,7 @@ namespace Farscape {
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
             glTextureParameterf(m_RendererID, GL_TEXTURE_MAX_ANISOTROPY, RendererAPI::GetCapabilities().MaxAnisotropy);
 
-            auto format = HazelToOpenGLTextureFormat(m_Format);
+            auto format = FarscapeToOpenGLTextureFormat(m_Format);
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[2]);
             glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[0]);
 

@@ -6,6 +6,9 @@ project(Farscape
     LANGUAGES CXX C
 )
 
+set(FARSCAPE_EDITOR_ASSET_VER "1.0.0")
+set(FARSCAPE_SANDBOX_ASSET_VER "1.0.0")
+
 # include support for pre 3.16 precompiled header support
 include(cmake_modules/PrecompiledHeader.cmake)
 # include helpers
