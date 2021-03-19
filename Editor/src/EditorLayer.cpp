@@ -433,7 +433,7 @@ namespace Farscape {
 			if (ImGui::CollapsingHeader("Albedo", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::Image(m_AlbedoInput.TextureMap ? (void*)m_AlbedoInput.TextureMap->GetRendererID() : (void*)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
+				ImGui::Image(m_AlbedoInput.TextureMap ? (void*)(uint64_t)m_AlbedoInput.TextureMap->GetRendererID() : (void*)(uint64_t)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
 				ImGui::PopStyleVar();
 				if (ImGui::IsItemHovered())
 				{
@@ -443,7 +443,7 @@ namespace Farscape {
 						ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
 						ImGui::TextUnformatted(m_AlbedoInput.TextureMap->GetPath().c_str());
 						ImGui::PopTextWrapPos();
-						ImGui::Image((void*)m_AlbedoInput.TextureMap->GetRendererID(), ImVec2(384, 384));
+						ImGui::Image((void*)(uint64_t)m_AlbedoInput.TextureMap->GetRendererID(), ImVec2(384, 384));
 						ImGui::EndTooltip();
 					}
 					if (ImGui::IsItemClicked())
@@ -471,7 +471,7 @@ namespace Farscape {
 			if (ImGui::CollapsingHeader("Normals", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::Image(m_NormalInput.TextureMap ? (void*)m_NormalInput.TextureMap->GetRendererID() : (void*)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
+				ImGui::Image(m_NormalInput.TextureMap ? (void*)(uint64_t)m_NormalInput.TextureMap->GetRendererID() : (void*)(uint64_t)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
 				ImGui::PopStyleVar();
 				if (ImGui::IsItemHovered())
 				{
@@ -481,7 +481,7 @@ namespace Farscape {
 						ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
 						ImGui::TextUnformatted(m_NormalInput.TextureMap->GetPath().c_str());
 						ImGui::PopTextWrapPos();
-						ImGui::Image((void*)m_NormalInput.TextureMap->GetRendererID(), ImVec2(384, 384));
+						ImGui::Image((void*)(uint64_t)m_NormalInput.TextureMap->GetRendererID(), ImVec2(384, 384));
 						ImGui::EndTooltip();
 					}
 					if (ImGui::IsItemClicked())
@@ -500,7 +500,7 @@ namespace Farscape {
 			if (ImGui::CollapsingHeader("Metalness", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::Image(m_MetalnessInput.TextureMap ? (void*)m_MetalnessInput.TextureMap->GetRendererID() : (void*)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
+				ImGui::Image(m_MetalnessInput.TextureMap ? (void*)(uint64_t)m_MetalnessInput.TextureMap->GetRendererID() : (void*)(uint64_t)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
 				ImGui::PopStyleVar();
 				if (ImGui::IsItemHovered())
 				{
@@ -510,7 +510,7 @@ namespace Farscape {
 						ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
 						ImGui::TextUnformatted(m_MetalnessInput.TextureMap->GetPath().c_str());
 						ImGui::PopTextWrapPos();
-						ImGui::Image((void*)m_MetalnessInput.TextureMap->GetRendererID(), ImVec2(384, 384));
+						ImGui::Image((void*)(uint64_t)m_MetalnessInput.TextureMap->GetRendererID(), ImVec2(384, 384));
 						ImGui::EndTooltip();
 					}
 					if (ImGui::IsItemClicked())
@@ -531,7 +531,7 @@ namespace Farscape {
 			if (ImGui::CollapsingHeader("Roughness", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::Image(m_RoughnessInput.TextureMap ? (void*)m_RoughnessInput.TextureMap->GetRendererID() : (void*)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
+				ImGui::Image(m_RoughnessInput.TextureMap ? (void*)(uint64_t)m_RoughnessInput.TextureMap->GetRendererID() : (void*)(uint64_t)m_CheckerboardTex->GetRendererID(), ImVec2(64, 64));
 				ImGui::PopStyleVar();
 				if (ImGui::IsItemHovered())
 				{
@@ -541,7 +541,7 @@ namespace Farscape {
 						ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
 						ImGui::TextUnformatted(m_RoughnessInput.TextureMap->GetPath().c_str());
 						ImGui::PopTextWrapPos();
-						ImGui::Image((void*)m_RoughnessInput.TextureMap->GetRendererID(), ImVec2(384, 384));
+						ImGui::Image((void*)(uint64_t)m_RoughnessInput.TextureMap->GetRendererID(), ImVec2(384, 384));
 						ImGui::EndTooltip();
 					}
 					if (ImGui::IsItemClicked())
@@ -587,7 +587,7 @@ namespace Farscape {
 		SceneRenderer::SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 		m_ActiveScene->GetCamera().SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
 		m_ActiveScene->GetCamera().SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		ImGui::Image((void*)SceneRenderer::GetFinalColorBufferRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
+		ImGui::Image((void*)(uint64_t)SceneRenderer::GetFinalColorBufferRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
 
 		static int counter = 0;
 		auto windowSize = ImGui::GetWindowSize();
