@@ -68,3 +68,11 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/FastNoiseLite/CMakeLists.txt")
 else()
 	add_subdirectory(FastNoiseLite)
 endif()
+
+### GoogleTest
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/External/googletest/CMakeLists.txt")
+    message(FATAL_ERROR "Submodule googletest not downloaded")
+else()
+	add_subdirectory(googletest)
+endif()
