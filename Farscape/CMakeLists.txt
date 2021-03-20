@@ -122,3 +122,13 @@ install(TARGETS Farscape
     CONFIGURATIONS Release
     DESTINATION "${FARSCAPE_BINARY_DIR}/Release"
 )
+
+install(FILES "configurables/imgui.ini"
+    CONFIGURATIONS Debug
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Debug"
+)
+
+install(FILES "configurables/imgui.ini"
+    CONFIGURATIONS Release
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Release"
+)

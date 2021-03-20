@@ -41,6 +41,17 @@ set_target_properties(assimp
 
 
 add_library(Farscape::assimp ALIAS assimp)
+
+install(FILES "${tmp_dll}"
+    CONFIGURATIONS Debug
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Debug"
+)
+
+install(FILES "${tmp_dll}"
+    CONFIGURATIONS Release
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Release"
+)
+
 # $<IF:$<CONFIG:Debug>,"${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Debug/assimp-vc142-mtd.dll","${FARSCAPE_EXTERNALS_DIR}/assimp/lib/Release/assimp-vc142-mt.dll">
 # $<IF:$<CONFIG:Debug>,${FARSCAPE_ASSIMP_LIB},${FARSCAPE_ASSIMP_LIB}>
 

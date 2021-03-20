@@ -17,3 +17,14 @@ congifure_prebuilt_lib (
     "${PROJECT_SOURCE_DIR}/Editor/assets"
 )
 
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/Editor/assets"
+    CONFIGURATIONS Debug
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Debug"
+    PATTERN "assets/CMakeLists.txt" EXCLUDE
+)
+
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/Editor/assets"
+    CONFIGURATIONS Release
+    DESTINATION "${FARSCAPE_BINARY_DIR}/Release"
+    PATTERN "assets/CMakeLists.txt" EXCLUDE
+)

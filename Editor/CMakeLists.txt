@@ -43,7 +43,7 @@ target_link_libraries(FarscapeEditor
 )
 
 
- install(TARGETS FarscapeEditor
+install(TARGETS FarscapeEditor
     CONFIGURATIONS Debug
     DESTINATION "${FARSCAPE_BINARY_DIR}/Debug"
 )
