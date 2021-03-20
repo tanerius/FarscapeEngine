@@ -13,3 +13,6 @@
 [submodule "external/FastNoiseLite"]
 	path = external/FastNoiseLite
 	url = git@github.com:tanerius/FastNoiseLite.git
+[submodule "external/googletest"]
+	path = external/googletest
+	url = git@github.com:google/googletest.git
