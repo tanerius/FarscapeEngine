@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/VertexArray.h"
-#include "platform/Windows/OpenGLVertexArray.h"
+#include "Video/OpenGL/OpenGLVertexArray.h"
 
 namespace Farscape {
 

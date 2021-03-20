@@ -2,7 +2,7 @@
 #include "RenderPass.h"
 #include "Renderer.h"
 
-#include "platform/Windows/OpenGLRenderPass.h"
+#include "Video/OpenGL/OpenGLRenderPass.h"
 
 namespace Farscape {
 

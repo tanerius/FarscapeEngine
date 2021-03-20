@@ -1,7 +1,7 @@
 #include "fspch.h"
 #include "FrameBuffer.h"
 
-#include "platform/Windows/OpenGLFramebuffer.h"
+#include "Video/OpenGL/OpenGLFramebuffer.h"
 
 namespace Farscape {
 

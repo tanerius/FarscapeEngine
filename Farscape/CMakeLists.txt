@@ -2,79 +2,55 @@ cmake_minimum_required(VERSION 3.18)
 
 add_subdirectory(libs)
 
-set(FS_PLATFORM_SPECIFIC_SRC_PATH "src/Farscape/platform")
-
+set(FS_ENGINE_SRC_PATH "src/Farscape/Engine")
+set(FS_PLATFORM_SPECIFIC_SRC_PATH "src/Farscape/Platform/OS")
+set(FS_RENDERER_SPECIFIC_SRC_PATH "src/Farscape/Platform/Video")
 
 if(MSVC)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
     set(BUILD_SHARED_LIBS TRUE)
 endif()
 
-# Set the relevant platform dependant sources
-if (WIN32)
-    set(FS_SPECIFIC_SOURCES 
+# Probablu the ONLY good way to use GLOB without leaking out of targets
+# Glob the core engine dsources
+file(GLOB_RECURSE FS_SOURCES_ENGINE
+            LIST_DIRECTORIES false 
+            ${FS_ENGINE_SRC_PATH}/*
+        )
+
+# Glob the the renderer API sources
+file(GLOB_RECURSE FS_SOURCES_RENDERERS
+            LIST_DIRECTORIES false 
+            ${FS_RENDERER_SPECIFIC_SRC_PATH}/*
+        )
+
+# Glob the OS specific stuff
+if(${FARSCAPE_PLATFORM} STREQUAL "Win64")
+    # These sources are included only if the OS is a 64 bit windows 
+    set(FS_SOURCES_OS
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsWindow.h"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/WindowsInput.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLBuffer.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLVertexArray.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRendererAPI.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShader.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLTexture.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLFramebuffer.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLFramebuffer.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRenderPass.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLRenderPass.cpp"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShaderUniform.h"
-        "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Windows/OpenGLShaderUniform.cpp"
     )
-elseif (APPLE)
-    set(FS_SPECIFIC_SOURCES 
+elseif (${FARSCAPE_PLATFORM} STREQUAL "Apple")
+    # These sources are included if the OS is MacOS
+    set(FS_SOURCES_OS 
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Macos/AppleWindow.cpp"
         "${FS_PLATFORM_SPECIFIC_SRC_PATH}/Macos/AppleWindow.h"
     )
+else()
+    message(FATAL_ERROR "OS not supported")
 endif ()
 
-
+# Put it all together starting from PCH
 set(FS_SOURCES 
-    src/pch/fspch.h
-    src/pch/fspch.cpp
-    src/Farscape/Core/Application.cpp
-    src/Farscape/Core/Log.cpp
-    src/Farscape/Core/Core.cpp
-    src/Farscape/Core/Layer.cpp
-    src/Farscape/Core/Window.cpp
-    src/Farscape/Renderer/Framebuffer.cpp
-    ${FS_SPECIFIC_SOURCES}
-    src/Farscape/Core/Layer.cpp
-    src/Farscape/Core/LayerStack.cpp
-    src/Farscape/ImGui/ImGuiLayer.cpp
-    src/Farscape/Renderer/Shader.cpp
-    src/Farscape/Renderer/Buffer.cpp
-    src/Farscape/Renderer/Renderer.cpp
-    src/Farscape/Renderer/RenderCommandQueue
-    src/Farscape/Renderer/Renderer2D.cpp
-    src/Farscape/Renderer/VertexArray.cpp
-    src/Farscape/Renderer/RendererAPI.cpp
-    src/Farscape/Renderer/Camera.cpp
-    src/Farscape/Renderer/Texture.cpp
-    src/Farscape/ImGui/ImGuizmo.cpp
-    src/Farscape/Renderer/RenderPass.cpp
-    src/Farscape/Renderer/Material.cpp
-    src/Farscape/Renderer/Mesh.cpp
-    src/Farscape/Core/Math/Mat4.cpp
-    src/Farscape/Renderer/SceneRenderer.cpp
-    src/Farscape/Scene/Entity.cpp
-    src/Farscape/Scene/Scene.cpp
-    src/Farscape/Core/Timestep.cpp
-    src/Farscape/Editor/SceneHierarchyPanel.cpp
-    src/Farscape/Core/Uuid.cpp
-    src/Farscape/Core/Math/Noise.cpp
- )
+    "src/pch/fspch.h"
+    "src/pch/fspch.cpp"
+    ${FS_SOURCES_ENGINE}
+    ${FS_SOURCES_RENDERERS}
+    ${FS_SOURCES_OS}
+)
+
 
  # OpenGL
 find_package(OpenGL REQUIRED)
@@ -106,9 +82,9 @@ target_compile_definitions(Farscape PUBLIC "FS_DEBUG")
 target_include_directories(Farscape 
     PUBLIC src/pch
     PUBLIC src/include
-    PUBLIC src/Farscape
+    PUBLIC src/Farscape/Engine
+    PUBLIC src/Farscape/Platform
     PUBLIC ${FARSCAPE_BINARY_DIR}/generated
-    PUBLIC src/platform
     PUBLIC ${OPENGL_INCLUDE_DIRS}
 )
 
@@ -129,8 +105,6 @@ target_link_libraries(Farscape
     PUBLIC Farscape::FastNoiseLite
 )
 
-
-
 if(MSVC)
   target_compile_options(Farscape PRIVATE /W4 /WX)
 else()
@@ -138,11 +112,6 @@ else()
 endif()
 
 add_library(Farscape::Farscape ALIAS Farscape)
-
-
-
-     
-
 
 install(TARGETS Farscape
     CONFIGURATIONS Debug
