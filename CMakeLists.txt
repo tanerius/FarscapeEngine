@@ -37,3 +37,5 @@ add_subdirectory(Farscape)
 add_subdirectory(Sandbox)
 # add Editor sources
 add_subdirectory(Editor)
+# add the tests
+add_subdirectory(Tests)
