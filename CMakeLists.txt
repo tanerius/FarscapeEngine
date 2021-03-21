@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(Farscape 
-    VERSION 0.0.1
+    VERSION 0.0.2
     DESCRIPTION "Farscape game engine project"
     LANGUAGES CXX C
 )
