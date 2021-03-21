@@ -70,7 +70,7 @@ namespace Farscape {
 
     void Camera::OnUpdate(Timestep ts)
     {
-        if (Input::IsKeyPressed(GLFW_KEY_LEFT_ALT))
+        if (Input::IsKeyPressed(KeyCode::LeftAlt))
         {
             const glm::vec2& mouse{ Input::GetMouseX(), Input::GetMouseY() };
             glm::vec2 delta = mouse - m_InitialMousePosition;
