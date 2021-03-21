@@ -14,7 +14,7 @@ namespace Farscape {
     public:
         virtual ~RenderPass() {}
 
-        virtual RenderPassSpecification& GetSpecification() = 0;
+        virtual RenderPassSpecification& GetSpecification() const = 0;
 
         static SharedRef<RenderPass> Create(const RenderPassSpecification& spec);
     };
