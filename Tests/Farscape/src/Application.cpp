@@ -2,11 +2,27 @@
 
 #include <gtest/gtest.h>
 
+
+class Sandbox : public Farscape::Application
+{
+public:
+    Sandbox()
+    {
+
+    }
+
+    ~Sandbox()
+    {
+
+    }
+};
+
 class ApplicationTest : public ::testing::Test
 {
 
     virtual void SetUp() override
     {
+        Farscape::InitializeEngine();
 
     }
 
@@ -16,7 +32,7 @@ class ApplicationTest : public ::testing::Test
 
 TEST_F(ApplicationTest, AppCreation)
 {
-    auto app = new Farscape::Application();
+    auto app = new Sandbox();
     EXPECT_NE(app, nullptr);
     delete app;
 }
