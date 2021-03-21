@@ -6,4 +6,6 @@
 #cmakedefine Farscape_VERSION_BUILD "@Farscape_VERSION_BUILD@"
 #cmakedefine BUILD_DATE "@BUILD_DATE@"
 #cmakedefine FARSCAPE_PLATFORM "@FARSCAPE_PLATFORM@"
-
+#cmakedefine FS_LINUX
+#cmakedefine FS_WIN64
+#cmakedefine FS_APPLE

@@ -51,12 +51,15 @@ macro(set_farscape_platform)
     if(APPLE)
         # MacOS, iOS, watchOS, tvOS
         set(FARSCAPE_PLATFORM "Apple")
+        set(FS_APPLE "Apple")
     elseif(WIN32 OR WIN64)
         # Any windows
         set(FARSCAPE_PLATFORM "Win64")
+        set(FS_WIN64 "Win64")
     elseif(UNIX AND NOT APPLE)
         # Nix
         set(FARSCAPE_PLATFORM "Linux")
+        set(FS_LINUX "Linux")
     else()
         # Nix
         set(FARSCAPE_PLATFORM "NA")
