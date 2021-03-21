@@ -127,7 +127,7 @@ namespace Farscape {
         std::string NodeName, MeshName;
     };
 
-    class Mesh : public IMesh
+    class Mesh : public IMesh, public RefCounter
     {
     public:
         Mesh(const std::string& filename);
@@ -139,10 +139,10 @@ namespace Farscape {
         std::vector<Submesh>& GetSubmeshes() { return m_Submeshes; }
         const std::vector<Submesh>& GetSubmeshes() const { return m_Submeshes; }
 
-        Ref<Shader> GetMeshShader() { return m_MeshShader; }
-        Ref<Material> GetMaterial() { return m_BaseMaterial; }
-        std::vector<Ref<MaterialInstance>> GetMaterials() { return m_Materials; }
-        const std::vector<Ref<Texture2D>>& GetTextures() const { return m_Textures; }
+        SharedRef<Shader> GetMeshShader() { return m_MeshShader; }
+        SharedRef<Material> GetMaterial() { return m_BaseMaterial; }
+        std::vector<SharedRef<MaterialInstance>> GetMaterials() { return m_Materials; }
+        const std::vector<SharedRef<Texture2D>>& GetTextures() const { return m_Textures; }
         const std::string& GetFilePath() const { return m_FilePath; }
 
         const std::vector<Triangle> GetTriangleCache(uint32_t index) const { return m_TriangleCache.at(index); }
@@ -168,7 +168,7 @@ namespace Farscape {
         uint32_t m_BoneCount = 0;
         std::vector<BoneInfo> m_BoneInfo;
 
-        Ref<VertexArray> m_VertexArray;
+        SharedRef<VertexArray> m_VertexArray;
 
         std::vector<Vertex> m_StaticVertices;
         std::vector<AnimatedVertex> m_AnimatedVertices;
@@ -178,11 +178,11 @@ namespace Farscape {
         const aiScene* m_Scene;
 
         // Materials
-        Ref<Shader> m_MeshShader;
-        Ref<Material> m_BaseMaterial;
-        std::vector<Ref<Texture2D>> m_Textures;
-        std::vector<Ref<Texture2D>> m_NormalMaps;
-        std::vector<Ref<MaterialInstance>> m_Materials;
+        SharedRef<Shader> m_MeshShader;
+        SharedRef<Material> m_BaseMaterial;
+        std::vector<SharedRef<Texture2D>> m_Textures;
+        std::vector<SharedRef<Texture2D>> m_NormalMaps;
+        std::vector<SharedRef<MaterialInstance>> m_Materials;
 
         std::unordered_map<uint32_t, std::vector<Triangle>> m_TriangleCache;
 

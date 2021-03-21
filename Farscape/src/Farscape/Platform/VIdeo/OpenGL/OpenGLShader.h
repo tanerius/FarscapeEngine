@@ -11,7 +11,7 @@ namespace Farscape {
     public:
         OpenGLShader() = default;
         OpenGLShader(const std::string& filepath);
-        static Ref<OpenGLShader> CreateFromString(const std::string& source);
+        static SharedRef<OpenGLShader> CreateFromString(const std::string& source);
 
         virtual void Reload() override;
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) override;

@@ -67,7 +67,7 @@ namespace Farscape {
         SetSkybox(environment.RadianceMap);
     }
 
-    void Scene::SetSkybox(const Ref<TextureCube>& skybox)
+    void Scene::SetSkybox(const SharedRef<TextureCube>& skybox)
     {
         m_SkyboxTexture = skybox;
         m_SkyboxMaterial->Set("u_Texture", skybox);

@@ -8,17 +8,17 @@
 namespace Farscape {
 
 
-    std::vector<Ref<Shader>> Shader::s_AllShaders;
+    std::vector<SharedRef<Shader>> Shader::s_AllShaders;
 
-    Ref<Shader> Shader::Create(const std::string& filepath)
+    SharedRef<Shader> Shader::Create(const std::string& filepath)
     {
-        Ref<Shader> result = nullptr;
+        SharedRef<Shader> result = nullptr;
 
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:	    return nullptr;
         case RendererAPIType::OpenGL:   
-            result = std::make_shared<OpenGLShader>(filepath);
+            result = SharedRef<OpenGLShader>::Create(filepath);
             break;
         case RendererAPIType::Metal:    FS_CORE_FATAL("Metal not supported yet!"); return nullptr;
         case RendererAPIType::DirectX:  FS_CORE_FATAL("DirectX not supported yet!"); return nullptr;
@@ -28,9 +28,9 @@ namespace Farscape {
         return result;
     }
 
-    Ref<Shader> Shader::CreateFromString(const std::string& source)
+    SharedRef<Shader> Shader::CreateFromString(const std::string& source)
     {
-        Ref<Shader> result = nullptr;
+        SharedRef<Shader> result = nullptr;
 
         switch (RendererAPI::Current())
         {
@@ -54,7 +54,7 @@ namespace Farscape {
     {
     }
 
-    void ShaderLibrary::Add(const Ref<Shader>& shader)
+    void ShaderLibrary::Add(const SharedRef<Shader>& shader)
     {
         auto& name = shader->GetName();
         FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
@@ -63,7 +63,7 @@ namespace Farscape {
 
     void ShaderLibrary::Load(const std::string& path)
     {
-        auto shader = Ref<Shader>(Shader::Create(path));
+        auto shader = SharedRef<Shader>(Shader::Create(path));
         auto& name = shader->GetName();
         FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
         m_Shaders[name] = shader;
@@ -72,13 +72,13 @@ namespace Farscape {
     void ShaderLibrary::Load(const std::string& name, const std::string& path)
     {
         FS_CORE_ASSERT(m_Shaders.find(name) == m_Shaders.end(), "Shader not found");
-        m_Shaders[name] = Ref<Shader>(Shader::Create(path));
+        m_Shaders[name] = SharedRef<Shader>(Shader::Create(path));
     }
 
-    Ref<Shader>& ShaderLibrary::Get(const std::string& name)
+    const SharedRef<Shader>& ShaderLibrary::Get(const std::string& name) const
     {
         FS_CORE_ASSERT(m_Shaders.find(name) != m_Shaders.end(), "Shader not found");
-        return m_Shaders[name];
+        return m_Shaders.at(name);
     }
 
 }

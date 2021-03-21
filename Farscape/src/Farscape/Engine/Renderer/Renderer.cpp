@@ -13,10 +13,10 @@ namespace Farscape {
 
     struct RendererData
     {
-        Ref<RenderPass> m_ActiveRenderPass;
+        SharedRef<RenderPass> m_ActiveRenderPass;
         RenderCommandQueue m_CommandQueue;
         Scope<ShaderLibrary> m_ShaderLibrary;
-        Ref<VertexArray> m_FullscreenQuadVertexArray;
+        SharedRef<VertexArray> m_FullscreenQuadVertexArray;
     };
 
     static RendererData s_Data;
@@ -118,7 +118,7 @@ namespace Farscape {
         s_Data.m_CommandQueue.Execute();
     }
 
-    void Renderer::BeginRenderPass(const Ref<RenderPass>& renderPass, bool clear)
+    void Renderer::BeginRenderPass(SharedRef<RenderPass> renderPass, bool clear)
     {
         FS_CORE_ASSERT(renderPass, "Render pass cannot be null!");
 
@@ -142,7 +142,7 @@ namespace Farscape {
         s_Data.m_ActiveRenderPass = nullptr;
     }
 
-    void Renderer::SubmitQuad(const Ref<MaterialInstance>& material, const glm::mat4& transform)
+    void Renderer::SubmitQuad(SharedRef<MaterialInstance> material, const glm::mat4& transform)
     {
         bool depthTest = true;
         if (material)
@@ -158,7 +158,7 @@ namespace Farscape {
         Renderer::DrawIndexed(6, PrimitiveType::Triangles, depthTest);
     }
 
-    void Renderer::SubmitFullscreenQuad(const Ref<MaterialInstance>& material)
+    void Renderer::SubmitFullscreenQuad(SharedRef<MaterialInstance> material)
     {
         bool depthTest = true;
         if (material)
@@ -171,7 +171,7 @@ namespace Farscape {
         Renderer::DrawIndexed(6, PrimitiveType::Triangles, depthTest);
     }
 
-    void Renderer::SubmitMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const Ref<MaterialInstance>& /* overrideMaterial */)
+    void Renderer::SubmitMesh(SharedRef<Mesh> mesh, const glm::mat4& transform, SharedRef<MaterialInstance> /* overrideMaterial */)
     {
         // auto material = overrideMaterial ? overrideMaterial : mesh->GetMaterialInstance();
         // auto shader = material->GetShader();
@@ -207,7 +207,7 @@ namespace Farscape {
         }
     }
 
-    void Renderer::DrawAABB(const Ref<Mesh>& mesh, const glm::mat4& transform, const glm::vec4& /* color */)
+    void Renderer::DrawAABB(SharedRef<Mesh> mesh, const glm::mat4& transform, const glm::vec4& /* color */)
     {
         for (Submesh& submesh : mesh->m_Submeshes)
         {

@@ -21,13 +21,13 @@ namespace Farscape {
 
 	glm::mat4 Mat4FromAssimpMat4(const aiMatrix4x4& matrix);
 
-	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
+	SceneHierarchyPanel::SceneHierarchyPanel(const SharedRef<Scene>& context)
 		: m_Context(context)
 	{
 
 	}
 
-	void SceneHierarchyPanel::SetContext(const Ref<Scene>& scene)
+	void SceneHierarchyPanel::SetContext(const SharedRef<Scene>& scene)
 	{
 		m_Context = scene;
 	}
@@ -114,7 +114,7 @@ namespace Farscape {
 		}
 	}
 
-	void SceneHierarchyPanel::DrawMeshNode(const Ref<Mesh>& mesh, uint32_t& imguiMeshID)
+	void SceneHierarchyPanel::DrawMeshNode(const SharedRef<Mesh>& mesh, uint32_t& imguiMeshID)
 	{
 		static char imguiName[128];
 		memset(imguiName, 0, 128);
@@ -139,7 +139,7 @@ namespace Farscape {
 		return { translation, orientation, scale };
 	}
 
-	void SceneHierarchyPanel::MeshNodeHierarchy(const Ref<Mesh>& mesh, aiNode* node, const glm::mat4& parentTransform, uint32_t level)
+	void SceneHierarchyPanel::MeshNodeHierarchy(const SharedRef<Mesh>& mesh, aiNode* node, const glm::mat4& parentTransform, uint32_t level)
 	{
 		glm::mat4 localTransform = Mat4FromAssimpMat4(node->mTransformation);
 		glm::mat4 transform = parentTransform * localTransform;

@@ -32,7 +32,7 @@ namespace Farscape
         { 
         }
 
-        SharedRef(std::nullptr_t n)
+        SharedRef(std::nullptr_t)
             : m_Instance(nullptr)
         {
         }

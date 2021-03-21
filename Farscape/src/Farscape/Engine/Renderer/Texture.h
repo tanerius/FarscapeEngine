@@ -20,7 +20,7 @@ namespace Farscape {
         Repeat = 2
     };
 
-    class Texture : public ITexture
+    class Texture : public ITexture, public RefCounter
     {
     public:
         virtual ~Texture() {}
@@ -44,8 +44,8 @@ namespace Farscape {
     class Texture2D : public Texture
     {
     public:
-        static Ref<Texture2D> Create(TextureFormat format, uint32_t width, uint32_t height, TextureWrap wrap = TextureWrap::Clamp);
-        static Ref<Texture2D> Create(const std::string& path, bool srgb = false);
+        static SharedRef<Texture2D> Create(TextureFormat format, uint32_t width, uint32_t height, TextureWrap wrap = TextureWrap::Clamp);
+        static SharedRef<Texture2D> Create(const std::string& path, bool srgb = false);
 
         virtual void Lock() = 0;
         virtual void Unlock() = 0;
@@ -61,8 +61,8 @@ namespace Farscape {
     class TextureCube : public Texture
     {
     public:
-        static Ref<TextureCube> Create(TextureFormat format, uint32_t width, uint32_t height);
-        static Ref<TextureCube> Create(const std::string& path);
+        static SharedRef<TextureCube> Create(TextureFormat format, uint32_t width, uint32_t height);
+        static SharedRef<TextureCube> Create(const std::string& path);
 
         virtual const std::string& GetPath() const = 0;
     };

@@ -87,7 +87,7 @@ namespace Farscape {
 
         m_IsAnimated = scene->mAnimations != nullptr;
         m_MeshShader = m_IsAnimated ? Renderer::GetShaderLibrary()->Get("FsPBR_Anim") : Renderer::GetShaderLibrary()->Get("FsPBR_Static");
-        m_BaseMaterial = CreateRef<Material>(m_MeshShader);
+        m_BaseMaterial = SharedRef<Material>::Create(m_MeshShader);
 
         m_InverseTransform = glm::inverse(Mat4FromAssimpMat4(scene->mRootNode->mTransformation));
 
@@ -232,7 +232,7 @@ namespace Farscape {
                 auto aiMaterial = scene->mMaterials[i];
                 auto aiMaterialName = aiMaterial->GetName();
 
-                auto mi = CreateRef<MaterialInstance>(m_BaseMaterial);
+                auto mi = SharedRef<MaterialInstance>::Create(m_BaseMaterial);
                 m_Materials[i] = mi;
 
                 FS_MESH_LOG("  {0} (Index = {1})", aiMaterialName.data, i);

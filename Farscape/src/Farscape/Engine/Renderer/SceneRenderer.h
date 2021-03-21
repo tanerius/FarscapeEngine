@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Scene/Scene.h"
-
+#include "Renderer/Mesh.h"
 #include "RenderPass.h"
 
 namespace Farscape {
@@ -24,10 +24,10 @@ namespace Farscape {
 
         static void SubmitEntity(Entity* entity);
 
-        static std::pair<Ref<TextureCube>, Ref<TextureCube>> CreateEnvironmentMap(const std::string& filepath);
+        static std::pair<SharedRef<TextureCube>, SharedRef<TextureCube>> CreateEnvironmentMap(const std::string& filepath);
 
-        static Ref<RenderPass> GetFinalRenderPass();
-        static Ref<Texture2D> GetFinalColorBuffer();
+        static SharedRef<RenderPass> GetFinalRenderPass();
+        static SharedRef<Texture2D> GetFinalColorBuffer();
 
         // TODO: Temp
         static uint32_t GetFinalColorBufferRendererID();

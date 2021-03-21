@@ -20,27 +20,27 @@ namespace Farscape {
             Camera SceneCamera;
 
             // Resources
-            Ref<MaterialInstance> SkyboxMaterial;
+            SharedRef<MaterialInstance> SkyboxMaterial;
             Environment SceneEnvironment;
             Light ActiveLight;
         } SceneData;
 
-        Ref<Texture2D> BRDFLUT;
-        Ref<Shader> CompositeShader;
+        SharedRef<Texture2D> BRDFLUT;
+        SharedRef<Shader> CompositeShader;
 
-        Ref<RenderPass> GeoPass;
-        Ref<RenderPass> CompositePass;
+        SharedRef<RenderPass> GeoPass;
+        SharedRef<RenderPass> CompositePass;
 
         struct DrawCommand
         {
-            Ref<Mesh> Mesh;
-            Ref<MaterialInstance> Material;
+            SharedRef<Mesh> Mesh;
+            SharedRef<MaterialInstance> Material;
             glm::mat4 Transform;
         };
         std::vector<DrawCommand> DrawList;
 
         // Grid
-        Ref<MaterialInstance> GridMaterial;
+        SharedRef<MaterialInstance> GridMaterial;
 
         SceneRendererOptions Options;
     };
@@ -119,17 +119,17 @@ namespace Farscape {
         s_Data.DrawList.push_back({ mesh, entity->GetMaterial(), entity->GetTransform() });
     }
 
-    static Ref<Shader> equirectangularConversionShader, envFilteringShader, envIrradianceShader;
+    static SharedRef<Shader> equirectangularConversionShader, envFilteringShader, envIrradianceShader;
 
-    std::pair<Ref<TextureCube>, Ref<TextureCube>> SceneRenderer::CreateEnvironmentMap(const std::string& filepath)
+    std::pair<SharedRef<TextureCube>, SharedRef<TextureCube>> SceneRenderer::CreateEnvironmentMap(const std::string& filepath)
     {
         const uint32_t cubemapSize = 2048;
         const uint32_t irradianceMapSize = 32;
 
-        Ref<TextureCube> envUnfiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
+        SharedRef<TextureCube> envUnfiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
         if (!equirectangularConversionShader)
             equirectangularConversionShader = Shader::Create("assets/shaders/EquirectangularToCubeMap.glsl");
-        Ref<Texture2D> envEquirect = Texture2D::Create(filepath);
+        SharedRef<Texture2D> envEquirect = Texture2D::Create(filepath);
         FS_CORE_ASSERT(envEquirect->GetFormat() == TextureFormat::Float16, "Texture is not HDR!");
 
         equirectangularConversionShader->Bind();
@@ -145,7 +145,7 @@ namespace Farscape {
         if (!envFilteringShader)
             envFilteringShader = Shader::Create("assets/shaders/EnvironmentMipFilter.glsl");
 
-        Ref<TextureCube> envFiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
+        SharedRef<TextureCube> envFiltered = TextureCube::Create(TextureFormat::Float16, cubemapSize, cubemapSize);
 
         Renderer::Submit([envUnfiltered, envFiltered]()
         {
@@ -171,7 +171,7 @@ namespace Farscape {
         if (!envIrradianceShader)
             envIrradianceShader = Shader::Create("assets/shaders/EnvironmentIrradiance.glsl");
 
-        Ref<TextureCube> irradianceMap = TextureCube::Create(TextureFormat::Float16, irradianceMapSize, irradianceMapSize);
+        SharedRef<TextureCube> irradianceMap = TextureCube::Create(TextureFormat::Float16, irradianceMapSize, irradianceMapSize);
         envIrradianceShader->Bind();
         envFiltered->Bind();
         Renderer::Submit([irradianceMap]()
@@ -254,14 +254,14 @@ namespace Farscape {
         s_Data.SceneData = {};
     }
 
-    Ref<Texture2D> SceneRenderer::GetFinalColorBuffer()
+    SharedRef<Texture2D> SceneRenderer::GetFinalColorBuffer()
     {
         // return s_Data.CompositePass->GetSpecification().TargetFramebuffer;
         FS_CORE_ASSERT(false, "Not implemented");
         return nullptr;
     }
 
-    Ref<RenderPass> SceneRenderer::GetFinalRenderPass()
+    SharedRef<RenderPass> SceneRenderer::GetFinalRenderPass()
     {
         return s_Data.CompositePass;
     }

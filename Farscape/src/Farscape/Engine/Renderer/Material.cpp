@@ -7,12 +7,12 @@ namespace Farscape {
     // Material
     //////////////////////////////////////////////////////////////////////////////////
 
-    Ref<Material> Material::Create(const Ref<Shader>& shader)
+    SharedRef<Material> Material::Create(const SharedRef<Shader>& shader)
     {
-        return std::make_shared<Material>(shader);
+        return SharedRef<Material>::Create(shader);
     }
 
-    Material::Material(const Ref<Shader>& shader)
+    Material::Material(const SharedRef<Shader>& shader)
         : m_Shader(shader)
     {
         m_Shader->AddShaderReloadedCallback(std::bind(&Material::OnShaderReloaded, this));
@@ -101,7 +101,7 @@ namespace Farscape {
         return m_VSUniformStorageBuffer;
     }
 
-    void Material::Bind() const
+    void Material::Bind()
     {
         m_Shader->Bind();
 
@@ -128,12 +128,12 @@ namespace Farscape {
     // MaterialInstance
     //////////////////////////////////////////////////////////////////////////////////
 
-    Ref<MaterialInstance> MaterialInstance::Create(const Ref<Material>& material)
+    SharedRef<MaterialInstance> MaterialInstance::Create(const SharedRef<Material>& material)
     {
-        return std::make_shared<MaterialInstance>(material);
+        return SharedRef<MaterialInstance>::Create(material);
     }
 
-    MaterialInstance::MaterialInstance(const Ref<Material>& material)
+    MaterialInstance::MaterialInstance(const SharedRef<Material>& material)
         : m_Material(material)
     {
         m_Material->m_MaterialInstances.insert(this);
@@ -202,7 +202,7 @@ namespace Farscape {
         return m_VSUniformStorageBuffer;
     }
 
-    void MaterialInstance::Bind() const
+    void MaterialInstance::Bind()
     {
         m_Material->m_Shader->Bind();
 

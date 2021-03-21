@@ -12,11 +12,11 @@ namespace Farscape {
         ~Entity();
 
         // TODO: Move to Component
-        void SetMesh(const Ref<Mesh>& mesh) { m_Mesh = mesh; }
-        Ref<Mesh> GetMesh() { return m_Mesh; }
+        void SetMesh(const SharedRef<Mesh>& mesh) { m_Mesh = mesh; }
+        SharedRef<Mesh> GetMesh() { return m_Mesh; }
 
-        void SetMaterial(const Ref<MaterialInstance>& material) { m_Material = material; }
-        Ref<MaterialInstance> GetMaterial() { return m_Material; }
+        void SetMaterial(const SharedRef<MaterialInstance>& material) { m_Material = material; }
+        SharedRef<MaterialInstance> GetMaterial() { return m_Material; }
 
         const glm::mat4& GetTransform() const { return m_Transform; }
         glm::mat4& Transform() { return m_Transform; }
@@ -29,8 +29,8 @@ namespace Farscape {
         glm::mat4 m_Transform;
 
         // TODO: Temp
-        Ref<Mesh> m_Mesh;
-        Ref<MaterialInstance> m_Material;
+        SharedRef<Mesh> m_Mesh;
+        SharedRef<MaterialInstance> m_Material;
 
         friend class Scene;
     };

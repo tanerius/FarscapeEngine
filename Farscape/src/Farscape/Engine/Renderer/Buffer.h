@@ -120,7 +120,7 @@ namespace Farscape {
         None = 0, Static = 1, Dynamic = 2
     };
 
-    class VertexBuffer
+    class VertexBuffer : public RefCounter
     {
     public:
         virtual ~VertexBuffer() {}
@@ -134,11 +134,11 @@ namespace Farscape {
         virtual unsigned int GetSize() const = 0;
         virtual RendererID GetRendererID() const = 0;
 
-        static Ref<VertexBuffer> Create(void* data, uint32_t size, VertexBufferUsage usage = VertexBufferUsage::Static);
-        static Ref<VertexBuffer> Create(uint32_t size, VertexBufferUsage usage = VertexBufferUsage::Dynamic);
+        static SharedRef<VertexBuffer> Create(void* data, uint32_t size, VertexBufferUsage usage = VertexBufferUsage::Static);
+        static SharedRef<VertexBuffer> Create(uint32_t size, VertexBufferUsage usage = VertexBufferUsage::Dynamic);
     };
 
-    class IndexBuffer
+    class IndexBuffer : public RefCounter
     {
     public:
         virtual ~IndexBuffer() {}
@@ -151,7 +151,7 @@ namespace Farscape {
         virtual unsigned int GetSize() const = 0;
         virtual RendererID GetRendererID() const = 0;
 
-        static Ref<IndexBuffer> Create(void* data, uint32_t size = 0);
+        static SharedRef<IndexBuffer> Create(void* data, uint32_t size = 0);
     };
 
 }

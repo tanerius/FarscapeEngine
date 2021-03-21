@@ -104,10 +104,12 @@ namespace Farscape {
 
     };
 
-    class Shader : public IShader
+    class Shader : public IShader, public RefCounter
     {
     public:
         using ShaderReloadedCallback = std::function<void()>;
+
+        virtual ~Shader() {}
 
         virtual void Reload() = 0;
 
@@ -128,8 +130,8 @@ namespace Farscape {
         // Represents a complete shader program stored in a single file.
         // Note: currently for simplicity this is simply a string filepath, however
         //       in the future this will be an asset object + metadata
-        static Ref<Shader> Create(const std::string& filepath);
-        static Ref<Shader> CreateFromString(const std::string& source);
+        static SharedRef<Shader> Create(const std::string& filepath);
+        static SharedRef<Shader> CreateFromString(const std::string& source);
 
         virtual void SetVSMaterialUniformBuffer(Buffer buffer) = 0;
         virtual void SetPSMaterialUniformBuffer(Buffer buffer) = 0;
@@ -146,22 +148,22 @@ namespace Farscape {
         virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) = 0;
 
         // Temporary, before we have an asset manager
-        static std::vector<Ref<Shader>> s_AllShaders;
+        static std::vector<SharedRef<Shader>> s_AllShaders;
     };
 
     // This should be eventually handled by the Asset Manager
-    class ShaderLibrary : public ICollection
+    class ShaderLibrary : public ICollection, public RefCounter
     {
     public:
         ShaderLibrary();
         ~ShaderLibrary();
 
-        void Add(const Ref<Shader>& shader);
+        void Add(const SharedRef<Shader>& shader);
         void Load(const std::string& path);
         void Load(const std::string& name, const std::string& path);
 
-        Ref<Shader>& Get(const std::string& name);
+        const SharedRef<Shader>& Get(const std::string& name) const;
     private:
-        std::unordered_map<std::string, Ref<Shader>> m_Shaders;
+        std::unordered_map<std::string, SharedRef<Shader>> m_Shaders;
     };
 }

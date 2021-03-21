@@ -6,17 +6,17 @@ namespace Farscape {
 
     struct RenderPassSpecification
     {
-        Ref<Framebuffer> TargetFramebuffer;
+        SharedRef<Framebuffer> TargetFramebuffer;
     };
 
-    class RenderPass
+    class RenderPass : public RefCounter
     {
     public:
         virtual ~RenderPass() {}
 
-        virtual const RenderPassSpecification& GetSpecification() const = 0;
+        virtual RenderPassSpecification& GetSpecification() = 0;
 
-        static Ref<RenderPass> Create(const RenderPassSpecification& spec);
+        static SharedRef<RenderPass> Create(const RenderPassSpecification& spec);
     };
 
 }

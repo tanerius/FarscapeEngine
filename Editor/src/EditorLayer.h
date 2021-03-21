@@ -56,27 +56,27 @@ namespace Farscape {
     private:
         Scope<SceneHierarchyPanel> m_SceneHierarchyPanel;
 
-        Ref<Scene> m_Scene;
-        Ref<Scene> m_SphereScene;
-        Ref<Scene> m_ActiveScene;
+        SharedRef<Scene> m_Scene;
+        SharedRef<Scene> m_SphereScene;
+        SharedRef<Scene> m_ActiveScene;
 
         Entity* m_MeshEntity = nullptr;
 
-        Ref<Shader> m_BrushShader;
-        Ref<Mesh> m_PlaneMesh;
-        Ref<Material> m_SphereBaseMaterial;
+        SharedRef<Shader> m_BrushShader;
+        SharedRef<Mesh> m_PlaneMesh;
+        SharedRef<Material> m_SphereBaseMaterial;
 
-        Ref<Material> m_MeshMaterial;
+        SharedRef<Material> m_MeshMaterial;
 
-        std::vector<Ref<MaterialInstance>> m_MetalSphereMaterialInstances;
-        std::vector<Ref<MaterialInstance>> m_DielectricSphereMaterialInstances;
+        std::vector<SharedRef<MaterialInstance>> m_MetalSphereMaterialInstances;
+        std::vector<SharedRef<MaterialInstance>> m_DielectricSphereMaterialInstances;
 
         float m_GridScale = 16.025f, m_GridSize = 0.025f;
 
         struct AlbedoInput
         {
             glm::vec3 Color = { 0.972f, 0.96f, 0.915f }; // Silver, from https://docs.unrealengine.com/en-us/Engine/Rendering/Materials/PhysicallyBased
-            Ref<Texture2D> TextureMap;
+            SharedRef<Texture2D> TextureMap;
             bool SRGB = true;
             bool UseTexture = false;
         };
@@ -84,7 +84,7 @@ namespace Farscape {
 
         struct NormalInput
         {
-            Ref<Texture2D> TextureMap;
+            SharedRef<Texture2D> TextureMap;
             bool UseTexture = false;
         };
         NormalInput m_NormalInput;
@@ -92,7 +92,7 @@ namespace Farscape {
         struct MetalnessInput
         {
             float Value = 1.0f;
-            Ref<Texture2D> TextureMap;
+            SharedRef<Texture2D> TextureMap;
             bool UseTexture = false;
         };
         MetalnessInput m_MetalnessInput;
@@ -100,7 +100,7 @@ namespace Farscape {
         struct RoughnessInput
         {
             float Value = 0.2f;
-            Ref<Texture2D> TextureMap;
+            SharedRef<Texture2D> TextureMap;
             bool UseTexture = false;
         };
         RoughnessInput m_RoughnessInput;
@@ -117,7 +117,7 @@ namespace Farscape {
         SceneType m_SceneType;
 
         // Editor resources
-        Ref<Texture2D> m_CheckerboardTex;
+        SharedRef<Texture2D> m_CheckerboardTex;
 
         glm::vec2 m_ViewportBounds[2];
         int m_GizmoType = -1; // -1 = no gizmo

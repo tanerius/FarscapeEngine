@@ -81,32 +81,32 @@ namespace Farscape {
 
 		// Model Scene
 		{
-			m_Scene = CreateRef<Scene>("Model Scene");
+			m_Scene = SharedRef<Scene>::Create("Model Scene");
 			m_Scene->SetCamera(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
 
 			m_Scene->SetEnvironment(environment);
 
 			m_MeshEntity = m_Scene->CreateEntity("Test Entity");
 
-			auto mesh = CreateRef<Mesh>("assets/meshes/TestScene.fbx");
+			auto mesh = SharedRef<Mesh>::Create("assets/meshes/TestScene.fbx");
 			m_MeshEntity->SetMesh(mesh);
 
 			m_MeshMaterial = mesh->GetMaterial();
 
 			auto secondEntity = m_Scene->CreateEntity("Gun Entity");
 			secondEntity->Transform() = glm::translate(glm::mat4(1.0f), { 5, 5, 5 }) * glm::scale(glm::mat4(1.0f), {10, 10, 10});
-			mesh = CreateRef<Mesh>("assets/models/m1911/M1911Materials.fbx");
+			mesh = SharedRef<Mesh>::Create("assets/models/m1911/M1911Materials.fbx");
 			secondEntity->SetMesh(mesh);
 		}
 
 		// Sphere Scene
 		{
-			m_SphereScene = CreateRef<Scene>("PBR Sphere Scene");
+			m_SphereScene = SharedRef<Scene>::Create("PBR Sphere Scene");
 			m_SphereScene->SetCamera(Camera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f)));
 
 			m_SphereScene->SetEnvironment(environment);
 
-			auto sphereMesh = CreateRef<Mesh>("assets/models/Sphere1m.fbx");
+			auto sphereMesh = SharedRef<Mesh>::Create("assets/models/Sphere1m.fbx");
 			m_SphereBaseMaterial = sphereMesh->GetMaterial();
 
 			float x = -4.0f;
@@ -115,7 +115,7 @@ namespace Farscape {
 			{
 				auto sphereEntity = m_SphereScene->CreateEntity();
 
-				Ref<MaterialInstance> mi = CreateRef<MaterialInstance>(m_SphereBaseMaterial);
+				SharedRef<MaterialInstance> mi = SharedRef<MaterialInstance>::Create(m_SphereBaseMaterial);
 				mi->Set("u_Metalness", 1.0f);
 				mi->Set("u_Roughness", roughness);
 				x += 1.1f;
@@ -133,7 +133,7 @@ namespace Farscape {
 			{
 				auto sphereEntity = m_SphereScene->CreateEntity();
 
-				Ref<MaterialInstance> mi(new MaterialInstance(m_SphereBaseMaterial));
+				SharedRef<MaterialInstance> mi(new MaterialInstance(m_SphereBaseMaterial));
 				mi->Set("u_Metalness", 0.0f);
 				mi->Set("u_Roughness", roughness);
 				x += 1.1f;
@@ -149,7 +149,7 @@ namespace Farscape {
 		m_ActiveScene = m_Scene;
 		m_SceneHierarchyPanel = CreateScope<SceneHierarchyPanel>(m_ActiveScene);
 
-		m_PlaneMesh.reset(new Mesh("assets/models/Plane1m.obj"));
+		m_PlaneMesh.Reset(new Mesh("assets/models/Plane1m.obj"));
 
 		// Editor
 		m_CheckerboardTex = Texture2D::Create("assets/editor/Checkerboard.tga");
@@ -418,7 +418,7 @@ namespace Farscape {
 				std::string filename = Application::Get().OpenFile("");
 				if (filename != "")
 				{
-					auto newMesh = CreateRef<Mesh>(filename);
+					auto newMesh = SharedRef<Mesh>::Create(filename);
 					// m_MeshMaterial.reset(new MaterialInstance(newMesh->GetMaterial()));
 					// m_MeshEntity->SetMaterial(m_MeshMaterial);
 					m_MeshEntity->SetMesh(newMesh);

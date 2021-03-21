@@ -53,15 +53,15 @@ namespace Farscape {
 		static void WaitAndRender();
 
 		// ~Actual~ Renderer here... TODO: remove confusion later
-		static void BeginRenderPass(const Ref<RenderPass>& renderPass, bool clear = true);
+		static void BeginRenderPass(SharedRef<RenderPass> renderPass, bool clear = true);
 		static void EndRenderPass();
 
-		static void SubmitQuad(const Ref<MaterialInstance>& material, const glm::mat4& transform = glm::mat4(1.0f));
-		static void SubmitFullscreenQuad(const Ref<MaterialInstance>& material);
-		static void SubmitMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const Ref<MaterialInstance>& overrideMaterial = nullptr);
+		static void SubmitQuad( SharedRef<MaterialInstance> material, const glm::mat4& transform = glm::mat4(1.0f));
+		static void SubmitFullscreenQuad(SharedRef<MaterialInstance> material);
+		static void SubmitMesh(SharedRef<Mesh> mesh, const glm::mat4& transform, SharedRef<MaterialInstance> overrideMaterial = nullptr);
 
 		static void DrawAABB(const AABB& aabb, const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f));
-		static void DrawAABB(const Ref<Mesh>& mesh, const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f));
+		static void DrawAABB(SharedRef<Mesh> mesh, const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f));
 	private:
 		static RenderCommandQueue& GetRenderCommandQueue();
 	};

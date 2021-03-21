@@ -10,7 +10,7 @@ namespace Farscape {
         OpenGLRenderPass(const RenderPassSpecification& spec);
         virtual ~OpenGLRenderPass();
 
-        virtual const RenderPassSpecification& GetSpecification() const override { return m_Specification; }
+        virtual RenderPassSpecification& GetSpecification() override { return m_Specification; }
     private:
         RenderPassSpecification m_Specification;
     };

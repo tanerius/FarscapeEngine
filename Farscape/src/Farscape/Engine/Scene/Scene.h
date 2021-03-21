@@ -7,8 +7,8 @@ namespace Farscape {
 
     struct Environment
     {
-        Ref<TextureCube> RadianceMap;
-        Ref<TextureCube> IrradianceMap;
+        SharedRef<TextureCube> RadianceMap;
+        SharedRef<TextureCube> IrradianceMap;
 
         static Environment Load(const std::string& filepath);
     };
@@ -21,7 +21,7 @@ namespace Farscape {
         float Multiplier = 1.0f;
     };
 
-    class Scene
+    class Scene : public RefCounter
     {
     public:
         Scene(const std::string& debugName = "Scene");
@@ -36,7 +36,7 @@ namespace Farscape {
         Camera& GetCamera() { return m_Camera; }
 
         void SetEnvironment(const Environment& environment);
-        void SetSkybox(const Ref<TextureCube>& skybox);
+        void SetSkybox(const SharedRef<TextureCube>& skybox);
 
         Light& GetLight() { return m_Light; }
 
@@ -53,8 +53,8 @@ namespace Farscape {
         float m_LightMultiplier = 0.3f;
 
         Environment m_Environment;
-        Ref<TextureCube> m_SkyboxTexture;
-        Ref<MaterialInstance> m_SkyboxMaterial;
+        SharedRef<TextureCube> m_SkyboxTexture;
+        SharedRef<MaterialInstance> m_SkyboxMaterial;
 
         float m_SkyboxLod = 1.0f;
 

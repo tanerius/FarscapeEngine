@@ -4,34 +4,34 @@
 
 namespace Farscape {
 
-    Ref<VertexBuffer> VertexBuffer::Create(void* data, uint32_t size, VertexBufferUsage usage)
+    SharedRef<VertexBuffer> VertexBuffer::Create(void* data, uint32_t size, VertexBufferUsage usage)
     {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:    return nullptr;
-        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLVertexBuffer>(data, size, usage);
+        case RendererAPIType::OpenGL:  return SharedRef<OpenGLVertexBuffer>::Create(data, size, usage);
         }
         FS_CORE_ASSERT(false, "Unknown RendererAPI");
         return nullptr;
     }
 
-    Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, VertexBufferUsage usage)
+    SharedRef<VertexBuffer> VertexBuffer::Create(uint32_t size, VertexBufferUsage usage)
     {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:    return nullptr;
-        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLVertexBuffer>(size, usage);
+        case RendererAPIType::OpenGL:  return SharedRef<OpenGLVertexBuffer>::Create(size, usage);
         }
         FS_CORE_ASSERT(false, "Unknown RendererAPI");
         return nullptr;
     }
 
-    Ref<IndexBuffer> IndexBuffer::Create(void* data, uint32_t size)
+    SharedRef<IndexBuffer> IndexBuffer::Create(void* data, uint32_t size)
     {
         switch (RendererAPI::Current())
         {
         case RendererAPIType::None:    return nullptr;
-        case RendererAPIType::OpenGL:  return std::make_shared<OpenGLIndexBuffer>(data, size);
+        case RendererAPIType::OpenGL:  return SharedRef<OpenGLIndexBuffer>::Create(data, size);
         }
         FS_CORE_ASSERT(false, "Unknown RendererAPI");
         return nullptr;

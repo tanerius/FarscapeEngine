@@ -31,9 +31,9 @@ namespace Farscape {
         Reload();
     }
 
-    Ref<OpenGLShader> OpenGLShader::CreateFromString(const std::string& source)
+    SharedRef<OpenGLShader> OpenGLShader::CreateFromString(const std::string& source)
     {
-        Ref<OpenGLShader> shader = std::make_shared<OpenGLShader>();
+        SharedRef<OpenGLShader> shader = SharedRef<OpenGLShader>::Create();
         shader->Load(source);
         return shader;
     }

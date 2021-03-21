@@ -36,24 +36,24 @@ namespace Farscape {
         static const uint32_t MaxLineVertices = MaxLines * 2;
         static const uint32_t MaxLineIndices = MaxLines * 6;
 
-        Ref<VertexArray> QuadVertexArray;
-        Ref<VertexBuffer> QuadVertexBuffer;
-        Ref<Shader> TextureShader;
-        Ref<Texture2D> WhiteTexture;
+        SharedRef<VertexArray> QuadVertexArray;
+        SharedRef<VertexBuffer> QuadVertexBuffer;
+        SharedRef<Shader> TextureShader;
+        SharedRef<Texture2D> WhiteTexture;
 
         uint32_t QuadIndexCount = 0;
         QuadVertex* QuadVertexBufferBase = nullptr;
         QuadVertex* QuadVertexBufferPtr = nullptr;
 
-        std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
+        std::array<SharedRef<Texture2D>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1; // 0 = white texture
 
         glm::vec4 QuadVertexPositions[4];
 
         // Lines
-        Ref<VertexArray> LineVertexArray;
-        Ref<VertexBuffer> LineVertexBuffer;
-        Ref<Shader> LineShader;
+        SharedRef<VertexArray> LineVertexArray;
+        SharedRef<VertexBuffer> LineVertexBuffer;
+        SharedRef<Shader> LineShader;
 
         uint32_t LineIndexCount = 0;
         LineVertex* LineVertexBufferBase = nullptr;
@@ -99,7 +99,7 @@ namespace Farscape {
             offset += 4;
         }
 
-        Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
+        SharedRef<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
         s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
         delete[] quadIndices;
 
@@ -136,7 +136,7 @@ namespace Farscape {
         for (uint32_t i = 0; i < s_Data.MaxLineIndices; i++)
             lineIndices[i] = i;
 
-        Ref<IndexBuffer> lineIB = IndexBuffer::Create(lineIndices, s_Data.MaxLineIndices);
+        SharedRef<IndexBuffer> lineIB = IndexBuffer::Create(lineIndices, s_Data.MaxLineIndices);
         s_Data.LineVertexArray->SetIndexBuffer(lineIB);
         delete[] lineIndices;
     }
@@ -276,12 +276,12 @@ namespace Farscape {
         s_Data.Stats.QuadCount++;
     }
 
-    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const SharedRef<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, tintColor);
     }
 
-    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
+    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const SharedRef<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             FlushAndReset();
@@ -291,7 +291,7 @@ namespace Farscape {
         float textureIndex = 0.0f;
         for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *texture.get())
+            if (*s_Data.TextureSlots[i].Raw() == *texture.Raw())
             {
                 textureIndex = (float)i;
                 break;
@@ -391,12 +391,12 @@ namespace Farscape {
         s_Data.Stats.QuadCount++;
     }
 
-    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const SharedRef<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, texture, tilingFactor, tintColor);
     }
 
-    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
+    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const SharedRef<Texture2D>& texture, float tilingFactor, const glm::vec4& /* tintColor */)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             FlushAndReset();
@@ -406,7 +406,7 @@ namespace Farscape {
         float textureIndex = 0.0f;
         for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *texture.get())
+            if (*s_Data.TextureSlots[i].Raw() == *texture.Raw())
             {
                 textureIndex = (float)i;
                 break;

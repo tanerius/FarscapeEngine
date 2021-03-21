@@ -16,14 +16,14 @@ namespace Farscape {
         Blend = BIT(2)
     };
 
-    class Material
+    class Material : public IRendererObject, public RefCounter
     {
         friend class MaterialInstance;
     public:
-        Material(const Ref<Shader>& shader);
+        Material(const SharedRef<Shader>& shader);
         virtual ~Material();
 
-        void Bind() const;
+        void Bind();
 
         uint32_t GetFlags() const { return m_MaterialFlags; }
         void SetFlag(MaterialFlag flag) { m_MaterialFlags |= (uint32_t)flag; }
@@ -41,7 +41,7 @@ namespace Farscape {
                 mi->OnMaterialValueUpdated(decl);
         }
 
-        void Set(const std::string& name, const Ref<Texture>& texture)
+        void Set(const std::string& name, const SharedRef<Texture>& texture)
         {
             auto decl = FindResourceDeclaration(name);
             uint32_t slot = decl->GetRegister();
@@ -50,17 +50,17 @@ namespace Farscape {
             m_Textures[slot] = texture;
         }
 
-        void Set(const std::string& name, const Ref<Texture2D>& texture)
+        void Set(const std::string& name, const SharedRef<Texture2D>& texture)
         {
-            Set(name, (const Ref<Texture>&)texture);
+            Set(name, (const SharedRef<Texture>&)texture);
         }
 
-        void Set(const std::string& name, const Ref<TextureCube>& texture)
+        void Set(const std::string& name, const SharedRef<TextureCube>& texture)
         {
-            Set(name, (const Ref<Texture>&)texture);
+            Set(name, (const SharedRef<Texture>&)texture);
         }
     public:
-        static Ref<Material> Create(const Ref<Shader>& shader);
+        static SharedRef<Material> Create(const SharedRef<Shader>& shader);
     private:
         void AllocateStorage();
         void OnShaderReloaded();
@@ -70,21 +70,21 @@ namespace Farscape {
         ShaderResourceDeclaration* FindResourceDeclaration(const std::string& name);
         Buffer& GetUniformBufferTarget(ShaderUniformDeclaration* uniformDeclaration);
     private:
-        Ref<Shader> m_Shader;
+        SharedRef<Shader> m_Shader;
         std::unordered_set<MaterialInstance*> m_MaterialInstances;
 
         Buffer m_VSUniformStorageBuffer;
         Buffer m_PSUniformStorageBuffer;
-        std::vector<Ref<Texture>> m_Textures;
+        std::vector<SharedRef<Texture>> m_Textures;
 
         uint32_t m_MaterialFlags;
     };
 
-    class MaterialInstance
+    class MaterialInstance :  public RefCounter
     {
         friend class Material;
     public:
-        MaterialInstance(const Ref<Material>& material);
+        MaterialInstance(const SharedRef<Material>& material);
         virtual ~MaterialInstance();
 
         template <typename T>
@@ -101,7 +101,7 @@ namespace Farscape {
             m_OverriddenValues.insert(name);
         }
 
-        void Set(const std::string& name, const Ref<Texture>& texture)
+        void Set(const std::string& name, const SharedRef<Texture>& texture)
         {
             auto decl = m_Material->FindResourceDeclaration(name);
             if (!decl)
@@ -114,36 +114,36 @@ namespace Farscape {
             m_Textures[slot] = texture;
         }
 
-        void Set(const std::string& name, const Ref<Texture2D>& texture)
+        void Set(const std::string& name, const SharedRef<Texture2D>& texture)
         {
-            Set(name, (const Ref<Texture>&)texture);
+            Set(name, (const SharedRef<Texture>&)texture);
         }
 
-        void Set(const std::string& name, const Ref<TextureCube>& texture)
+        void Set(const std::string& name, const SharedRef<TextureCube>& texture)
         {
-            Set(name, (const Ref<Texture>&)texture);
+            Set(name, (const SharedRef<Texture>&)texture);
         }
 
-        void Bind() const;
+        void Bind();
 
         uint32_t GetFlags() const { return m_Material->m_MaterialFlags; }
         bool GetFlag(MaterialFlag flag) const { return (uint32_t)flag & m_Material->m_MaterialFlags; }
         void SetFlag(MaterialFlag flag, bool value = true);
 
-        Ref<Shader >GetShader() { return m_Material->m_Shader; }
+        SharedRef<Shader>GetShader() { return m_Material->m_Shader; }
     public:
-        static Ref<MaterialInstance> Create(const Ref<Material>& material);
+        static SharedRef<MaterialInstance> Create(const SharedRef<Material>& material);
     private:
         void AllocateStorage();
         void OnShaderReloaded();
         Buffer& GetUniformBufferTarget(ShaderUniformDeclaration* uniformDeclaration);
         void OnMaterialValueUpdated(ShaderUniformDeclaration* decl);
     private:
-        Ref<Material> m_Material;
+        SharedRef<Material> m_Material;
 
         Buffer m_VSUniformStorageBuffer;
         Buffer m_PSUniformStorageBuffer;
-        std::vector<Ref<Texture>> m_Textures;
+        std::vector<SharedRef<Texture>> m_Textures;
 
         // TODO: This is a temporary system to track overrides
         std::unordered_set<std::string> m_OverriddenValues;
