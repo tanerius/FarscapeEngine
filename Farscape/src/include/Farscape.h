@@ -5,6 +5,7 @@
 #include "Core/Log.h"
 
 #include "Core/Timestep.h"
+#include "Core/Timer.h"
 
 #include "Events/Event.h"
 #include "Events/KeyEvent.h"
