@@ -63,6 +63,7 @@ macro(set_farscape_platform)
     else()
         # Nix
         set(FARSCAPE_PLATFORM "NA")
+        set(FS_PLATFORM_NA "Linux")
     endif()
     
 endmacro()

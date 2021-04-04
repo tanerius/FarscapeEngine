@@ -90,6 +90,7 @@ target_include_directories(Farscape
 
 add_precompiled_header(Farscape fspch.h SOURCE_CXX src/pch/fspch.cpp FORCEINCLUDE)
 get_target_property(FARSCAPE_ASSIMP_LIB Farscape::assimp "assimp_library")
+get_target_property(FARSCAPE_MONO_LIB Farscape::mono "mono_sgen_lib")
 
 target_link_libraries(Farscape
     PUBLIC spdlog::spdlog
@@ -103,6 +104,8 @@ target_link_libraries(Farscape
     PUBLIC ${FARSCAPE_ASSIMP_LIB}
     PUBLIC Farscape::entt
     PUBLIC Farscape::FastNoiseLite
+    PUBLIC Farscape::mono
+    PUBLIC ${FARSCAPE_MONO_LIB}
 )
 
 if(MSVC)
