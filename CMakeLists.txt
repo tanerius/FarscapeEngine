@@ -31,6 +31,10 @@ print_farscape_environment()
 add_subdirectory(External)
 # add shared
 add_subdirectory(Shared)
+# SampleApp
+add_subdirectory(ScriptCore)
+# SampleApp
+add_subdirectory(SampleApp)
 # add engine sources
 add_subdirectory(Farscape)
 # add sandbox sources
