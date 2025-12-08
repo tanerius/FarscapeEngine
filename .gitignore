@@ -1,62 +1,25 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# .gitignore
+build/
+*.exe
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+*.o
+*.dll
 *.so
 *.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
 *.a
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-CMakeLists.txt.user
+*.pdb
+*.ilk
+*.exp
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.vcxproj.filters
+.vs/
+.vscode/
 CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
+CMakeFiles/
 cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-
-out
-.vscode
-.vs
-
-CMakeSettings.json
-
-external/mono/*
-!external/mono/CMakeLists.txt
-
-external/assimp/*
-!external/assimp/CMakeLists.txt
-
-Editor/assets/*
-!Editor/assets/CMakeLists.txt
-
-sandbox/assets/*
-!sandbox/assets/CMakeLists.txt
+Makefile
+*.spv
