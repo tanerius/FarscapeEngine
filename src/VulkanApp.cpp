@@ -366,6 +366,17 @@ void VulkanApp::createGraphicsPipeline() {
     inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
+    // Enable dynamic viewport and scissor states
+    std::vector<VkDynamicState> dynamicStates = {
+        VK_DYNAMIC_STATE_VIEWPORT,
+        VK_DYNAMIC_STATE_SCISSOR
+    };
+
+    VkPipelineDynamicStateCreateInfo dynamicState{};
+    dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+    dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+    dynamicState.pDynamicStates = dynamicStates.data();
+
     VkViewport viewport{};
     viewport.x = 0.0f;
     viewport.y = 0.0f;
@@ -381,9 +392,9 @@ void VulkanApp::createGraphicsPipeline() {
     VkPipelineViewportStateCreateInfo viewportState{};
     viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
     viewportState.viewportCount = 1;
-    viewportState.pViewports = &viewport;
+    viewportState.pViewports = nullptr;  // Will be set dynamically
     viewportState.scissorCount = 1;
-    viewportState.pScissors = &scissor;
+    viewportState.pScissors = nullptr;   // Will be set dynamically
 
     VkPipelineRasterizationStateCreateInfo rasterizer{};
     rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
@@ -438,6 +449,7 @@ void VulkanApp::createGraphicsPipeline() {
     pipelineInfo.pMultisampleState = &multisampling;
     pipelineInfo.pDepthStencilState = &depthStencil;
     pipelineInfo.pColorBlendState = &colorBlending;
+    pipelineInfo.pDynamicState = &dynamicState;
     pipelineInfo.layout = pipelineLayout;
     pipelineInfo.renderPass = renderPass;
     pipelineInfo.subpass = 0;
@@ -681,6 +693,21 @@ void VulkanApp::drawFrame() {
 
     vkCmdBeginRenderPass(commandBuffers[currentFrame], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
     vkCmdBindPipeline(commandBuffers[currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+
+    // Set dynamic viewport and scissor
+    VkViewport viewport{};
+    viewport.x = 0.0f;
+    viewport.y = 0.0f;
+    viewport.width = static_cast<float>(swapChainExtent.width);
+    viewport.height = static_cast<float>(swapChainExtent.height);
+    viewport.minDepth = 0.0f;
+    viewport.maxDepth = 1.0f;
+    vkCmdSetViewport(commandBuffers[currentFrame], 0, 1, &viewport);
+
+    VkRect2D scissor{};
+    scissor.offset = {0, 0};
+    scissor.extent = swapChainExtent;
+    vkCmdSetScissor(commandBuffers[currentFrame], 0, 1, &scissor);
 
     VkBuffer vertexBuffers[] = {vertexBuffer};
     VkDeviceSize offsets[] = {0};
