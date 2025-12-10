@@ -171,16 +171,29 @@ The engine includes an integrated ImGui interface for real-time debugging and sc
 include/
 ├── RenderObject.h    # Renderable entity with transform
 ├── Scene.h           # Collection of render objects
-├── Renderer.h        # Vulkan rendering logic
+├── Renderer.h        # Vulkan rendering logic + ImGui integration
 ├── CubeGeometry.h    # Predefined cube geometry
 └── VulkanApp.h       # Main application (uses Scene/Renderer)
 
 src/
 ├── RenderObject.cpp
 ├── Scene.cpp
-├── Renderer.cpp
+├── Renderer.cpp      # Includes ImGui initialization and rendering
 ├── CubeGeometry.cpp
-└── VulkanApp.cpp
+├── VulkanApp.cpp
+└── main.cpp          # Entry point
+
+external/
+├── imgui/            # ImGui library (docking branch)
+│   ├── imgui.cpp     # Core ImGui files
+│   ├── imgui.h
+│   └── backends/     # GLFW and Vulkan backends
+├── glm/              # Math library (header-only)
+└── windows/glfw/     # Platform-specific GLFW binaries
+
+shaders/
+├── shader.vert       # Vertex shader (GLSL)
+└── shader.frag       # Fragment shader (GLSL)
 ```
 
 ## Migration Notes
