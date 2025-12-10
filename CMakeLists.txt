@@ -129,11 +129,13 @@ endif()
 set(SOURCES
     src/main.cpp
     src/VulkanApp.cpp
+    src/CubeGeometry.cpp
 )
 
 # Header files
 set(HEADERS
     include/VulkanApp.h
+    include/CubeGeometry.h
 )
 
 # Create executable

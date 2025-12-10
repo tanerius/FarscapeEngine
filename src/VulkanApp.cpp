@@ -1,4 +1,5 @@
 #include "VulkanApp.h"
+#include "CubeGeometry.h"
 
 #include <iostream>
 #include <fstream>
@@ -42,6 +43,9 @@ void VulkanApp::framebufferResizeCallback(GLFWwindow* window, int width, int hei
 }
 
 void VulkanApp::initVulkan() {
+    vertices = CubeGeometry::getVertices();
+    indices = CubeGeometry::getIndices();
+    
     createInstance();
     createSurface();
     pickPhysicalDevice();
