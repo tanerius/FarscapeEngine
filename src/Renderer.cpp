@@ -338,8 +338,10 @@ void Renderer::initializeImGui(GLFWwindow *window, VkInstance instance, VkRender
     // Note: Fonts are automatically uploaded by ImGui_ImplVulkan on first NewFrame() call
 }
 
-void Renderer::newImGuiFrame()
+bool Renderer::newImGuiFrame(bool *fullscreen)
 {
+    bool shouldExit = false;
+
     ImGui_ImplVulkan_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -373,7 +375,7 @@ void Renderer::newImGuiFrame()
         {
             if (ImGui::MenuItem("Exit"))
             {
-                // Handle exit (you can set a flag to close the window)
+                shouldExit = true;
             }
             ImGui::EndMenu();
         }
@@ -401,9 +403,19 @@ void Renderer::newImGuiFrame()
     ImGui::Begin("Scene Controls");
     ImGui::Text("Background Color");
     ImGui::ColorEdit3("Clear Color", clearColor.data());
+
+    ImGui::Separator();
+    if (ImGui::Checkbox("Fullscreen", fullscreen))
+    {
+        // Fullscreen state changed, will be handled by VulkanApp
+    }
+
+    ImGui::Separator();
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImGui::End();
+
+    return shouldExit;
 }
 
 void Renderer::renderImGui(VkCommandBuffer commandBuffer)

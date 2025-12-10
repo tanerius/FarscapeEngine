@@ -48,7 +48,7 @@ public:
     void updateCamera(uint32_t currentImage, void *uniformBufferMapped, VkExtent2D swapChainExtent, float aspectRatio);
 
     void renderImGui(VkCommandBuffer commandBuffer);
-    void newImGuiFrame();
+    bool newImGuiFrame(bool *fullscreen);
 
     std::array<float, 3> &getClearColor() { return clearColor; }
 

@@ -92,6 +92,34 @@ void VulkanApp::mainLoop()
     vkDeviceWaitIdle(device);
 }
 
+void VulkanApp::toggleFullscreen()
+{
+    static int windowedPosX = 0, windowedPosY = 0;
+    static int windowedWidth = WIDTH, windowedHeight = HEIGHT;
+
+    if (isFullscreen)
+    {
+        // Enter fullscreen mode
+        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+
+        // Save current window position and size
+        glfwGetWindowPos(window, &windowedPosX, &windowedPosY);
+        glfwGetWindowSize(window, &windowedWidth, &windowedHeight);
+
+        // Set fullscreen
+        glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+    }
+    else
+    {
+        // Exit fullscreen mode
+        glfwSetWindowMonitor(window, nullptr, windowedPosX, windowedPosY, windowedWidth, windowedHeight, 0);
+    }
+
+    // Trigger swap chain recreation
+    framebufferResized = true;
+}
+
 void VulkanApp::cleanup()
 {
     cleanupSwapChain();
@@ -722,8 +750,21 @@ void VulkanApp::drawFrame()
     vkCmdBeginRenderPass(commandBuffers[currentFrame], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
     // Render ImGui UI (including the 3D viewport window with the offscreen texture)
-    renderer.newImGuiFrame();
+    bool previousFullscreen = isFullscreen;
+    bool shouldExit = renderer.newImGuiFrame(&isFullscreen);
     renderer.renderImGui(commandBuffers[currentFrame]);
+
+    // Handle exit request from menu
+    if (shouldExit)
+    {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+
+    // Check if fullscreen state changed
+    if (previousFullscreen != isFullscreen)
+    {
+        toggleFullscreen();
+    }
 
     vkCmdEndRenderPass(commandBuffers[currentFrame]);
 
