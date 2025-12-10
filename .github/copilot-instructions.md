@@ -81,10 +81,19 @@ FarscapeEngine/
 ## Scene/Renderer Architecture
 
 ### Design Principles
+- **ImGui-first UI**: All interface elements are ImGui windows with full docking support
+- **Offscreen rendering**: 3D scene rendered to texture, then displayed in ImGui window
 - **Separation of Concerns**: VulkanApp handles lifecycle, Scene manages objects, Renderer handles graphics
 - **Flexibility**: Easy to add/remove objects at runtime
 - **Encapsulation**: Renderer owns Vulkan buffer lifecycle for objects
 - **Extensibility**: RenderObject can be extended for different geometry types
+
+### Rendering Flow
+1. Update uniform buffers for current frame
+2. Render 3D scene to offscreen texture (renderSceneToTexture)
+3. Begin main render pass for swap chain
+4. Render ImGui interface (including 3D viewport showing offscreen texture)
+5. End render pass and present to swap chain
 
 ### Object Lifecycle
 1. Create RenderObject with geometry (vertices, indices)
@@ -204,6 +213,8 @@ cd build
 - Ensure VULKAN_SDK is set before CMake configuration
 
 ### Architecture Decisions
+- **ImGui-first interface**: Entire UI is ImGui-based with docking support
+- **Offscreen rendering**: 3D scene rendered to texture, displayed in ImGui window
 - **Scene/Renderer separation**: Scene manages objects, Renderer handles Vulkan operations
 - **RenderObject system**: Objects have geometry and transforms (position, rotation, scale)
 - **Per-object buffers**: Renderer creates and manages Vulkan buffers for each object
@@ -212,27 +223,33 @@ cd build
 - **Single uniform buffer**: Currently one UBO for camera/projection, objects share it
 - **No resource manager**: Direct Vulkan handle management
 - **Basic scene graph**: Flat list of objects, no parent-child hierarchy yet
-- **ImGui integration**: Renderer manages ImGui initialization and rendering
+- **ImGui docking**: Full docking support with multi-viewport enabled
 - **Separate ImGui descriptor pool**: ImGui uses its own descriptor pool to avoid conflicts
-- **ImGui controls clear color**: Background color dynamically controlled via UI
+- **Dockable 3D viewport**: Scene texture displayed as ImGui::Image in dockable window
 
 ## Current Architecture
 
 ### Completed
+- ✅ **ImGui docking interface**: Full docking support with multi-viewport
+- ✅ **Offscreen rendering**: 3D scene rendered to texture for ImGui display
 - ✅ **Scene/Renderer separation**: Clean architecture with separated concerns
 - ✅ **RenderObject system**: Entities with geometry and transforms
 - ✅ **CubeGeometry utility**: Abstracted geometry creation
 - ✅ **Per-object buffer management**: Automatic Vulkan buffer lifecycle
-- ✅ **ImGui integration**: Real-time UI for debugging and controls
+- ✅ **Dockable 3D viewport**: Scene displayed as resizable, dockable ImGui window
 - ✅ **Background color control**: Interactive RGB color picker in UI
 
 ### Key Classes
 - **VulkanApp**: Application lifecycle, Vulkan initialization, main loop
-- **Renderer**: Vulkan rendering operations, buffer management, camera, ImGui integration
+- **Renderer**: 
+  - Offscreen rendering to texture (renderSceneToTexture)
+  - ImGui docking and multi-viewport management
+  - Buffer management, camera operations
+  - Displays rendered scene via ImGui::Image
 - **Scene**: Collection of RenderObjects, add/remove/query operations
 - **RenderObject**: Geometry + transforms (position, rotation, scale)
 - **CubeGeometry**: Static utility for predefined cube geometry
-- **ImGui**: Integrated for real-time UI, debugging tools, and scene controls
+- **ImGui**: Primary interface with dockable windows (3D Viewport, Scene Controls)
 
 ## Future Development Goals
 
@@ -262,11 +279,13 @@ cd build
 
 ### Verification Steps
 1. Clean build succeeds without errors
-2. Application launches and shows window
-3. Cube renders with correct colors (6 distinct faces)
-4. Cube rotates smoothly
-5. Window resizing works without crashes
-6. No Vulkan validation errors in debug mode
+2. Application launches and shows ImGui docking interface
+3. 3D Viewport window displays rotating cube with correct colors (6 distinct faces)
+4. Cube rotates smoothly within viewport window
+5. Windows can be docked/undocked and resized
+6. Scene Controls panel functions correctly (color picker, FPS counter)
+7. Main window resizing works without crashes
+8. No Vulkan validation errors in debug mode
 
 ### Build Warnings to Ignore
 - C4100: Unreferenced parameter (framebuffer resize callback)

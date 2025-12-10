@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Farscape Engine has been refactored to separate rendering logic from scene management, making it easier to add and manage multiple objects in the scene.
+The Farscape Engine features an ImGui-first dockable interface architecture with offscreen rendering. The 3D scene is rendered to a texture and displayed within a dockable ImGui window, allowing for a fully customizable workspace layout.
 
 ## Architecture Components
 
@@ -42,29 +42,33 @@ scene.removeObject(cube1);
 ```
 
 ### Renderer (`Renderer.h/cpp`)
-Handles all Vulkan rendering operations for a scene and manages ImGui UI.
+Handles all Vulkan rendering operations for a scene and manages the ImGui docking interface.
 
 **Features:**
+- **Offscreen Rendering**: Renders 3D scene to texture for display in ImGui
 - Creates and manages Vulkan buffers for each object
-- Renders all objects in a scene
+- Manages offscreen render pass, framebuffer, and texture resources
 - Manages camera position and view/projection matrices
 - Automatic buffer management when scene changes
-- ImGui integration for real-time UI and debugging
+- **ImGui Docking**: Full docking support with multi-viewport
 - Separate descriptor pool for ImGui to avoid resource conflicts
 - Dynamic background color control via UI
+- Dockable 3D viewport window
 
 **Usage:**
 ```cpp
 Renderer renderer;
 renderer.initialize(device, physicalDevice, commandPool, graphicsQueue, ...);
+renderer.createOffscreenRenderPass(colorFormat, depthFormat);
+renderer.createOffscreenResources(colorFormat, depthFormat);
 renderer.initializeImGui(window, instance, renderPass, graphicsQueue, imageCount);
 renderer.updateScene(&scene);
 renderer.setCamera(glm::vec3(2, 2, 2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-renderer.render(commandBuffer, currentFrame, descriptorSets, ...);
 
 // In render loop
-renderer.newImGuiFrame();  // Start ImGui frame
-renderer.renderImGui(commandBuffer);  // Render UI
+renderer.renderSceneToTexture(commandBuffer, currentFrame, descriptorSets, ...);
+renderer.newImGuiFrame();  // Start ImGui frame with dockspace
+renderer.renderImGui(commandBuffer);  // Render UI with 3D viewport
 ```
 
 ### CubeGeometry (`CubeGeometry.h/cpp`)
@@ -88,21 +92,25 @@ auto cube = std::make_shared<RenderObject>(vertices, indices);
 
 2. **Rendering Loop:**
    - Each frame, `updateUniformBuffer()` updates object transforms and camera
-   - `renderer.newImGuiFrame()` starts a new ImGui frame for UI rendering
-   - `renderer.render()` renders all objects in the scene
-   - `renderer.renderImGui()` renders the UI overlay
+   - `renderer.renderSceneToTexture()` renders 3D scene to offscreen texture
+   - Main render pass begins for swap chain
+   - `renderer.newImGuiFrame()` starts ImGui frame with dockspace
+   - `renderer.renderImGui()` renders UI (including 3D viewport showing texture)
    - Renderer automatically binds correct buffers for each object
 
 3. **Buffer Management:**
    - When `updateScene()` is called, Renderer creates Vulkan buffers for new objects
    - Old buffers are cleaned up when scene changes
    - Each object gets its own vertex and index buffers
+   - Offscreen framebuffer and texture managed by Renderer
    - ImGui uses a separate descriptor pool to avoid conflicts with scene rendering
 
 4. **UI Features:**
-   - Real-time background color picker (RGB control)
-   - FPS counter and frame time display
-   - Scene controls panel for debugging
+   - **Dockable Interface**: Full docking support with multi-viewport
+   - **3D Viewport Window**: Displays rendered scene texture as ImGui image
+   - **Scene Controls Panel**: Real-time background color picker, FPS counter
+   - **Menu Bar**: File menu with application controls
+   - **Resizable Viewports**: 3D viewport can be resized and docked anywhere
 
 ## Adding Multiple Objects
 
@@ -123,20 +131,23 @@ for (int i = 0; i < 5; i++) {
 renderer.updateScene(&scene);
 ```
 
-## Current UI Features (ImGui)
+## Current UI Features (ImGui Docking)
 
-The engine includes an integrated ImGui interface for real-time debugging and scene control:
+The engine features a fully dockable ImGui interface as the primary user interface:
 
-**Scene Controls Panel:**
-- Background color picker (RGB sliders)
-- FPS counter and frame time display
-- Extensible for additional runtime controls
+**Dockable Windows:**
+- **3D Viewport**: Displays rendered scene texture, resizable and dockable
+- **Scene Controls Panel**: Background color picker, FPS counter, frame time
+- **Menu Bar**: File menu with Exit option
+- **Dockspace**: Main docking area for flexible layout
 
 **Implementation Details:**
 - ImGui uses separate descriptor pool (avoids conflicts with main rendering)
 - Backends: `imgui_impl_glfw` and `imgui_impl_vulkan`
-- Renders as overlay on top of 3D scene
-- Docking branch support for future advanced layouts
+- Offscreen rendering: Scene rendered to texture, then displayed in ImGui
+- Full docking support with `ImGuiConfigFlags_DockingEnable`
+- Multi-viewport support with `ImGuiConfigFlags_ViewportsEnable`
+- Scene texture sampled via ImGui descriptor set
 
 ## Future Improvements
 
@@ -198,13 +209,20 @@ shaders/
 
 ## Migration Notes
 
-**Before:**
+**Version 1 (Initial):**
 - VulkanApp directly managed vertex/index buffers
 - Single hardcoded cube
 - Rendering logic mixed with application logic
 
-**After:**
+**Version 2 (Scene/Renderer):**
 - Renderer manages buffers per object
 - Scene can contain multiple objects
 - Clean separation of concerns
-- Easy to add/remove objects at runtime
+- Simple ImGui overlay
+
+**Version 3 (Current - ImGui Docking):**
+- Offscreen rendering to texture
+- Full ImGui docking interface
+- 3D viewport as dockable window
+- Multi-viewport support
+- Flexible workspace layouts

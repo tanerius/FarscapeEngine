@@ -19,8 +19,7 @@ Renderer::~Renderer()
 }
 
 void Renderer::initialize(VkDevice device, VkPhysicalDevice physicalDevice, VkCommandPool commandPool,
-                          VkQueue graphicsQueue, VkDescriptorSetLayout descriptorSetLayout,
-                          VkPipelineLayout pipelineLayout, VkPipeline graphicsPipeline)
+                          VkQueue graphicsQueue)
 {
     this->device = device;
     this->physicalDevice = physicalDevice;
@@ -82,51 +81,6 @@ void Renderer::updateScene(Scene *scene)
                 createBuffersForObject(obj.get());
             }
         }
-    }
-}
-
-void Renderer::render(VkCommandBuffer commandBuffer, uint32_t currentFrame,
-                      const std::vector<VkDescriptorSet> &descriptorSets,
-                      VkPipelineLayout pipelineLayout, VkPipeline graphicsPipeline,
-                      VkExtent2D swapChainExtent)
-{
-    if (!currentScene)
-        return;
-
-    // Set dynamic viewport and scissor
-    VkViewport viewport{};
-    viewport.x = 0.0f;
-    viewport.y = 0.0f;
-    viewport.width = static_cast<float>(swapChainExtent.width);
-    viewport.height = static_cast<float>(swapChainExtent.height);
-    viewport.minDepth = 0.0f;
-    viewport.maxDepth = 1.0f;
-    vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
-
-    VkRect2D scissor{};
-    scissor.offset = {0, 0};
-    scissor.extent = swapChainExtent;
-    vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
-
-    vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-    vkCmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout,
-                            0, 1, &descriptorSets[currentFrame], 0, nullptr);
-
-    // Render each object in the scene
-    for (const auto &obj : currentScene->getObjects())
-    {
-        auto it = objectBuffers.find(obj.get());
-        if (it == objectBuffers.end())
-            continue;
-
-        const ObjectBuffers &buffers = it->second;
-
-        VkBuffer vertexBuffers[] = {buffers.vertexBuffer};
-        VkDeviceSize offsets[] = {0};
-        vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
-        vkCmdBindIndexBuffer(commandBuffer, buffers.indexBuffer, 0, VK_INDEX_TYPE_UINT16);
-
-        vkCmdDrawIndexed(commandBuffer, buffers.indexCount, 1, 0, 0, 0);
     }
 }
 

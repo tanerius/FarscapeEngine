@@ -60,8 +60,7 @@ void VulkanApp::initVulkan()
     createUniformBuffers();
 
     // Initialize renderer
-    renderer.initialize(device, physicalDevice, commandPool, graphicsQueue,
-                        descriptorSetLayout, pipelineLayout, graphicsPipeline);
+    renderer.initialize(device, physicalDevice, commandPool, graphicsQueue);
 
     // Create a cube and add it to the scene
     auto cube = std::make_shared<RenderObject>(CubeGeometry::getVertices(), CubeGeometry::getIndices());

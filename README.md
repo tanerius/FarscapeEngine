@@ -182,28 +182,28 @@ cd build
 ./Farscape
 ```
 
-You should see a window titled "Farscape Engine - Rotating Cube" with a 3D cube spinning automatically. Each face has a different color:
-- **Front**: Red
-- **Back**: Green
-- **Top**: Blue
-- **Bottom**: Yellow
-- **Right**: Magenta
-- **Left**: Cyan
+You should see an ImGui-based dockable interface with:
+- **3D Viewport**: A dockable window showing the 3D scene with a rotating cube. Each face has a different color:
+  - **Front**: Red, **Back**: Green, **Top**: Blue
+  - **Bottom**: Yellow, **Right**: Magenta, **Left**: Cyan
+- **Scene Controls**: A dockable panel with:
+  - Background color picker/sliders
+  - Real-time FPS and frame time statistics
+- **Menu Bar**: File menu with Exit option
 
-The cube rotates continuously around a diagonal axis. 
-
-An ImGui UI window titled "Scene Controls" will appear in the upper-left corner, allowing you to:
-- Adjust the background color using RGB sliders or color picker
-- View real-time FPS and frame time statistics
+The cube rotates continuously around a diagonal axis within the 3D Viewport window.
 
 Close the window to exit.
 
 ## Controls
 
 - Close the window to exit the application
-- The cube rotates automatically
-- **ImGui UI Window**: 
-  - Drag to move the window
+- The cube rotates automatically in the 3D Viewport
+- **Dockable Windows**: 
+  - Drag window tabs to dock/undock panels
+  - Resize windows by dragging borders
+  - 3D Viewport can be resized and docked anywhere
+- **Scene Controls Panel**:
   - Use color picker/sliders to change background color in real-time
   - Click on color values to enter precise RGB values
   - View frame time and FPS statistics
@@ -220,19 +220,24 @@ Close the window to exit.
 - ✅ Depth buffering
 - ✅ Swap chain management with window resizing support
 - ✅ Per-object buffer management
-- ✅ **ImGui integration** for real-time UI and debugging
+- ✅ **ImGui docking** with multi-viewport support
+- ✅ **Offscreen rendering** of 3D scene to texture
+- ✅ **Dockable 3D viewport** window
 - ✅ **Interactive background color control** via UI
 
 ## Architecture
 
-The engine now features a clean separation of concerns:
+The engine features an ImGui-first dockable interface architecture:
 
 - **VulkanApp**: Application lifecycle and Vulkan setup
 - **Scene**: Manages collections of RenderObjects
-- **Renderer**: Handles Vulkan rendering operations and ImGui integration
+- **Renderer**: 
+  - Handles offscreen rendering of 3D scene to texture
+  - Manages ImGui docking and multi-viewport interface
+  - Displays rendered scene as ImGui image window
 - **RenderObject**: Represents entities with geometry and transforms
 - **CubeGeometry**: Utility for predefined geometry
-- **ImGui**: Integrated UI library for real-time controls and debugging
+- **ImGui**: Primary interface with dockable windows and viewports
 
 For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 

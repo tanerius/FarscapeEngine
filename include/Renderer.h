@@ -29,8 +29,7 @@ public:
     ~Renderer();
 
     void initialize(VkDevice device, VkPhysicalDevice physicalDevice, VkCommandPool commandPool,
-                    VkQueue graphicsQueue, VkDescriptorSetLayout descriptorSetLayout,
-                    VkPipelineLayout pipelineLayout, VkPipeline graphicsPipeline);
+                    VkQueue graphicsQueue);
 
     void initializeImGui(GLFWwindow *window, VkInstance instance, VkRenderPass renderPass,
                          VkQueue graphicsQueue, uint32_t imageCount);
@@ -44,10 +43,6 @@ public:
 
     void cleanup();
     void updateScene(Scene *scene);
-    void render(VkCommandBuffer commandBuffer, uint32_t currentFrame,
-                const std::vector<VkDescriptorSet> &descriptorSets,
-                VkPipelineLayout pipelineLayout, VkPipeline graphicsPipeline,
-                VkExtent2D swapChainExtent);
 
     void setCamera(const glm::vec3 &position, const glm::vec3 &target, const glm::vec3 &up);
     void updateCamera(uint32_t currentImage, void *uniformBufferMapped, VkExtent2D swapChainExtent, float aspectRatio);
