@@ -130,12 +130,18 @@ set(SOURCES
     src/main.cpp
     src/VulkanApp.cpp
     src/CubeGeometry.cpp
+    src/RenderObject.cpp
+    src/Scene.cpp
+    src/Renderer.cpp
 )
 
 # Header files
 set(HEADERS
     include/VulkanApp.h
     include/CubeGeometry.h
+    include/RenderObject.h
+    include/Scene.h
+    include/Renderer.h
 )
 
 # Create executable

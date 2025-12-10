@@ -24,7 +24,18 @@ Farscape Engine is a Vulkan-based 3D game engine designed for handling vast dist
 ```
 FarscapeEngine/
 ├── src/                    # Source files (.cpp)
+│   ├── main.cpp           # Entry point
+│   ├── VulkanApp.cpp      # Main application
+│   ├── Renderer.cpp       # Vulkan rendering logic
+│   ├── Scene.cpp          # Scene management
+│   ├── RenderObject.cpp   # Renderable entity with transforms
+│   └── CubeGeometry.cpp   # Geometry utilities
 ├── include/                # Header files (.h)
+│   ├── VulkanApp.h        # Main application header
+│   ├── Renderer.h         # Renderer interface
+│   ├── Scene.h            # Scene container
+│   ├── RenderObject.h     # Render object interface
+│   └── CubeGeometry.h     # Geometry utilities
 ├── shaders/                # GLSL shaders (.vert, .frag)
 ├── external/               # Third-party dependencies
 │   ├── windows/           # Windows-specific binaries
@@ -32,6 +43,7 @@ FarscapeEngine/
 │   ├── linux/             # Linux-specific binaries (optional)
 │   └── glm/               # Cross-platform headers
 ├── build/                  # Build output (not in version control)
+├── ARCHITECTURE.md         # Detailed architecture documentation
 └── CMakeLists.txt         # Build configuration
 ```
 
@@ -63,6 +75,33 @@ FarscapeEngine/
 - Compiled shaders output to `build/shaders/` directory
 - Uses `glslc` from Vulkan SDK
 - Application must run from `build/` directory to find shaders
+
+## Scene/Renderer Architecture
+
+### Design Principles
+- **Separation of Concerns**: VulkanApp handles lifecycle, Scene manages objects, Renderer handles graphics
+- **Flexibility**: Easy to add/remove objects at runtime
+- **Encapsulation**: Renderer owns Vulkan buffer lifecycle for objects
+- **Extensibility**: RenderObject can be extended for different geometry types
+
+### Object Lifecycle
+1. Create RenderObject with geometry (vertices, indices)
+2. Add to Scene via `scene.addObject(object)`
+3. Call `renderer.updateScene(&scene)` to create Vulkan buffers
+4. Renderer automatically renders all objects in scene
+5. Buffers cleaned up when object removed or scene changes
+
+### Transform System
+- RenderObjects have position, rotation (Euler angles), and scale
+- `getModelMatrix()` computes final transformation matrix
+- Currently, first object's transform used for demo rotation
+- Future: Per-object uniform buffers for independent transforms
+
+### Adding New Geometry
+1. Create static method like `CubeGeometry::getVertices()`
+2. Return `std::vector<Vertex>` and `std::vector<uint16_t>`
+3. Create RenderObject: `auto obj = std::make_shared<RenderObject>(vertices, indices)`
+4. Add to scene: `scene.addObject(obj)`
 
 ## Coding Conventions
 
@@ -159,31 +198,49 @@ cd build
 - Ensure VULKAN_SDK is set before CMake configuration
 
 ### Architecture Decisions
-- **No game loop abstraction yet**: Direct while loop in mainLoop()
-- **Single VulkanApp class**: Currently monolithic, will be refactored
-- **Fixed cube geometry**: Hardcoded in VulkanApp, will be abstracted
+- **Scene/Renderer separation**: Scene manages objects, Renderer handles Vulkan operations
+- **RenderObject system**: Objects have geometry and transforms (position, rotation, scale)
+- **Per-object buffers**: Renderer creates and manages Vulkan buffers for each object
+- **Shared pointers**: Scene uses std::shared_ptr for object lifecycle management
+- **Direct game loop**: Simple while loop in mainLoop(), no abstraction yet
+- **Single uniform buffer**: Currently one UBO for camera/projection, objects share it
 - **No resource manager**: Direct Vulkan handle management
-- **No scene graph**: Single rotating cube demo only
+- **Basic scene graph**: Flat list of objects, no parent-child hierarchy yet
+
+## Current Architecture
+
+### Completed
+- ✅ **Scene/Renderer separation**: Clean architecture with separated concerns
+- ✅ **RenderObject system**: Entities with geometry and transforms
+- ✅ **CubeGeometry utility**: Abstracted geometry creation
+- ✅ **Per-object buffer management**: Automatic Vulkan buffer lifecycle
+
+### Key Classes
+- **VulkanApp**: Application lifecycle, Vulkan initialization, main loop
+- **Renderer**: Vulkan rendering operations, buffer management, camera
+- **Scene**: Collection of RenderObjects, add/remove/query operations
+- **RenderObject**: Geometry + transforms (position, rotation, scale)
+- **CubeGeometry**: Static utility for predefined cube geometry
 
 ## Future Development Goals
 
 ### Short Term
 1. Input handling (keyboard/mouse)
-2. Camera system with controls
-3. Abstract geometry loading
-4. Separate renderer class
+2. Camera controller (FPS/orbital)
+3. Multiple objects demonstration
+4. Per-object uniform buffers for individual transforms
 
 ### Medium Term
 1. Texture support
 2. Material system
 3. Basic lighting (Phong)
-4. Resource management
-5. Multiple objects/entities
+4. Model loading (.obj, .gltf)
+5. Resource management and caching
 
 ### Long Term
 1. Entity Component System (ECS)
 2. Physics integration
-3. Scene graph
+3. Hierarchical scene graph
 4. PBR rendering
 5. Large-scale coordinate system for space rendering
 6. Floating-point precision management for vast distances

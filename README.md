@@ -6,21 +6,30 @@ A simple Vulkan-based game engine starting with a rotating cube demo.
 
 ```
 FarscapeEngine/
-├── src/                  # Source files
-│   ├── main.cpp         # Entry point
-│   └── VulkanApp.cpp    # Main application implementation
-├── include/             # Header files
-│   └── VulkanApp.h      # Main application header
-├── shaders/             # GLSL shader source files
-│   ├── shader.vert      # Vertex shader
-│   └── shader.frag      # Fragment shader
-├── external/            # Third-party libraries
-│   ├── windows/         # Windows-specific binaries
-│   │   └── glfw/        # GLFW for Windows
-│   ├── linux/           # Linux-specific binaries (if needed)
-│   │   └── glfw/        # GLFW for Linux
-│   └── glm/             # GLM (header-only, cross-platform)
-└── CMakeLists.txt       # CMake build configuration
+├── src/                    # Source files
+│   ├── main.cpp           # Entry point
+│   ├── VulkanApp.cpp      # Main application implementation
+│   ├── Renderer.cpp       # Vulkan rendering logic
+│   ├── Scene.cpp          # Scene management
+│   ├── RenderObject.cpp   # Renderable entity
+│   └── CubeGeometry.cpp   # Predefined cube geometry
+├── include/                # Header files
+│   ├── VulkanApp.h        # Main application header
+│   ├── Renderer.h         # Renderer interface
+│   ├── Scene.h            # Scene container
+│   ├── RenderObject.h     # Render object with transforms
+│   └── CubeGeometry.h     # Geometry utilities
+├── shaders/                # GLSL shader source files
+│   ├── shader.vert        # Vertex shader
+│   └── shader.frag        # Fragment shader
+├── external/               # Third-party libraries
+│   ├── windows/           # Windows-specific binaries
+│   │   └── glfw/          # GLFW for Windows
+│   ├── linux/             # Linux-specific binaries (if needed)
+│   │   └── glfw/          # GLFW for Linux
+│   └── glm/               # GLM (header-only, cross-platform)
+├── ARCHITECTURE.md         # Detailed architecture documentation
+└── CMakeLists.txt         # CMake build configuration
 ```
 
 ## Prerequisites
@@ -190,25 +199,41 @@ The cube rotates continuously around a diagonal axis. Close the window to exit.
 
 - ✅ Vulkan renderer initialization
 - ✅ GLFW window management
+- ✅ Scene/Renderer architecture for managing multiple objects
+- ✅ RenderObject system with position, rotation, and scale transforms
 - ✅ 3D cube geometry with vertex colors
 - ✅ Model-View-Projection (MVP) transformation
 - ✅ Automatic rotation animation
 - ✅ Depth buffering
 - ✅ Swap chain management with window resizing support
+- ✅ Per-object buffer management
+
+## Architecture
+
+The engine now features a clean separation of concerns:
+
+- **VulkanApp**: Application lifecycle and Vulkan setup
+- **Scene**: Manages collections of RenderObjects
+- **Renderer**: Handles Vulkan rendering operations
+- **RenderObject**: Represents entities with geometry and transforms
+- **CubeGeometry**: Utility for predefined geometry
+
+For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Next Steps
 
-This is a foundational "Hello World" for the Farscape Engine. Possible extensions:
+Possible extensions:
 
-1. Add input handling (keyboard/mouse controls)
-2. Implement a camera system
-3. Add texture support
-4. Create a material system
-5. Implement lighting (Phong/PBR)
-6. Add more complex geometry
-7. Implement an entity component system (ECS)
-8. Add physics integration
-9. Create a scene graph
+1. **Input handling** - Keyboard/mouse controls for camera
+2. **Camera controller** - First-person or orbital camera
+3. **Multiple objects** - Render multiple cubes/objects in scene
+4. **Texture support** - Load and apply textures to objects
+5. **Material system** - Per-object materials and properties
+6. **Lighting** - Phong or PBR lighting models
+7. **Model loading** - Load .obj or .gltf files
+8. **Entity Component System** - More flexible object composition
+9. **Physics integration** - Collision detection and dynamics
+10. **Large-scale coordinates** - Precision management for space rendering
 
 ## Troubleshooting
 
