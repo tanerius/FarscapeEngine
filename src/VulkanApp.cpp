@@ -70,6 +70,10 @@ void VulkanApp::initVulkan() {
     createCommandBuffers();
     createSyncObjects();
     
+    // Initialize ImGui after all Vulkan resources are created
+    renderer.initializeImGui(window, instance, renderPass, graphicsQueue, 
+                            static_cast<uint32_t>(swapChainImages.size()));
+    
     startTime = std::chrono::steady_clock::now();
 }
 
@@ -643,7 +647,8 @@ void VulkanApp::drawFrame() {
     renderPassInfo.renderArea.extent = swapChainExtent;
 
     std::array<VkClearValue, 2> clearValues{};
-    clearValues[0].color = {{0.1f, 0.1f, 0.15f, 1.0f}};
+    auto& clearColor = renderer.getClearColor();
+    clearValues[0].color = {{clearColor[0], clearColor[1], clearColor[2], 1.0f}};
     clearValues[1].depthStencil = {1.0f, 0};
 
     renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
@@ -655,6 +660,10 @@ void VulkanApp::drawFrame() {
     
     renderer.render(commandBuffers[currentFrame], currentFrame, descriptorSets,
                    pipelineLayout, graphicsPipeline, swapChainExtent);
+    
+    // Render ImGui
+    renderer.newImGuiFrame();
+    renderer.renderImGui(commandBuffers[currentFrame]);
 
     vkCmdEndRenderPass(commandBuffers[currentFrame]);
 

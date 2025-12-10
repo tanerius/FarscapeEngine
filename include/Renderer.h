@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <array>
 
 struct Vertex;
 class RenderObject;
@@ -29,6 +30,9 @@ public:
                    VkQueue graphicsQueue, VkDescriptorSetLayout descriptorSetLayout,
                    VkPipelineLayout pipelineLayout, VkPipeline graphicsPipeline);
     
+    void initializeImGui(GLFWwindow* window, VkInstance instance, VkRenderPass renderPass, 
+                        VkQueue graphicsQueue, uint32_t imageCount);
+    
     void cleanup();
     
     void updateScene(Scene* scene);
@@ -39,6 +43,11 @@ public:
     
     void setCamera(const glm::vec3& position, const glm::vec3& target, const glm::vec3& up);
     void updateCamera(uint32_t currentImage, void* uniformBufferMapped, VkExtent2D swapChainExtent, float aspectRatio);
+    
+    void renderImGui(VkCommandBuffer commandBuffer);
+    void newImGuiFrame();
+    
+    std::array<float, 3>& getClearColor() { return clearColor; }
 
 private:
     VkDevice device = VK_NULL_HANDLE;
@@ -52,6 +61,10 @@ private:
     glm::vec3 cameraPosition = glm::vec3(2.0f, 2.0f, 2.0f);
     glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    
+    // ImGui
+    VkDescriptorPool imguiDescriptorPool = VK_NULL_HANDLE;
+    std::array<float, 3> clearColor = {0.0f, 0.0f, 0.0f};
     
     void createBuffersForObject(RenderObject* object);
     void cleanupObjectBuffers(RenderObject* object);

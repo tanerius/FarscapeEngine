@@ -27,7 +27,8 @@ FarscapeEngine/
 │   │   └── glfw/          # GLFW for Windows
 │   ├── linux/             # Linux-specific binaries (if needed)
 │   │   └── glfw/          # GLFW for Linux
-│   └── glm/               # GLM (header-only, cross-platform)
+│   ├── glm/               # GLM (header-only, cross-platform)
+│   └── imgui/             # ImGui (UI library, cross-platform)
 ├── ARCHITECTURE.md         # Detailed architecture documentation
 └── CMakeLists.txt         # CMake build configuration
 ```
@@ -39,8 +40,9 @@ Before building the project, you need to install:
 1. **Vulkan SDK** - Download from [LunarG Vulkan SDK](https://vulkan.lunarg.com/)
 2. **GLFW** - Window and input library
 3. **GLM** - OpenGL Mathematics library
-4. **CMake** (version 3.20 or higher)
-5. **C++ Compiler** with C++17 support (MSVC, GCC, or Clang)
+4. **ImGui** - Immediate mode GUI library (included in `external/imgui/`)
+5. **CMake** (version 3.20 or higher)
+6. **C++ Compiler** with C++17 support (MSVC, GCC, or Clang)
 
 ### Windows Installation
 
@@ -188,12 +190,23 @@ You should see a window titled "Farscape Engine - Rotating Cube" with a 3D cube 
 - **Right**: Magenta
 - **Left**: Cyan
 
-The cube rotates continuously around a diagonal axis. Close the window to exit.
+The cube rotates continuously around a diagonal axis. 
+
+An ImGui UI window titled "Scene Controls" will appear in the upper-left corner, allowing you to:
+- Adjust the background color using RGB sliders or color picker
+- View real-time FPS and frame time statistics
+
+Close the window to exit.
 
 ## Controls
 
 - Close the window to exit the application
 - The cube rotates automatically
+- **ImGui UI Window**: 
+  - Drag to move the window
+  - Use color picker/sliders to change background color in real-time
+  - Click on color values to enter precise RGB values
+  - View frame time and FPS statistics
 
 ## Features
 
@@ -207,6 +220,8 @@ The cube rotates continuously around a diagonal axis. Close the window to exit.
 - ✅ Depth buffering
 - ✅ Swap chain management with window resizing support
 - ✅ Per-object buffer management
+- ✅ **ImGui integration** for real-time UI and debugging
+- ✅ **Interactive background color control** via UI
 
 ## Architecture
 
@@ -214,9 +229,10 @@ The engine now features a clean separation of concerns:
 
 - **VulkanApp**: Application lifecycle and Vulkan setup
 - **Scene**: Manages collections of RenderObjects
-- **Renderer**: Handles Vulkan rendering operations
+- **Renderer**: Handles Vulkan rendering operations and ImGui integration
 - **RenderObject**: Represents entities with geometry and transforms
 - **CubeGeometry**: Utility for predefined geometry
+- **ImGui**: Integrated UI library for real-time controls and debugging
 
 For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
@@ -227,13 +243,14 @@ Possible extensions:
 1. **Input handling** - Keyboard/mouse controls for camera
 2. **Camera controller** - First-person or orbital camera
 3. **Multiple objects** - Render multiple cubes/objects in scene
-4. **Texture support** - Load and apply textures to objects
-5. **Material system** - Per-object materials and properties
-6. **Lighting** - Phong or PBR lighting models
-7. **Model loading** - Load .obj or .gltf files
-8. **Entity Component System** - More flexible object composition
-9. **Physics integration** - Collision detection and dynamics
-10. **Large-scale coordinates** - Precision management for space rendering
+4. **Expanded ImGui panels** - Object inspector, scene hierarchy, performance profiler
+5. **Texture support** - Load and apply textures to objects
+6. **Material system** - Per-object materials and properties
+7. **Lighting** - Phong or PBR lighting models
+8. **Model loading** - Load .obj or .gltf files
+9. **Entity Component System** - More flexible object composition
+10. **Physics integration** - Collision detection and dynamics
+11. **Large-scale coordinates** - Precision management for space rendering
 
 ## Troubleshooting
 

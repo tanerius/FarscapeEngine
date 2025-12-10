@@ -15,6 +15,7 @@ Farscape Engine is a Vulkan-based 3D game engine designed for handling vast dist
 - **Graphics API**: Vulkan 1.4+
 - **Window Management**: GLFW 3.x
 - **Math Library**: GLM (header-only)
+- **UI Library**: ImGui (docking branch)
 - **Build System**: CMake 3.20+
 - **Language**: C++17
 - **Platforms**: Windows (primary), Linux, macOS
@@ -41,7 +42,8 @@ FarscapeEngine/
 │   ├── windows/           # Windows-specific binaries
 │   │   └── glfw/          # lib-vc2022/ for Visual Studio 2022
 │   ├── linux/             # Linux-specific binaries (optional)
-│   └── glm/               # Cross-platform headers
+│   ├── glm/               # Cross-platform headers
+│   └── imgui/             # ImGui UI library (docking branch)
 ├── build/                  # Build output (not in version control)
 ├── ARCHITECTURE.md         # Detailed architecture documentation
 └── CMakeLists.txt         # Build configuration
@@ -135,15 +137,18 @@ FarscapeEngine/
 - Project does not use vcpkg
 - All dependencies manually managed in `external/` directory
 - Platform-specific binaries kept separate
+- ImGui source files included directly in `external/imgui/`
 
 ### Windows Setup
 1. Vulkan SDK installed system-wide
 2. GLFW pre-compiled binaries in `external/windows/glfw/`
 3. GLM headers in `external/glm/`
+4. ImGui source files in `external/imgui/` (included in repo)
 
 ### Linux Setup
 - Use system package manager (preferred)
 - Manual libraries in `external/linux/` (if needed)
+- ImGui source files in `external/imgui/` (included in repo)
 
 ## Common Development Workflows
 
@@ -182,6 +187,7 @@ cd build
 - **Preserve shader compilation**: Ensure glslc integration works
 - **Follow Vulkan best practices**: Proper synchronization, resource lifetimes
 - **Test on multiple platforms**: Consider Linux compatibility
+- **ImGui integration**: Renderer manages ImGui lifecycle; use separate descriptor pool
 
 ### Code Style Preferences
 - Prefer explicit over implicit
@@ -206,6 +212,9 @@ cd build
 - **Single uniform buffer**: Currently one UBO for camera/projection, objects share it
 - **No resource manager**: Direct Vulkan handle management
 - **Basic scene graph**: Flat list of objects, no parent-child hierarchy yet
+- **ImGui integration**: Renderer manages ImGui initialization and rendering
+- **Separate ImGui descriptor pool**: ImGui uses its own descriptor pool to avoid conflicts
+- **ImGui controls clear color**: Background color dynamically controlled via UI
 
 ## Current Architecture
 
@@ -214,13 +223,16 @@ cd build
 - ✅ **RenderObject system**: Entities with geometry and transforms
 - ✅ **CubeGeometry utility**: Abstracted geometry creation
 - ✅ **Per-object buffer management**: Automatic Vulkan buffer lifecycle
+- ✅ **ImGui integration**: Real-time UI for debugging and controls
+- ✅ **Background color control**: Interactive RGB color picker in UI
 
 ### Key Classes
 - **VulkanApp**: Application lifecycle, Vulkan initialization, main loop
-- **Renderer**: Vulkan rendering operations, buffer management, camera
+- **Renderer**: Vulkan rendering operations, buffer management, camera, ImGui integration
 - **Scene**: Collection of RenderObjects, add/remove/query operations
 - **RenderObject**: Geometry + transforms (position, rotation, scale)
 - **CubeGeometry**: Static utility for predefined cube geometry
+- **ImGui**: Integrated for real-time UI, debugging tools, and scene controls
 
 ## Future Development Goals
 
@@ -229,6 +241,7 @@ cd build
 2. Camera controller (FPS/orbital)
 3. Multiple objects demonstration
 4. Per-object uniform buffers for individual transforms
+5. Expanded ImGui panels (object inspector, scene hierarchy)
 
 ### Medium Term
 1. Texture support

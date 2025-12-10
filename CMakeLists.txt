@@ -125,6 +125,18 @@ if(NOT glm_FOUND)
     endif()
 endif()
 
+# ImGui source files
+set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/external/imgui)
+set(IMGUI_SOURCES
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_demo.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_vulkan.cpp
+)
+
 # Source files
 set(SOURCES
     src/main.cpp
@@ -133,6 +145,7 @@ set(SOURCES
     src/RenderObject.cpp
     src/Scene.cpp
     src/Renderer.cpp
+    ${IMGUI_SOURCES}
 )
 
 # Header files
@@ -151,6 +164,8 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${Vulkan_INCLUDE_DIRS}
+    ${IMGUI_DIR}
+    ${IMGUI_DIR}/backends
 )
 
 # Link libraries
